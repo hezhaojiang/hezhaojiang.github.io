@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="RTMP 是 Real Time Messaging Protocol（实时消息传输协议）的首字母缩写。它是由 Adobe 公司提出的一种应用层的协议，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题。 该协议基于 TCP，是一个协议族，包括 RTMP 基本协议及 RTMPT&#x2F;RTMPS&#x2F;RTMPE 等多种变种。 RTMP 是一种设计用来进行实时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流媒体传输 - RTMP 协议">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/ccfdbe65/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="RTMP 是 Real Time Messaging Protocol（实时消息传输协议）的首字母缩写。它是由 Adobe 公司提出的一种应用层的协议，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题。 该协议基于 TCP，是一个协议族，包括 RTMP 基本协议及 RTMPT&#x2F;RTMPS&#x2F;RTMPE 等多种变种。 RTMP 是一种设计用来进行实时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201012214637.png">
+<meta property="article:published_time" content="2020-10-12T05:39:55.000Z">
+<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="RTMP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201012214637.png">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/ccfdbe65/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>流媒体传输 - RTMP 协议 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">协议介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%EF%BC%88HandShake%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">握手（HandShake）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">握手交互流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E7%9A%84%E6%8F%A1%E6%89%8B%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">简化的握手交互流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%E4%BA%A4%E4%BA%92%E6%8A%93%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">握手交互抓包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%E6%8A%A5%E6%96%87%E5%88%86%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">握手报文分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C0-%E4%B8%8E-S0"><span class="nav-number">2.4.1.</span> <span class="nav-text">C0 与 S0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C1-%E4%B8%8E-S1"><span class="nav-number">2.4.2.</span> <span class="nav-text">C1 与 S1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C2-%E4%B8%8E-S2"><span class="nav-number">2.4.3.</span> <span class="nav-text">C2 与 S2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%EF%BC%88NetConnection%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">建立网络连接（NetConnection）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">建立网络连接交互流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E6%8A%93%E5%8C%85"><span class="nav-number">3.2.</span> <span class="nav-text">建立网络连接抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BD%91%E7%BB%9C%E6%B5%81%EF%BC%88NetStream%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">建立网络流（NetStream）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8A%93%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">建立网络流抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%EF%BC%88Play%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">播放（Play）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E6%8A%93%E5%8C%85"><span class="nav-number">5.1.</span> <span class="nav-text">播放抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="nav-number">6.</span> <span class="nav-text">数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">音频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE"><span class="nav-number">6.2.</span> <span class="nav-text">视频数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/ccfdbe65/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          流媒体传输 - RTMP 协议
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-12 13:39:55" itemprop="dateCreated datePublished" datetime="2020-10-12T13:39:55+08:00">2020-10-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%81%E5%AA%92%E4%BD%93%E4%BC%A0%E8%BE%93/" itemprop="url" rel="index"><span itemprop="name">流媒体传输</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/ccfdbe65/" class="post-meta-item leancloud_visitors" data-flag-title="流媒体传输 - RTMP 协议" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/ccfdbe65/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/ccfdbe65/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>RTMP 是 Real Time Messaging Protocol（实时消息传输协议）的首字母缩写。它是由 Adobe 公司提出的一种应用层的协议，用来解决多媒体数据传输流的多路复用（Multiplexing）和分包（packetizing）的问题。</p>
+<p>该协议基于 TCP，是一个协议族，包括 RTMP 基本协议及 RTMPT/RTMPS/RTMPE 等多种变种。</p>
+<p>RTMP 是一种设计用来进行实时数据通信的网络协议，主要用来在 Flash/AIR 平台和支持 RTMP 协议的流媒体或交互服务器之间进行音视频和数据通信。</p>
+<a id="more"></a>
+<h2 id="协议介绍"><a href="#协议介绍" class="headerlink" title="协议介绍"></a>协议介绍</h2><p>RTMP 协议规定，播放一个流媒体有两个前提步骤：第一步，建立一个网络连接（NetConnection）；第二步，建立一个网络流（NetStream）。</p>
+<p>其中，网络连接代表服务器端应用程序和客户端之间基础的连通关系。网络流代表了发送多媒体数据的通道。服务器和客户端之间只能建立一个网络连接，但是基于该连接可以创建很多网络流。他们的关系如图所示：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201012214637.png" alt="RTMP 中的逻辑结构"></p>
+<p>播放一个 RTMP 协议的流媒体需要经过以下几个步骤：握手，建立连接，建立流，播放，四个步骤流程如下：</p>
+<pre><code>            +----------+                     +----------+
+            |  Client  |   TCP/IP Network    |  Server  |
+            +----------+                     +----------+
+--------+---|                     |                     |
+        |Uninitialized            |            Uninitialized
+        |   |----------C0--------&gt;|                     |
+        |   |                     |---------C0---------&gt;|
+        |   |----------C1--------&gt;|                     |
+        |   |                     |&lt;--------S0----------|
+        |Version sent             |&lt;--------S1----------|
+Hand-   |   |&lt;---------S0---------|                     |
+shake   |   |&lt;---------S1---------|             Version sent
+        |   |                     |---------C1---------&gt;|
+        |   |----------C2--------&gt;|                     |
+        |   |                     |&lt;--------S2----------|
+        |Ack Sent                 |                Ack Sent
+        |   |&lt;---------S2---------|                     |
+        |   |                     |---------C2---------&gt;|
+        |Handshake Done           |           Handshake Done
+--------+---|                                           |
+            |                                           |
+--------+---|---------- Command Message(connect) ------&gt;|
+        |   |                                           |
+        |   |&lt;------ Window Acknowledgement Size -------|
+        |   |                                           |
+        |   |&lt;---------- Set Peer Bandwidth ------------|
+        |   |                                           |
+Appli-  |   |------- Window Acknowledgement Size ------&gt;|
+cation  |   |                                           |
+Connect |   |&lt;---- User Control Message(StreamBegin) ---|
+        |   |                                           |
+        |   |&lt;----------- Command Message --------------|
+        |   |       (_result- connect response)         |
+--------+---|                                           |
+            |                                           |
+--------+---|------ Command Message(createStream) -----&gt;|
+Create  |   |                                           |
+Stream  |   |&lt;----------- Command Message --------------|
+--------+---|      (_result- createStream response)     |
+            |                                           |
+--------+---|--------- Command Message (play) ---------&gt;|
+        |   |                                           |
+        |   |&lt;-------------- SetChunkSize --------------|
+        |   |                                           |
+        |   |&lt;---- User Control (StreamIsRecorded) -----|
+        |   |                                           |
+        |   |&lt;------- UserControl (StreamBegin) --------|
+        |   |                                           |
+Play    |   |&lt;-- Command Message(onStatus-play reset) --|
+        |   |                                           |
+        |   |&lt;-- Command Message(onStatus-play start) --|
+        |   |                                           |
+        |   |&lt;------------- Audio Message --------------|
+        |   |                                           |
+        |   |&lt;------------- Video Message --------------|
+        |   |                     |                     |
+                                  |
+           Keep receiving audio and video stream till finishes
+</code></pre><h2 id="握手（HandShake）"><a href="#握手（HandShake）" class="headerlink" title="握手（HandShake）"></a>握手（HandShake）</h2><h3 id="握手交互流程"><a href="#握手交互流程" class="headerlink" title="握手交互流程"></a>握手交互流程</h3><p>一个 RTMP 连接以握手开始，双方分别发送大小固定的三个数据块：</p>
+<ol>
+<li>握手开始于客户端发送 C0、C1 块。服务器收到 C0 或 C1 后发送 S0 和 S1。</li>
+<li>当客户端收齐 S0 和 S1 后，开始发送 C2。当服务器收齐 C0 和 C1 后，开始发送 S2。</li>
+<li><p>当客户端和服务器分别收到 S2 和 C2 后，握手完成。</p>
+<pre><code>             +----------+                     +----------+
+             |  Client  |   TCP/IP Network    |  Server  |
+             +----------+                     +----------+
+ --------+---|                     |                     |
+         |Uninitialized            |            Uninitialized
+         |   |----------C0--------&gt;|                     |
+         |   |                     |---------C0---------&gt;|
+         |   |----------C1--------&gt;|                     |
+         |   |                     |&lt;--------S0----------|
+         |Version sent             |&lt;--------S1----------|
+ Hand-   |   |&lt;---------S0---------|                     |
+ shake   |   |&lt;---------S1---------|             Version sent
+         |   |                     |---------C1---------&gt;|
+         |   |----------C2--------&gt;|                     |
+         |   |                     |&lt;--------S2----------|
+         |Ack Sent                 |                Ack Sent
+         |   |&lt;---------S2---------|                     |
+         |   |                     |---------C2---------&gt;|
+         |Handshake Done           |           Handshake Done
+ --------+---|                                           |
+                 Pictorial Representation of Handshake
+</code></pre></li>
+</ol>
+<h3 id="简化的握手交互流程"><a href="#简化的握手交互流程" class="headerlink" title="简化的握手交互流程"></a>简化的握手交互流程</h3><p>而在实际应用中，通常使用三次握手来简化以上握手流程：</p>
+<ol>
+<li>Client —— C0&amp;C1 ——&gt; Server</li>
+<li>Client &lt;—— S0&amp;S1&amp;S2 —— Server</li>
+<li>Client —— C2 ——&gt; Server</li>
+</ol>
+<h3 id="握手交互抓包"><a href="#握手交互抓包" class="headerlink" title="握手交互抓包"></a>握手交互抓包</h3><p>通过 Wirshark 抓包，得到以下数据包：</p>
+<ol>
+<li><p>Client —— C0&amp;C1 ——&gt; Server</p>
+<pre><code> 0000   03 00 00 00 00 09 00 7c 02 f7 78 55 1e ce ab 8e   .......|..xU....
+ 0010   1e 36 2f 07 c5 86 8a 70 b2 66 d4 02 20 e5 08 61   .6/....p.f.. ..a
+ ····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+ 05f0   c4 10 96 07 08 84 39 34 53 ce 50 96 94 af be ab   ......94S.P.....
+ 0600   e0                                                .
+ -------------------------------------------------------------------------
+ Protocol version: 03
+ Handshake C1: 0000000009007c02f778551eceab8e1e362f07c5868a70b2…
+</code></pre></li>
+<li><p>Client &lt;—— S0&amp;S1&amp;S2 —— Server</p>
+<pre><code> 0000   03 06 a7 7f 3b 0d 0e 0a 0d 8b 4c 51 8d d0 a9 c7   ....;.....LQ....
+ 0010   21 e8 6a 5b b0 4a 9d 74 91 0f 30 03 fa bc 77 6e   !.j[.J.t..0...wn
+ ····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+ 0600   2d a1 d7 ca 81 18 80 02 9a d4 94 92 ab 14 ea 8a   -...............
+ ····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+ 0bf0   96 4b 7e 0c f1 27 fb fd 52 02 19 5d d7 73 57 47   .K~..&#39;..R..].sWG
+ 0c00   f0                                                .
+ -------------------------------------------------------------------------
+ Protocol version: 03
+ Handshake S1: 06a77f3b0d0e0a0d8b4c518dd0a9c721e86a5bb04a9d7491…
+ Handshake S2: a1d7ca811880029ad49492ab14ea8a119cd415aa26c62ee4…
+</code></pre></li>
+<li><p>Client —— C2 ——&gt; Server</p>
+<pre><code> 0000   e2 5c 15 c2 2c af 72 d0 98 6f bd 3e da 0d 71 51   .\..,.r..o.&gt;..qQ
+ ····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+ 05f0   94 e0 bc b0 94 31 f4 20 d6 e7 d3 03 6d 2c 71 77   .....1. ....m,qw
+ -------------------------------------------------------------------------
+ Handshake C2: e25c15c22caf72d0986fbd3eda0d7151973e19083e0abbef…
+</code></pre></li>
+</ol>
+<h3 id="握手报文分析"><a href="#握手报文分析" class="headerlink" title="握手报文分析"></a>握手报文分析</h3><h4 id="C0-与-S0"><a href="#C0-与-S0" class="headerlink" title="C0 与 S0"></a>C0 与 S0</h4><pre><code>    C0 与 S0
++-+-+-+-+-+-+-+-+
+|    version    |
++-+-+-+-+-+-+-+-+
+</code></pre><ul>
+<li>C0：客户端发送其所支持的 RTMP 版本号：3~31。一般都是写 3</li>
+<li>S1：服务端返回其所支持的版本号。如果没有客户端的版本号，默认返回 3</li>
+</ul>
+<h4 id="C1-与-S1"><a href="#C1-与-S1" class="headerlink" title="C1 与 S1"></a>C1 与 S1</h4><pre><code>       C1 与 S1
++-+-+-+-+-+-+-+-+-+-+
+|   time (4 bytes)  |
++-+-+-+-+-+-+-+-+-+-+
+|   zero (4 bytes)  |
++-+-+-+-+-+-+-+-+-+-+
+|   random bytes    |
++-+-+-+-+-+-+-+-+-+-+
+|random bytes(cont) |
+|       ....        |
++-+-+-+-+-+-+-+-+-+-+
+</code></pre><ul>
+<li>C1/S1 长度为 1536B。主要目的是确保握手的唯一性。</li>
+<li>格式为 time + zero + random</li>
+<li>time 发送时间戳，长度 4 byte</li>
+<li>zero 保留值 0，长度 4 byte</li>
+<li>random 随机值，长度 1528 byte，保证此次握手的唯一性，确定握手的对象</li>
+</ul>
+<h4 id="C2-与-S2"><a href="#C2-与-S2" class="headerlink" title="C2 与 S2"></a>C2 与 S2</h4><pre><code>       C2 与 S2
++-+-+-+-+-+-+-+-+-+-+
+|   time (4 bytes)  |
++-+-+-+-+-+-+-+-+-+-+
+|   time2(4 bytes)  |
++-+-+-+-+-+-+-+-+-+-+
+|   random bytes    |
++-+-+-+-+-+-+-+-+-+-+
+|random bytes(cont) |
+|       ....        |
++-+-+-+-+-+-+-+-+-+-+
+</code></pre><ul>
+<li>C2/S2 的长度也是 1536B。相当于就是 S1/C1 的响应值，对应 C1/S1 的 Copy 值，在于字段有点区别</li>
+<li>time， C2/S2 发送的时间戳，长度 4 byte</li>
+<li>time2， S1/C1 发送的时间戳，长度 4 byte</li>
+<li>random，S1/C1 发送的随机数，长度为 1528B</li>
+</ul>
+<h2 id="建立网络连接（NetConnection）"><a href="#建立网络连接（NetConnection）" class="headerlink" title="建立网络连接（NetConnection）"></a>建立网络连接（NetConnection）</h2><h3 id="建立网络连接交互流程"><a href="#建立网络连接交互流程" class="headerlink" title="建立网络连接交互流程"></a>建立网络连接交互流程</h3><ol>
+<li>Client ——&gt; Server : Command Message Connect</li>
+<li>Client &lt;—— Server : Window Acknowledgement Size</li>
+<li>Client &lt;—— Server : Set Peer Bandwidth</li>
+<li>Client ——&gt; Server : Window Acknowledgement Size</li>
+<li>Client &lt;—— Server : User Control Message Stream Begin</li>
+<li><p>Client &lt;—— Server : Command Message _result</p>
+<pre><code>             +----------+                     +----------+
+             |  Client  |          |          |  Server  |
+             +----------+          |          +----------+
+ --------+---|---------- Command Message(connect) ------&gt;|
+         |   |                                           |
+         |   |&lt;------ Window Acknowledgement Size -------|
+         |   |                                           |
+         |   |&lt;---------- Set Peer Bandwidth ------------|
+         |   |                                           |
+ Appli-  |   |------- Window Acknowledgement Size ------&gt;|
+ cation  |   |                                           |
+ Connect |   |&lt;---- User Control Message(StreamBegin) ---|
+         |   |                                           |
+         |   |&lt;----------- Command Message --------------|
+         |   |       (_result- connect response)         |
+ --------+---|                                           |
+                 Message flow in the connect command
+</code></pre></li>
+</ol>
+<h3 id="建立网络连接抓包"><a href="#建立网络连接抓包" class="headerlink" title="建立网络连接抓包"></a>建立网络连接抓包</h3><ol>
+<li><p>Client ——&gt; Server : AMF0 Command connect()</p>
+<pre><code> 0000   03 00 00 00 00 00 cc 14 00 00 00 00 02 00 07 63   ...............c
+ 0010   6f 6e 6e 65 63 74 00 3f f0 00 00 00 00 00 00 03   onnect.?........
+ 0020   00 03 61 70 70 02 00 06 6d 79 6c 69 76 65 00 08   ..app...mylive..
+ 0030   66 6c 61 73 68 56 65 72 02 00 0d 4c 4e 58 20 39   flashVer...LNX 9
+ 0040   2c 30 2c 31 32 34 2c 32 00 05 74 63 55 72 6c 02   ,0,124,2..tcUrl.
+ 0050   00 20 72 74 6d 70 3a 2f 2f 36 32 2e 32 33 34 2e   . rtmp://62.234.
+ 0060   31 31 31 2e 31 33 3a 31 39 33 35 2f 6d 79 6c 69   111.13:1935/myli
+ 0070   76 65 00 04 66 70 61 64 01 00 00 0c 63 61 70 61   ve..fpad....capa
+ 0080   62 69 6c 69 74 69 65 73 00 40 2e 00 00 00 00 00   bilities.@......
+ 0090   00 00 0b 61 75 64 69 6f 43 6f 64 65 63 73 00 40   ...audioCodecs.@
+ 00a0   af ce 00 00 00 00 00 00 0b 76 69 64 65 6f 43 6f   .........videoCo
+ 00b0   64 65 63 73 00 40 6f 80 00 00 00 00 00 00 0d 76   decs.@o........v
+ 00c0   69 64 65 6f 46 75 6e 63 74 69 6f 6e 00 3f f0 00   ideoFunction.?..
+ 00d0   00 00 00 00 00 00 00 09                           ........
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command connect(&#39;mylive&#39;))
+     Response to this call in frame: 20
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0011 = Chunk Stream ID: 3
+         Timestamp: 0
+         Body size: 204
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 0
+     RTMP Body
+         String &#39;connect&#39;
+         Number 1
+         Object (8 items)
+             AMF0 type: Object (0x03)
+             Property &#39;app&#39; String &#39;mylive&#39;
+             Property &#39;flashVer&#39; String &#39;LNX 9,0,124,2&#39;
+             Property &#39;tcUrl&#39; String &#39;rtmp://62.234.111.13:1935/mylive&#39;
+             Property &#39;fpad&#39; Boolean false
+             Property &#39;capabilities&#39; Number 15
+             Property &#39;audioCodecs&#39; Number 4071
+             Property &#39;videoCodecs&#39; Number 252
+             Property &#39;videoFunction&#39; Number 1
+             End Of Object Marker
+</code></pre></li>
+<li><p>Server ——&gt; Client : Window Acknowledgement Size</p>
+<pre><code> 0000   02 00 00 00 00 00 04 05 00 00 00 00 00 4c 4b 40   .............LK@
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (Window Acknowledgement Size 5000000)
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp: 0
+         Body size: 4
+         Type ID: Window Acknowledgement Size (0x05)
+         Stream ID: 0
+     RTMP Body
+         Window acknowledgement size: 5000000
+</code></pre></li>
+<li><p>Server ——&gt; Client : Set Peer Bandwidth</p>
+<pre><code> 0000   02 00 00 00 00 00 05 06 00 00 00 00 00 4c 4b 40   .............LK@
+ 0010   02                                                .
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (Set Peer Bandwidth 5000000,Dynamic)
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp: 0
+         Body size: 5
+         Type ID: Set Peer Bandwidth (0x06)
+         Stream ID: 0
+     RTMP Body
+         Window acknowledgement size: 5000000
+         Limit type: Dynamic (2)
+</code></pre></li>
+<li><p>Server ——&gt; Client : Set Chunk Size</p>
+<pre><code> 0000   02 00 00 00 00 00 04 01 00 00 00 00 00 00 10 00   ................
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (Set Chunk Size 4096)
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp: 0
+         Body size: 4
+         Type ID: Set Chunk Size (0x01)
+         Stream ID: 0
+     RTMP Body
+         Chunk size: 4096
+</code></pre></li>
+<li><p>Server ——&gt; Client : AMF0 Command _result</p>
+<pre><code> 0000   03 00 00 00 00 00 be 14 00 00 00 00 02 00 07 5f   ..............._
+ 0010   72 65 73 75 6c 74 00 3f f0 00 00 00 00 00 00 03   result.?........
+ 0020   00 06 66 6d 73 56 65 72 02 00 0d 46 4d 53 2f 33   ..fmsVer...FMS/3
+ 0030   2c 30 2c 31 2c 31 32 33 00 0c 63 61 70 61 62 69   ,0,1,123..capabi
+ 0040   6c 69 74 69 65 73 00 40 3f 00 00 00 00 00 00 00   lities.@?.......
+ 0050   00 09 03 00 05 6c 65 76 65 6c 02 00 06 73 74 61   .....level...sta
+ 0060   74 75 73 00 04 63 6f 64 65 02 00 1d 4e 65 74 43   tus..code...NetC
+ 0070   6f 6e 6e 65 63 74 69 6f 6e 2e 43 6f 6e 6e 65 63   onnection.Connec
+ 0080   74 2e 53 75 63 63 65 73 73 00 0b 64 65 73 63 72   t.Success..descr
+ 0090   69 70 74 69 6f 6e 02 00 15 43 6f 6e 6e 65 63 74   iption...Connect
+ 00a0   69 6f 6e 20 73 75 63 63 65 65 64 65 64 2e 00 0e   ion succeeded...
+ 00b0   6f 62 6a 65 63 74 45 6e 63 6f 64 69 6e 67 00 00   objectEncoding..
+ 00c0   00 00 00 00 00 00 00 00 00 09                     ..........
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command _result(&#39;NetConnection.Connect.Success&#39;))
+     Call for this response in frame: 17
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0011 = Chunk Stream ID: 3
+         Timestamp: 0
+         Body size: 190
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 0
+     RTMP Body
+         String &#39;_result&#39;
+         Number 1
+         Object (2 items)
+             AMF0 type: Object (0x03)
+             Property &#39;fmsVer&#39; String &#39;FMS/3,0,1,123&#39;
+             Property &#39;capabilities&#39; Number 31
+             End Of Object Marker
+         Object (4 items)
+             AMF0 type: Object (0x03)
+             Property &#39;level&#39; String &#39;status&#39;
+             Property &#39;code&#39; String &#39;NetConnection.Connect.Success&#39;
+             Property &#39;description&#39; String &#39;Connection succeeded.&#39;
+             Property &#39;objectEncoding&#39; Number 0
+             End Of Object Marker
+</code></pre></li>
+<li><p>Client ——&gt; Server : Window Acknowledgement Size</p>
+<pre><code> 0000   02 00 00 00 00 00 04 05 00 00 00 00 00 4c 4b 40   .............LK@
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (Window Acknowledgement Size 5000000)
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp: 0
+         Body size: 4
+         Type ID: Window Acknowledgement Size (0x05)
+         Stream ID: 0
+     RTMP Body
+         Window acknowledgement size: 5000000
+</code></pre></li>
+</ol>
+<h2 id="建立网络流（NetStream）"><a href="#建立网络流（NetStream）" class="headerlink" title="建立网络流（NetStream）"></a>建立网络流（NetStream）</h2><ol>
+<li>客户端发送命令消息中的“创建流”（createStream）命令到服务器端。</li>
+<li><p>服务器端接收到“创建流”命令后，发送命令消息中的“结果”(_result)，通知客户端流的状态。</p>
+<pre><code>             +----------+                     +----------+
+             |  Client  |          |          |  Server  |
+             +----------+          |          +----------+
+ --------+---|------ Command Message(createStream) -----&gt;|
+ Create  |   |                                           |
+ Stream  |   |&lt;----------- Command Message --------------|
+ --------+---|      (_result- createStream response)     |
+</code></pre></li>
+</ol>
+<h3 id="建立网络流抓包"><a href="#建立网络流抓包" class="headerlink" title="建立网络流抓包"></a>建立网络流抓包</h3><ol>
+<li><p>Client ——&gt; Server : AMF0 Command createStream()</p>
+<pre><code> 0000   43 00 00 00 00 00 19 14 02 00 0c 63 72 65 61 74   C..........creat
+ 0010   65 53 74 72 65 61 6d 00 40 00 00 00 00 00 00 00   eStream.@.......
+ 0020   05                                                .
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command createStream())
+     Response to this call in frame: 25
+     RTMP Header
+         01.. .... = Format: 1
+         ..00 0011 = Chunk Stream ID: 3
+         Timestamp delta: 0
+         Timestamp: 0 (calculated)
+         Body size: 25
+         Type ID: AMF0 Command (0x14)
+     RTMP Body
+         String &#39;createStream&#39;
+         Number 2
+         Null
+</code></pre></li>
+<li><p>Server ——&gt; Client : AMF0 Command _result</p>
+<pre><code> 0000   03 00 00 00 00 00 1d 14 00 00 00 00 02 00 07 5f   ..............._
+ 0010   72 65 73 75 6c 74 00 40 00 00 00 00 00 00 00 05   result.@........
+ 0020   00 3f f0 00 00 00 00 00 00                        .?.......
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command _result())
+     Call for this response in frame: 23
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0011 = Chunk Stream ID: 3
+         Timestamp: 0
+         Body size: 29
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 0
+     RTMP Body
+         String &#39;_result&#39;
+         Number 2
+         Null
+         Number 1
+</code></pre></li>
+</ol>
+<h2 id="播放（Play）"><a href="#播放（Play）" class="headerlink" title="播放（Play）"></a>播放（Play）</h2><ol>
+<li>客户端发送命令消息中的播放（play）命令到服务器。</li>
+<li>接收到播放命令后，服务器发送设置块大小（ChunkSize）协议消息。</li>
+<li>服务器发送用户控制消息中的 streambegin，告知客户端流ID。</li>
+<li>播放命令成功的话，服务器发送命令消息中的“响应状态” NetStream.Play.Start &amp; NetStream.Play.reset，告知客户端播放命令执行成功。</li>
+<li><p>在此之后服务器发送客户端要播放的音频和视频数据。</p>
+<pre><code>         +----------+                     +----------+
+         |  Client  |          |          |  Server  |
+         +----------+          |          +----------+
+</code></pre><p> ————+—-|————- Command Message (play) ————-&gt;|</p>
+<pre><code>     |   |                                           |
+     |   |&lt;-------------- SetChunkSize --------------|
+     |   |                                           |
+     |   |&lt;---- User Control (StreamIsRecorded) -----|
+     |   |                                           |
+     |   |&lt;------- UserControl (StreamBegin) --------|
+     |   |                                           |
+</code></pre><p> Play    |   |&lt;— Command Message(onStatus-play reset) —|</p>
+<pre><code>     |   |                                           |
+     |   |&lt;-- Command Message(onStatus-play start) --|
+     |   |                                           |
+     |   |&lt;------------- Audio Message --------------|
+     |   |                                           |
+     |   |&lt;------------- Video Message --------------|
+     |   |                     |                     |
+                               |
+        Keep receiving audio and video stream till finishes
+</code></pre></li>
+</ol>
+<h3 id="播放抓包"><a href="#播放抓包" class="headerlink" title="播放抓包"></a>播放抓包</h3><ol>
+<li><p>Client ——&gt; Server : Command getStreamLength()</p>
+<pre><code> 0000   08 00 00 00 00 00 1f 14 00 00 00 00 02 00 0f 67   ...............g
+ 0010   65 74 53 74 72 65 61 6d 4c 65 6e 67 74 68 00 40   etStreamLength.@
+ 0020   08 00 00 00 00 00 00 05 02 00 00                  ...........
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command getStreamLength())
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 1000 = Chunk Stream ID: 8
+         Timestamp: 0
+         Body size: 31
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 0
+     RTMP Body
+         String &#39;getStreamLength&#39;
+         Number 3
+         Null
+         String &#39;&#39;
+</code></pre></li>
+<li><p>Client ——&gt; Server : Command play(‘’)</p>
+<pre><code> 0000   08 00 00 00 00 00 1d 14 01 00 00 00 02 00 04 70   ...............p
+ 0010   6c 61 79 00 40 10 00 00 00 00 00 00 05 02 00 00   lay.@...........
+ 0020   00 c0 9f 40 00 00 00 00 00                        ...@.....
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command play(&#39;&#39;))
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 1000 = Chunk Stream ID: 8
+         Timestamp: 0
+         Body size: 29
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 1
+     RTMP Body
+         String &#39;play&#39;
+         Number 4
+         Null
+         String &#39;&#39;
+         Number -2000
+</code></pre></li>
+<li><p>Client ——&gt; Server : User Control Message Set Buffer Length</p>
+<pre><code> 0000   42 00 00 01 00 00 0a 04 00 03 00 00 00 01 00 00   B...............
+ 0010   0b b8                                             ..
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (User Control Message Set Buffer Length 1,3000ms)
+     RTMP Header
+         01.. .... = Format: 1
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp delta: 1
+         Timestamp: 1 (calculated)
+         Body size: 10
+         Type ID: User Control Message (0x04)
+     RTMP Body
+         Event type: Set Buffer Length (3)
+</code></pre></li>
+<li><p>Server ——&gt; Client : User Control Message Stream Begin</p>
+<pre><code> 0000   02 00 00 00 00 00 06 04 00 00 00 00 00 00 00 00   ................
+ 0010   00 01                                             ..
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (User Control Message Stream Begin 1)
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0010 = Chunk Stream ID: 2
+         Timestamp: 0
+         Body size: 6
+         Type ID: User Control Message (0x04)
+         Stream ID: 0
+     RTMP Body
+         Event type: Stream Begin (0)
+</code></pre></li>
+<li><p>Server ——&gt; Client : Command onStatus(‘NetStream.Play.Start’)</p>
+<pre><code> 0000   05 00 00 00 00 00 60 14 01 00 00 00 02 00 08 6f   ......`........o
+ 0010   6e 53 74 61 74 75 73 00 00 00 00 00 00 00 00 00   nStatus.........
+ 0020   05 03 00 05 6c 65 76 65 6c 02 00 06 73 74 61 74   ....level...stat
+ 0030   75 73 00 04 63 6f 64 65 02 00 14 4e 65 74 53 74   us..code...NetSt
+ 0040   72 65 61 6d 2e 50 6c 61 79 2e 53 74 61 72 74 00   ream.Play.Start.
+ 0050   0b 64 65 73 63 72 69 70 74 69 6f 6e 02 00 0a 53   .description...S
+ 0060   74 61 72 74 20 6c 69 76 65 00 00 09               tart live...
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Command onStatus(&#39;NetStream.Play.Start&#39;))
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0101 = Chunk Stream ID: 5
+         Timestamp: 0
+         Body size: 96
+         Type ID: AMF0 Command (0x14)
+         Stream ID: 1
+     RTMP Body
+         String &#39;onStatus&#39;
+         Number 0
+         Null
+         Object (3 items)
+</code></pre></li>
+<li><p>Server ——&gt; Client : Data |RtmpSampleAccess()</p>
+<pre><code> 0000   05 00 00 00 00 00 18 12 01 00 00 00 02 00 11 7c   ...............|
+ 0010   52 74 6d 70 53 61 6d 70 6c 65 41 63 63 65 73 73   RtmpSampleAccess
+ 0020   01 01 01 01                                       ....
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Data |RtmpSampleAccess())
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0101 = Chunk Stream ID: 5
+         Timestamp: 0
+         Body size: 24
+         Type ID: AMF0 Data (0x12)
+         Stream ID: 1
+     RTMP Body
+         String &#39;|RtmpSampleAccess&#39;
+         Boolean true
+         Boolean true
+</code></pre></li>
+<li><p>Server ——&gt; Client : Data onMetaData()</p>
+<pre><code> 0000   05 00 00 00 00 01 83 12 01 00 00 00 02 00 0a 6f   ...............o
+ 0010   6e 4d 65 74 61 44 61 74 61 03 00 06 53 65 72 76   nMetaData...Serv
+ ····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+ 0180   00 00 00 00 00 00 00 00 00 00 00 00 00 00 09      ...............
+ -------------------------------------------------------------------------
+ Real Time Messaging Protocol (AMF0 Data onMetaData())
+     RTMP Header
+         00.. .... = Format: 0
+         ..00 0101 = Chunk Stream ID: 5
+         Timestamp: 0
+         Body size: 387
+         Type ID: AMF0 Data (0x12)
+         Stream ID: 1
+     RTMP Body
+         String &#39;onMetaData&#39;
+         Object (14 items)
+             AMF0 type: Object (0x03)
+             Property &#39;Server&#39; String &#39;NGINX RTMP (github.com/arut/nginx-rtmp-module)&#39;
+             Property &#39;width&#39; Number 1280
+             Property &#39;height&#39; Number 720
+             Property &#39;displayWidth&#39; Number 1280
+             Property &#39;displayHeight&#39; Number 720
+             Property &#39;duration&#39; Number 0
+             Property &#39;framerate&#39; Number 25
+             Property &#39;fps&#39; Number 25
+             Property &#39;videodatarate&#39; Number 0
+             Property &#39;videocodecid&#39; Number 7
+             Property &#39;audiodatarate&#39; Number 125
+             Property &#39;audiocodecid&#39; Number 1
+             Property &#39;profile&#39; String &#39;&#39;
+             Property &#39;level&#39; String &#39;&#39;
+             End Of Object Marker
+</code></pre></li>
+</ol>
+<h2 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h2><h3 id="音频数据"><a href="#音频数据" class="headerlink" title="音频数据"></a>音频数据</h3><pre><code>0000   80 fa 5b 46 e3 29 dc a6 32 90 25 1e 08 00 45 00   ..[F.)..2.%...E.
+····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+05e0   aa aa 02 ab 2a 26 a8 20 06 60                     ....*&amp;. .`
+-------------------------------------------------------------------------
+Real Time Messaging Protocol (Audio Data)
+    RTMP Header
+        00.. .... = Format: 0
+        ..00 0110 = Chunk Stream ID: 6
+        Timestamp: 59947
+        Body size: 2054
+        Type ID: Audio Data (0x08)
+        Stream ID: 1
+    RTMP Body
+        Control: 0x1f (ADPCM 44 kHz 16 bit stereo)
+            0001 .... = Format: ADPCM (1)
+            .... 11.. = Sample rate: 44 kHz (3)
+            .... ..1. = Sample size: 16 bit (1)
+            .... ...1 = Channels: stereo (1)
+        Audio data: 80a1a80292a0884488cccd0c9088cd54cc88888888c8ccd0…
+</code></pre><h3 id="视频数据"><a href="#视频数据" class="headerlink" title="视频数据"></a>视频数据</h3><pre><code>0000   47 00 00 28 00 1a 1b 09 27 01 00 00 a0 00 00 1a   G..(....&#39;.......
+····   ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··   ················
+1a20   b4 9e 58                                          ..X
+-------------------------------------------------------------------------
+Real Time Messaging Protocol (Video Data)
+    RTMP Header
+        01.. .... = Format: 1
+        ..00 0111 = Chunk Stream ID: 7
+        Timestamp delta: 40
+        Timestamp: 129960 (calculated)
+        Body size: 6683
+        Type ID: Video Data (0x09)
+    RTMP Body
+        Control: 0x27 (inter-frame H.264)
+            0010 .... = Type: inter-frame (2)
+            .... 0111 = Format: H.264 (7)
+        Video data: 010000a000001a12419aab49a8416c994c085ffffe8d340d…
+</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://wwwimages2.adobe.com/content/dam/acom/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf">《Adobe’s Real Time Messaging Protocol》</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/jimodetiantang/p/8974075.html">RTMP 协议详解 - 季末的天堂 - 博客园</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\50f2e42d\" rel="bookmark">流媒体传输 - RTMP 协议报文分析</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/RTMP/" rel="tag"># RTMP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/97e2582/" rel="prev" title="博客搭建 - NexT 主题美化">
+                  <i class="fa fa-chevron-left"></i> 博客搭建 - NexT 主题美化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/50f2e42d/" rel="next" title="流媒体传输 - RTMP 协议报文分析">
+                  流媒体传输 - RTMP 协议报文分析 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/ccfdbe65/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/ccfdbe65/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

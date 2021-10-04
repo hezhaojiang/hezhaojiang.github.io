@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="HLS 全称是 HTTP Live Streaming，是一个由 Apple 公司提出的基于 HTTP 的媒体流传输协议，用于实时音视频流的传输。目前 HLS 协议被广泛的应用于视频点播和直播领域。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流媒体传输 - HLS 协议">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/f5bbcc60/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="HLS 全称是 HTTP Live Streaming，是一个由 Apple 公司提出的基于 HTTP 的媒体流传输协议，用于实时音视频流的传输。目前 HLS 协议被广泛的应用于视频点播和直播领域。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201122225230.png">
+<meta property="article:published_time" content="2020-11-22T06:41:05.000Z">
+<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="HLS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201122225230.png">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/f5bbcc60/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>流媒体传输 - HLS 协议 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">原理介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">整体架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HLS-%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">HLS 协议分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HLS-Playlist"><span class="nav-number">2.1.</span> <span class="nav-text">HLS Playlist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HLS-Media-Segments"><span class="nav-number">2.2.</span> <span class="nav-text">HLS Media Segments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HLS-TAGS"><span class="nav-number">2.3.</span> <span class="nav-text">HLS TAGS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HLS-%E6%92%AD%E6%94%BE"><span class="nav-number">3.</span> <span class="nav-text">HLS 播放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E6%9C%AA%E5%8A%A0%E5%AF%86-HLS"><span class="nav-number">3.1.</span> <span class="nav-text">播放未加密 HLS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E5%8A%A0%E5%AF%86-HLS"><span class="nav-number">3.2.</span> <span class="nav-text">播放加密 HLS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HLS-%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">HLS 协议总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">4.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">4.3.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/f5bbcc60/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          流媒体传输 - HLS 协议
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-22 14:41:05" itemprop="dateCreated datePublished" datetime="2020-11-22T14:41:05+08:00">2020-11-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%81%E5%AA%92%E4%BD%93%E4%BC%A0%E8%BE%93/" itemprop="url" rel="index"><span itemprop="name">流媒体传输</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/f5bbcc60/" class="post-meta-item leancloud_visitors" data-flag-title="流媒体传输 - HLS 协议" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/f5bbcc60/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/f5bbcc60/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><code>HLS</code> 全称是 <code>HTTP Live Streaming</code>，是一个由 <code>Apple</code> 公司提出的基于 <code>HTTP</code> 的媒体流传输协议，用于实时音视频流的传输。目前 <code>HLS</code> 协议被广泛的应用于视频点播和直播领域。</p>
+<a id="more"></a>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h3><p>通过将整条流切割成一个小的可以通过 <code>HTTP</code> 下载的媒体文件, 然后提供一个配套的媒体列表文件, 提供给客户端, 让客户端顺序地拉取这些媒体文件播放, 来实现看上去是在播放一条流的效果. 由于传输层协议只需要标准的 <code>HTTP</code> 协议, HLS 可以方便的透过防火墙或者代理服务器, 而且可以很方便的利用 CDN 进行分发加速, 并且客户端实现起来也很方便.</p>
+<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p><code>HLS</code> 的架构分为三部分：Server，CDN，Client 。即服务器、分发组件和客户端。</p>
+<p>下面是 <code>HLS</code> 整体架构图：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201122225230.png" alt="HLS 整体架构图"></p>
+<p>服务器用于接收媒体输入流，对它们进行编码，封装成适合于分发的格式，然后准备进行分发。</p>
+<p>分发组件为标准的 Web 服务器。它们用于接收客户端请求，传递处理过的媒体，把资源和客户端联系起来。</p>
+<p>客户端软件决定请求何种合适的媒体，下载这些资源，然后把它们重新组装成用户可以观看的连续流。</p>
+<h2 id="HLS-协议分析"><a href="#HLS-协议分析" class="headerlink" title="HLS 协议分析"></a>HLS 协议分析</h2><h3 id="HLS-Playlist"><a href="#HLS-Playlist" class="headerlink" title="HLS Playlist"></a>HLS Playlist</h3><p>其实, <code>HLS</code> 协议的主要内容是关于 <code>M3U8</code> 这个文本协议的, 其实生成与解析都非常简单. 为了更加直接地说明这一点, 我下面举两个简单的例子:</p>
+<p>简单的 <code>Media Playlist</code>：</p>
+<pre><code>#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:8
+#EXT-X-MEDIA-SEQUENCE:2680
+#EXTINF:7.975,
+https://priv.example.com/fileSequence2680.ts
+#EXTINF:7.941,
+https://priv.example.com/fileSequence2681.ts
+#EXTINF:7.975,
+https://priv.example.com/fileSequence2682.ts
+</code></pre><p>包含多种比特率的 <code>Master Playlist</code>：</p>
+<pre><code>#EXTM3U
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1280000
+http://example.com/low.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+http://example.com/mid.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=7680000
+http://example.com/hi.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=65000,CODECS=&quot;mp4a.40.5&quot;
+http://example.com/audio-only.m3u8
+</code></pre><ul>
+<li><code>HLS</code> 通过 <code>URI(RFC3986)</code> 指向的一个 <code>Playlist</code> 来表示一个媒体流</li>
+<li>一个 <code>Playlist</code> 可以是一个 <code>Media Playlist</code> 或者 <code>Master Playlist</code>, 使用 <code>UTF-8</code> 编码的文本文件, 包含一些 <code>URI</code> 跟描述性的 <code>tags</code></li>
+<li>一个 <code>Media Playlist</code> 包含一个 <code>Media Segments</code> 列表,当顺序播放时, 能播放整个完整的流</li>
+<li>要想播放这个 <code>Playlist</code>, 客户端需要首先下载他, 然后播放里面的每一个 <code>Media Segment</code></li>
+<li><p>更加复杂的情况是, <code>Playlist</code> 是一个 <code>Master Playlist</code>, 包含一个 <code>Variant Stream</code> 集合, 通常每个 <code>Variant Stream</code> 里面是同一个流的多个不同版本(如: 分辨率, 码率不同)</p>
+</li>
+<li><p>一个 <code>Playlist</code> 文件必须通过 <code>URI(.m3u8 或 m3u)</code> 或者 <code>HTTP Content-Type</code> 来识别 (<code>application/vnd.apple.mpegurl</code> 或 <code>audio/mpegurl</code>)</p>
+</li>
+<li>换行符可以用 <code>\n</code> 或者 <code>\r\n</code></li>
+<li>以 <code>#</code> 开头的是 <code>tag</code> 或者注释, 以 <code>#EXT</code> 开头的是 <code>tag</code>, 其余的为注释, 在解析时应该忽略</li>
+<li><code>Playlist</code> 里面的 <code>URI</code> 可以用绝对地址或者相对地址, 如果使用相对地址, 那么是相对于 <code>Playlist</code> 文件的地址</li>
+</ul>
+<h3 id="HLS-Media-Segments"><a href="#HLS-Media-Segments" class="headerlink" title="HLS Media Segments"></a>HLS Media Segments</h3><ul>
+<li>每一个 <code>Media Segment</code> 通过一个 <code>URI</code> 指定, 可能包含一个 <code>byte range</code></li>
+<li>每一个 <code>Media Segment</code> 的 <code>duration</code> 通过 <code>EXTINF</code> <code>tag</code> 指定</li>
+<li>每一个 <code>Media Segment</code> 有一个唯一的整数 <code>Media Segment Number</code></li>
+<li>有些媒体格式需要一个 <code>format-specific sequence</code> 来初始化一个 <code>parser</code>, 在 <code>Media Segment</code> 被 <code>parse</code> 之前. 这个字段叫做 <code>Media Initialization Section</code>, 通过 <code>EXT-X-MAP</code> <code>tag</code> 来指定. 支持的 <code>Media Segment</code> 格式</li>
+</ul>
+<h3 id="HLS-TAGS"><a href="#HLS-TAGS" class="headerlink" title="HLS TAGS"></a>HLS TAGS</h3><ul>
+<li><code>Basic Tags</code> : 用在 <code>Media Playlist</code> 和 <code>Master Playlist</code> 里面<ul>
+<li><code>EXTM3U</code>: 必须在文件的第一行, 标识是一个 <code>Extended M3U Playlist</code> 文件</li>
+<li><code>EXT-X-VERSION</code>: 表示 <code>Playlist</code> 兼容的版本</li>
+</ul>
+</li>
+<li><code>Media Segment Tags</code> : 只能出现在 <code>Media Playlist</code> 里面<ul>
+<li><code>EXTINF</code>: 用于指定 <code>Media Segment</code> 的 <code>duration</code></li>
+<li><code>EXT-X-BYTERANGE</code>: 用于指定 <code>URI</code> 的 <code>sub-range</code></li>
+<li><code>EXT-X-DISCONTINUITY</code>: 表示不连续</li>
+<li><code>EXT-X-KEY</code>: 表示 <code>Media Segment</code> 已加密, 该值用于解密</li>
+<li><code>EXT-X-MAP</code>: 用于指定 <code>Media Initialization Section</code></li>
+<li><code>EXT-X-PROGRAM-DATE-TIME</code>: 和 <code>Media Segment</code> 的第一个 <code>sample</code> 一起来确定时间戳</li>
+<li><code>EXT-X-DATERANGE</code>: 将一个时间范围和一组属性键值对结合到一起</li>
+</ul>
+</li>
+<li><code>Media Playlist tags</code> : 只能出现在 <code>Media Playlist</code> 里面<ul>
+<li><code>EXT-X-TARGETDURATION</code>: 用于指定最大的 <code>Media Segment duration</code></li>
+<li><code>EXT-X-MEDIA-SEQUENCE</code>: 用于指定第一个 <code>Media Segment</code> 的 <code>Media Sequence Number</code></li>
+<li><code>EXT-X-DISCONTINUITY-SEQUENCE</code>: 用于不同 <code>Variant Stream</code> 之间同步</li>
+<li><code>EXT-X-ENDLIST</code>: 表示结束</li>
+<li><code>EXT-X-PLAYLIST-TYPE</code>: 可选, 指定整个 <code>Playlist</code> 的类型</li>
+<li><code>EXT-X-I-FRAMES-ONLY</code>: 表示每个 <code>Media Segment</code> 描述一个单一的 <code>I-frame</code></li>
+</ul>
+</li>
+<li><code>Master Playlist tags</code> : 只能出现在 <code>Master Playlist</code> 中<ul>
+<li><code>EXT-X-MEDIA</code>: 用于关联同一个内容的多个 <code>Media Playlist</code> 的多种 <code>renditions</code></li>
+<li><code>EXT-X-STREAM-INF</code>: 用于指定一个 <code>Variant Stream</code></li>
+<li><code>EXT-X-I-FRAME-STREAM-INF</code>: 用于指定一个 <code>Media Playlist</code> 包含媒体的 <code>I-frames</code></li>
+<li><code>EXT-X-SESSION-DATA</code>: 存放一些 <code>session</code> 数据</li>
+<li><code>EXT-X-SESSION-KEY</code>: 用于解密</li>
+</ul>
+</li>
+<li><code>Media or Master Playlist Tags</code> : 可以出现在 <code>Media Playlist</code> 或者 <code>Master Playlist</code> 中，但是如果同时出现在同一个 <code>Master Playlist</code> 和 <code>Media Playlist</code> 中时，必须为相同值<ul>
+<li><code>EXT-X-INDEPENDENT-SEGMENTS</code>: 表示每个 <code>Media Segment</code> 可以独立解码</li>
+<li><code>EXT-X-START</code>: 标识一个优选的点来播放这个 <code>Playlist</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="HLS-播放"><a href="#HLS-播放" class="headerlink" title="HLS 播放"></a>HLS 播放</h2><h3 id="播放未加密-HLS"><a href="#播放未加密-HLS" class="headerlink" title="播放未加密 HLS"></a>播放未加密 HLS</h3><p>我们通过 <code>VLC</code> 播放器播放苹果官方提供的一个例子：<code>http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8</code>，并使用 <code>Wirshark</code> 对其中交互进行抓包。</p>
+<pre><code>GET /iphone/samples/bipbop/gear1/prog_index.m3u8 HTTP/1.1
+Host: devimages.apple.com
+Accept: */*
+Accept-Language: zh_CN
+User-Agent: VLC/3.0.8 LibVLC/3.0.8
+Range: bytes=0-
+
+    HTTP/1.1 206 Partial Content
+    Accept-Ranges: bytes
+    Content-Type: audio/x-mpegurl
+    ETag: &quot;50117c8233644c19b5ab49551b72507f:1239907352&quot;
+    Last-Modified: Thu, 16 Apr 2009 18:42:32 GMT
+    Server: AkamaiNetStorage
+    Date: Sun, 22 Nov 2020 15:01:49 GMT
+    Content-Range: bytes 0-7018/7019
+    Content-Length: 7019
+    X-Cache: TCP_MEM_HIT from a184-26-91-45.deploy.akamaitechnologies.com (AkamaiGHost/10.2.0.2-31441410) (-)
+    Connection: keep-alive
+
+    #EXTM3U
+    #EXT-X-TARGETDURATION:10
+    #EXT-X-MEDIA-SEQUENCE:0
+    #EXTINF:10, no desc
+    fileSequence0.ts
+    #EXTINF:10, no desc
+    fileSequence1.ts
+    #EXTINF:10, no desc
+    fileSequence2.ts
+    #EXTINF:10, no desc
+    ......
+    #EXTINF:1, no desc
+    fileSequence180.ts
+    #EXT-X-ENDLIST
+</code></pre><p>我们可以看到返回的 <code>M3U8</code> 里面他有一个一个 <code>ts</code> 视频片段，这个一个一个视频片段就是我们需要的播放的视频片段。</p>
+<p><code>#EXTINF</code> 表示每个 <code>ts</code> 切片视频文件的时长。<br><code>#EXT-X-TARGETDURATION</code> 指定当前视频流中的切片文件的最大时长，也就是说这些 <code>ts</code> 切片的时长不能大于 <code>#EXT-X-TARGETDURATION</code> 的值。<br><code>#EXT-X-MEDIA-SEQUENCE</code> 第一个 <code>ts</code> 分片的序列号<br><code>#EXT-X-ENDLIST</code> 这个表示视频结束，有这个标志同时也说明当前的流是一个非直播流。<br><code>#EXT-X-PLAYLIST-TYPE:VOD</code> 的意思是当前的视频流并不是一个直播流，而是点播流，换句话说就是该视频的全部的 <code>ts</code> 文件已经被生成好了<br><code>#EXT-X-ALLOW-CACHE</code> 是否允许 <code>cache</code></p>
+<h3 id="播放加密-HLS"><a href="#播放加密-HLS" class="headerlink" title="播放加密 HLS"></a>播放加密 HLS</h3><h2 id="HLS-协议总结"><a href="#HLS-协议总结" class="headerlink" title="HLS 协议总结"></a>HLS 协议总结</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>客户端支持简单, 只需要支持 <code>HTTP</code> 请求即可, <code>HTTP</code> 协议无状态, 只需要按顺序下载媒体片段即可。</li>
+<li>使用 <code>HTTP</code> 协议网络兼容性好, <code>HTTP</code> 数据包也可以方便地通过防火墙或者代理服务器, <code>CDN</code> 支持良好。</li>
+<li><code>Apple</code> 的全系列产品支持，不需要安装任何插件就可以原生支持播放 <code>HLS</code>, 目前 <code>Android</code> 也加入了对 <code>HLS</code> 的支持。</li>
+<li>自带多码率自适应机制。</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>相比 <code>RTMP</code> 这类长连接协议, 延时较高, 难以用到互动直播场景。</li>
+<li>对于点播服务来说, 由于 <code>TS</code> 切片通常较小, 海量碎片在文件分发, 一致性缓存, 存储等方面都有较大挑战。</li>
+</ul>
+<h3 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h3><ul>
+<li>由于客户端每次请求 <code>TS</code> 或 <code>M3U8</code> 有可能一个新的连接请求, 无法有效的标识客户端, 一旦出现问题, 基本无法有效的定位问题。</li>
+<li>一般工业级的服务器都会对传统的 <code>HLS</code> 做一些改进，常见优化是对每个 <code>M3U8</code> 文件增加 <code>Session</code> 来标识一条 <code>HLS</code> 连接。</li>
+<li>不管通过哪种方式, 最终我们都能通过一个唯一的 <code>id</code> 来标识一条流, 这样在排查问题时就可以根据这个 <code>id</code> 来定位播放过程中的问题。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/renhui/p/8081869.html">流媒体协议（一）：HLS 协议 - 灰色飘零 - 博客园</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/HLS/" rel="tag"># HLS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/f517d3b0/" rel="prev" title="后端开发日记 - 检查内存泄漏">
+                  <i class="fa fa-chevron-left"></i> 后端开发日记 - 检查内存泄漏
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/436448e4/" rel="next" title="善用佳软 - Vim 使用教程">
+                  善用佳软 - Vim 使用教程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/f5bbcc60/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/f5bbcc60/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

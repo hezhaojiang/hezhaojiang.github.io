@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="运动补偿是一种描述相邻帧（相邻在这里表示在编码关系上相邻，在播放顺序上两帧未必相邻）差别的方法，具体来说是描述前面一帧（相邻在这里表示在编码关系上的前面，在播放顺序上未必在当前帧前面）的每个小块怎样移动到当前帧中的某个位置去。这种方法经常被视频压缩 &#x2F; 视频编解码器用来减少视频序列中的时域冗余。它也可以用来进行去交织（deinterlacing）以及运动插值（motion interpolatio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编解码技术：H264 - 运动补偿">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2021/b556f4df/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="运动补偿是一种描述相邻帧（相邻在这里表示在编码关系上相邻，在播放顺序上两帧未必相邻）差别的方法，具体来说是描述前面一帧（相邻在这里表示在编码关系上的前面，在播放顺序上未必在当前帧前面）的每个小块怎样移动到当前帧中的某个位置去。这种方法经常被视频压缩 &#x2F; 视频编解码器用来减少视频序列中的时域冗余。它也可以用来进行去交织（deinterlacing）以及运动插值（motion interpolatio">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-22T06:56:58.000Z">
+<meta property="article:modified_time" content="2021-01-30T13:00:23.708Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="H.264">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2021/b556f4df/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>编解码技术：H264 - 运动补偿 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">运动补偿原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF"><span class="nav-number">2.</span> <span class="nav-text">全局运动补偿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%9D%97%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF"><span class="nav-number">3.</span> <span class="nav-text">分块运动补偿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%9D%97%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF"><span class="nav-number">4.</span> <span class="nav-text">可变分块运动补偿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%8F%A0%E5%88%86%E5%9D%97%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF"><span class="nav-number">5.</span> <span class="nav-text">重叠分块运动补偿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E4%BC%B0%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">运动估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/b556f4df/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编解码技术：H264 - 运动补偿
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-22 14:56:58" itemprop="dateCreated datePublished" datetime="2021-01-22T14:56:58+08:00">2021-01-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-30 21:00:23" itemprop="dateModified" datetime="2021-01-30T21:00:23+08:00">2021-01-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%A7%A3%E7%A0%81%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">编解码技术</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2021/b556f4df/" class="post-meta-item leancloud_visitors" data-flag-title="编解码技术：H264 - 运动补偿" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2021/b556f4df/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/b556f4df/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>运动补偿是一种描述相邻帧（相邻在这里表示在编码关系上相邻，在播放顺序上两帧未必相邻）差别的方法，具体来说是描述前面一帧（相邻在这里表示在编码关系上的前面，在播放顺序上未必在当前帧前面）的每个小块怎样移动到当前帧中的某个位置去。这种方法经常被视频压缩 / 视频编解码器用来减少视频序列中的时域冗余。它也可以用来进行去交织（deinterlacing）以及运动插值（motion interpolation）的操作。</p>
+<a id="more"></a>
+<h2 id="运动补偿原理"><a href="#运动补偿原理" class="headerlink" title="运动补偿原理"></a>运动补偿原理</h2><p>一个视频序列包含一定数量的图片 — 通常称为帧（frame）。相邻的图片通常很相似，也就是说，包含了很多冗余。使用运动补偿的目的是通过消除这种冗余，来提高压缩比。</p>
+<p>最早的运动补偿的设计只是简单的从当前帧中减去参考帧，从而得到通常含有较少能量（或者称为信息）的 “残差”，从而可以用较低的码率进行编码。解码器可以通过简单的加法完全恢复编码帧。</p>
+<p>一个稍微复杂一点的设计是估计一下整帧场景的移动和场景中物体的移动，并将这些运动通过一定的参数编码到码流中去。这样预测帧上的像素值就是由参考帧上具有一定位移的相应像素值而生成的。这样的方法比简单的相减可以获得能量更小的残差，从而获得更好的压缩比 — 当然，用来描述运动的参数不能在码流中占据太大的部分，否则就会抵消复杂的运动估计带来的好处。</p>
+<p>通常，图像帧是一组一组进行处理的。每组的第一帧（通常是第一帧）在编码的时候不使用运动估计的办法，这种帧称为帧内编码帧（Intra frame）或者 I 帧。该组中的其它帧使用帧间编码帧（Inter frame），通常是 P 帧。这种编码方式通常被称为 IPPPP，表示编码的时候第一帧是 I 帧，其它帧是 P 帧。</p>
+<p>在进行预测的时候，不仅仅可以从过去的帧来预测当前帧，还可以使用未来的帧来预测当前帧。当然在编码的时候，未来的帧必须比当前帧更早的编码，也就是说，编码的顺序和播放的顺序是不同的。通常这样的当前帧是使用过去和未来的 I 帧或者 P 帧同时进行预测，被称为双向预测帧，即 B 帧。这种编码方式的编码顺序的一个例子为 IBBPBBPBBPBB。</p>
+<p>运动补偿的方法包含：全局运动补偿、分块运动补偿、可变分块运动补偿、重叠分块运动个补偿。</p>
+<h2 id="全局运动补偿"><a href="#全局运动补偿" class="headerlink" title="全局运动补偿"></a>全局运动补偿</h2><p>在全局运动补偿中，运动模型基本上就是反映摄像机的各种运动，包括平移，旋转，变焦等等。这种模型特别适合对没有运动物体的静止场景的编码。 全局运动补偿有下面的一些优点：</p>
+<ol>
+<li>该模型仅仅使用少数的参数对全局的运行进行描述，参数所占用的码率基本上可以忽略不计。</li>
+<li>该方法不对帧进行分区编码，这避免了分区造成的块效应。</li>
+<li>在时间方向的一条直线的点如果在空间方向具有相等的间隔，就对应了在实际空间中连续移动的点。其它的运动估计算法通常会在时间方向引入非连续性。<br>但是，缺点是，如果场景中有运动物体的话，全局运动补偿就不足以表示了。这时候应该选用其它的方法。</li>
+</ol>
+<h2 id="分块运动补偿"><a href="#分块运动补偿" class="headerlink" title="分块运动补偿"></a>分块运动补偿</h2><p>在分块运动补偿（BMC for block motion compensation）中，每帧被分为若干像素块（在大多数视频编码标准，如 MPEG 中，是分为 16x16 的像素块）。从参考帧的某个位置的等大小的块对当前块进行预测，预测的过程中只有平移，平移的大小被称为运动矢量。</p>
+<p>对分块运动补偿来说，运动矢量是模型的必要参数，必须一起编码加入码流中。由于运动矢量之间并不是独立的（例如属于同一个运动物体的相邻两块通常运动的相关性很大），通常使用差分编码来降低码率。这意味着在相邻的运动矢量编码之前对它们作差，只对差分的部分进行编码。使用熵编码对运动矢量的成分进行编码可以进一步消除运动矢量的统计冗余（通常运动矢量的差分集中于 0 矢量附近）。</p>
+<p>运动矢量的值可以是非整数的，此时的运动补偿被称为亚像素精度的运动补偿。这是通过对参考帧像素值进行亚像素级插值，而后进行运动补偿做到的。最简单的亚像素精度运动补偿使用半像素精度，也有使用 1/4 像素和 1/8 像素精度的运动补偿算法。更高的亚像素精度可以提高运动补偿的精确度，但是大量的插值操作大大增加了计算复杂度。</p>
+<p>分块运动补偿的一个大缺点在于在块之间引入的非连续性，通常称为块效应。当块效应严重时，解码图像看起来会有像马赛克一样的效果，严重影响视觉质量。另外一个缺点是，当高频分量较大时，会引起振铃效应。关于高频分量，请参见对运动补偿后的残差进行变换的方法：变换编码。</p>
+<h2 id="可变分块运动补偿"><a href="#可变分块运动补偿" class="headerlink" title="可变分块运动补偿"></a>可变分块运动补偿</h2><p>可变分块运动补偿（VBSMC，全称 Variable Block Size Motion Compensation）是 BMC 的变种，编码器可以动态选择分块大小。进行视频编码时，使用大的分块可以减少表征运动向量所需的比特数，使用小的分块则可以在编码时产生更少的预测余量信息。较老的设计，象 H.261 和 MPEG-1 视频编码，典型的使用了固定分块，而较新的设计，像 H.263、MPEG-4 Part 2、H.264/MPEG-4 AVC 和 VC-1 则赋予了编码器动态选择何种分块来表征运动图像的能力。</p>
+<h2 id="重叠分块运动补偿"><a href="#重叠分块运动补偿" class="headerlink" title="重叠分块运动补偿"></a>重叠分块运动补偿</h2><p>重叠分块运动补偿（OBMC for Overlapped block motion compensation）是一种更好的解决方案，它不但能增加预测精度，而且能够避免块失真。 因此，每个像素第属于 4 个分块。基于此方案，每个像素的 4 个预测值求和后得到一个加权平均数。</p>
+<p>为此目的，分块被关联到一个窗口函数，该窗口函数具有任何地方的 4 个重叠窗口的总和为 1 的特质。</p>
+<h2 id="运动估计"><a href="#运动估计" class="headerlink" title="运动估计"></a>运动估计</h2><p>运动估计就是寻找最优或次优的运动向量的过程。某个块的预测误差量常常是指在运动补偿区域所有像素中，预测像素和实际像素数值的均方差或者绝对差别总和。</p>
+<p>发现最优向量，一个最基本的方法是不得不为在固定探测范围内，给每一个运动向量，计算块的预测误差计算邻近祯之中找寻前后 frame 之中相似的 Macro Block，两者之间的差异值。以及估算表示此 Motion Vector 所需的位元数目，和在错误数和比特数之间挑选一个最折中作为运动向量值。运动估计技术尽量简单的测试在执行前一个简单的探测测试技术为：估计所有可能的运动表现，比如这样的最优化被称做全探测。</p>
+<p>一个稍快但不是最优的方法是用第一个近似值作为一个粗略探测栅格，然后在接下来的步骤里在近似值的周围精确栅格。</p>
+<p>一个通用办法是 3 步探测，用 3 次探测栅格；3 个运动向量和 3 个精确步骤来得到 15 次 15 个像素范围内的全面探测。</p>
+<p>对于分块运动估计，一个块的像素预测误差和它的附近搭接块，根据此前自乘的窗函数，都被测重和求和。</p>
+<p>分块运动估计最主要的缺点是增加计算的复杂性，和实际的预测误差，因而最优向量依靠于临近运动块向量。</p>
+<p>因此，没有一个多项式（计算的复杂性）算法可以保证最优运动向量。</p>
+<p>然而，在可接受的计算的复杂性上，存在最接近最理想迭代和非迭代方法。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF">运动补偿 - 维基百科，自由的百科全书</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\4f888bde\" rel="bookmark">编解码技术：H264 - CAVLC</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\3552c034\" rel="bookmark">编解码技术：H264 - Level</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\f2a4ae37\" rel="bookmark">编解码技术：H264 - NAL Unit</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\49096de1\" rel="bookmark">编解码技术：H264 - PPS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\5224fbf9\" rel="bookmark">编解码技术：H264 - Profile</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/H-264/" rel="tag"># H.264</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2021/83dc3ab7/" rel="prev" title="源码阅读 x264 - 运动补偿">
+                  <i class="fa fa-chevron-left"></i> 源码阅读 x264 - 运动补偿
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2021/47588647/" rel="next" title="数据结构与算法 - 逆元">
+                  数据结构与算法 - 逆元 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/b556f4df/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2021/b556f4df/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="AVFormatContext : 封装格式上下文结构体，也是统领全局的结构体，保存了视频文件封装格式相关信息 AVInputFormat : 每种封装格式（例如 FLV, MKV, MP4, AVI）对应一个该结构体 AVStream : 视频文件中每个视频（音频）流对应一个该结构体 AVCodecContext : 编码器上下文结构体，保存了视频（音频）编解码相关信息 AVCodec : 每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频日记 - ffmpeg 关键结构体">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2021/e03178b1/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="AVFormatContext : 封装格式上下文结构体，也是统领全局的结构体，保存了视频文件封装格式相关信息 AVInputFormat : 每种封装格式（例如 FLV, MKV, MP4, AVI）对应一个该结构体 AVStream : 视频文件中每个视频（音频）流对应一个该结构体 AVCodecContext : 编码器上下文结构体，保存了视频（音频）编解码相关信息 AVCodec : 每">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-08T08:53:09.000Z">
+<meta property="article:modified_time" content="2021-01-13T13:48:44.593Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="ffmpeg">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2021/e03178b1/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>音视频日记 - ffmpeg 关键结构体 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E5%B0%81%E8%A3%85-amp-%E8%A7%A3%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">协议封装 &amp; 解协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AVIOContext"><span class="nav-number">1.1.</span> <span class="nav-text">AVIOContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVIOContext-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">AVIOContext 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVIOContext-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">AVIOContext 成员变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URLContext-amp-URLProtocol"><span class="nav-number">1.2.</span> <span class="nav-text">URLContext &amp; URLProtocol</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URLContext-amp-URLProtocol-%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">URLContext &amp; URLProtocol 定义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85-amp-%E8%A7%A3%E5%B0%81%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">封装 &amp; 解封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AVFormatContext"><span class="nav-number">2.1.</span> <span class="nav-text">AVFormatContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVFormatContext-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">AVFormatContext 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVFormatContext-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">AVFormatContext 成员变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVStream"><span class="nav-number">2.2.</span> <span class="nav-text">AVStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVStream-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">AVStream 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVStream-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">AVStream 成员变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVInputFormat"><span class="nav-number">2.3.</span> <span class="nav-text">AVInputFormat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVInputFormat-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.1.</span> <span class="nav-text">AVInputFormat 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVInputFormat-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">AVInputFormat 成员变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81-amp-%E8%A7%A3%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">编码 &amp; 解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVCodecContext"><span class="nav-number">2.5.</span> <span class="nav-text">AVCodecContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVCodecContext-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.6.</span> <span class="nav-text">AVCodecContext 相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVCodecContext-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">2.6.1.</span> <span class="nav-text">AVCodecContext 成员变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVCodec"><span class="nav-number">2.7.</span> <span class="nav-text">AVCodec</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVCodec-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.1.</span> <span class="nav-text">AVCodec 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVCodec-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">2.7.2.</span> <span class="nav-text">AVCodec 成员变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">音视频数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AVPacket"><span class="nav-number">3.1.</span> <span class="nav-text">AVPacket</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVPacket-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.1.</span> <span class="nav-text">AVPacket 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVPacket-%E7%BB%93%E6%9E%84%E4%BD%93%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.2.</span> <span class="nav-text">AVPacket 结构体定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVFrame"><span class="nav-number">3.2.</span> <span class="nav-text">AVFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVFrame-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">AVFrame 相关函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVPacket-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">AVPacket 成员变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/e03178b1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音视频日记 - ffmpeg 关键结构体
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-08 16:53:09" itemprop="dateCreated datePublished" datetime="2021-01-08T16:53:09+08:00">2021-01-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-13 21:48:44" itemprop="dateModified" datetime="2021-01-13T21:48:44+08:00">2021-01-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">音视频日记</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2021/e03178b1/" class="post-meta-item leancloud_visitors" data-flag-title="音视频日记 - ffmpeg 关键结构体" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2021/e03178b1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/e03178b1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li><code>AVFormatContext</code> : 封装格式上下文结构体，也是统领全局的结构体，保存了视频文件封装格式相关信息</li>
+<li><code>AVInputFormat</code> : 每种封装格式（例如 FLV, MKV, MP4, AVI）对应一个该结构体</li>
+<li><code>AVStream</code> : 视频文件中每个视频（音频）流对应一个该结构体</li>
+<li><code>AVCodecContext</code> : 编码器上下文结构体，保存了视频（音频）编解码相关信息</li>
+<li><code>AVCodec</code> : 每种视频（音频）编解码器 (例如 H.264 解码器) 对应一个该结构体</li>
+<li><code>AVPacket</code> : 存储一帧压缩编码数据</li>
+<li><code>AVFrame</code> : 存储一帧解码后像素（采样）数据</li>
+</ul>
+<a id="more"></a>
+<h2 id="协议封装-amp-解协议"><a href="#协议封装-amp-解协议" class="headerlink" title="协议封装 &amp; 解协议"></a>协议封装 &amp; 解协议</h2><h3 id="AVIOContext"><a href="#AVIOContext" class="headerlink" title="AVIOContext"></a>AVIOContext</h3><p><code>AVIOContext</code> 是 <code>ffmpeg</code> 管理输入输出数据的结构体</p>
+<h4 id="AVIOContext-相关函数"><a href="#AVIOContext-相关函数" class="headerlink" title="AVIOContext 相关函数"></a>AVIOContext 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Allocate and initialize an AVIOContext for buffered I/O. It must be later freed with avio_context_free().</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param buffer Memory block for input/output operations via AVIOContext.</span></span><br><span class="line"><span class="comment"> *        The buffer must be allocated with av_malloc() and friends.</span></span><br><span class="line"><span class="comment"> *        It may be freed and replaced with a new buffer by libavformat.</span></span><br><span class="line"><span class="comment"> *        AVIOContext.buffer holds the buffer currently in use, which must be later freed with av_free().</span></span><br><span class="line"><span class="comment"> * @param buffer_size The buffer size is very important for performance.</span></span><br><span class="line"><span class="comment"> *        For protocols with fixed blocksize it should be set to this blocksize.</span></span><br><span class="line"><span class="comment"> *        For others a typical size is a cache page, e.g. 4kb.</span></span><br><span class="line"><span class="comment"> * @param write_flag Set to 1 if the buffer should be writable, 0 otherwise.</span></span><br><span class="line"><span class="comment"> * @param opaque An opaque pointer to user-specific data.</span></span><br><span class="line"><span class="comment"> * @param read_packet  A function for refilling the buffer, may be NULL.</span></span><br><span class="line"><span class="comment"> *        For stream protocols, must never return 0 but rather a proper AVERROR code.</span></span><br><span class="line"><span class="comment"> * @param write_packet A function for writing the buffer contents, may be NULL.</span></span><br><span class="line"><span class="comment"> *        The function may not change the input buffers content.</span></span><br><span class="line"><span class="comment"> * @param seek A function for seeking to specified byte position, may be NULL.</span></span><br><span class="line"><span class="comment"> * @return Allocated AVIOContext or NULL on failure.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">AVIOContext *<span class="title">avio_alloc_context</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">unsigned</span> <span class="keyword">char</span> *<span class="built_in">buffer</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">int</span> buffer_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">int</span> write_flag,</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">void</span> *opaque,</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">int</span> (*read_packet)(<span class="keyword">void</span> *opaque, <span class="keyword">uint8_t</span> *buf, <span class="keyword">int</span> buf_size),</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">int</span> (*write_packet)(<span class="keyword">void</span> *opaque, <span class="keyword">uint8_t</span> *buf, <span class="keyword">int</span> buf_size),</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">int64_t</span> (*<span class="built_in">seek</span>)(<span class="keyword">void</span> *opaque, <span class="keyword">int64_t</span> offset, <span class="keyword">int</span> whence))</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="AVIOContext-成员变量"><a href="#AVIOContext-成员变量" class="headerlink" title="AVIOContext 成员变量"></a>AVIOContext 成员变量</h4><ul>
+<li><code>unsigned char *buffer;</code> : 缓存开始位置</li>
+<li><code>int buffer_size;</code> : 缓存大小（默认 <code>32768</code>）</li>
+<li><code>unsigned char *buf_ptr;</code> : 当前指针读取到的位置</li>
+<li><code>unsigned char *buf_end;</code> : 缓存结束的位置</li>
+<li><code>void *opaque;</code> : <code>URLContext</code> 结构体</li>
+<li><code>int64_t pos;</code> : 文件读取指针位置</li>
+<li><code>int eof_reached;</code> : 在读取失败或读取完成时置位</li>
+<li><code>(*read_packet)</code> : 读取音视频数据的函数</li>
+<li><code>(*write_packet)</code> : 写入音视频数据的函数</li>
+<li><code>(*read_pause)</code> : 暂停或恢复网络流媒体协议的播放</li>
+</ul>
+<h3 id="URLContext-amp-URLProtocol"><a href="#URLContext-amp-URLProtocol" class="headerlink" title="URLContext &amp; URLProtocol"></a>URLContext &amp; URLProtocol</h3><p><code>URLContext</code> &amp; <code>URLProtocol</code> 并不在 <code>ffmpeg</code> 提供的头文件中，而是在源代码中</p>
+<h4 id="URLContext-amp-URLProtocol-定义"><a href="#URLContext-amp-URLProtocol-定义" class="headerlink" title="URLContext &amp; URLProtocol 定义"></a>URLContext &amp; URLProtocol 定义</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLContext</span> &#123;</span></span><br><span class="line">    <span class="keyword">const</span> AVClass *av_class;    <span class="comment">/**&lt;information for av_log(). Set by url_open(). */</span></span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> *<span class="title">prot</span>;</span></span><br><span class="line">    <span class="keyword">void</span> *priv_data;</span><br><span class="line">    <span class="keyword">char</span> *filename;             <span class="comment">/**&lt; specified URL */</span></span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> max_packet_size;        <span class="comment">/**&lt; if non zero, the stream is packetized with this max packet size */</span></span><br><span class="line">    <span class="keyword">int</span> is_streamed;            <span class="comment">/**&lt;true if streamed (no seek possible), default = false */</span></span><br><span class="line">    <span class="keyword">int</span> is_connected;</span><br><span class="line">    AVIOInterruptCB interrupt_callback;</span><br><span class="line">    <span class="keyword">int64_t</span> rw_timeout;         <span class="comment">/**&lt;maximum time to wait for (network) read/write operation completion, in mcs */</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *protocol_whitelist;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *protocol_blacklist;</span><br><span class="line">    <span class="keyword">int</span> min_packet_size;        <span class="comment">/**&lt; if non zero, the stream is packetized with this min packet size */</span></span><br><span class="line">&#125; URLContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> &#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="keyword">int</span>     (*url_open)( URLContext *h, <span class="keyword">const</span> <span class="keyword">char</span> *url, <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * This callback is to be used by protocols which open further nested</span></span><br><span class="line"><span class="comment">     * protocols. options are then to be passed to ffurl_open()/ffurl_connect()</span></span><br><span class="line"><span class="comment">     * for those nested protocols.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span>     (*url_open2)(URLContext *h, <span class="keyword">const</span> <span class="keyword">char</span> *url, <span class="keyword">int</span> flags, AVDictionary **options);</span><br><span class="line">    <span class="keyword">int</span>     (*url_accept)(URLContext *s, URLContext **c);</span><br><span class="line">    <span class="keyword">int</span>     (*url_handshake)(URLContext *c);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Read data from the protocol.</span></span><br><span class="line"><span class="comment">     * If data is immediately available (even less than size), EOF is</span></span><br><span class="line"><span class="comment">     * reached or an error occurs (including EINTR), return immediately.</span></span><br><span class="line"><span class="comment">     * Otherwise:</span></span><br><span class="line"><span class="comment">     * In non-blocking mode, return AVERROR(EAGAIN) immediately.</span></span><br><span class="line"><span class="comment">     * In blocking mode, wait for data/EOF/error with a short timeout (0.1s),</span></span><br><span class="line"><span class="comment">     * and return AVERROR(EAGAIN) on timeout.</span></span><br><span class="line"><span class="comment">     * Checking interrupt_callback, looping on EINTR and EAGAIN and until</span></span><br><span class="line"><span class="comment">     * enough data has been read is left to the calling function; see</span></span><br><span class="line"><span class="comment">     * retry_transfer_wrapper in avio.c.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span>     (*url_read) (URLContext *h, <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> <span class="built_in">size</span>);</span><br><span class="line">    <span class="keyword">int</span>     (*url_write)(URLContext *h, <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> <span class="built_in">size</span>);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_seek) (URLContext *h, <span class="keyword">int64_t</span> pos, <span class="keyword">int</span> whence);</span><br><span class="line">    <span class="keyword">int</span>     (*url_close)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_read_pause)(URLContext *h, <span class="keyword">int</span> pause);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_read_seek)(URLContext *h, <span class="keyword">int</span> stream_index,</span><br><span class="line">                             <span class="keyword">int64_t</span> timestamp, <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> (*url_get_file_handle)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_get_multi_file_handle)(URLContext *h, <span class="keyword">int</span> **handles,</span><br><span class="line">                                     <span class="keyword">int</span> *numhandles);</span><br><span class="line">    <span class="keyword">int</span> (*url_get_short_seek)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_shutdown)(URLContext *h, <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> priv_data_size;</span><br><span class="line">    <span class="keyword">const</span> AVClass *priv_data_class;</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> (*url_check)(URLContext *h, <span class="keyword">int</span> mask);</span><br><span class="line">    <span class="keyword">int</span> (*url_open_dir)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_read_dir)(URLContext *h, AVIODirEntry **next);</span><br><span class="line">    <span class="keyword">int</span> (*url_close_dir)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_delete)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> (*url_move)(URLContext *h_src, URLContext *h_dst);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *default_whitelist;</span><br><span class="line">&#125; URLProtocol;</span><br></pre></td></tr></table></figure>
+<p>在 <code>URLProtocol</code> 结构体中，除了一些回调函数接口之外，有一个变量 <code>const char *name</code>，该变量存储了协议的名称。每一种输入协议都对应这样一个结构体对象。比如说，文件协议中代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file.c</span></span><br><span class="line"><span class="keyword">const</span> URLProtocol ff_file_protocol = &#123;</span><br><span class="line">    .name                = <span class="string">&quot;file&quot;</span>,</span><br><span class="line">    .url_open            = file_open,</span><br><span class="line">    .url_read            = file_read,</span><br><span class="line">    .url_write           = file_write,</span><br><span class="line">    .url_seek            = file_seek,</span><br><span class="line">    .url_close           = file_close,</span><br><span class="line">    .url_get_file_handle = file_get_handle,</span><br><span class="line">    .url_check           = file_check,</span><br><span class="line">    .url_delete          = file_delete,</span><br><span class="line">    .url_move            = file_move,</span><br><span class="line">    .priv_data_size      = <span class="keyword">sizeof</span>(FileContext),</span><br><span class="line">    .priv_data_class     = &amp;file_class,</span><br><span class="line">    .url_open_dir        = file_open_dir,</span><br><span class="line">    .url_read_dir        = file_read_dir,</span><br><span class="line">    .url_close_dir       = file_close_dir,</span><br><span class="line">    .default_whitelist   = <span class="string">&quot;file,crypto,data&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="封装-amp-解封装"><a href="#封装-amp-解封装" class="headerlink" title="封装 &amp; 解封装"></a>封装 &amp; 解封装</h2><h3 id="AVFormatContext"><a href="#AVFormatContext" class="headerlink" title="AVFormatContext"></a>AVFormatContext</h3><h4 id="AVFormatContext-相关函数"><a href="#AVFormatContext-相关函数" class="headerlink" title="AVFormatContext 相关函数"></a>AVFormatContext 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分配一个 AVFormatContext</span></span><br><span class="line"><span class="function">AVFormatContext *<span class="title">avformat_alloc_context</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="comment">// 释放 AVFormatContext 及其所有 AVStream</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">avformat_free_context</span><span class="params">(AVFormatContext *s)</span></span>;</span><br><span class="line"><span class="comment">// 打开一个输入流并读取报头，该函数不会打开编解码器</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_open_input</span><span class="params">(AVFormatContext **ps, <span class="keyword">const</span> <span class="keyword">char</span> *url, ff_const59 AVInputFormat *fmt, AVDictionary **options)</span></span>;</span><br><span class="line"><span class="comment">// 读取媒体文件的数据包以获取流信息</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_find_stream_info</span><span class="params">(AVFormatContext *ic, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="AVFormatContext-成员变量"><a href="#AVFormatContext-成员变量" class="headerlink" title="AVFormatContext 成员变量"></a>AVFormatContext 成员变量</h4><ul>
+<li><code>struct AVInputFormat *iformat;</code> : 输入音视频的 <code>AVInputFormat</code></li>
+<li><code>struct AVOutputFormat *oformat;</code> : 输出音视频的 <code>AVInputFormat</code></li>
+<li><code>AVIOContext *pb;</code> : 输入 / 输出音视频数据的缓存</li>
+<li><code>int64_t duration;</code> : 输入 / 输出音视频的时长（以微秒为单位）</li>
+<li><code>int64_t bit_rate;</code> : 输入 / 输出音视频的码率</li>
+<li><code>unsigned int nb_streams;</code> ： 输入 / 输出音视频的 <code>AVStream</code> 个数</li>
+<li><code>AVStream **streams;</code> ： 输入 / 输出音视频的每个视频（音频流）</li>
+<li><code>AVDictionary *metadata;</code> ： 元数据</li>
+</ul>
+<h3 id="AVStream"><a href="#AVStream" class="headerlink" title="AVStream"></a>AVStream</h3><p>视频文件中每个视频（音频）流对应一个 <code>AVStream</code> 对象</p>
+<ul>
+<li>在解封装时，<code>AVStream</code> 对象由 <code>libavformat</code> 中的函数 <code>xxxx_read_header()</code> 调用 <code>avformat_open_input()</code> 创建</li>
+<li>如果解封装时，未在文件中读到文件头，即标志位 <code>AVFMTCTX_NOHEADER</code> 被置位，由函数 <code>xxxx_read_packet()</code> 调用 <code>avformat_open_input()</code> 创建</li>
+<li>在封装时，<code>AVStream</code> 对象由用户调用函数 <code>avformat_new_stream()</code> 创建</li>
+<li>调用 <code>libavformat</code> 中的函数 <code>avformat_free_context()</code> 销毁对象</li>
+</ul>
+<h4 id="AVStream-相关函数"><a href="#AVStream-相关函数" class="headerlink" title="AVStream 相关函数"></a>AVStream 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Add a new stream to a media file.</span></span><br><span class="line"><span class="comment"> * @param s media file handle</span></span><br><span class="line"><span class="comment"> * @param c If non-NULL, the AVCodecContext corresponding to the new stream will be initialized to use this codec.</span></span><br><span class="line"><span class="comment"> * This is needed for e.g. codec-specific defaults to be set, so codec should be provided if it is known.</span></span><br><span class="line"><span class="comment"> * @return newly created stream or NULL on error.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">AVStream *<span class="title">avformat_new_stream</span><span class="params">(AVFormatContext *s, <span class="keyword">const</span> AVCodec *c)</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="AVStream-成员变量"><a href="#AVStream-成员变量" class="headerlink" title="AVStream 成员变量"></a>AVStream 成员变量</h4><ul>
+<li><code>int index</code> : stream index in AVFormatContext</li>
+<li><code>AVCodecContext *codec;</code> : 指向该视频 / 音频流的 AVCodecContext 它们是一一对应的关系</li>
+<li><code>AVRational time_base;</code> : 该流的时基 通过该值可以把 PTS/DTS 转化为真正的时间</li>
+<li><code>int64_t duration;</code> : 该视频 / 音频流长度</li>
+<li><code>AVRational r_frame_rate;</code> : 该流的帧率</li>
+<li><code>AVDictionary *metadata;</code> : 元数据信息</li>
+<li><code>AVRational avg_frame_rate;</code> : 平均帧率（注 : 对视频来说，这个挺重要的）</li>
+<li><code>AVPacket attached_pic;</code> : 附带的图片。比如说一些 MP3，AAC 音频文件附带的专辑封面</li>
+<li><code>AVCodecParameters *codecpar;</code> : 与此流相关的编解码器参数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AVRational 可以用来表示无理数：</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVRational</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> num; <span class="comment">///&lt; Numerator 分子</span></span><br><span class="line">    <span class="keyword">int</span> den; <span class="comment">///&lt; Denominator 分母</span></span><br><span class="line">&#125; AVRational;</span><br></pre></td></tr></table></figure>
+<h3 id="AVInputFormat"><a href="#AVInputFormat" class="headerlink" title="AVInputFormat"></a>AVInputFormat</h3><p>该结构被称为 <code>demuxer</code>，是音视频文件的一个解封装器</p>
+<blockquote>
+<p><code>AVOutputFormat</code> 和 <code>AVInputFormat</code> 结构类似，是音视频文件的封装器</p>
+</blockquote>
+<h4 id="AVInputFormat-相关函数"><a href="#AVInputFormat-相关函数" class="headerlink" title="AVInputFormat 相关函数"></a>AVInputFormat 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If f is NULL, returns the first registered input format,</span></span><br><span class="line"><span class="comment"> * if f is non-NULL, returns the next registered input format after f or NULL if f is the last one.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">attribute_deprecated AVInputFormat  *<span class="title">av_iformat_next</span><span class="params">(<span class="keyword">const</span> AVInputFormat  *f)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>遍历 <code>ffmpeg</code> 中的解封装器的方法：</p>
+<ol>
+<li>注册所有解封装器：<code>av_register_all();</code>。注意，需要调用该函数才可以将所有注册的解封装器连接为一个链表</li>
+<li>声明一个 <code>AVInputFormat</code> 类型的指针，比如说 <code>AVInputFormat* first_f = nullptr;</code></li>
+<li>调用 <code>av_iformat_next()</code> 函数，即可获得指向链表下一个解封装器的指针，循环往复可以获得所有解码器的信息</li>
+</ol>
+<h4 id="AVInputFormat-成员变量"><a href="#AVInputFormat-成员变量" class="headerlink" title="AVInputFormat 成员变量"></a>AVInputFormat 成员变量</h4><p>每种文件格式对应了一个 <code>AVInputFormat</code> 对象，这些对象中的成员变量基本为 <code>const</code> 类型</p>
+<ul>
+<li><code>const char *name;</code> : 封装格式名称</li>
+<li><code>const char *long_name;</code> : 封装格式的长名称</li>
+<li><code>const char *extensions;</code> : 封装格式的扩展名</li>
+<li><code>int raw_codec_id;</code> : 封装格式 <code>ID</code></li>
+<li>一些封装格式处理的接口回调函数，如 <code>read_header</code>, <code>read_packet</code>, <code>read_close</code>, <code>read_seek</code> 等</li>
+</ul>
+<h3 id="编码-amp-解码"><a href="#编码-amp-解码" class="headerlink" title="编码 &amp; 解码"></a>编码 &amp; 解码</h3><h3 id="AVCodecContext"><a href="#AVCodecContext" class="headerlink" title="AVCodecContext"></a>AVCodecContext</h3><h3 id="AVCodecContext-相关函数"><a href="#AVCodecContext-相关函数" class="headerlink" title="AVCodecContext 相关函数"></a>AVCodecContext 相关函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分配一个 AVCodecContext，并将其字段设置为默认值</span></span><br><span class="line"><span class="function">AVCodecContext *<span class="title">avcodec_alloc_context3</span><span class="params">(<span class="keyword">const</span> AVCodec *codec)</span></span>;</span><br><span class="line"><span class="comment">// 释放 AVCodecContext 及其相关内容，并向提供的指针写入 nullptr</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">avcodec_free_context</span><span class="params">(AVCodecContext **avctx)</span></span>;</span><br><span class="line"><span class="comment">// 关闭一个给定的 AVCodecContext 并释放所有与它相关的数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_close</span><span class="params">(AVCodecContext *avctx)</span></span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Fill the codec context based on the values from the supplied codec parameters.</span></span><br><span class="line"><span class="comment"> * Any allocated fields in codec that have a corresponding field in par are</span></span><br><span class="line"><span class="comment"> * freed and replaced with duplicates of the corresponding field in par.</span></span><br><span class="line"><span class="comment"> * Fields in codec that do not have a counterpart in par are not touched.</span></span><br><span class="line"><span class="comment"> * @return &gt;= 0 on success, a negative AVERROR code on failure.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_parameters_to_context</span><span class="params">(AVCodecContext *codec, <span class="keyword">const</span> AVCodecParameters *par)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="AVCodecContext-成员变量"><a href="#AVCodecContext-成员变量" class="headerlink" title="AVCodecContext 成员变量"></a>AVCodecContext 成员变量</h4><ul>
+<li><code>const struct AVCodec  *codec;</code> : 编解码器的 <code>AVCodec</code></li>
+<li><code>int width, height;</code> : 图像的宽高（只针对视频）</li>
+<li><code>int coded_width, coded_height;</code> 未裁剪的图像宽高</li>
+<li><code>enum AVPixelFormat pix_fmt;</code> : 像素格式（只针对视频）</li>
+<li><code>AVRational time_base;</code> : 帧率的信息</li>
+<li><code>int sample_rate;</code> : 采样率（只针对音频）</li>
+<li><code>int channels;</code> : 采样率（只针对音频）</li>
+<li><code>enum AVSampleFormat sample_fmt;</code> : 采样格式（只针对音频）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    **** width&#x2F;coded_width &amp; height&#x2F;coded_height ****</span><br><span class="line">一些编码器要求帧尺寸是特定数字的倍数，例如 x264 的帧尺寸是 16 的倍数</span><br><span class="line">因此，如果需要，编码器将把帧填充到合适的数字，并为解码器存储裁剪值</span><br><span class="line">coded_width, coded_height 是裁剪前的大小</span><br><span class="line">width, height 是裁剪后的大小</span><br></pre></td></tr></table></figure>
+<h3 id="AVCodec"><a href="#AVCodec" class="headerlink" title="AVCodec"></a>AVCodec</h3><p>AVCodec 是存储编解码器信息的结构体</p>
+<h4 id="AVCodec-相关函数"><a href="#AVCodec-相关函数" class="headerlink" title="AVCodec 相关函数"></a>AVCodec 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果 c 为空，返回第一个注册的编解码器</span></span><br><span class="line"><span class="comment">// 如果 c 非空，返回 c 之后的下一个注册编解码器，如果 c 是最后一个编解码器，返回 nullptr</span></span><br><span class="line"><span class="function">attribute_deprecated AVCodec *<span class="title">av_codec_next</span><span class="params">(<span class="keyword">const</span> AVCodec *c)</span></span>;</span><br><span class="line"><span class="comment">// 查找具有匹配编解码器 ID 的已注册解码器</span></span><br><span class="line"><span class="function">AVCodec *<span class="title">avcodec_find_decoder</span><span class="params">(<span class="keyword">enum</span> AVCodecID id)</span></span>;</span><br><span class="line"><span class="comment">// 初始化 AVCodecContext 使用给定的 AVCodec。在使用这个函数之前，必须使用 avcodec_alloc_context3() 分配上下文。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_open2</span><span class="params">(AVCodecContext *avctx, <span class="keyword">const</span> AVCodec *codec, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>遍历 <code>ffmpeg</code> 中的解码器信息的方法：</p>
+<ol>
+<li>注册所有编解码器：<code>av_register_all();</code>。注意，需要调用该函数才可以将所有注册的解码器连接为一个链表</li>
+<li>声明一个 <code>AVCodec</code> 类型的指针，比如说 <code>AVCodec* first_c = nullptr;</code></li>
+<li>调用 <code>av_codec_next()</code> 函数，即可获得指向链表下一个解码器的指针，循环往复可以获得所有解码器的信息。注意，如果想要获得指向第一个解码器的指针，则需要将该函数的参数设置为 <code>nullptr</code></li>
+</ol>
+<h4 id="AVCodec-成员变量"><a href="#AVCodec-成员变量" class="headerlink" title="AVCodec 成员变量"></a>AVCodec 成员变量</h4><ul>
+<li><code>const char *name;</code> : 编解码器的名字，比较短</li>
+<li><code>const char *long_name;</code> : 编解码器的名字，全称，比较长</li>
+<li><code>enum AVMediaType type;</code> : 指明了类型，是视频，音频，还是字幕</li>
+<li><code>enum AVCodecID id;</code> : ID，不重复</li>
+<li><code>const AVRational *supported_framerates;</code> : 支持的帧率（仅视频）</li>
+<li><code>const enum AVPixelFormat *pix_fmts;</code> : 支持的像素格式（仅视频）</li>
+<li><code>const int *supported_samplerates;</code> : 支持的采样率（仅音频）</li>
+<li><code>const enum AVSampleFormat *sample_fmts;</code> : 支持的采样格式（仅音频）</li>
+<li><code>const uint64_t *channel_layouts;</code> : 支持的声道数（仅音频）</li>
+<li><code>int priv_data_size;</code> : 私有数据的大小</li>
+</ul>
+<p>每一个编解码器对应一个该结构体，查看一下 <code>ffmpeg</code> 的源代码，我们可以看一下 <code>H.264</code> 解码器的结构体如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// h264.c</span></span><br><span class="line">AVCodec ff_h264_decoder = &#123;</span><br><span class="line">    .name                  = <span class="string">&quot;h264&quot;</span>,</span><br><span class="line">    .long_name             = NULL_IF_CONFIG_SMALL(<span class="string">&quot;H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10&quot;</span>),</span><br><span class="line">    .type                  = AVMEDIA_TYPE_VIDEO,</span><br><span class="line">    .id                    = AV_CODEC_ID_H264,</span><br><span class="line">    .priv_data_size        = <span class="keyword">sizeof</span>(H264Context),</span><br><span class="line">    .init                  = h264_decode_init,</span><br><span class="line">    .<span class="built_in">close</span>                 = h264_decode_end,</span><br><span class="line">    .decode                = h264_decode_frame,</span><br><span class="line">    .capabilities          = <span class="comment">/*AV_CODEC_CAP_DRAW_HORIZ_BAND |*/</span> AV_CODEC_CAP_DR1 |</span><br><span class="line">                             AV_CODEC_CAP_DELAY | AV_CODEC_CAP_SLICE_THREADS |</span><br><span class="line">                             AV_CODEC_CAP_FRAME_THREADS,</span><br><span class="line">    .hw_configs            = (<span class="keyword">const</span> AVCodecHWConfigInternal *<span class="keyword">const</span> []) &#123; <span class="literal">NULL</span> &#125;,</span><br><span class="line">    .caps_internal         = FF_CODEC_CAP_INIT_THREADSAFE | FF_CODEC_CAP_EXPORTS_CROPPING |</span><br><span class="line">                             FF_CODEC_CAP_ALLOCATE_PROGRESS | FF_CODEC_CAP_INIT_CLEANUP,</span><br><span class="line">    .<span class="built_in">flush</span>                 = h264_decode_flush,</span><br><span class="line">    .update_thread_context = ONLY_IF_THREADS_ENABLED(ff_h264_update_thread_context),</span><br><span class="line">    .profiles              = NULL_IF_CONFIG_SMALL(ff_h264_profiles),</span><br><span class="line">    .priv_class            = &amp;h264_class,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="音视频数据"><a href="#音视频数据" class="headerlink" title="音视频数据"></a>音视频数据</h2><h3 id="AVPacket"><a href="#AVPacket" class="headerlink" title="AVPacket"></a>AVPacket</h3><p><code>AVPacket</code> 是存储压缩编码数据相关信息的结构体</p>
+<h4 id="AVPacket-相关函数"><a href="#AVPacket-相关函数" class="headerlink" title="AVPacket 相关函数"></a>AVPacket 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回流的下一帧</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_read_frame</span><span class="params">(AVFormatContext *s, AVPacket *pkt)</span></span>;</span><br><span class="line"><span class="comment">// 向解码器提供原始数据包数据作为输入</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_send_packet</span><span class="params">(AVCodecContext *avctx, <span class="keyword">const</span> AVPacket *avpkt)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="AVPacket-结构体定义"><a href="#AVPacket-结构体定义" class="headerlink" title="AVPacket 结构体定义"></a>AVPacket 结构体定义</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVPacket</span> &#123;</span></span><br><span class="line">    AVBufferRef *buf;</span><br><span class="line">    <span class="keyword">int64_t</span> pts;    <span class="comment">///&lt; 显示时间戳</span></span><br><span class="line">    <span class="keyword">int64_t</span> dts;    <span class="comment">///&lt; 解码时间戳</span></span><br><span class="line">    <span class="keyword">uint8_t</span> *data;  <span class="comment">///&lt; 压缩编码数据</span></span><br><span class="line">    <span class="keyword">int</span>   <span class="built_in">size</span>;     <span class="comment">///&lt; 压缩编码数据大小</span></span><br><span class="line">    <span class="keyword">int</span>   stream_index; <span class="comment">///&lt; 所属的 AVStream</span></span><br><span class="line">    <span class="keyword">int</span>   flags;    <span class="comment">///&lt; A combination of AV_PKT_FLAG values</span></span><br><span class="line">    AVPacketSideData *side_data;</span><br><span class="line">    <span class="keyword">int</span> side_data_elems;</span><br><span class="line">    <span class="keyword">int64_t</span> duration;</span><br><span class="line">    <span class="keyword">int64_t</span> pos;    <span class="comment">///&lt; byte position in stream, -1 if unknown</span></span><br><span class="line">&#125; AVPacket;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   *** 对于 H.264 来说。1 个 AVPacket 的 data 通常对应一个 NALU ***</span><br><span class="line">通过查看 ffmpeg 源代码我们发现，AVPacket 中的数据起始处没有分隔符 0x00000001</span><br><span class="line">也不是 0x65、0x67、0x68、0x41 等字节</span><br><span class="line">所以 AVPacket 肯定这不是标准的 NALU</span><br><span class="line">其实，AVPacket 前 4 个字表示的是 NALU 的长度，从第 5 个字节开始才是 NALU 的数据</span><br><span class="line">所以直接将 AVPacket 前 4 个字节替换为 0x00000001 即可得到标准的 NALU 数据</span><br></pre></td></tr></table></figure>
+<h3 id="AVFrame"><a href="#AVFrame" class="headerlink" title="AVFrame"></a>AVFrame</h3><h4 id="AVFrame-相关函数"><a href="#AVFrame-相关函数" class="headerlink" title="AVFrame 相关函数"></a>AVFrame 相关函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分配 AVFrame 并将其字段设置为默认值</span></span><br><span class="line"><span class="function">AVFrame *<span class="title">av_frame_alloc</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="comment">// 释放 AVFrame 和其中所有动态分配的成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">av_frame_free</span><span class="params">(AVFrame **frame)</span></span>;</span><br><span class="line"><span class="comment">// 从解码器返回已解码的输出数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_receive_frame</span><span class="params">(AVCodecContext *avctx, AVFrame *frame)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="AVPacket-成员变量"><a href="#AVPacket-成员变量" class="headerlink" title="AVPacket 成员变量"></a>AVPacket 成员变量</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVFrame</span> &#123;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_NUM_DATA_POINTERS 8</span></span><br><span class="line">    <span class="keyword">uint8_t</span> *data[AV_NUM_DATA_POINTERS];    <span class="comment">// 解码后原始数据 对视频来说是 YUV，RGB，对音频来说是 PCM</span></span><br><span class="line">    <span class="keyword">int</span> linesize[AV_NUM_DATA_POINTERS];     <span class="comment">// data 中一行数据的大小。注意：未必等于图像的宽，一般大于图像的宽</span></span><br><span class="line">    <span class="keyword">uint8_t</span> **extended_data;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">width</span>, <span class="built_in">height</span>;  <span class="comment">// 视频帧宽和高（1920x1080, 1280x720 ...）</span></span><br><span class="line">    <span class="keyword">int</span> nb_samples;     <span class="comment">// 音频的一个 AVFrame 中可能包含多个音频帧，在此标记包含了几个</span></span><br><span class="line">    <span class="keyword">int</span> format;         <span class="comment">// 解码后原始数据类型（YUV420, YUV422, RGB24 ...）</span></span><br><span class="line">    <span class="keyword">int</span> key_frame;      <span class="comment">// 1 -&gt; keyframe, 0-&gt; not</span></span><br><span class="line">    <span class="keyword">enum</span> AVPictureType pict_type;   <span class="comment">// 帧类型（I, B, P ...）</span></span><br><span class="line">    AVRational sample_aspect_ratio; <span class="comment">// 宽高比（16:9, 4:3 ...）</span></span><br><span class="line">    <span class="keyword">int64_t</span> pts;        <span class="comment">// 显示时间戳</span></span><br><span class="line">    <span class="keyword">int64_t</span> pkt_dts;</span><br><span class="line">    <span class="keyword">int</span> coded_picture_number;   <span class="comment">// 编码帧序号</span></span><br><span class="line">    <span class="keyword">int</span> display_picture_number; <span class="comment">// 显示帧序号</span></span><br><span class="line">    ... ...</span><br><span class="line">&#125; AVFrame;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] 基于 FFmpeg + SDL 的视频播放器的制作 — 雷霄骅</li>
+<li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020/article/details/11693997">FFMPEG 中最关键的结构体之间的关系_雷霄骅 (leixiaohua1020) 的专栏 - CSDN 博客_ffmpeg 结构体</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\c30ccf98\" rel="bookmark">树莓派日记 - 安装 ffmpeg</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2021\a1b64acb\" rel="bookmark">音视频日记 - Windows 安装 ffmpeg</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2021\ce615ee4\" rel="bookmark">音视频日记 - ffmpeg 之 IO 架构分析</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2021\4765df61\" rel="bookmark">音视频日记 - ffmpeg 命令行</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ffmpeg/" rel="tag"># ffmpeg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2021/4765df61/" rel="prev" title="音视频日记 - ffmpeg 命令行">
+                  <i class="fa fa-chevron-left"></i> 音视频日记 - ffmpeg 命令行
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2021/fd828132/" rel="next" title="数据结构与算法 - 拓扑排序">
+                  数据结构与算法 - 拓扑排序 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/e03178b1/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2021/e03178b1/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

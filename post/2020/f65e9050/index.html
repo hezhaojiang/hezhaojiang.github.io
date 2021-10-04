@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="在 libevent 中，事件主循环的作用就是执行一个循环，在循环中监听事件以及超时的事件并且将这些激活的事件进行处理。libevent 提供了对用户开放了两种执行事件主循环的函数： 12int event_base_dispatch(struct event_base *);int event_base_loop(struct event_base *, int);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="源码阅读 libevent - 事件主循环">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/f65e9050/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="在 libevent 中，事件主循环的作用就是执行一个循环，在循环中监听事件以及超时的事件并且将这些激活的事件进行处理。libevent 提供了对用户开放了两种执行事件主循环的函数： 12int event_base_dispatch(struct event_base *);int event_base_loop(struct event_base *, int);">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201111125131.png">
+<meta property="article:published_time" content="2020-11-08T21:03:49.000Z">
+<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="libevent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/f65e9050/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>源码阅读 libevent - 事件主循环 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%B8%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.</span> <span class="nav-text">事件主循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%8F%91%E7%94%9F"><span class="nav-number">2.</span> <span class="nav-text">事件发生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6%E5%8F%91%E7%94%9F"><span class="nav-number">2.1.</span> <span class="nav-text">如何监听事件发生</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.1.</span> <span class="nav-text">监听方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">2.1.2.</span> <span class="nav-text">监听超时时间的计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E5%90%AC-IO-%E4%BA%8B%E4%BB%B6%E5%92%8C-Signal-%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.1.3.</span> <span class="nav-text">监听 IO 事件和 Signal 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-number">2.1.4.</span> <span class="nav-text">select</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%8F%91%E7%94%9F%E5%90%8E%E5%A6%82%E4%BD%95%E6%BF%80%E6%B4%BB%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">事件发生后如何激活事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB-IO-%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.1.</span> <span class="nav-text">激活 IO 事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#evmap-io-active"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">evmap_io_active_</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#event-active-nolock"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">event_active_nolock_</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#event-callback-activate-nolock"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">event_callback_activate_nolock_</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#event-queue-insert-active"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">event_queue_insert_active</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB-Signal-%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.2.</span> <span class="nav-text">激活 Signal 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%B6%85%E6%97%B6%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.3.</span> <span class="nav-text">激活超时事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.2.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%AC%A1%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">单次事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%B7%B2%E6%BF%80%E6%B4%BB%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">如何处理已激活事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#event-process-active"><span class="nav-number">3.1.1.</span> <span class="nav-text">event_process_active</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#event-process-active-single-queue"><span class="nav-number">3.1.2.</span> <span class="nav-text">event_process_active_single_queue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%8C%81%E4%B9%85%E5%8C%96%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.1.3.</span> <span class="nav-text">如何持久化事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/f65e9050/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          源码阅读 libevent - 事件主循环
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-09 05:03:49" itemprop="dateCreated datePublished" datetime="2020-11-09T05:03:49+08:00">2020-11-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">源码阅读</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/f65e9050/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 事件主循环" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/f65e9050/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/f65e9050/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在 <code>libevent</code> 中，事件主循环的作用就是执行一个循环，在循环中监听事件以及超时的事件并且将这些激活的事件进行处理。<code>libevent</code> 提供了对用户开放了两种执行事件主循环的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_dispatch</span><span class="params">(struct event_base *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_loop</span><span class="params">(struct event_base *, <span class="keyword">int</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="事件主循环"><a href="#事件主循环" class="headerlink" title="事件主循环"></a>事件主循环</h2><blockquote>
+<p><a href="/post/2020/afa6fb2f/" title="源码阅读 libevent - 结构体：event">源码阅读 libevent - 结构体：event</a> 中提到了 <code>event</code> 结构体的生命周期:</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png" alt="event 的生命周期"></p>
+</blockquote>
+<p>事件主循环做的工作就是该流程图的下半部分：</p>
+<p>pending 状态：等待事件发生<br>active 状态：事件已经发生，等待调用事件回调</p>
+<p>总体流程分为三部分</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>流程</th>
+<th>调用相关函数</th>
+<th>event 状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事件发生</td>
+<td>event_active()</td>
+<td>pending —&gt; avtive</td>
+</tr>
+<tr>
+<td>单次事件处理</td>
+<td>callback done</td>
+<td>avtive —&gt; non-pending</td>
+</tr>
+<tr>
+<td>持久事件处理</td>
+<td>callback done</td>
+<td>avtive —&gt; pending</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>事件主循环函数 <code>event_base_dispatch()</code> 其实就是调用 <code>event_base_loop()</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_dispatch</span><span class="params">(struct event_base *event_base)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (event_base_loop(event_base, <span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>event_base_loop()</code> 函数实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_loop</span><span class="params">(struct event_base *base, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">eventop</span> *<span class="title">evsel</span> = <span class="title">base</span>-&gt;<span class="title">evsel</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> *<span class="title">tv_p</span>;</span></span><br><span class="line">    <span class="keyword">int</span> res, done, retval = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* 加锁. 在调用 evsel-&gt;dispatch 时会进行解锁, 在调用用户回调函数时也会解锁 */</span></span><br><span class="line">    EVBASE_ACQUIRE_LOCK(base, th_base_lock);</span><br><span class="line">    <span class="keyword">if</span> (base-&gt;running_loop) &#123;</span><br><span class="line">        event_warnx(<span class="string">&quot;%s: reentrant invocation.  Only one event_base_loop can run on each event_base at once.&quot;</span>, __func__);</span><br><span class="line">        EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    base-&gt;running_loop = <span class="number">1</span>; <span class="comment">/* 只允许一个事件主循环 */</span></span><br><span class="line"></span><br><span class="line">    clear_time_cache(base); <span class="comment">/* 清空缓存的超时 */</span></span><br><span class="line">    <span class="keyword">if</span> (base-&gt;sig.ev_signal_added &amp;&amp; base-&gt;sig.ev_n_signals_added) evsig_set_base_(base);</span><br><span class="line">    done = <span class="number">0</span>; <span class="comment">/* 用来确定是否退出循环 */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> EVENT__DISABLE_THREAD_SUPPORT</span></span><br><span class="line">    base-&gt;th_owner_id = EVTHREAD_GET_ID(); <span class="comment">/* 保存当前线程 ID */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    base-&gt;event_gotterm = base-&gt;event_break = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!done) &#123;</span><br><span class="line">        base-&gt;event_continue = <span class="number">0</span>;</span><br><span class="line">        base-&gt;n_deferreds_queued = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 中止循环的两个条件 */</span></span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_gotterm) <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_break) <span class="keyword">break</span>;</span><br><span class="line">        tv_p = &amp;tv;</span><br><span class="line">        <span class="comment">/* 如果当前 event_base 里没有已经激活的事件，就将时间最小堆，堆顶的超时值取出来，作为下一轮 dispatch 的超时值</span></span><br><span class="line"><span class="comment">        ** 否则就将超时时间置为 0，evsel-&gt;dispatch 会立马超时返回，激活的事件得以处理 */</span></span><br><span class="line">        <span class="keyword">if</span> (!N_ACTIVE_CALLBACKS(base) &amp;&amp; !(flags &amp; EVLOOP_NONBLOCK)) timeout_next(base, &amp;tv_p);</span><br><span class="line">        <span class="keyword">else</span> evutil_timerclear(&amp;tv);</span><br><span class="line">        <span class="comment">/* If we have no events, we just exit */</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">0</span> == (flags &amp; EVLOOP_NO_EXIT_ON_EMPTY) &amp;&amp;</span><br><span class="line">            !event_haveevents(base) &amp;&amp; !N_ACTIVE_CALLBACKS(base)) &#123;</span><br><span class="line">            event_debug((<span class="string">&quot;%s: no events registered.&quot;</span>, __func__));</span><br><span class="line">            retval = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">goto</span> done;</span><br><span class="line">        &#125;</span><br><span class="line">        event_queue_make_later_events_active(base);</span><br><span class="line">        clear_time_cache(base);</span><br><span class="line">        res = evsel-&gt;dispatch(base, tv_p);</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="number">-1</span>) &#123;</span><br><span class="line">            event_debug((<span class="string">&quot;%s: dispatch returned unsuccessfully.&quot;</span>, __func__));</span><br><span class="line">            retval = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">goto</span> done;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        update_time_cache(base);</span><br><span class="line">        <span class="comment">/* 将 base 的 min_heap 中所有超时的事件以超时激活类型添加到激活队列中 */</span></span><br><span class="line">        timeout_process(base);</span><br><span class="line">        <span class="keyword">if</span> (N_ACTIVE_CALLBACKS(base)) &#123; <span class="comment">/* 如果激活队列中有事件 */</span></span><br><span class="line">            <span class="comment">/* 执行激活队列中的 event 相应的回调函数，返回的 n 是成功执行的非内部事件数目 */</span></span><br><span class="line">            <span class="keyword">int</span> n = event_process_active(base);</span><br><span class="line">            <span class="comment">/* 如果设置了 EVLOOP_ONCE，并且所有激活的事件都处理完了，那么就退出 event_loop */</span></span><br><span class="line">            <span class="keyword">if</span> ((flags &amp; EVLOOP_ONCE) &amp;&amp; N_ACTIVE_CALLBACKS(base) == <span class="number">0</span> &amp;&amp; n != <span class="number">0</span>)</span><br><span class="line">                done = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (flags &amp; EVLOOP_NONBLOCK) <span class="comment">/* 如果设置了 EVLOOP_NONBLOCK 那么也会退出 event_loop 循环 */</span></span><br><span class="line">            done = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    event_debug((<span class="string">&quot;%s: asked to terminate loop.&quot;</span>, __func__));</span><br><span class="line"></span><br><span class="line">done:</span><br><span class="line">    clear_time_cache(base);</span><br><span class="line">    base-&gt;running_loop = <span class="number">0</span>;</span><br><span class="line">    EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">    <span class="keyword">return</span> (retval);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接阅读 <code>event_base_loop()</code> 较为困难，我们根据上述流程进行分析</p>
+<ol>
+<li>事件发生<ul>
+<li>如何监听事件发生</li>
+<li>事件发生后如何激活事件</li>
+</ul>
+</li>
+<li>事件处理<ul>
+<li>如何处理已激活事件</li>
+<li>如何持久化事件</li>
+</ul>
+</li>
+</ol>
+<h2 id="事件发生"><a href="#事件发生" class="headerlink" title="事件发生"></a>事件发生</h2><h3 id="如何监听事件发生"><a href="#如何监听事件发生" class="headerlink" title="如何监听事件发生"></a>如何监听事件发生</h3><h4 id="监听方式"><a href="#监听方式" class="headerlink" title="监听方式"></a>监听方式</h4><p>libevent 提供了多种监听事件的方案，如单次监听、循环监听等，监听方案由 <code>event_base_loop()</code> 参数决定：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 阻塞, 直到一个 event 变成 active. 在 active 状态的 event 的 Callback 函数执行后，就退出。 */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLOOP_ONCE 0x01</span></span><br><span class="line"><span class="comment">/* 不会阻塞，它仅仅是查看是否已经有 event ready. 有则运行其 callback. 然后退出 */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLOOP_NONBLOCK 0x02</span></span><br><span class="line"><span class="comment">/* 哪怕 event_base 中没有 active 或者 pending 的 event 了。也不退出。直到调用 event_base_loopbreak() or event_base_loopexit(). */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLOOP_NO_EXIT_ON_EMPTY 0x04</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 当 flags 什么都不设置时，则 loop 一直运行，检查到 event 变为 active 时，运行其 callback 函数。</span></span><br><span class="line"><span class="comment">** 当没有 active 或 pending 的 event 后，退出 loop。</span></span><br><span class="line"><span class="comment">** 有人调用了 event_base_loopbreak() or event_base_loopexit()，也退出 loop. */</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有关 event_base_loopbreak() 和 event_base_loopexit() 参见：<a href="#">Post not found: 源码阅读 libevent - 事件主循环的停止</a></p>
+</blockquote>
+<h4 id="监听超时时间的计算"><a href="#监听超时时间的计算" class="headerlink" title="监听超时时间的计算"></a>监听超时时间的计算</h4><h4 id="监听-IO-事件和-Signal-事件"><a href="#监听-IO-事件和-Signal-事件" class="headerlink" title="监听 IO 事件和 Signal 事件"></a>监听 IO 事件和 Signal 事件</h4><p><code>libevent</code> 调用 <code>evsel-&gt;dispatch</code> 回调函数监听 <code>IO</code> 事件和 <code>Signal</code> 事件的发生：</p>
+<p>以 <code>select.c</code> 为例：</p>
+<h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">select_dispatch</span><span class="params">(struct event_base *base, struct timeval *tv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res=<span class="number">0</span>, i, j, nfds;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">selectop</span> *<span class="title">selectop</span> = <span class="title">base</span>-&gt;<span class="title">evbase</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (selectop-&gt;resize_out_sets) &#123;</span><br><span class="line">        fd_set *readset_out = <span class="literal">NULL</span>, *writeset_out = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">size_t</span> sz = selectop-&gt;event_fdsz;</span><br><span class="line">        <span class="keyword">if</span> (!(readset_out = mm_realloc(selectop-&gt;event_readset_out, sz))) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        selectop-&gt;event_readset_out = readset_out;</span><br><span class="line">        <span class="keyword">if</span> (!(writeset_out = mm_realloc(selectop-&gt;event_writeset_out, sz))) &#123;</span><br><span class="line">            <span class="comment">/* We don&#x27;t free readset_out here, since it was already successfully reallocated.</span></span><br><span class="line"><span class="comment">            ** The next time we call select_dispatch, the realloc will be a no-op. */</span></span><br><span class="line">            <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        selectop-&gt;event_writeset_out = writeset_out;</span><br><span class="line">        selectop-&gt;resize_out_sets = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memcpy</span>(selectop-&gt;event_readset_out, selectop-&gt;event_readset_in, selectop-&gt;event_fdsz);</span><br><span class="line">    <span class="built_in">memcpy</span>(selectop-&gt;event_writeset_out, selectop-&gt;event_writeset_in, selectop-&gt;event_fdsz);</span><br><span class="line">    nfds = selectop-&gt;event_fds + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">    res = select(nfds, selectop-&gt;event_readset_out, selectop-&gt;event_writeset_out, <span class="literal">NULL</span>, tv);</span><br><span class="line">    EVBASE_ACQUIRE_LOCK(base, th_base_lock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (res == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (errno != EINTR) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    event_debug((<span class="string">&quot;%s: select reports %d&quot;</span>, __func__, res));</span><br><span class="line"></span><br><span class="line">    i = evutil_weakrand_range_(&amp;base-&gt;weakrand_seed, nfds);</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; nfds; ++j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (++i&gt;= nfds) i = <span class="number">0</span>;</span><br><span class="line">        res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (FD_ISSET(i, selectop-&gt;event_readset_out)) res |= EV_READ;</span><br><span class="line">        <span class="keyword">if</span> (FD_ISSET(i, selectop-&gt;event_writeset_out)) res |= EV_WRITE;</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">        evmap_io_active_(base, i, res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在事件发生后调用 <code>evmap_io_active_()</code> 将发生的事件加入到激活事件队列中，参见 <a href="# 事件发生后如何激活事件">事件发生后如何激活事件</a>。</p>
+<h3 id="事件发生后如何激活事件"><a href="#事件发生后如何激活事件" class="headerlink" title="事件发生后如何激活事件"></a>事件发生后如何激活事件</h3><p>三种事件的激活方式如下图所示：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201111125131.png" alt="事件激活"></p>
+<h4 id="激活-IO-事件"><a href="#激活-IO-事件" class="headerlink" title="激活 IO 事件"></a>激活 IO 事件</h4><h5 id="evmap-io-active"><a href="#evmap-io-active" class="headerlink" title="evmap_io_active_"></a>evmap_io_active_</h5><p>从 <code>select_dispatch</code> 函数中可以看出，对于每一个事件发生的 <code>fd</code>，均会调用一次 <code>evmap_io_active_</code> 函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">evmap_io_active_</span><span class="params">(struct event_base *base, <span class="keyword">evutil_socket_t</span> fd, <span class="keyword">short</span> events)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_io_map</span> *<span class="title">io</span> = &amp;<span class="title">base</span>-&gt;<span class="title">io</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evmap_io</span> *<span class="title">ctx</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span> || fd&gt;= io-&gt;nentries) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">/* 在 IO 事件的哈希表中获取该 fd 已添加的事件 */</span></span><br><span class="line">    GET_IO_SLOT(ctx, io, fd, evmap_io);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == ctx) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">/* 遍历哈希表中所有该 fd 已添加的事件 */</span></span><br><span class="line">    LIST_FOREACH(ev, &amp;ctx-&gt;events, ev_io_next) &#123;</span><br><span class="line">        <span class="comment">/* 比对 dispatch 的事件和已添加的事件 */</span></span><br><span class="line">        <span class="keyword">if</span> (ev-&gt;ev_events &amp; events) s(ev, ev-&gt;ev_events &amp; events, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="event-active-nolock"><a href="#event-active-nolock" class="headerlink" title="event_active_nolock_"></a>event_active_nolock_</h5><p><code>evmap_io_active_</code> 对 <code>dispatch</code> 的所有事件进行过滤后，对于所有已添加事件，就需要调用 <code>event_active_nolock_</code> 进行激活。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_active_nolock_</span><span class="params">(struct event *ev, <span class="keyword">int</span> res, <span class="keyword">short</span> ncalls)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_base</span> *<span class="title">base</span>;</span></span><br><span class="line">    base = ev-&gt;ev_base;</span><br><span class="line">    EVENT_BASE_ASSERT_LOCKED(base);</span><br><span class="line">    <span class="comment">/* #define ev_flags ev_evcallback.evcb_flags */</span></span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_flags &amp; EVLIST_FINALIZING) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">/* event 是否在激活链表和下一次激活链表中 */</span></span><br><span class="line">    <span class="keyword">switch</span> ((ev-&gt;ev_flags &amp; (EVLIST_ACTIVE|EVLIST_ACTIVE_LATER))) &#123;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">case</span> EVLIST_ACTIVE|EVLIST_ACTIVE_LATER:</span><br><span class="line">        EVUTIL_ASSERT(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> EVLIST_ACTIVE: <span class="comment">/* We get different kinds of events, add them together */</span></span><br><span class="line">        ev-&gt;ev_res |= res;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">case</span> EVLIST_ACTIVE_LATER:</span><br><span class="line">        ev-&gt;ev_res |= res;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        ev-&gt;ev_res = res;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_pri &lt; base-&gt;event_running_priority) base-&gt;event_continue = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* 对于 signal 事件，需要对 IO 事件触发次数进行计数 */</span></span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_events &amp; EV_SIGNAL) &#123;</span><br><span class="line">        ev-&gt;ev_ncalls = ncalls;</span><br><span class="line">        ev-&gt;ev_pncalls = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    event_callback_activate_nolock_(base, event_to_event_callback(ev));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="event-callback-activate-nolock"><a href="#event-callback-activate-nolock" class="headerlink" title="event_callback_activate_nolock_"></a>event_callback_activate_nolock_</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_callback_activate_nolock_</span><span class="params">(struct event_base *base, struct event_callback *evcb)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (evcb-&gt;evcb_flags &amp; EVLIST_FINALIZING) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* event 是否在激活链表和下一次激活链表中 */</span></span><br><span class="line">    <span class="keyword">switch</span> (evcb-&gt;evcb_flags &amp; (EVLIST_ACTIVE|EVLIST_ACTIVE_LATER)) &#123;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        EVUTIL_ASSERT(<span class="number">0</span>);</span><br><span class="line">        EVUTIL_FALLTHROUGH;</span><br><span class="line">    <span class="keyword">case</span> EVLIST_ACTIVE_LATER:</span><br><span class="line">        event_queue_remove_active_later(base, evcb); <span class="comment">/* 删除下一次激活列表中的该 event */</span></span><br><span class="line">        r = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> EVLIST_ACTIVE:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 没有在激活列表和在下一次激活列表中的 event 会走到这里 */</span></span><br><span class="line">    event_queue_insert_active(base, evcb); <span class="comment">/* 加入激活队列 */</span></span><br><span class="line">    <span class="keyword">if</span> (EVBASE_NEED_NOTIFY(base))evthread_notify_base(base);</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="event-queue-insert-active"><a href="#event-queue-insert-active" class="headerlink" title="event_queue_insert_active"></a>event_queue_insert_active</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span></span><br><span class="line">event_queue_insert_active(struct event_base *base, struct event_callback *evcb)</span><br><span class="line">&#123;</span><br><span class="line">    EVENT_BASE_ASSERT_LOCKED(base);</span><br><span class="line">    <span class="comment">/* Double insertion is possible for active events */</span></span><br><span class="line">    <span class="keyword">if</span> (evcb-&gt;evcb_flags &amp; EVLIST_ACTIVE) <span class="keyword">return</span>;</span><br><span class="line">    INCR_EVENT_COUNT(base, evcb-&gt;evcb_flags); <span class="comment">/* 非内部事件计数自增 increase */</span></span><br><span class="line">    evcb-&gt;evcb_flags |= EVLIST_ACTIVE; <span class="comment">/* event 事件增加激活标志位 */</span></span><br><span class="line"></span><br><span class="line">    base-&gt;event_count_active++; <span class="comment">/* 激活事件计数自增 */</span></span><br><span class="line">    MAX_EVENT_COUNT(base-&gt;event_count_active_max, base-&gt;event_count_active);</span><br><span class="line">    <span class="comment">/* #define ev_pri ev_evcallback.evcb_pri 事件优先级 */</span></span><br><span class="line">    EVUTIL_ASSERT(evcb-&gt;evcb_pri &lt; base-&gt;nactivequeues);</span><br><span class="line">    <span class="comment">/* 插入到对应优先级的激活队列尾部 */</span></span><br><span class="line">    TAILQ_INSERT_TAIL(&amp;base-&gt;activequeues[evcb-&gt;evcb_pri], evcb, evcb_active_next);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="激活-Signal-事件"><a href="#激活-Signal-事件" class="headerlink" title="激活 Signal 事件"></a>激活 Signal 事件</h4><p>对于 <code>Signal</code> 事件，<code>libevent</code> 将其统一转换为了 <code>IO</code> 事件，在 <code>IO</code> 事件中，有一个特殊的事件专门用来接收信号事件，该特殊事件的回调函数会调用 <code>evmap_signal_active_</code> 将发生的 <code>Signal</code> 事件添加到激活事件列表中。</p>
+<blockquote>
+<p>参见：<a href="/post/2020/89de67d/" title="源码阅读 libevent - 信号事件处理">源码阅读 libevent - 信号事件处理</a></p>
+</blockquote>
+<p><code>evmap_signal_active_</code> 代码如下，其最终也是调用了 <code>event_active_nolock_</code> 进行事件的激活。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">evmap_signal_active_</span><span class="params">(struct event_base *base, <span class="keyword">evutil_socket_t</span> sig, <span class="keyword">int</span> ncalls)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_signal_map</span> *<span class="title">map</span> = &amp;<span class="title">base</span>-&gt;<span class="title">sigmap</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evmap_signal</span> *<span class="title">ctx</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sig &lt; <span class="number">0</span> || sig&gt;= <span class="built_in">map</span>-&gt;nentries) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">/* 在 Signal 事件的数组中获取该 Signal 已添加的事件 */</span></span><br><span class="line">    GET_SIGNAL_SLOT(ctx, <span class="built_in">map</span>, sig, evmap_signal);</span><br><span class="line">    <span class="keyword">if</span> (!ctx) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">/* 将该 Signal 已添加的事件全部加入到激活事件列表中 */</span></span><br><span class="line">    LIST_FOREACH(ev, &amp;ctx-&gt;events, ev_signal_next)</span><br><span class="line">        event_active_nolock_(ev, EV_SIGNAL, ncalls);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="激活超时事件"><a href="#激活超时事件" class="headerlink" title="激活超时事件"></a>激活超时事件</h4><p>遍历检查小根堆中每个事件是否超时，如果超时，则将其加入到激活队列中，激活事件调用的函数也为 <code>event_active_nolock_</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">timeout_process</span><span class="params">(struct event_base *base)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* Caller must hold lock. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line">    <span class="keyword">if</span> (min_heap_empty_(&amp;base-&gt;timeheap)) <span class="keyword">return</span>;</span><br><span class="line">    gettime(base, &amp;now);</span><br><span class="line">    <span class="keyword">while</span> ((ev = min_heap_top_(&amp;base-&gt;timeheap))) &#123;</span><br><span class="line">        <span class="comment">/* 根据小根堆的特性，如果顶部的事件没有超时，其他事件就不用再遍历了 */</span></span><br><span class="line">        <span class="keyword">if</span> (evutil_timercmp(&amp;ev-&gt;ev_timeout, &amp;now, &gt;)) <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">/* delete this event from the I/O queues */</span></span><br><span class="line">        event_del_nolock_(ev, EVENT_DEL_NOBLOCK);</span><br><span class="line">        event_debug((<span class="string">&quot;timeout_process: event: %p, call %p&quot;</span>, ev, ev-&gt;ev_callback));</span><br><span class="line">        event_active_nolock_(ev, EV_TIMEOUT, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><code>IO</code> 事件的激活是在 <code>libevent</code> 调用多路 <code>IO</code> 复用函数后，然后将发生的事件添加入激活队列</li>
+<li><code>Signal</code> 事件的激活在 <code>libevent</code> 处理 <code>IO</code> 事件的回调中</li>
+<li>超时事件的激活在 <code>libevent</code> 调用完多路 <code>IO</code> 复用函数后，检查小根堆里的超时情况时</li>
+</ul>
+<h2 id="单次事件处理"><a href="#单次事件处理" class="headerlink" title="单次事件处理"></a>单次事件处理</h2><h3 id="如何处理已激活事件"><a href="#如何处理已激活事件" class="headerlink" title="如何处理已激活事件"></a>如何处理已激活事件</h3><h4 id="event-process-active"><a href="#event-process-active" class="headerlink" title="event_process_active"></a>event_process_active</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">event_process_active</span><span class="params">(struct event_base *base)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* Caller must hold th_base_lock */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evcallback_list</span> *<span class="title">activeq</span> = <span class="title">NULL</span>;</span></span><br><span class="line">    <span class="keyword">int</span> i, c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> *<span class="title">endtime</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> maxcb = base-&gt;max_dispatch_callbacks;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> limit_after_prio = base-&gt;limit_callbacks_after_prio;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (base-&gt;max_dispatch_time.tv_sec &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        update_time_cache(base);</span><br><span class="line">        gettime(base, &amp;tv);</span><br><span class="line">        evutil_timeradd(&amp;base-&gt;max_dispatch_time, &amp;tv, &amp;tv);</span><br><span class="line">        endtime = &amp;tv;</span><br><span class="line">    &#125; <span class="keyword">else</span> endtime = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 按优先级遍历激活队列中的事件 */</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; base-&gt;nactivequeues; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (TAILQ_FIRST(&amp;base-&gt;activequeues[i]) != <span class="literal">NULL</span>) &#123; <span class="comment">/* 同一个优先级下可以有多个事件 */</span></span><br><span class="line">            base-&gt;event_running_priority = i; <span class="comment">/* 设置当前的优先级 */</span></span><br><span class="line">            activeq = &amp;base-&gt;activequeues[i]; <span class="comment">/* 获取优先级 i 下的所有 event 组成的链表 */</span></span><br><span class="line">            <span class="comment">/* 遍历 activeq 链表，调用其中每个 event 的回调函数 */</span></span><br><span class="line">            <span class="keyword">if</span> (i &lt; limit_after_prio) c = event_process_active_single_queue(base, activeq, INT_MAX, <span class="literal">NULL</span>);</span><br><span class="line">            <span class="keyword">else</span> c = event_process_active_single_queue(base, activeq, maxcb, endtime);</span><br><span class="line">            <span class="keyword">if</span> (c &lt; <span class="number">0</span>) <span class="keyword">goto</span> done; <span class="comment">/* c 是执行的非内部事件数目 */</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (c&gt; <span class="number">0</span>) <span class="comment">/* Processed a real event; do not consider lower-priority events */</span></span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">/* If we get here, all of the events we processed were internal. Continue. */</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">done:</span><br><span class="line">    base-&gt;event_running_priority = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="event-process-active-single-queue"><a href="#event-process-active-single-queue" class="headerlink" title="event_process_active_single_queue"></a>event_process_active_single_queue</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">event_process_active_single_queue</span><span class="params">(struct event_base *base,</span></span></span><br><span class="line"><span class="function"><span class="params">    struct evcallback_list *activeq, <span class="keyword">int</span> max_to_process, <span class="keyword">const</span> struct timeval *endtime)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_callback</span> *<span class="title">evcb</span>;</span></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    EVUTIL_ASSERT(activeq != <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">/* activeq 为某一优先级的激活队列，该处遍历该优先级的激活队列中的所有事件 */</span></span><br><span class="line">    <span class="comment">/* 从遍历结束的结束条件和遍历下一个事件的方式就可知，每次遍历会在激活队列中删除当前事件 */</span></span><br><span class="line">    <span class="keyword">for</span> (evcb = TAILQ_FIRST(activeq); evcb; evcb = TAILQ_FIRST(activeq)) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span> = <span class="title">NULL</span>;</span></span><br><span class="line">        <span class="comment">/* 在激活队列中删除当前事件 */</span></span><br><span class="line">        <span class="keyword">if</span> (evcb-&gt;evcb_flags &amp; EVLIST_INIT) &#123;</span><br><span class="line">            <span class="comment">/* 激活队列中仅插入了 event 结构体中的 event_callback 结构体，需要获取 event 所在地址 */</span></span><br><span class="line">            ev = event_callback_to_event(evcb);</span><br><span class="line">            <span class="keyword">if</span> (ev-&gt;ev_events &amp; EV_PERSIST || ev-&gt;ev_flags &amp; EVLIST_FINALIZING)</span><br><span class="line">                event_queue_remove_active(base, evcb); <span class="comment">/* 永久事件从激活队列中删除 */</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                event_del_nolock_(ev, EVENT_DEL_NOBLOCK); <span class="comment">/* 非永久事件从所有队列中删除 */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> event_queue_remove_active(base, evcb);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!(evcb-&gt;evcb_flags &amp; EVLIST_INTERNAL)) ++count; <span class="comment">/* 非内部事件回调次数计数 */</span></span><br><span class="line">        base-&gt;current_event = evcb;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (evcb-&gt;evcb_closure) &#123; <span class="comment">/* 在调用回调函数是否进行其他行为 */</span></span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_EVENT_SIGNAL:</span><br><span class="line">            EVUTIL_ASSERT(ev != <span class="literal">NULL</span>);</span><br><span class="line">            event_signal_closure(base, ev);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_EVENT_PERSIST: <span class="comment">/* 对于永久事件，在调用回调函数之前会重新调用 event_add 来添加该事件到对应队列中 */</span></span><br><span class="line">            EVUTIL_ASSERT(ev != <span class="literal">NULL</span>);</span><br><span class="line">            event_persist_closure(base, ev);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_EVENT: <span class="comment">/* 对于一般事件，直接调用回调函数 */</span></span><br><span class="line">            <span class="keyword">void</span> (*evcb_callback)(<span class="keyword">evutil_socket_t</span>, <span class="keyword">short</span>, <span class="keyword">void</span> *);</span><br><span class="line">            <span class="keyword">short</span> res;</span><br><span class="line">            EVUTIL_ASSERT(ev != <span class="literal">NULL</span>);</span><br><span class="line">            evcb_callback = *ev-&gt;ev_callback;</span><br><span class="line">            res = ev-&gt;ev_res;</span><br><span class="line">            EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">            evcb_callback(ev-&gt;ev_fd, res, ev-&gt;ev_arg);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_CB_SELF:</span><br><span class="line">            <span class="keyword">void</span> (*evcb_selfcb)(struct event_callback *, <span class="keyword">void</span> *) = evcb-&gt;evcb_cb_union.evcb_selfcb;</span><br><span class="line">            EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">            evcb_selfcb(evcb, evcb-&gt;evcb_arg);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_EVENT_FINALIZE:</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_EVENT_FINALIZE_FREE:</span><br><span class="line">            <span class="keyword">void</span> (*evcb_evfinalize)(struct event *, <span class="keyword">void</span> *);</span><br><span class="line">            <span class="keyword">int</span> evcb_closure = evcb-&gt;evcb_closure;</span><br><span class="line">            EVUTIL_ASSERT(ev != <span class="literal">NULL</span>);</span><br><span class="line">            base-&gt;current_event = <span class="literal">NULL</span>;</span><br><span class="line">            evcb_evfinalize = ev-&gt;ev_evcallback.evcb_cb_union.evcb_evfinalize;</span><br><span class="line">            EVUTIL_ASSERT((evcb-&gt;evcb_flags &amp; EVLIST_FINALIZING));</span><br><span class="line">            EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">            evcb_evfinalize(ev, ev-&gt;ev_arg);</span><br><span class="line">            event_debug_note_teardown_(ev);</span><br><span class="line">            <span class="keyword">if</span> (evcb_closure == EV_CLOSURE_EVENT_FINALIZE_FREE) mm_free(ev);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EV_CLOSURE_CB_FINALIZE:</span><br><span class="line">            <span class="keyword">void</span> (*evcb_cbfinalize)(struct event_callback *, <span class="keyword">void</span> *) = evcb-&gt;evcb_cb_union.evcb_cbfinalize;</span><br><span class="line">            base-&gt;current_event = <span class="literal">NULL</span>;</span><br><span class="line">            EVUTIL_ASSERT((evcb-&gt;evcb_flags &amp; EVLIST_FINALIZING));</span><br><span class="line">            EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">            evcb_cbfinalize(evcb, evcb-&gt;evcb_arg);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            EVUTIL_ASSERT(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EVBASE_ACQUIRE_LOCK(base, th_base_lock);</span><br><span class="line">        base-&gt;current_event = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_break) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (count&gt;= max_to_process) <span class="keyword">return</span> count;</span><br><span class="line">        <span class="keyword">if</span> (count &amp;&amp; endtime) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>;</span></span><br><span class="line">            update_time_cache(base);</span><br><span class="line">            gettime(base, &amp;now);</span><br><span class="line">            <span class="keyword">if</span> (evutil_timercmp(&amp;now, endtime,&gt;=)) <span class="keyword">return</span> count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_continue) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="如何持久化事件"><a href="#如何持久化事件" class="headerlink" title="如何持久化事件"></a>如何持久化事件</h4><p><code>libevent</code> 持久化事件是在调用事件的回调函数之前，调用 <code>event_add_nolock_</code> 重新将事件添加到事件列表中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Closure function invoked when we&#x27;re activating a persistent event. */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">event_persist_closure</span><span class="params">(struct event_base *base, struct event *ev)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">void</span> (*evcb_callback)(<span class="keyword">evutil_socket_t</span>, <span class="keyword">short</span>, <span class="keyword">void</span> *);</span><br><span class="line">    <span class="comment">// Other fields of *ev that must be stored before executing</span></span><br><span class="line">    <span class="keyword">evutil_socket_t</span> evcb_fd;</span><br><span class="line">    <span class="keyword">short</span> evcb_res;</span><br><span class="line">    <span class="keyword">void</span> *evcb_arg;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* reschedule the persistent event if we have a timeout. */</span></span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_io_timeout.tv_sec || ev-&gt;ev_io_timeout.tv_usec) &#123;</span><br><span class="line">        <span class="comment">/* If there was a timeout, we want it to run at an interval of ev_io_timeout after the last time</span></span><br><span class="line"><span class="comment">        ** it was _scheduled_ for, not ev_io_timeout after _now_.  If it fired for another reason,</span></span><br><span class="line"><span class="comment">        ** though,the timeout ought to start ticking _now_. */</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">run_at</span>, <span class="title">relative_to</span>, <span class="title">delay</span>, <span class="title">now</span>;</span></span><br><span class="line">        <span class="keyword">ev_uint32_t</span> usec_mask = <span class="number">0</span>;</span><br><span class="line">        EVUTIL_ASSERT(is_same_common_timeout(&amp;ev-&gt;ev_timeout, &amp;ev-&gt;ev_io_timeout));</span><br><span class="line">        gettime(base, &amp;now);</span><br><span class="line">        <span class="keyword">if</span> (is_common_timeout(&amp;ev-&gt;ev_timeout, base)) &#123;</span><br><span class="line">            <span class="built_in">delay</span> = ev-&gt;ev_io_timeout;</span><br><span class="line">            usec_mask = <span class="built_in">delay</span>.tv_usec &amp; ~MICROSECONDS_MASK;</span><br><span class="line">            <span class="built_in">delay</span>.tv_usec &amp;= MICROSECONDS_MASK;</span><br><span class="line">            <span class="keyword">if</span> (ev-&gt;ev_res &amp; EV_TIMEOUT) &#123;</span><br><span class="line">                relative_to = ev-&gt;ev_timeout;</span><br><span class="line">                relative_to.tv_usec &amp;= MICROSECONDS_MASK;</span><br><span class="line">            &#125; <span class="keyword">else</span> relative_to = now;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">delay</span> = ev-&gt;ev_io_timeout;</span><br><span class="line">            <span class="keyword">if</span> (ev-&gt;ev_res &amp; EV_TIMEOUT) relative_to = ev-&gt;ev_timeout;</span><br><span class="line">            <span class="keyword">else</span> relative_to = now;</span><br><span class="line">        &#125;</span><br><span class="line">        evutil_timeradd(&amp;relative_to, &amp;<span class="built_in">delay</span>, &amp;run_at);</span><br><span class="line">        <span class="keyword">if</span> (evutil_timercmp(&amp;run_at, &amp;now, &lt;)) &#123;</span><br><span class="line">            <span class="comment">/* Looks like we missed at least one invocation due to a clock jump, not running the event</span></span><br><span class="line"><span class="comment">            ** loop for a while, really slow callbacks, or something. Reschedule relative to now.*/</span></span><br><span class="line">            evutil_timeradd(&amp;now, &amp;<span class="built_in">delay</span>, &amp;run_at);</span><br><span class="line">        &#125;</span><br><span class="line">        run_at.tv_usec |= usec_mask;</span><br><span class="line">        event_add_nolock_(ev, &amp;run_at, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Save our callback before we release the lock</span></span><br><span class="line">    evcb_callback = ev-&gt;ev_callback;</span><br><span class="line">    evcb_fd = ev-&gt;ev_fd;</span><br><span class="line">    evcb_res = ev-&gt;ev_res;</span><br><span class="line">    evcb_arg = ev-&gt;ev_arg;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Release the lock</span></span><br><span class="line">    EVBASE_RELEASE_LOCK(base, th_base_lock);</span><br><span class="line">    <span class="comment">// Execute the callback</span></span><br><span class="line">    (evcb_callback)(evcb_fd, evcb_res, evcb_arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz">libevent-2.1.11-stable.tar.gz (Released 2019-08-01)</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28114615/article/details/96826553">libevent 源码学习（13）：事件主循环 event_base_loop_HerofH_的博客 - CSDN 博客</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\a867e274\" rel="bookmark">源码阅读 libevent - 初识 Hello World</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/libevent/" rel="tag"># libevent</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/dd5b304b/" rel="prev" title="源码阅读 libevent - 工作流程分析">
+                  <i class="fa fa-chevron-left"></i> 源码阅读 libevent - 工作流程分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/dff5a5c3/" rel="next" title="音视频封装 - FLV 封装格式">
+                  音视频封装 - FLV 封装格式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/f65e9050/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/f65e9050/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

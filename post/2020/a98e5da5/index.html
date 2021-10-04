@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="欧拉回路 &amp; 通路介绍一笔画问题一笔画问题：给定一个 n 个点 m 条边的图，要求从指定的顶点出发，经过所有的边恰好一次。 欧拉回路 &amp; 通路与一笔画问题的关系定义：  通过图中所有边恰好一次且行遍所有顶点的通路称为 欧拉通路。 通过图中所有边恰好一次且行遍所有顶点的回路称为 欧拉回路。    注：定义中边经过且仅经过 1 次，顶点的经过次数不受限制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法 - 欧拉回路 &amp; 通路">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/a98e5da5/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="欧拉回路 &amp; 通路介绍一笔画问题一笔画问题：给定一个 n 个点 m 条边的图，要求从指定的顶点出发，经过所有的边恰好一次。 欧拉回路 &amp; 通路与一笔画问题的关系定义：  通过图中所有边恰好一次且行遍所有顶点的通路称为 欧拉通路。 通过图中所有边恰好一次且行遍所有顶点的回路称为 欧拉回路。    注：定义中边经过且仅经过 1 次，顶点的经过次数不受限制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200907002929.png">
+<meta property="article:published_time" content="2020-08-28T06:41:29.000Z">
+<meta property="article:modified_time" content="2021-03-03T12:54:47.441Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200907002929.png">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/a98e5da5/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构与算法 - 欧拉回路 & 通路 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%9B%9E%E8%B7%AF-amp-%E9%80%9A%E8%B7%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">欧拉回路 &amp; 通路介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%AC%94%E7%94%BB%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">一笔画问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%9B%9E%E8%B7%AF-amp-%E9%80%9A%E8%B7%AF%E4%B8%8E%E4%B8%80%E7%AC%94%E7%94%BB%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">欧拉回路 &amp; 通路与一笔画问题的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%9B%BE-amp-%E5%8D%8A%E6%AC%A7%E6%8B%89%E5%9B%BE"><span class="nav-number">1.3.</span> <span class="nav-text">欧拉图 &amp; 半欧拉图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%9B%BE-amp-%E5%8D%8A%E6%AC%A7%E6%8B%89%E5%9B%BE%E7%9A%84%E5%88%A4%E5%88%AB"><span class="nav-number">1.4.</span> <span class="nav-text">欧拉图 &amp; 半欧拉图的判别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code332-%E9%87%8D%E6%96%B0%E5%AE%89%E6%8E%92%E8%A1%8C%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">Code332 重新安排行程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hierholzer-%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">Hierholzer 算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code753-%E7%A0%B4%E8%A7%A3%E4%BF%9D%E9%99%A9%E7%AE%B1"><span class="nav-number">3.</span> <span class="nav-text">Code753 破解保险箱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3"><span class="nav-number">3.1.</span> <span class="nav-text">算法思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/a98e5da5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构与算法 - 欧拉回路 & 通路
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-28 14:41:29" itemprop="dateCreated datePublished" datetime="2020-08-28T14:41:29+08:00">2020-08-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-03 20:54:47" itemprop="dateModified" datetime="2021-03-03T20:54:47+08:00">2021-03-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/a98e5da5/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 欧拉回路 & 通路" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/a98e5da5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/a98e5da5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="欧拉回路-amp-通路介绍"><a href="#欧拉回路-amp-通路介绍" class="headerlink" title="欧拉回路 &amp; 通路介绍"></a>欧拉回路 &amp; 通路介绍</h2><h3 id="一笔画问题"><a href="#一笔画问题" class="headerlink" title="一笔画问题"></a>一笔画问题</h3><p><strong>一笔画问题</strong>：给定一个 n 个点 m 条边的图，要求从指定的顶点出发，经过所有的边恰好一次。</p>
+<h3 id="欧拉回路-amp-通路与一笔画问题的关系"><a href="#欧拉回路-amp-通路与一笔画问题的关系" class="headerlink" title="欧拉回路 &amp; 通路与一笔画问题的关系"></a>欧拉回路 &amp; 通路与一笔画问题的关系</h3><p>定义：</p>
+<ul>
+<li>通过图中所有边恰好一次且行遍所有顶点的通路称为 <strong>欧拉通路</strong>。</li>
+<li>通过图中所有边恰好一次且行遍所有顶点的回路称为 <strong>欧拉回路</strong>。</li>
+</ul>
+<blockquote>
+<ul>
+<li>注：定义中边经过且仅经过 1 次，顶点的经过次数不受限制。</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h3 id="欧拉图-amp-半欧拉图"><a href="#欧拉图-amp-半欧拉图" class="headerlink" title="欧拉图 &amp; 半欧拉图"></a>欧拉图 &amp; 半欧拉图</h3><p>定义：</p>
+<ul>
+<li>具有欧拉回路的图称为 <strong>欧拉图</strong>。</li>
+<li>具有欧拉通路但不具有欧拉回路的图称为 <strong>半欧拉图</strong>。</li>
+</ul>
+<h3 id="欧拉图-amp-半欧拉图的判别"><a href="#欧拉图-amp-半欧拉图的判别" class="headerlink" title="欧拉图 &amp; 半欧拉图的判别"></a>欧拉图 &amp; 半欧拉图的判别</h3><p>如果没有保证至少存在一种合理的路径，我们需要判别这张图是否是欧拉图或者半欧拉图，具体地：</p>
+<ul>
+<li>对于无向图 G，G 是欧拉图当且仅当 G 是连通的且没有奇度顶点。</li>
+<li>对于无向图 G，G 是半欧拉图当且仅当 G 是连通的且 G 中恰有 2 个奇度顶点。</li>
+<li>对于有向图 G，G 是欧拉图当且仅当 G 的所有顶点属于同一个强连通分量且每个顶点的入度和出度相同。</li>
+<li>对于有向图 G，G 是半欧拉图当且仅当 G 的所有顶点属于同一个强连通分量且<ul>
+<li>恰有一个顶点的出度与入度差为 1；</li>
+<li>恰有一个顶点的入度与出度差为 1；</li>
+<li>所有其他顶点的入度和出度相同。</li>
+</ul>
+</li>
+</ul>
+<p>从上述描述中可知，如果图 G 是一个连通图，则可用如下表格判断其是否是欧拉图 / 半欧拉图：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>欧拉图（具有欧拉回路）</th>
+<th>半欧拉图（欧拉通路）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无向图</td>
+<td>所有顶点都是偶度</td>
+<td>所有顶点都是偶度或有且仅有两个奇度节点</td>
+</tr>
+<tr>
+<td>有向图</td>
+<td>所有节点的出度和入度均相同</td>
+<td>有且仅有一个顶点的出度减入度等于 1 <br> 有且仅有一个顶点的入度减出度等于 1 <br> 所有其他顶点的入度和出度相同</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Code332-重新安排行程"><a href="#Code332-重新安排行程" class="headerlink" title="Code332 重新安排行程"></a>Code332 重新安排行程</h2><blockquote>
+<p>332: 重新安排行程 - 力扣 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reconstruct-itinerary/">https://leetcode-cn.com/problems/reconstruct-itinerary/</a></p>
+</blockquote>
+<p>将该题转化为一笔画问题：给定一个 n 个点 m 条边的图，要求从指定的顶点出发，经过所有的边恰好一次，<strong>且使得路径的字典序最小</strong>。</p>
+<h3 id="Hierholzer-算法"><a href="#Hierholzer-算法" class="headerlink" title="Hierholzer 算法"></a>Hierholzer 算法</h3><p>Hierholzer 算法用于在连通图中寻找欧拉路径，其流程如下：</p>
+<ol>
+<li>从起点出发，进行深度优先搜索。</li>
+<li>每次沿着某条边从某个顶点移动到另外一个顶点的时候，都需要删除这条边。</li>
+<li>如果没有可移动的路径，则将所在节点加入到栈中，并返回。</li>
+</ol>
+<p>当我们顺序地考虑该问题时，我们也许很难解决该问题，因为我们无法判断当前节点的哪一个分支是「死胡同」分支。</p>
+<p>不妨倒过来思考。我们注意到只有那个入度与出度差为 1 的节点会导致死胡同。而该节点必然是最后一个遍历到的节点。我们可以改变入栈的规则，当我们遍历完一个节点所连的所有节点后，我们才将该节点入栈（即逆序入栈）。</p>
+<p>对于当前节点而言，从它的每一个非「死胡同」分支出发进行深度优先搜索，都将会搜回到当前节点。而从它的「死胡同」分支出发进行深度优先搜索将不会搜回到当前节点。也就是说当前节点的死胡同分支将会优先于其他非「死胡同」分支入栈。</p>
+<p>这样就能保证我们可以「一笔画」地走完所有边，最终的栈中逆序地保存了「一笔画」的结果。我们只要将栈中的内容反转，即可得到答案。</p>
+<p>另外，为了保证我们能够快速找到当前节点所连的节点中字典序最小的那一个，我们可以使用优先队列存储当前节点所连到的点，每次我们 O(1) 地找到最小字典序的节点，并 O(logm) 地删除它。</p>
+<p>C++ 代码实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">priority_queue</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;, <span class="built_in">std</span>::greater&lt;<span class="built_in">string</span>&gt;&gt;&gt; vec;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; stk;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; curr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (vec.count(curr) &amp;&amp; vec[curr].<span class="built_in">size</span>() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">string</span> tmp = vec[curr].top();</span><br><span class="line">            vec[curr].pop();</span><br><span class="line">            dfs(<span class="built_in">move</span>(tmp));</span><br><span class="line">        &#125;</span><br><span class="line">        stk.emplace_back(curr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">findItinerary</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;&amp; tickets)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; it : tickets) &#123;</span><br><span class="line">            vec[it[<span class="number">0</span>]].emplace(it[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(<span class="string">&quot;JFK&quot;</span>);</span><br><span class="line"></span><br><span class="line">        reverse(stk.<span class="built_in">begin</span>(), stk.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> stk;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Code753-破解保险箱"><a href="#Code753-破解保险箱" class="headerlink" title="Code753 破解保险箱"></a>Code753 破解保险箱</h2><blockquote>
+<p>753: 破解保险箱 - 力扣 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cracking-the-safe/">https://leetcode-cn.com/problems/cracking-the-safe/</a></p>
+</blockquote>
+<p>题目描述：</p>
+<p>有一个需要密码才能打开的保险箱。密码是 n 位数, 密码的每一位是 k 位序列 0, 1, …, k-1 中的一个。</p>
+<p>你可以随意输入密码，保险箱会自动记住最后 n 位输入，如果匹配，则能够打开保险箱。</p>
+<p>举个例子，假设密码是 “345”，你可以输入 “012345” 来打开它，只是你输入了 6 个字符.</p>
+<p>请返回一个能打开保险箱的最短字符串。</p>
+<h3 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h3><p>这道题说的是给了 k 个数字，值为 0 到 k-1，让我们组成 n 位密码。我们可以发现，为了尽可能的使钥匙串变短，所以我们的密码之间尽可能要相互重叠：</p>
+<ul>
+<li>如果密码是 2 位数，00 和 001 共享一个数 0，可以用来解锁密码为 00 和 01 的两个保险箱</li>
+<li>如果密码是 3 个数，012 和 0120 共享两个数 12，可以用来解锁密码为 012 和 120 的两个保险箱</li>
+</ul>
+<p>我们可以发现，两个长度为 n 的密码最好能共享 n-1 个数字，这样累加出来的钥匙串肯定是最短的。</p>
+<p>密码共有 n 位，每一个位可以有 k 个数字，那么总共不同的密码总数就有 k<sup>n</sup> 个，而每个密码可以公用 n - 1 位，所以破解保险箱的密码最短长度为：n - 1 + k<sup>n</sup> 位。</p>
+<p>我们可以考虑创建一个有 k<sup>n-1</sup> 个节点的图，每个节点有 k 条出边，则该图中一共有 k<sup>n</sup> 条边，将【节点代表的 n - 1 位数字 + 边代表的 1 位数字】作为经过该条边后尝试的密码值，而经过边后到达的新节点代表的 n - 1 位数字，可以作为下一个密码的前 n - 1 位数字使用，这样可以保证每个密码值不重复，又完全覆盖了 k<sup>n</sup> 个密码值。</p>
+<p>以三位密码的二进制保险箱（n = 3, k = 2）举例：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200907002929.png" alt="3 位密码的破解保险箱"></p>
+<p>我们可以按如下顺序遍历图中所有的边：</p>
+<pre><code>00 -&gt; 00 -&gt; 01 -&gt; 11 -&gt; 11 -&gt; 10 -&gt; 01 -&gt; 10 -&gt; 00
+00     0     1     1     1     0     1     0     0  --&gt; 0011101000
+</code></pre><p>最后可得出破解该保险箱的最短字符顺序为：0011101000，其位数也正好为 n - 1 + k<sup>n</sup> = 3 - 1 + 2<sup>3</sup> = 10 位。</p>
+<p>将其拓展为 n 位 k 个数字的密码：比如节点为 a<sub>1</sub>a<sub>2</sub>a<sub>3</sub>…a<sub>n</sub> 经过边 a<sub>m</sub> 后的新节点为 a<sub>2</sub>a<sub>3</sub>…a<sub>n</sub>a<sub>m</sub>。</p>
+<p>仍利用 Hierholzer 算法：</p>
+<ol>
+<li>从起点（以 n - 1 个 0 的节点作为起点，当然也可以选择其他节点）出发，进行深度优先搜索。</li>
+<li>每次沿着某条边从某个顶点移动到另外一个顶点的时候，都需要删除这条边（标记该条边已经过）。</li>
+<li>如果没有可移动的路径，则将所在节点加入到字符串中，并返回。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> node = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp; side, <span class="keyword">int</span> n, <span class="keyword">int</span> k, <span class="keyword">int</span> i, <span class="built_in">string</span>&amp; res)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> currNode = i % node;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; k; ++j) &#123;</span><br><span class="line">            <span class="keyword">int</span> t = currNode * k + j;</span><br><span class="line">            <span class="keyword">if</span> (!side[t]++) &#123; <span class="comment">/* 仅遍历没有走过的边 */</span></span><br><span class="line">                dfs(side, n, k, t, res);</span><br><span class="line">                res += j + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">crackSafe</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        node = <span class="built_in">pow</span>(k, n - <span class="number">1</span>);            <span class="comment">/* 节点个数 */</span></span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">side</span><span class="params">(node * k, <span class="number">0</span>)</span></span>;   <span class="comment">/* 边数个标志，用来指示每条边是否遍历过 */</span></span><br><span class="line">        <span class="built_in">string</span> res;</span><br><span class="line">        dfs(side, n, k, <span class="number">0</span>, res);         <span class="comment">/* 从 n -1 个 0 的节点开始寻找 */</span></span><br><span class="line">        res.append(n - <span class="number">1</span>, <span class="string">&#x27;0&#x27;</span>);          <span class="comment">/* 补充起始节点字符串 */</span></span><br><span class="line">        <span class="keyword">return</span> res;                      <span class="comment">/* 无需 reverse，翻转前后均为正确答案 */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reconstruct-itinerary/solution/zhong-xin-an-pai-xing-cheng-by-leetcode-solution/">重新安排行程 - 重新安排行程 - 力扣（LeetCode）</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cracking-the-safe/solution/po-jie-bao-xian-xiang-by-leetcode/">破解保险箱 - 破解保险箱 - 力扣（LeetCode）</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\42349ee0\" rel="bookmark">数据结构与算法 - 二叉搜索树</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\1c1a3b62\" rel="bookmark">数据结构与算法 - 二叉树的遍历</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2021\fd828132\" rel="bookmark">数据结构与算法 - 拓扑排序</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\4fe8298f\" rel="bookmark">数据结构与算法 - 并查集</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2021\2d042192\" rel="bookmark">数据结构与算法 - 最小生成树</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/cff0aa33/" rel="prev" title="数据压缩技术 - 游程编码">
+                  <i class="fa fa-chevron-left"></i> 数据压缩技术 - 游程编码
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/4fe8298f/" rel="next" title="数据结构与算法 - 并查集">
+                  数据结构与算法 - 并查集 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/a98e5da5/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/a98e5da5/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

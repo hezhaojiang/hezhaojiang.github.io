@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="内存泄漏一般是由于程序在堆上分配了内存而没有释放，随着程序的运行占用的内存越来越大，一方面会影响程序的稳定性，可能让运行速度越来越慢，或者造成 OOM，甚至会影响程序所运行的机器的稳定性，造成宕机。 而分析内存问题的常用工具有 valgrind 和 gperftools 等，当然也可以自行开发钩子函数，本文主要介绍 gperftools 来进行内存泄漏的分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后端开发日记 - 检查内存泄漏">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/f517d3b0/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="内存泄漏一般是由于程序在堆上分配了内存而没有释放，随着程序的运行占用的内存越来越大，一方面会影响程序的稳定性，可能让运行速度越来越慢，或者造成 OOM，甚至会影响程序所运行的机器的稳定性，造成宕机。 而分析内存问题的常用工具有 valgrind 和 gperftools 等，当然也可以自行开发钩子函数，本文主要介绍 gperftools 来进行内存泄漏的分析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-19T07:54:19.000Z">
+<meta property="article:modified_time" content="2021-01-30T12:55:48.029Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="内存管理">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/f517d3b0/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>后端开发日记 - 检查内存泄漏 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-gperftools"><span class="nav-number">1.</span> <span class="nav-text">安装 gperftools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-gperftools"><span class="nav-number">2.</span> <span class="nav-text">使用 gperftools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-heap-checking"><span class="nav-number">2.1.</span> <span class="nav-text">使用 heap-checking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%9D%A5%E4%BD%BF%E7%94%A8-heap-checking"><span class="nav-number">2.1.1.</span> <span class="nav-text">设置环境变量来使用 heap-checking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E6%9D%A5%E4%BD%BF%E7%94%A8-heap-checking"><span class="nav-number">2.1.2.</span> <span class="nav-text">修改代码来使用 heap-checking</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-heap-checking-%E8%BE%93%E5%87%BA"><span class="nav-number">2.2.</span> <span class="nav-text">分析 heap-checking 输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-heap-profiling"><span class="nav-number">2.3.</span> <span class="nav-text">使用 heap-profiling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%9D%A5%E4%BD%BF%E7%94%A8-heap-profiling"><span class="nav-number">2.3.1.</span> <span class="nav-text">设置环境变量来使用 heap-profiling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E6%9D%A5%E4%BD%BF%E7%94%A8-heap-profiling"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改代码来使用 heap-profiling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90-heap-profiling-%E8%BE%93%E5%87%BA"><span class="nav-number">2.3.3.</span> <span class="nav-text">分析 heap-profiling 输出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/f517d3b0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          后端开发日记 - 检查内存泄漏
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-19 15:54:19" itemprop="dateCreated datePublished" datetime="2020-11-19T15:54:19+08:00">2020-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-30 20:55:48" itemprop="dateModified" datetime="2021-01-30T20:55:48+08:00">2021-01-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">后端开发日记</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/f517d3b0/" class="post-meta-item leancloud_visitors" data-flag-title="后端开发日记 - 检查内存泄漏" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/f517d3b0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/f517d3b0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>内存泄漏一般是由于程序在堆上分配了内存而没有释放，随着程序的运行占用的内存越来越大，一方面会影响程序的稳定性，可能让运行速度越来越慢，或者造成 <code>OOM</code>，甚至会影响程序所运行的机器的稳定性，造成宕机。</p>
+<p>而分析内存问题的常用工具有 <code>valgrind</code> 和 <code>gperftools</code> 等，当然也可以自行开发钩子函数，本文主要介绍 <code>gperftools</code> 来进行内存泄漏的分析。</p>
+<a id="more"></a>
+<h2 id="安装-gperftools"><a href="#安装-gperftools" class="headerlink" title="安装 gperftools"></a>安装 gperftools</h2><p>首先是一些依赖环境的安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## libunwind 64 位系统必选</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/libunwind/libunwind.git</span><br><span class="line"><span class="built_in">cd</span> libunwind</span><br><span class="line">sh ./autogen.sh</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成 PDF 可视化必选</span></span><br><span class="line">sudo apt-get install graphviz graphviz-doc</span><br><span class="line">sudo yum install graphviz graphviz-doc</span><br><span class="line">sudo yum install ghostscript</span><br></pre></td></tr></table></figure>
+<p>然后就可以安装 <code>gperftools</code> 工具了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gperftools/gperftools.git</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>安装完成后，如果程序运行环境与编译环境不是同一台主机，需要拷贝出一些成果物放置到合适的位置，主要成果物包括：</p>
+<ol>
+<li><code>lib</code> 文件，需要放在运行环境中<ul>
+<li><code>libunwind.so.8</code></li>
+<li><code>libtcmalloc.so.4</code></li>
+</ul>
+</li>
+<li>头文件，需要放在代码中方便集中管理<ul>
+<li><code>heap-checker.h</code></li>
+<li><code>heap-profiler.h</code></li>
+</ul>
+</li>
+<li>工具文件，可以放在编译环境中使用，也可以拷贝到其他主机上使用<ul>
+<li><code>pprof</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="使用-gperftools"><a href="#使用-gperftools" class="headerlink" title="使用 gperftools"></a>使用 gperftools</h2><p><code>gperftools</code> 提供了 <code>4</code> 个工具：</p>
+<ul>
+<li><code>thread-caching malloc</code> : 简称 <code>tcmalloc</code>，可以用来替代 <code>glibc</code> 中原有的 <code>malloc/free</code>、<code>new/delete</code> 等函数</li>
+<li><code>heap-checking using tcmalloc</code> : 用来检查程序中的内存泄漏位置，适用于 <code>C++</code></li>
+<li><code>heap-profiling using tcmalloc</code> : 用来统计程序中的内存申请、释放情况，可用于检查内存使用情况和泄漏情况，适用于 <code>C/C++</code>，可应用于所有可执行文件</li>
+<li><code>CPU profiler</code> : 用来统计程序中每个部分占用 CPU 性能情况，用于程序 CPU 性能的观察和优化</li>
+</ul>
+<p>以上 <code>4</code> 个工具中，用于分析内存泄漏的有两个工具：<code>heap-checking using tcmalloc</code> 和 <code>heap-profiling using tcmalloc</code></p>
+<h3 id="使用-heap-checking"><a href="#使用-heap-checking" class="headerlink" title="使用 heap-checking"></a>使用 heap-checking</h3><p>使用 <code>heap-checking</code> 有两种方式，一种是设置环境变量的方法，一种是修改代码的方法</p>
+<h4 id="设置环境变量来使用-heap-checking"><a href="#设置环境变量来使用-heap-checking" class="headerlink" title="设置环境变量来使用 heap-checking"></a>设置环境变量来使用 heap-checking</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env LD_PRELOAD=<span class="string">&quot;/usr/lib/libtcmalloc.so&quot;</span></span><br><span class="line"><span class="comment">## 假设我们要检查的程序是 /usr/local/bin/my_binary_compiled_with_tcmalloc</span></span><br><span class="line">env HEAPCHECK=normal /usr/<span class="built_in">local</span>/bin/my_binary_compiled_with_tcmalloc</span><br></pre></td></tr></table></figure>
+<ol>
+<li>minimal</li>
+<li>normal</li>
+<li>strict</li>
+<li>draconian</li>
+</ol>
+<p>“minimal”：堆检查在初始化中尽可能晚地开始，这意味着您可以在初始化例程中泄漏一些内存，并且不会触发泄漏消息。如果您经常在一次全局初始化中故意泄漏数据，则 “minimal” 模式对您非常有用。否则，应使用更严格的模式。</p>
+<p>“normal” 堆检查跟踪活动对象，并报告程序退出时无法通过活动对象访问的任何数据的泄漏，是谷歌最常用的模式，适用于日常堆检查使用。</p>
+<p>“strict” 堆检查很像 “normal”，但有一些额外的检查，即内存不会丢失在全局析构函数中。特别是，如果您有一个全局变量，该变量在程序执行期间分配内存，然后在全局析构函数中 “forgets” 内存（例如，将指针设置为 NULL），这将在 “strict” 模式下提示泄漏消息，而在 “normal” 模式下并不会进行提示。</p>
+<p>“draconian” 堆检查适合那些喜欢非常精确地了解其内存管理，并且希望堆检查器帮助他们实施它的人。在 “draconian” 模式下，堆检查器不会执行 “live object” 检查，因此除非在程序退出之前释放了所有分配的内存，它都会报告泄漏。</p>
+<h4 id="修改代码来使用-heap-checking"><a href="#修改代码来使用-heap-checking" class="headerlink" title="修改代码来使用 heap-checking"></a>修改代码来使用 heap-checking</h4><blockquote>
+<p>可参考：<a target="_blank" rel="noopener" href="https://gperftools.github.io/gperftools/heap_checker.html">https://gperftools.github.io/gperftools/heap_checker.html</a></p>
+</blockquote>
+<h3 id="分析-heap-checking-输出"><a href="#分析-heap-checking-输出" class="headerlink" title="分析 heap-checking 输出"></a>分析 heap-checking 输出</h3><h3 id="使用-heap-profiling"><a href="#使用-heap-profiling" class="headerlink" title="使用 heap-profiling"></a>使用 heap-profiling</h3><p>与 <code>heap-checking</code> 一样，<code>heap-profiling</code> 也有同样的两种方法来使用</p>
+<h4 id="设置环境变量来使用-heap-profiling"><a href="#设置环境变量来使用-heap-profiling" class="headerlink" title="设置环境变量来使用 heap-profiling"></a>设置环境变量来使用 heap-profiling</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env LD_PRELOAD=<span class="string">&quot;/usr/lib/libtcmalloc.so&quot;</span></span><br><span class="line"><span class="comment">## 假设我们要检查的程序是 /usr/local/bin/my_binary_compiled_with_tcmalloc</span></span><br><span class="line">env HEAPPROFILE=/tmp/mybin.hprof /usr/<span class="built_in">local</span>/bin/my_binary_compiled_with_tcmalloc</span><br></pre></td></tr></table></figure>
+<p>除了以上环境变量，还有一些环境变量可以设置：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>环境变量</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEAP_PROFILE_ALLOCATION_INTERVAL</td>
+<td>1073741824 (1GB)</td>
+<td>每次程序分配指定字节数时，转储堆分析信息。</td>
+</tr>
+<tr>
+<td>HEAP_PROFILE_INUSE_INTERVAL</td>
+<td>104857600(100M)</td>
+<td>每当高水位内存使用标记增加指定字节数时，转储堆分析信息。</td>
+</tr>
+<tr>
+<td>HEAP_PROFILE_TIME_INTERVAL</td>
+<td>0</td>
+<td>每次经过指定的秒数时转储堆分析信息。</td>
+</tr>
+<tr>
+<td>HEAPPROFILESIGNAL</td>
+<td>已禁用</td>
+<td>每当将指定的信号发送到进程时，转储堆分析信息。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="修改代码来使用-heap-profiling"><a href="#修改代码来使用-heap-profiling" class="headerlink" title="修改代码来使用 heap-profiling"></a>修改代码来使用 heap-profiling</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gperftools/heap-profiler.h&gt;</span></span></span><br><span class="line"><span class="comment">/* 启动堆分析器 */</span></span><br><span class="line">HeapProfilerStart()</span><br><span class="line"><span class="comment">/* 停止堆分析器 */</span></span><br><span class="line">HeapProfilerStop()</span><br><span class="line"><span class="comment">/* 转储堆分析器分析结果 */</span></span><br><span class="line">HeapProfilerDump()</span><br><span class="line">GetHeapProfile()</span><br><span class="line"><span class="comment">/* 检查堆分析器是否启动 */</span></span><br><span class="line">IsHeapProfilerRunning()</span><br></pre></td></tr></table></figure>
+<p>示例程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gperftools/heap-profiler.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WAIT_FOREVER(t) do &#123; while(1) &#123; sleep(t); &#125; &#125; while(0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">leek_malloc</span><span class="params">(<span class="keyword">void</span>* arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>* ptr = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        ptr = <span class="built_in">malloc</span>(<span class="number">1024</span>); <span class="comment">/* 1024 Byte */</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;malloc 1024 byte success.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (time(<span class="literal">NULL</span>) % <span class="number">2</span> == <span class="number">0</span>) <span class="built_in">free</span>(ptr);</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">leek_check</span><span class="params">(<span class="keyword">void</span>* arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        HeapProfilerDump(<span class="string">&quot;check&quot;</span>);</span><br><span class="line">        sleep(<span class="number">5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> tidmalloc;</span><br><span class="line">    <span class="keyword">pthread_t</span> tiddump;</span><br><span class="line">    HeapProfilerStart(<span class="string">&quot;start&quot;</span>);</span><br><span class="line"></span><br><span class="line">    pthread_create(&amp;tidmalloc, <span class="literal">NULL</span>, leek_malloc, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_create(&amp;tidmalloc, <span class="literal">NULL</span>, leek_check, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    WAIT_FOREVER(<span class="number">10</span>);</span><br><span class="line">    HeapProfilerStop();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析-heap-profiling-输出"><a href="#分析-heap-profiling-输出" class="headerlink" title="分析 heap-profiling 输出"></a>分析 heap-profiling 输出</h4><p>如果在程序中打开堆分析，程序将定期将配置文件写入文件系统。配置文件序列将命名为：</p>
+<pre><code>    &lt;prefix&gt;.0000.heap
+    &lt;prefix&gt;.0001.heap
+    &lt;prefix&gt;.0002.heap
+    ...
+</code></pre><p><code>&lt;prefix&gt;</code> 是运行代码时提供的文件名前缀（或者通过环境变量 <code>HEAPPROFILE</code> 提供）的位置。请注意，如果提供的前缀不是以 ‘/‘ 开头，则配置文件将写入程序的工作目录。</p>
+<p>通过将配置文件输出传递到工具 <code>pprof</code> 可以查看配置文件输出。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://gperftools.github.io/gperftools/heap_checker.html">Gperftools Heap Leak Checker</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://gperftools.github.io/gperftools/heapprofile.html">Gperftools Heap Profiler</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag"># 内存管理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/1472cc3/" rel="prev" title="音视频封装 - PS 封装解析示例">
+                  <i class="fa fa-chevron-left"></i> 音视频封装 - PS 封装解析示例
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/f5bbcc60/" rel="next" title="流媒体传输 - HLS 协议">
+                  流媒体传输 - HLS 协议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/f517d3b0/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/f517d3b0/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

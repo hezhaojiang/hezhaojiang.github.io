@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="libevent 允许创建一个超时 event，使用 evtimer_new 宏。 1#define evtimer_new(b, cb, arg)     event_new((b), -1, 0, (cb), (arg))">
+<meta property="og:type" content="article">
+<meta property="og:title" content="源码阅读 libevent - 超时管理：min_heap">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/97886769/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="libevent 允许创建一个超时 event，使用 evtimer_new 宏。 1#define evtimer_new(b, cb, arg)     event_new((b), -1, 0, (cb), (arg))">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-05T21:08:22.000Z">
+<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="libevent">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/97886769/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>源码阅读 libevent - 超时管理：min_heap | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E6%97%B6-event-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">超时 event 的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%B6%85%E6%97%B6%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">设置超时值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%A4%9A%E8%B7%AF-IO-%E5%A4%8D%E7%94%A8%E5%87%BD%E6%95%B0%E7%AD%89%E5%BE%85%E8%B6%85%E6%97%B6"><span class="nav-number">3.</span> <span class="nav-text">调用多路 IO 复用函数等待超时</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#event-base-loop"><span class="nav-number">3.1.</span> <span class="nav-text">event_base_loop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timeout-next"><span class="nav-number">3.2.</span> <span class="nav-text">timeout_next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timeout-process"><span class="nav-number">3.3.</span> <span class="nav-text">timeout_process</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/97886769/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          源码阅读 libevent - 超时管理：min_heap
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-06 05:08:22" itemprop="dateCreated datePublished" datetime="2020-11-06T05:08:22+08:00">2020-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">源码阅读</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/97886769/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 超时管理：min_heap" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/97886769/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/97886769/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><code>libevent</code> 允许创建一个超时 <code>event</code>，使用 <code>evtimer_new</code> 宏。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> evtimer_new(b, cb, arg)     event_new((b), -1, 0, (cb), (arg))</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>从宏的实现来看，它一样是用到了一般的 <code>event_new</code>，并且不使用任何的文件描述符。从超时 <code>event</code> 宏的实现来看，无论是 <code>evtimer</code> 创建的 <code>event</code> 还是一般 <code>event_new</code> 创建的 <code>event</code>，都能使得 <code>libevent</code> 进行超时监听。</p>
+<p>使得 <code>libevent</code> 对一个 <code>event</code> 进行超时监听的原因是：在调用 <code>int event_add(struct event *ev, const struct timeval *tv)</code> 的时候，第二参数不能为 <code>NULL</code>，要设置一个超时值。如果为 <code>NULL</code>，那么 <code>libevent</code> 将不会为这个 <code>event</code> 监听超时。下文统一称设置了超时值的 <code>event</code> 为超时 <code>event</code>。</p>
+<h2 id="超时-event-的原理"><a href="#超时-event-的原理" class="headerlink" title="超时 event 的原理"></a>超时 event 的原理</h2><p><code>libevent</code> 对超时进行监听的原理不同于之前讲到的对信号的监听，<code>libevent</code> 对超时的监听的原理是，多路 <code>IO</code> 复用函数都是有一个超时值。如果用户需要 <code>libevent</code> 同时监听多个超时 <code>event</code>，那么 <code>libevent</code> 就把超时值最小的那个作为多路 <code>IO</code> 复用函数的超时值。自然，当时间一到，就会从多路 <code>IO</code> 复用函数返回。此时对超时 <code>event</code> 进行处理即可。</p>
+<p><code>libevent</code> 运行用户同时监听多个超时 <code>event</code>，那么就必须要对这个超时值进行管理。<code>libevent</code> 提供了小根堆 <code>min_heap</code> 和通用超时 <code>common timeout</code> 两种管理方式。本文首先分析小根堆 <code>min_heap</code> 超时管理机制。</p>
+<h2 id="设置超时值"><a href="#设置超时值" class="headerlink" title="设置超时值"></a>设置超时值</h2><p>首先调用 event_add 时要设置一个超时值，这样才能成为一个超时 event。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_add</span><span class="params">(struct event *ev, <span class="keyword">const</span> struct timeval *tv)</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    res = event_add_nolock_(ev, tv, <span class="number">0</span>);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_add_nolock_</span><span class="params">(struct event *ev, <span class="keyword">const</span> struct timeval *tv, <span class="keyword">int</span> tv_is_absolute)</span> </span>&#123;</span><br><span class="line">    ...... <span class="comment">/* common timeout 相关代码没有展示 */</span></span><br><span class="line">    <span class="comment">/* tv 不为 NULL, 就说明是一个超时 event, 在小根堆中为其留一个位置 */</span></span><br><span class="line">    <span class="keyword">if</span> (tv != <span class="literal">NULL</span> &amp;&amp; !(ev-&gt;ev_flags &amp; EVLIST_TIMEOUT)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (min_heap_reserve_(&amp;base-&gt;timeheap, <span class="number">1</span> + min_heap_size_(&amp;base-&gt;timeheap)) == <span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="number">-1</span>);  <span class="comment">/* ENOMEM == errno */</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...... <span class="comment">/* 将 IO 或者信号 event 插入到对应的队列中 */</span></span><br><span class="line">    <span class="keyword">if</span> (res != <span class="number">-1</span> &amp;&amp; tv != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>;</span></span><br><span class="line">        <span class="comment">/* 用户把这个 event 设置成 EV_PERSIST。即永久 event 如果没有这样设置的话，那么只会超时一次</span></span><br><span class="line"><span class="comment">        ** 设置了，那么就可以超时多次。那么就要记录用户设置的超时值。 */</span></span><br><span class="line">        <span class="keyword">if</span> (ev-&gt;ev_closure == EV_CLOSURE_EVENT_PERSIST &amp;&amp; !tv_is_absolute)</span><br><span class="line">            ev-&gt;ev_io_timeout = *tv;</span><br><span class="line">        <span class="comment">/* 因为可以在次线程调用 event_add。而主线程刚好在执行 event_base_dispatch */</span></span><br><span class="line">        <span class="keyword">if</span> ((ev-&gt;ev_flags &amp; EVLIST_ACTIVE) &amp;&amp; (ev-&gt;ev_res &amp; EV_TIMEOUT)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ev-&gt;ev_events &amp; EV_SIGNAL) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ev-&gt;ev_ncalls &amp;&amp; ev-&gt;ev_pncalls) &#123; <span class="comment">/* Abort loop */</span></span><br><span class="line">                    *ev-&gt;ev_pncalls = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* 从超时队列中删除这个 event。因为下次会再次加入。多次对同一个超时 event 调用 event_add, 那么只能保留最后的那个。 */</span></span><br><span class="line">            event_queue_remove_active(base, event_to_event_callback(ev));</span><br><span class="line">        &#125;</span><br><span class="line">        gettime(base, &amp;now); <span class="comment">/* 获取现在的时间 */</span></span><br><span class="line">        <span class="comment">/* 虽然用户在 event_add 时只需用一个相对时间，但实际上在 Libevent 内部还是要把这个时间转换成绝对时间。</span></span><br><span class="line"><span class="comment">        ** 从存储的角度来说，存绝对时间只需一个变量。而相对时间则需两个，一个存相对值，另一个存参照物。 */</span></span><br><span class="line">        <span class="keyword">if</span> (tv_is_absolute) ev-&gt;ev_timeout = *tv; <span class="comment">/* 该参数指明时间是否为一个绝对时间 */</span></span><br><span class="line">        <span class="keyword">else</span> evutil_timeradd(&amp;now, tv, &amp;ev-&gt;ev_timeout); <span class="comment">/* 参照时间 + 相对时间  ev_timeout 存的是绝对时间 */</span></span><br><span class="line">        event_queue_insert_timeout(base, ev); <span class="comment">/* 将该超时 event 插入到超时队列中 */</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">event</span>* <span class="title">top</span> = <span class="title">NULL</span>;</span></span><br><span class="line">        <span class="comment">/* 本次插入的超时值，是所有超时中最小的。那么此时就需要通知主线程。. */</span></span><br><span class="line">        <span class="keyword">if</span> (min_heap_elt_is_top_(ev)) notify = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((top = min_heap_top_(&amp;base-&gt;timeheap)) != <span class="literal">NULL</span> &amp;&amp; evutil_timercmp(&amp;top-&gt;ev_timeout, &amp;now, &lt;))</span><br><span class="line">            notify = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 如果代码逻辑中是需要通知的。并且本线程不是主线程。那么就通知主线程 */</span></span><br><span class="line">    <span class="keyword">if</span> (res != <span class="number">-1</span> &amp;&amp; notify &amp;&amp; EVBASE_NEED_NOTIFY(base)) evthread_notify_base(base);</span><br><span class="line">    <span class="keyword">return</span> (res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于同一个 <code>event</code>，如果是 <code>IO event</code> 或者 <code>sigal event</code>，那么将无法多次添加。但如果是一个超时 <code>event</code>，那么是可以多次添加的。并且对应超时值会使用最后添加时指明的那个，之前的统统不要，即替换掉之前的超时值。</p>
+<h2 id="调用多路-IO-复用函数等待超时"><a href="#调用多路-IO-复用函数等待超时" class="headerlink" title="调用多路 IO 复用函数等待超时"></a>调用多路 IO 复用函数等待超时</h2><h3 id="event-base-loop"><a href="#event-base-loop" class="headerlink" title="event_base_loop"></a>event_base_loop</h3><p>现在来看一下 <code>event_base_loop</code> 函数，看其是怎么处理超时 <code>event</code> 的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 非超时相关代码没有展示 */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_loop</span><span class="params">(struct event_base *base, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">eventop</span> *<span class="title">evsel</span> = <span class="title">base</span>-&gt;<span class="title">evsel</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> *<span class="title">tv_p</span>;</span></span><br><span class="line">    <span class="keyword">int</span> res, done, retval = <span class="number">0</span>;</span><br><span class="line">    done = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (!done) &#123;</span><br><span class="line">        tv_p = &amp;tv;</span><br><span class="line">        <span class="keyword">if</span> (!N_ACTIVE_CALLBACKS(base) &amp;&amp; !(flags &amp; EVLOOP_NONBLOCK)) &#123;</span><br><span class="line">            <span class="comment">/* 根据 Timer 事件计算 evsel-&gt;dispatch 的最大等待时间（超时值最小） */</span></span><br><span class="line">            timeout_next(base, &amp;tv_p);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/* if we have active events, we just poll new events without waiting. */</span></span><br><span class="line">            evutil_timerclear(&amp;tv);</span><br><span class="line">        &#125;</span><br><span class="line">        res = evsel-&gt;dispatch(base, tv_p);</span><br><span class="line">        <span class="comment">/* 处理超时事件，将超时事件插入到激活链表中 */</span></span><br><span class="line">        timeout_process(base);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">done:</span><br><span class="line">    <span class="keyword">return</span> (retval);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>event_base_loop()</code> 中有关超时管理方面工作不多，最主要的工作有两部分：</p>
+<ol>
+<li><p>设置 <code>dispatch</code> 回调的第二个参数 <code>tv</code>，这个参数如果为 <code>0</code>, 则无论是否有事件发生，都会立即返回。</p>
+<ol>
+<li><p>如果设置了 <code>EVLOOP_NONBLOCK</code> 标志位，则会调用 <code>evutil_timerclear()</code> 将 <code>tv</code> 设置为 <code>0</code></p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 不会阻塞，它仅仅是查看是否已经有 event ready. 有则运行其 callback. 然后退出 */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLOOP_NONBLOCK 0x02</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> evutil_timerclear(tvp)  (tvp)-&gt;tv_sec = (tvp)-&gt;tv_usec = 0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不存在激活的 <code>event</code>，也会调用 <code>evutil_timerclear()</code> 将 <code>tv</code> 设置为 <code>0</code></p>
+</li>
+<li>如果存在激活的 <code>event</code> 且没有设置 <code>EVLOOP_NONBLOCK</code> 标志位，则需要调用 <code>timeout_next()</code> 获取最近的超时 <code>event</code>，并作为等待事件的时间传给 <code>dispatch</code> 回调函数</li>
+</ol>
+</li>
+<li><p>调用 <code>timeout_process()</code> 函数将超时了的 <code>event</code> 加入激活队列。</p>
+</li>
+</ol>
+<h3 id="timeout-next"><a href="#timeout-next" class="headerlink" title="timeout_next"></a>timeout_next</h3><p><code>timeout_next()</code> 用来计算出本次调用多路 <code>IO</code> 复用函数的等待时间：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">timeout_next</span><span class="params">(struct event_base *base, struct timeval **tv_p)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* Caller must hold th_base_lock */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> *<span class="title">tv</span> = *<span class="title">tv_p</span>;</span></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* 堆的首元素具有最小的超时值，这个是小根堆的性质。 */</span></span><br><span class="line">    ev = min_heap_top_(&amp;base-&gt;timeheap);</span><br><span class="line">    <span class="keyword">if</span> (ev == <span class="literal">NULL</span>) &#123; *tv_p = <span class="literal">NULL</span>; <span class="keyword">goto</span> out; &#125; <span class="comment">/* 堆中没有元素 */</span></span><br><span class="line">    <span class="keyword">if</span> (gettime(base, &amp;now) == <span class="number">-1</span>) &#123; res = <span class="number">-1</span>; <span class="keyword">goto</span> out; &#125; <span class="comment">/* /* 获取当前时间 */</span></span><br><span class="line">    <span class="comment">/* 如果超时时间 &lt;= 当前时间，不能等待，需要立即返回</span></span><br><span class="line"><span class="comment">    ** 因为 ev_timeout 这个时间是由 event_add 调用时的绝对时间 + 相对时间。所以 ev_timeout 是绝对时间。</span></span><br><span class="line"><span class="comment">    ** 可能在调用 event_add 之后，过了一段时间才调用 event_base_diapatch, 所以现在可能都过了用户设置的超时时间。 */</span></span><br><span class="line">    <span class="keyword">if</span> (evutil_timercmp(&amp;ev-&gt;ev_timeout, &amp;now, &lt;=)) &#123; evutil_timerclear(tv); <span class="keyword">goto</span> out; &#125;</span><br><span class="line">    <span class="comment">/* 计算等待的时间 = 当前时间 - 最小的超时时间 */</span></span><br><span class="line">    evutil_timersub(&amp;ev-&gt;ev_timeout, &amp;now, tv);</span><br><span class="line">    event_debug((<span class="string">&quot;timeout_next: event: %p, in %d seconds, %d useconds&quot;</span>, ev, (<span class="keyword">int</span>)tv-&gt;tv_sec, (<span class="keyword">int</span>)tv-&gt;tv_usec));</span><br><span class="line">out:</span><br><span class="line">    <span class="keyword">return</span> (res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="timeout-process"><a href="#timeout-process" class="headerlink" title="timeout_process"></a>timeout_process</h3><p><code>timeout_process()</code> 函数将超时了的 <code>event</code> 加入激活队列：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">timeout_process</span><span class="params">(struct event_base *base)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (min_heap_empty_(&amp;base-&gt;timeheap)) <span class="keyword">return</span>;</span><br><span class="line">    gettime(base, &amp;now);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 遍历小根堆的元素。之所以不是只取堆顶那一个元素，是因为当主线程调用多路 IO 复用函数进入等待时，次线程可能添加了多个超时值更小的 event */</span></span><br><span class="line">    <span class="keyword">while</span> ((ev = min_heap_top_(&amp;base-&gt;timeheap))) &#123;</span><br><span class="line">        <span class="comment">/* ev-&gt;ev_timeout 存的是绝对时间，超时时间比此刻时间大，说明该 event 还没超时。那么余下的小根堆元素更不用检查了。 */</span></span><br><span class="line">        <span class="keyword">if</span> (evutil_timercmp(&amp;ev-&gt;ev_timeout, &amp;now, &gt;)) <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">/* 下面说到的 del 是等同于调用 event_del. 把 event 从这个 event_base 中 (所有的队列都) 删除。event_base 不再监听之。</span></span><br><span class="line"><span class="comment">        ** 这里是 timeout_process 函数。所以对于有超时的 event，才会被 del 掉。</span></span><br><span class="line"><span class="comment">        ** 对于有 EV_PERSIST 选项的 event，在处理激活 event 的时候，会再次添加进 event_base 的。</span></span><br><span class="line"><span class="comment">        ** 这样做的一个好处就是，再次添加的时候，又可以重新计算该 event 的超时时间 (绝对时间)。 */</span></span><br><span class="line">        event_del_nolock_(ev, EVENT_DEL_NOBLOCK);</span><br><span class="line">        <span class="comment">/* 把这个 event 加入到 event_base 的激活队列中。event_base 的激活队列又有该 event 了。</span></span><br><span class="line"><span class="comment">        ** 如果该 event 是 EV_PERSIST 的，可以再次添加进该 event_base */</span></span><br><span class="line">        event_active_nolock_(ev, EV_TIMEOUT, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当从多路 <code>IO</code> 复用函数返回时，就检查时间小根堆，看有多少个 <code>event</code> 已经超时了。如果超时了，那就把这个 <code>event</code> 加入到 <code>event_base</code> 的激活队列中。并且把这个超时删除掉。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz">libevent-2.1.11-stable.tar.gz (Released 2019-08-01)</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="https://github.com/KelvinYin/libevent-src-analysis/blob/master/libevent%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md">libevent-src-analysis/libevent 源码分析. md at master · KelvinYin/libevent-src-analysis</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/libevent/" rel="tag"># libevent</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/aa6f0789/" rel="prev" title="后端开发日记 - C++ 之位运算">
+                  <i class="fa fa-chevron-left"></i> 后端开发日记 - C++ 之位运算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/dd5b304b/" rel="next" title="源码阅读 libevent - 工作流程分析">
+                  源码阅读 libevent - 工作流程分析 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/97886769/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/97886769/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="MPEG2-PS 简介PS 流（MPEG program stream）是用于多路复用数字音频、视频等的容器格式。PS 格式在 MPEG-1 Part 1 (ISO&#x2F;IEC 11172-1) 和 MPEG-2 Part 1, Systems (ISO&#x2F;IEC standard 13818-1&#x2F;ITU-T H.222.0) 中指定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频封装 - PS 封装格式">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/9064839e/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="MPEG2-PS 简介PS 流（MPEG program stream）是用于多路复用数字音频、视频等的容器格式。PS 格式在 MPEG-1 Part 1 (ISO&#x2F;IEC 11172-1) 和 MPEG-2 Part 1, Systems (ISO&#x2F;IEC standard 13818-1&#x2F;ITU-T H.222.0) 中指定。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729221633.jpg">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729222439.png">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729222901.jpg">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729224213.png">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201214231955.jpg">
+<meta property="article:published_time" content="2020-07-28T08:32:42.000Z">
+<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="MPEG2-PS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729221633.jpg">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/9064839e/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>音视频封装 - PS 封装格式 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MPEG2-PS-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">MPEG2-PS 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Program-Stream"><span class="nav-number">2.1.</span> <span class="nav-text">Program Stream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Program-Stream-Pack"><span class="nav-number">2.2.</span> <span class="nav-text">Program Stream Pack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Program-Stream-Pack-Header"><span class="nav-number">2.3.</span> <span class="nav-text">Program Stream Pack Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#System-header"><span class="nav-number">2.4.</span> <span class="nav-text">System header</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/9064839e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音视频封装 - PS 封装格式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-07-28 16:32:42" itemprop="dateCreated datePublished" datetime="2020-07-28T16:32:42+08:00">2020-07-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%B0%81%E8%A3%85/" itemprop="url" rel="index"><span itemprop="name">音视频封装</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/9064839e/" class="post-meta-item leancloud_visitors" data-flag-title="音视频封装 - PS 封装格式" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/9064839e/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/9064839e/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="MPEG2-PS-简介"><a href="#MPEG2-PS-简介" class="headerlink" title="MPEG2-PS 简介"></a>MPEG2-PS 简介</h2><p>PS 流（MPEG program stream）是用于多路复用数字音频、视频等的容器格式。PS 格式在 MPEG-1 Part 1 (ISO/IEC 11172-1) 和 MPEG-2 Part 1, Systems (ISO/IEC standard 13818-1/ITU-T H.222.0) 中指定。</p>
+<a id="more"></a>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="Program-Stream"><a href="#Program-Stream" class="headerlink" title="Program Stream"></a>Program Stream</h3><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729221633.jpg" alt="Program Stream 结构"></p>
+<blockquote>
+<p>pack_start_code – The pack_start_code is the bit string ‘0000 0000 0000 0000 0000 0001 1011 1010’ (0x000001BA). It identifies the beginning of a pack.<br>MPEG_program_end_code – The MPEG_program_end_code is the bit string ‘0000 0000 0000 0000 0000 0001 1011 1001’ (0x000001B9). It terminates the Program Stream.</p>
+</blockquote>
+<h3 id="Program-Stream-Pack"><a href="#Program-Stream-Pack" class="headerlink" title="Program Stream Pack"></a>Program Stream Pack</h3><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729222439.png" alt="Program Stream Pack 结构"></p>
+<blockquote>
+<p>packet_start_code_prefix – The packet_start_code_prefix is a 24-bit code. Together with the stream_id that follows it constitutes a packet start code that identifies the beginning of a packet. The packet_start_code_prefix is the bit string ‘0000 0000 0000 0000 0000 0001’ (0x000001).</p>
+</blockquote>
+<h3 id="Program-Stream-Pack-Header"><a href="#Program-Stream-Pack-Header" class="headerlink" title="Program Stream Pack Header"></a>Program Stream Pack Header</h3><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729222901.jpg" alt="Program Stream Pack Header 结构"></p>
+<ul>
+<li>pack_start_code — pack_start_code 为比特串’0000 0000 0000 0000 0000 0001 1011 1010’ (0x000001BA)。它标识 PS 包的起始。</li>
+<li>system_clock_reference_base; system_clock_reference_extension — 系统时钟参考（SCR）为分成两部分编码的 42 比特字段。第一部分 system_clock_reference_base 为 33 比特字段，第二部分 system_clock_reference_extension 为 9 比特字段。SCR 指示在节目目标解码器的输入端包含 system_clock_reference_base 最后比特的字节到达的预期时间。</li>
+<li>marker_bit — marker_bit 为 1 比特字段，其值为‘1’。</li>
+<li>program_mux_rate — 此为 22 比特整数，指示包期间 P-STD 接收节目流的速率，其中该节目流包含在包中。program_mux_rate 值以 50 字节 / 秒为度量单位。0 值禁用。program_mux_rate 中表示的值用于规定字节到达 2.5.2 中的 P-STD 输入端的时间。在 program_mux_rate 字段中的编码值可以随着 ITU-T H.222.0 建议书 | ISO/IEC 13818-1 节目多路复用流中的包到包的变化而改变。</li>
+<li>pack_stuffing_length — 3 比特整数，指示跟随此字段的填充字节数。</li>
+<li>stuffing_byte — 此为等于‘1111 1111’的固定 8 比特 值，可以由编码器插入，例如满足信道的要求。它由解码器丢弃。在每个包头中，应存在不多于 7 个的填充字节。</li>
+</ul>
+<h3 id="System-header"><a href="#System-header" class="headerlink" title="System header"></a>System header</h3><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729224213.png" alt="System header 结构"></p>
+<ul>
+<li>system_header_start_code — 比特串 ‘0000 0000 0000 0000 0000 0001 1011 1011’ (0x000001BB)。它标识 System header 的起始。</li>
+<li>header_length — 此 16 比特字段指示跟随 header_length 字段的系统头的字节长度。</li>
+<li>rate_bound — 22 比特字段。rate_bound 为大于或等于在任意节目流包中编码的 program_mux_rate 字段的最大值的整数值。它可供解码器使用来评估它是否有能力解码该完整流。</li>
+<li>audio_bound — 6 比特字段。为 0 到 32 闭区间内的一个整数，在解码过程同时被激活的 PS 流中，它被设置为大于或等于 ISO/IEC 13818-3 和 ISO/IEC 11172-3 音频流最大数的整数值。</li>
+<li>fixed_flag — fixed_flag 为 1 比特标志。置于‘1’时指示固定的比特速率操作。置于‘0’时指示可变比特速率操作。</li>
+<li>CSPS_flag — CSPS_flag 为 1 比特字段。若其值置于‘1’，则节目流满足 2.7.9 中规定的限制。</li>
+<li>system_audio_lock_flag — system_audio_lock_flag 为 1 比特字段，指示音频采样速率和系统目标解码器的 system_clock_frequency 之间存在特定的常量比率关系。</li>
+<li>system_video_lock_flag — system_video_lock_flag 为 1 比特字段，指示视频时间基和系统目标解码器的系统时钟频率之间存在特定的常量比率关系。</li>
+<li>video_bound — video_bound 为 5 比特整数，在 0 到 16 的闭区间内取值，在解码过程同时被激活的 PS 流中，它被设置为大于或等于视流的最大数的整数值。</li>
+<li>packet_rate_restriction_flag — 1 比特标志。</li>
+<li>reserved_bits — 此 7 比特字段由 ISO/IEC 保留供未来使用。值应为‘111 1111’。</li>
+<li>stream_id — stream_id 为 8 比特字段， 指示以下 P-STD_buffer_bound_scale 和 P-STD</li>
+<li>P-STD_buffer_size_bound 字段所涉及的流的编码与基本流编号。若 stream_id 等于‘ 1011 1000 ’， 则跟随 stream_id 的 P-STD_buffer_bound_scale 和 P-STD_buffer_size_bound 字段涉及节目流中的所有音频流。若 stream_id 等于‘ 1011 1001 ’， 则跟随 stream_id 的 P-STD_buffer_bound_scale 和 P-STD_buffer_size_bound 字段涉及节目流中的所有视频流。<br>若 stream_id 取任何其他值，则它将是大于或等于‘1011 1100’的字节值并将解释为涉及依照表 2-22<br>的流编码和基本流编号。</li>
+<li>P-STD_buffer_bound_scale — P-STD_buffer_bound_scale 为 1 比特字段， 指示用于解释后续</li>
+<li>P-STD_buffer_size_bound 字段的标度因子。若前导 stream_id 指示音频流，则 P-STD_buffer_bound_scale 必有 0 值。若前导 stream_id 指示视频流，则 P-STD_buffer_bound_scale 必有 1 值。对所有其他流类型，P-STD_buffer_bound_scale 的值可以为 1 或为 0。</li>
+<li>P-STD_buffer_size_bound — P-STD_buffer_size_bound 为 13 比特无符号整数，规定该值大于或等于 PS 流中流 n 的所有包上的最大 P-STD 输入缓冲器尺寸 BSn。若 P-STD_buffer_bound_scale 有 0 值，那<br>么 P-STD_buffer_size_bound 以 128 字节为单位度量该缓冲器尺寸限制。若 P-STD_buffer_bound_scale 有‘1’<br>值，那么 P-STD_buffer_size_bound 以 1024 字节为单位度量该缓冲器尺寸限制。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>PS 码流格式总结如下图：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201214231955.jpg" alt="PS码流格式"></p>
+<blockquote>
+<p>PES Packet 参见 <a href="/post/2020/f33d2f13/" title="音视频封装 - PES 封装格式">音视频封装 - PES 封装格式</a></p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>[1] MPEG-2 Part 1, Systems</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\post\2020\1472cc3\" rel="bookmark">音视频封装 - PS 封装解析示例</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MPEG2-PS/" rel="tag"># MPEG2-PS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/faccfa50/" rel="prev" title="流媒体传输 - RTP 协议">
+                  <i class="fa fa-chevron-left"></i> 流媒体传输 - RTP 协议
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/634443fb/" rel="next" title="流媒体传输 - RTCP 协议">
+                  流媒体传输 - RTCP 协议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/9064839e/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/9064839e/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="关于 FLV 封装格式，随便在网络上一搜索，便能搜到一张包浆图：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频封装 - FLV 封装格式">
+<meta property="og:url" content="http://github.hezhaojiang.io/post/2020/dff5a5c3/index.html">
+<meta property="og:site_name" content="何照江的博客">
+<meta property="og:description" content="关于 FLV 封装格式，随便在网络上一搜索，便能搜到一张包浆图：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201115225122.png">
+<meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201117000710.png">
+<meta property="article:published_time" content="2020-11-15T06:42:37.000Z">
+<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:author" content="何照江">
+<meta property="article:tag" content="FLV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201115225122.png">
+
+
+<link rel="canonical" href="http://github.hezhaojiang.io/post/2020/dff5a5c3/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>音视频封装 - FLV 封装格式 | 何照江的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">何照江的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li> 
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-FLV-header"><span class="nav-number">1.</span> <span class="nav-text">The FLV header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-FLV-File-Body"><span class="nav-number">2.</span> <span class="nav-text">The FLV File Body</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FLV-Tag-Definition"><span class="nav-number">3.</span> <span class="nav-text">FLV Tag Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FLV-Tag-Header"><span class="nav-number">3.1.</span> <span class="nav-text">FLV Tag Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Audio-Tags"><span class="nav-number">3.2.</span> <span class="nav-text">Audio Tags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Video-Tags"><span class="nav-number">3.3.</span> <span class="nav-text">Video Tags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Tags"><span class="nav-number">3.4.</span> <span class="nav-text">Data Tags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="何照江"
+      src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+  <p class="site-author-name" itemprop="name">何照江</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/hezhaojiang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2020/dff5a5c3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
+      <meta itemprop="name" content="何照江">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何照江的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音视频封装 - FLV 封装格式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-15 14:42:37" itemprop="dateCreated datePublished" datetime="2020-11-15T14:42:37+08:00">2020-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%B0%81%E8%A3%85/" itemprop="url" rel="index"><span itemprop="name">音视频封装</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/post/2020/dff5a5c3/" class="post-meta-item leancloud_visitors" data-flag-title="音视频封装 - FLV 封装格式" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/post/2020/dff5a5c3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/dff5a5c3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>关于 FLV 封装格式，随便在网络上一搜索，便能搜到一张包浆图：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201115225122.png" alt="FLV 封装格式"></p>
+<a id="more"></a>
+<h2 id="The-FLV-header"><a href="#The-FLV-header" class="headerlink" title="The FLV header"></a>The FLV header</h2><p>An FLV file shall begin with the FLV header:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signature</td>
+<td>uint_8</td>
+<td>Signature byte always ‘F’ (0x46)</td>
+</tr>
+<tr>
+<td>Signature</td>
+<td>uint_8</td>
+<td>Signature byte always ‘L’ (0x4C)</td>
+</tr>
+<tr>
+<td>Signature</td>
+<td>uint_8</td>
+<td>Signature byte always ‘V’ (0x56)</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>uint_8</td>
+<td>File version (for example, 0x01 for FLV version 1)</td>
+</tr>
+<tr>
+<td>TypeFlagsReserved</td>
+<td>ubit[5]</td>
+<td>Shall be 0</td>
+</tr>
+<tr>
+<td>TypeFlagsAudio</td>
+<td>ubit[1]</td>
+<td>1 = Audio tags are present</td>
+</tr>
+<tr>
+<td>TypeFlagsReserved</td>
+<td>ubit[1]</td>
+<td>Shall be 0</td>
+</tr>
+<tr>
+<td>TypeFlagsVideo</td>
+<td>ubit[1]</td>
+<td>1 = Video tags are present</td>
+</tr>
+<tr>
+<td>DataOffset</td>
+<td>uint_32</td>
+<td>The length of this header in bytes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The DataOffset field usually has a value of 9 for FLV version 1. This field is present to accommodate larger headers<br>in future versions.</p>
+<h2 id="The-FLV-File-Body"><a href="#The-FLV-File-Body" class="headerlink" title="The FLV File Body"></a>The FLV File Body</h2><p>After the FLV header, the remainder of an FLV file shall consist of alternating back-pointers and tags. They<br>interleave as shown in the following table:</p>
+<p>FLV File Body</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PreviousTagSize0</td>
+<td>uint_32</td>
+<td>Always 0</td>
+</tr>
+<tr>
+<td>Tag1</td>
+<td>FLVTAG</td>
+<td>First tag</td>
+</tr>
+<tr>
+<td>PreviousTagSize1</td>
+<td>uint_32</td>
+<td>Size of previous tag, including its header, in bytes. For FLV version1, this value is 11 plus the DataSize of the previous tag.</td>
+</tr>
+<tr>
+<td>Tag2</td>
+<td>FLVTAG</td>
+<td>Second tag</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>PreviousTagSizeN-1</td>
+<td>uint_32</td>
+<td>Size of second-to-last tag, including its header, in bytes.</td>
+</tr>
+<tr>
+<td>TagN</td>
+<td>FLVTAG</td>
+<td>Last tag</td>
+</tr>
+<tr>
+<td>PreviousTagSizeN</td>
+<td>uint_32</td>
+<td>Size of last tag, including its header, in bytes.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="FLV-Tag-Definition"><a href="#FLV-Tag-Definition" class="headerlink" title="FLV Tag Definition"></a>FLV Tag Definition</h2><h3 id="FLV-Tag-Header"><a href="#FLV-Tag-Header" class="headerlink" title="FLV Tag Header"></a>FLV Tag Header</h3><p>The FLV tag contains metadata for audio, video, or scriPTS, optional encryption metadata, and the payload.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reserved</td>
+<td>ubit[2]</td>
+<td>保留字段 恒为 0</td>
+</tr>
+<tr>
+<td>Filter</td>
+<td>ubit[1]</td>
+<td>0：无需预处理 1：需要对包进行预处理（如解密）</td>
+</tr>
+<tr>
+<td>TagType</td>
+<td>ubit[5]</td>
+<td>tag 类型</td>
+</tr>
+<tr>
+<td>DataSize</td>
+<td>uint_24</td>
+<td>消息长度，包括从 StreamID 以后到 tag 末尾的数据</td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>uint_24</td>
+<td>当前 tag 的时间戳，以毫秒为单位</td>
+</tr>
+<tr>
+<td>TimestampExtended</td>
+<td>uint_8</td>
+<td>时间戳的拓展字节</td>
+</tr>
+<tr>
+<td>StreamID</td>
+<td>uint_24</td>
+<td>≡ 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>TagType（tag 类型）<ul>
+<li>8 = 音频</li>
+<li>9 = 视频</li>
+<li>18 = 脚本数据</li>
+</ul>
+</li>
+</ul>
+<p>In playback, the time sequencing of FLV tags depends on the FLV timestamps only. Any timing mechanisms built<br>into the payload data format shall be ignored.</p>
+<h3 id="Audio-Tags"><a href="#Audio-Tags" class="headerlink" title="Audio Tags"></a>Audio Tags</h3><p>FLV 对 AAC 音频格式封装比较特殊，本文中忽略对 AAC 格式音频的 FLV 封装介绍</p>
+<p>The AudioTagHeader contains audio-specific metadata.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SoundFormat</td>
+<td>ubit[4]</td>
+<td>音频格式</td>
+</tr>
+<tr>
+<td>SoundRate</td>
+<td>ubit[2]</td>
+<td>音频采样率</td>
+</tr>
+<tr>
+<td>SoundSize</td>
+<td>ubit[1]</td>
+<td>音频采样大小</td>
+</tr>
+<tr>
+<td>SoundType</td>
+<td>ubit[1]</td>
+<td>单声道 / 立体声</td>
+</tr>
+<tr>
+<td>AACPacketType</td>
+<td>IF (SoundFormat == 10) uint_8</td>
+</tr>
+<tr>
+<td>AUDIODATA</td>
+<td>Varies by SoundFormat</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>SoundFormat<ul>
+<li>0 = Linear PCM, platform endian</li>
+<li>1 = ADPCM</li>
+<li>2 = MP3</li>
+<li>3 = Linear PCM, little endian</li>
+<li>4 = Nellymoser 16 kHz mono</li>
+<li>5 = Nellymoser 8 kHz mono</li>
+<li>6 = Nellymoser</li>
+<li>7 = G.711 A-law logarithmic PCM</li>
+<li>8 = G.711 mu-law logarithmic PCM</li>
+<li>9 = reserved</li>
+<li>10 = AAC</li>
+<li>11 = Speex</li>
+<li>14 = MP3 8 kHz</li>
+<li>15 = Device-specific sound</li>
+</ul>
+</li>
+<li>SoundRate<ul>
+<li>0 = 5.5 kHz</li>
+<li>1 = 11 kHz</li>
+<li>2 = 22 kHz</li>
+<li>3 = 44 kHz</li>
+</ul>
+</li>
+<li>SoundSize<ul>
+<li>0 = 8-bit samples</li>
+<li>1 = 16-bit samples</li>
+</ul>
+</li>
+<li>SoundType<ul>
+<li>0 = Mono sound</li>
+<li>1 = Stereo sound</li>
+</ul>
+</li>
+<li>AACPacketType<ul>
+<li>0 = AAC sequence header</li>
+<li>1 = AAC raw</li>
+</ul>
+</li>
+</ul>
+<h3 id="Video-Tags"><a href="#Video-Tags" class="headerlink" title="Video Tags"></a>Video Tags</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frame Type</td>
+<td>ubit[4]</td>
+<td>视频帧类型</td>
+</tr>
+<tr>
+<td>CodecID</td>
+<td>ubit[4]</td>
+<td>视频编码格式</td>
+</tr>
+<tr>
+<td>AVCPacketType</td>
+<td>IF (CodecID == 7) uint_8</td>
+<td>AVC 包类型</td>
+</tr>
+<tr>
+<td>CompositionTime</td>
+<td>IF (CodecID == 7) uint_24</td>
+<td>单声道 / 立体声</td>
+</tr>
+<tr>
+<td>VIDEODATA</td>
+<td>VideoTagBody</td>
+<td>Video frame payload or frame info</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Frame Type<br>  1 = key frame (for AVC, a seekable frame)<br>  2 = inter frame (for AVC, a non-seekable frame)<br>  3 = disposable inter frame (H.263 only)<br>  4 = generated key frame (reserved for server use only)<br>  5 = video info/command frame</li>
+<li>CodecID<br>  2 = Sorenson H.263<br>  3 = Screen video<br>  4 = On2 VP6<br>  5 = On2 VP6 with alpha channel<br>  6 = Screen video version 2<br>  7 = AVC</li>
+<li>AVCPacketType<br>  0 = AVC sequence header<br>  1 = AVC NALU<br>  2 = AVC end of sequence (lower level NALU sequence ender is not required or supported)</li>
+<li>CompositionTime<ul>
+<li>IF (AVCPacketType == 1) CTS 偏移</li>
+<li>IF (AVCPacketType == 0) 0</li>
+</ul>
+</li>
+</ul>
+<div class="note info no-icon"><p>关于 CTS：这是一个比较难以理解的概念，需要和 PTS，DTS 配合一起理解。<br>首先，PTS（presentation time stamps），DTS(decoder timestamps)，CTS(CompositionTime) 的概念：<br>PTS：显示时间，也就是接收方在显示器显示这帧的时间。单位为 1/90000 秒。<br>DTS：解码时间，也就是 RTP 包中传输的时间戳，表明解码的顺序。单位单位为 1/90000 秒。根据后面的理解，PTS 就是标准中的 CompositionTime<br>CTS 偏移：CTS = (PTS - DTS) / 90 。CTS 的单位是毫秒。<br>PTS 和 DTS 的时间不一样，应该只出现在含有 B 帧的情况下，也就是 main profile 以上。baseline 是没有这个问题的，baseline 的 PTS 和 DTS 一直 x 相同，所以 CTS 一直为 0。</p>
+</div>
+<h3 id="Data-Tags"><a href="#Data-Tags" class="headerlink" title="Data Tags"></a>Data Tags</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>SCRIPTDATAVALUE</td>
+<td>Method or object name. SCRIPTDATAVALUE.Type = 2 (String)</td>
+</tr>
+<tr>
+<td>Value</td>
+<td>SCRIPTDATAVALUE</td>
+<td>AMF arguments or object properties. SCRIPTDATAVALUE.Type = 8 (ECMA array)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>SCRIPTDATAVALUE 类型类似于 AMF 类型：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>uint_8</td>
+<td>Type of the ScriptDataValue.</td>
+</tr>
+<tr>
+<td>ScriptDataValue</td>
+<td>Varies by Type</td>
+<td>Script data value.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>每种 Type 的取值对应的 ScriptDataValue 如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Type Value</th>
+<th>Type</th>
+<th>ScriptDataValue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Number</td>
+<td>DOUBLE</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Boolean</td>
+<td>uint_8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>String</td>
+<td>SCRIPTDATASTRING</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Object</td>
+<td>SCRIPTDATAOBJECT</td>
+</tr>
+<tr>
+<td>4</td>
+<td>MovieClip (reserved, not supported)</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Null</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Undefined</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Reference</td>
+<td>uint_16</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ECMA array</td>
+<td>SCRIPTDATAECMAARRAY</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Object end marker</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Strict array</td>
+<td>SCRIPTDATASTRICTARRAY</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Date</td>
+<td>SCRIPTDATADATE</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Long string</td>
+<td>SCRIPTDATALONGSTRING</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Number: 8 字节 DOUBLE 类型，比如十六进制 <code>00 40 10 00 00 00 00 00 00</code> 就表示的是一个 double 数 <code>4.0</code></li>
+<li>Boolean: 1 字节，使用 <code>00</code> 表示 <code>false</code>，使用 <code>01</code> 表示 <code>true</code></li>
+<li>String: 16 位整数表示字符串的长度 + 字符串</li>
+<li>Object: 内容由多组 String 类型的 SCRIPTDATAVALUE 作为 Key，其他类型的 SCRIPTDATAVALUE 作为 Value 的哈希列表组成，由 3 个字节：<code>00 00 09</code> 来表示结束</li>
+<li>Null: 仅占用 1 字节，那就是 Null 对象标识 0x05</li>
+<li>ECMA array: 32 位整数表示 Object 对象中元素个数 + Object 类型的 SCRIPTDATAVALUE</li>
+<li>Strict array: 32 位整数表示数组元素个数 + 多个其他类型的 SCRIPTDATAVALUE</li>
+<li>Date: 8 字节 double 来表示从 1970/1/1 到表示的时间所经过的毫秒数 + 2 字节无符号整数表示时区</li>
+<li>Long string: 32 位整数表示字符串的长度 + 字符串</li>
+</ul>
+<p>如 FLV 的 Data Tags 信息中最主要的 onMetaData 信息如下：</p>
+<pre><code>02 20 0a 6f 6e 4d 65 74 61 44 61 74 61 08 20 20 20 0d 20 08 64 75 72 61 74 69 6f 6e 20 40 32 0c
+49 ba 5e 35 3f 20 05 77 69 64 74 68 20 40 8a c0 20 20 20 20 20 20 06 68 65 69 67 68 74 20 40 7e
+20 20 20 20 20 20 20 0d 76 69 64 65 6f 64 61 74 61 72 61 74 65 20 40 95 41 68 20 20 20 20 20 09
+66 72 61 6d 65 72 61 74 65 20 40 38 20 20 20 20 20 20 20 0c 76 69 64 65 6f 63 6f 64 65 63 69 64
+20 40 1c 20 20 20 20 20 20 20 0d 61 75 64 69 6f 64 61 74 61 72 61 74 65 20 40 5f 40 20 20 20 20
+20 20 0f 61 75 64 69 6f 73 61 6d 70 6c 65 72 61 74 65 20 40 e5 88 80 20 20 20 20 20 0f 61 75 64
+69 6f 73 61 6d 70 6c 65 73 69 7a 65 20 40 30 20 20 20 20 20 20 20 06 73 74 65 72 65 6f 01 01 20
+0c 61 75 64 69 6f 63 6f 64 65 63 69 64 20 40 24 20 20 20 20 20 20 20 07 65 6e 63 6f 64 65 72 02
+20 0d 4c 61 76 66 35 38 2e 32 39 2e 31 30 30 20 08 66 69 6c 65 73 69 7a 65 20 41 4a 9e 05 80 20
+20 20 20 20 09 20 20 01 30 09
+</code></pre><p>解析后以上数据如下所示：</p>
+<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201117000710.png" alt="onMetaData 信息"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003518.png" alt="何照江 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200904003437.png" alt="何照江 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/FLV/" rel="tag"># FLV</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/2020/f65e9050/" rel="prev" title="源码阅读 libevent - 事件主循环">
+                  <i class="fa fa-chevron-left"></i> 源码阅读 libevent - 事件主循环
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2020/1472cc3/" rel="next" title="音视频封装 - PS 封装解析示例">
+                  音视频封装 - PS 封装解析示例 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何照江</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'dark',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/dff5a5c3/',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el: '#valine-comments',
+      path: "/post/2020/dff5a5c3/",
+      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
+    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
+  }, window.Valine);
+});
+</script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
+<script type="text/javascript" src="/js/click_magic.js"></script>
