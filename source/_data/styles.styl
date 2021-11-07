@@ -1,0 +1,92 @@
+// 增加背景图片
+//body {
+//    background-image:url(http://www.dmoe.cc/random.php);
+//    background-repeat: no-repeat;
+//    background-attachment: fixed;
+//    background-position: center;
+//    //background-position:50% 50%;
+//    opacity: 0.95;
+//    +mobile(){
+//        background-image: url(https://acg.yanwz.cn/api.php);
+//        background-position: 10% 20%;
+//        background-size: cover;
+//    }
+//}
+
+// 调整组件位置
+.posts-expand .post-header {
+  font-size: 1.125em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.post-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.post-block{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+// 组件边框椭圆化
+.main-inner {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0px 10px 10px 10px;
+    .sub-menu,
+    .post-block,
+    .tabs-comment,
+    .comments,
+    .pagination,
+    .sub-menu:not(:first-child):not(.sub-menu),
+    .post-block:not(:first-child):not(.sub-menu),
+    .tabs-comment:not(:first-child):not(.sub-menu),
+    .comments:not(:first-child):not(.sub-menu),
+    .pagination:not(:first-child):not(.sub-menu) {
+        border-radius: 30px 30px 30px 30px;
+        box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+    }
+}
+
+.header-inner {
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+.sidebar-inner{
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);    
+}
+
+// 修改标题字体行距
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Bree+Serif, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: bold;
+  line-height: 1.5;
+  margin: 0px 0 15px;
+}
+
+// 缩小打赏行距
+.reward-container {
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
+// 缩小相关文章行距
+.popular-posts-header {
+  border-bottom: 1px solid #eee;
+  font-size: 1.125em;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+// 缩小文章底部标签行距
+.post-tags {
+  margin-top: 10px;
+  text-align: center;
+}
