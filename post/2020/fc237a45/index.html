@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="H264 码流结构H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:     +---------------+     |0|1|2|3|4|5|6|7|     +-+-+-+-+-+-+-+-+     |F|N">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="H264 码流结构 H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:     +---------------+     |0|1|2|3|4|5|6|7|     +-+-+-+-+-+-+-+-+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="流媒体传输 - RTP 荷载 H264">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/fc237a45/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="H264 码流结构H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:     +---------------+     |0|1|2|3|4|5|6|7|     +-+-+-+-+-+-+-+-+     |F|N">
+<meta property="og:description" content="H264 码流结构 H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:     +---------------+     |0|1|2|3|4|5|6|7|     +-+-+-+-+-+-+-+-+">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200814220249.jpg">
 <meta property="article:published_time" content="2020-08-12T07:53:17.000Z">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/fc237a45/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>流媒体传输 - RTP 荷载 H264 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/fc237a45/","path":"post/2020/fc237a45/","title":"流媒体传输 - RTP 荷载 H264"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>流媒体传输 - RTP 荷载 H264 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#H264-%E7%A0%81%E6%B5%81%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">H264 码流结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264-%E7%A0%81%E6%B5%81%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">H264 码流打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95-NAL-%E5%8D%95%E5%85%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">单 NAL 单元模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%B0%81%E5%8C%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">组合封包模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E5%B0%81%E5%8C%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">分片封包模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FU-A"><span class="nav-number">2.3.1.</span> <span class="nav-text">FU-A</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FU-B"><span class="nav-number">2.3.2.</span> <span class="nav-text">FU-B</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#h264-%E7%A0%81%E6%B5%81%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">H264 码流结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h264-%E7%A0%81%E6%B5%81%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">H264 码流打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95-nal-%E5%8D%95%E5%85%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">单 NAL 单元模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%B0%81%E5%8C%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">组合封包模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E5%B0%81%E5%8C%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">分片封包模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fu-a"><span class="nav-number">2.3.1.</span> <span class="nav-text">FU-A</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fu-b"><span class="nav-number">2.3.2.</span> <span class="nav-text">FU-B</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2020/fc237a45/" class="post-meta-item leancloud_visitors" data-flag-title="流媒体传输 - RTP 荷载 H264" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/fc237a45/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/fc237a45/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -371,16 +279,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="H264-码流结构"><a href="#H264-码流结构" class="headerlink" title="H264 码流结构"></a>H264 码流结构</h2><p>H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:</p>
+        <h2 id="h264-码流结构">H264 码流结构</h2>
+<p>H264 码流是由很多 NAL Unit 组成，所有 NAL Unit 均存在一个八位数据的 NAL Unit Header ，这八位数据也充当此 RTP 有效负载格式的有效负载头。一个 NAL Unit Header 的语法如下:</p>
 <pre><code>    +---------------+
     |0|1|2|3|4|5|6|7|
     +-+-+-+-+-+-+-+-+
     |F|NRI|  Type   |
-    +---------------+
-</code></pre><a id="more"></a>
+    +---------------+</code></pre>
+<span id="more"></span>
 <ul>
-<li>F: 1bit forbidden_zero_bit，在 H.264 规范中规定了这一位必须为 0。</li>
-<li>NRI: 2bit nal_ref_idc，取 00 ~ 11, 似乎指示这个 NALU 的重要性, 如 00 的 NALU 解码器可以丢弃它而不影响图像的回放. 不过一般情况下不太关心这个属性。</li>
+<li><p>F: 1bit forbidden_zero_bit，在 H.264 规范中规定了这一位必须为 0。</p></li>
+<li><p>NRI: 2bit nal_ref_idc，取 00 ~ 11, 似乎指示这个 NALU 的重要性, 如 00 的 NALU 解码器可以丢弃它而不影响图像的回放. 不过一般情况下不太关心这个属性。</p></li>
 <li><p>Type: 5bit 等于 nal_unit_type，标识着这个 NAL Unit 的 Type，其类型如下：</p>
 <pre><code>  Table 1.  Summary of NAL unit types and the corresponding packet types
 
@@ -395,17 +304,18 @@
       27       MTAP24    Multi-time aggregation packet      5.7.2
       28       FU-A      Fragmentation unit                 5.8
       29       FU-B      Fragmentation unit                 5.8
-      30-31    reserved
-</code></pre></li>
+      30-31    reserved</code></pre></li>
 </ul>
-<h2 id="H264-码流打包"><a href="#H264-码流打包" class="headerlink" title="H264 码流打包"></a>H264 码流打包</h2><p><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc6184.txt">RFC 6184 Section 5.2</a> 中指定了 3 种打包方式：</p>
+<h2 id="h264-码流打包">H264 码流打包</h2>
+<p><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc6184.txt">RFC 6184 Section 5.2</a> 中指定了 3 种打包方式：</p>
 <ul>
 <li>单 NAL 单元模式（Single NAL Unit Packet）: 仅包含单个 NAL 单元的有效载荷。</li>
 <li>组合封包模式（Aggregation Packet）：用于聚合多个 NAL 单元的分组类型成为单个 RTP 有效负载。</li>
 <li>分片封包模式（Fragmentation Unit）：用于将单个 NAL 单元分段成多个 RTP 数据包。</li>
 </ul>
-<h3 id="单-NAL-单元模式"><a href="#单-NAL-单元模式" class="headerlink" title="单 NAL 单元模式"></a>单 NAL 单元模式</h3><p>一个 RTP 包仅由一个完整的 NALU 组成. 这种情况下 RTP 的 NAL 头类型字段和原始的 H.264 的 NALU 头类型字段是一样的。</p>
-<p>对于 NALU 的长度小于 MTU 大小的包, 一般采用单一 NAL 单元模式。一个原始的 H.264 NALU 单元常由 [Start Code] [NALU Header] [NALU Payload] 三部分组成, 其中 Start Code 用于标示这是一个 NALU 单元的开始, 必须是 “00 00 00 01” 或 “00 00 01”, NALU 头仅一个字节, 其后都是 NALU 单元内容，打包时去除 “00 00 01” 或 “00 00 00 01” 的开始码, 把其他数据封包为 RTP 包即可。</p>
+<h3 id="单-nal-单元模式">单 NAL 单元模式</h3>
+<p>一个 RTP 包仅由一个完整的 NALU 组成. 这种情况下 RTP 的 NAL 头类型字段和原始的 H.264 的 NALU 头类型字段是一样的。</p>
+<p>对于 NALU 的长度小于 MTU 大小的包, 一般采用单一 NAL 单元模式。一个原始的 H.264 NALU 单元常由 [Start Code] [NALU Header] [NALU Payload] 三部分组成, 其中 Start Code 用于标示这是一个 NALU 单元的开始, 必须是 "00 00 00 01" 或 "00 00 01", NALU 头仅一个字节, 其后都是 NALU 单元内容，打包时去除 "00 00 01" 或 "00 00 00 01" 的开始码, 把其他数据封包为 RTP 包即可。</p>
 <pre><code> 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -418,8 +328,9 @@
 |                               :...OPTIONAL RTP padding        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-    Figure 2.  RTP payload format for single NAL unit packet
-</code></pre><h3 id="组合封包模式"><a href="#组合封包模式" class="headerlink" title="组合封包模式"></a>组合封包模式</h3><p>可能是由多个 NAL 单元组成一个 RTP 包。分别有 4 种组合方式: STAP-A, STAP-B, MTAP16, MTAP24，类型值分别是 24, 25, 26 以及 27。</p>
+    Figure 2.  RTP payload format for single NAL unit packet</code></pre>
+<h3 id="组合封包模式">组合封包模式</h3>
+<p>可能是由多个 NAL 单元组成一个 RTP 包。分别有 4 种组合方式: STAP-A, STAP-B, MTAP16, MTAP24，类型值分别是 24, 25, 26 以及 27。</p>
 <pre><code> 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -432,12 +343,12 @@
 |                               :...OPTIONAL RTP padding        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-    Figure 3.  RTP payload format for aggregation packets
-</code></pre><p>MTAP 和 STAP 共享以下打包规则：</p>
+    Figure 3.  RTP payload format for aggregation packets</code></pre>
+<p>MTAP 和 STAP 共享以下打包规则：</p>
 <ul>
-<li>RTP 时间戳必须设置为所有要组合的 NAL 单元中 NALU-times 的最早时间。</li>
-<li>必须将 NAL 单元类型八位字节的类型字段设置为适当的值，如表 4 所示。</li>
-<li>如果聚合的 NAL 的所有 F 位均为零，则必须置零 F 位；否则，必须设置它。</li>
+<li><p>RTP 时间戳必须设置为所有要组合的 NAL 单元中 NALU-times 的最早时间。</p></li>
+<li><p>必须将 NAL 单元类型八位字节的类型字段设置为适当的值，如表 4 所示。</p></li>
+<li><p>如果聚合的 NAL 的所有 F 位均为零，则必须置零 F 位；否则，必须设置它。</p></li>
 <li><p>NRI 的值必须是所有在聚合数据包中 NAL 单元的最大值。</p>
 <pre><code>       Table 4.  Type field for STAPs and MTAPs
 
@@ -448,15 +359,16 @@
   24     STAP-A       0                 no
   25     STAP-B       0                 yes
   26     MTAP16      16                 yes
-  27     MTAP24      24                 yes
-</code></pre></li>
+  27     MTAP24      24                 yes</code></pre></li>
 </ul>
-<h3 id="分片封包模式"><a href="#分片封包模式" class="headerlink" title="分片封包模式"></a>分片封包模式</h3><p>用于把一个 NALU 单元封装成多个 RTP 包. 存在两种类型 FU-A 和 FU-B. 类型值分别是 28 和 29。<br>这种载荷类型允许将 NAL 单元分为多个 RTP 包。该封包模式具有以下优点：</p>
+<h3 id="分片封包模式">分片封包模式</h3>
+<p>用于把一个 NALU 单元封装成多个 RTP 包. 存在两种类型 FU-A 和 FU-B. 类型值分别是 28 和 29。 这种载荷类型允许将 NAL 单元分为多个 RTP 包。该封包模式具有以下优点：</p>
 <ul>
 <li>有效负载格式能够在 IPv4 网络传输大于 64 KB 的 NAL 单元，特别是在高清晰度格式中（每张图片的切片数量有限，导致每张图片的 NAL 单位数上限，可能会导致 NAL 单位数变大）</li>
 <li>分段机制允许分段单个 NAL 单元并应用通用前向纠错。</li>
 </ul>
-<h4 id="FU-A"><a href="#FU-A" class="headerlink" title="FU-A"></a>FU-A</h4><p>下图给出了 FU-As 的 RTP 有效载荷格式：</p>
+<h4 id="fu-a">FU-A</h4>
+<p>下图给出了 FU-As 的 RTP 有效载荷格式：</p>
 <pre><code>    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -469,15 +381,14 @@
     |                               :...OPTIONAL RTP padding        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-            Figure 14.  RTP payload format for FU-A
-</code></pre><ul>
+            Figure 14.  RTP payload format for FU-A</code></pre>
+<ul>
 <li><p>FU indicator 格式与 NAL Header 一致:</p>
 <pre><code>  +---------------+
   |0|1|2|3|4|5|6|7|
   +-+-+-+-+-+-+-+-+
   |F|NRI|  Type   |
-  +---------------+
-</code></pre></li>
+  +---------------+</code></pre></li>
 </ul>
 <p>Type 字段的值等于 28 和 29 分别标识该 RTP 包的封包模式为 FU-A 和 FU-B。</p>
 <ul>
@@ -486,31 +397,30 @@
   |0|1|2|3|4|5|6|7|
   +-+-+-+-+-+-+-+-+
   |S|E|R|  Type   |
-  +---------------+
-</code></pre><ul>
-<li>S: 1 bit 开始位<ul>
+  +---------------+</code></pre>
+<ul>
+<li>S: 1 bit 开始位
+<ul>
 <li>当设置成 1 时，指示跟随的 FU 荷载是分片 NAL 单元的开始。</li>
 <li>当设置成 0 时，指示跟随的 FU 荷载不是分片 NAL 单元荷载的开始。</li>
-</ul>
-</li>
-<li>E: 1 bit 结束位<ul>
+</ul></li>
+<li>E: 1 bit 结束位
+<ul>
 <li>当设置成 1 时，指示跟随的 FU 荷载是分片 NAL 单元的结束。</li>
 <li>当设置成 1 时，指示跟随的 FU 荷载不是分片 NAL 单元的结束。</li>
-</ul>
-</li>
-<li>R: 1 bit 保留位<ul>
+</ul></li>
+<li>R: 1 bit 保留位
+<ul>
 <li>保留位必须设置为 0。</li>
-</ul>
-</li>
-<li>Type: 5 bits<ul>
-<li>NAL 单元荷载类型定义见下表：<br><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200814220249.jpg" alt="NAL 单元荷载类型定义"></li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+<li>Type: 5 bits
+<ul>
+<li>NAL 单元荷载类型定义见下表： <img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200814220249.jpg" alt="NAL 单元荷载类型定义" /></li>
+</ul></li>
+</ul></li>
 </ul>
 <p>以两段 Wirshark 抓包的码流为例：</p>
-<ol>
+<ol type="1">
 <li><p>FU - Start</p>
 <pre><code> 0000   7c 85 b8 00 00 1d dc 40 00 02 ff ea 14 34 0c ab   |......@.....4..
  0010   5a 02 6f 1a 0f d5 5c f3 a9 df 6f d6 6b a8 25 1f   Z.o...\...o.k.%.
@@ -524,24 +434,21 @@
    1... .... = Start bit: the first packet of FU-A picture
    .0.. .... = End bit: Not the last packet of FU-A picture
    ..0. .... = Forbidden bit: 0
-   ...0 0101 = Nal_unit_type: Coded slice of an IDR picture (5)
-</code></pre></li>
+   ...0 0101 = Nal_unit_type: Coded slice of an IDR picture (5)</code></pre></li>
 <li><p>FU - End</p>
 <pre><code> 0000   7c 45 c0                                          |E.
 
- ============== 转化 第一个字节 7c 第二个字节 45 ================
-</code></pre><p> 0111 1100  F=0 NRI=11 Type=28</p>
-<pre><code> 0100 0101  S=0 E=1 R=0 Type=5
-
- ======================= Wirshark 解析 =======================
+ ============== 转化 第一个字节 7c 第二个字节 45 ================</code></pre>
+<p>0111 1100 F=0 NRI=11 Type=28 0100 0101 S=0 E=1 R=0 Type=5</p>
+<pre><code> ======================= Wirshark 解析 =======================
  FU header：
    0... .... = Start bit: Not the first packet of FU-A picture
    .1.. .... = End bit: the last packet of FU-A picture
    ..0. .... = Forbidden bit: 0
-   ...0 0101 = Nal_unit_type: Coded slice of an IDR picture (5)
-</code></pre></li>
+   ...0 0101 = Nal_unit_type: Coded slice of an IDR picture (5)</code></pre></li>
 </ol>
-<h4 id="FU-B"><a href="#FU-B" class="headerlink" title="FU-B"></a>FU-B</h4><p>FU-B 的封包格式仅仅是在 FU header 后面多了 2 个字节的 DON 解码顺序号，它允许 NAL 单元的传输顺序和 NAL 单元的解码顺序不同 ，用来 指示 NAL 单元的解码顺序。</p>
+<h4 id="fu-b">FU-B</h4>
+<p>FU-B 的封包格式仅仅是在 FU header 后面多了 2 个字节的 DON 解码顺序号，它允许 NAL 单元的传输顺序和 NAL 单元的解码顺序不同 ，用来 指示 NAL 单元的解码顺序。</p>
 <pre><code>    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -554,8 +461,9 @@
     |                               :...OPTIONAL RTP padding        |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-             Figure 15.  RTP payload format for FU-B
-</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+             Figure 15.  RTP payload format for FU-B</code></pre>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc6184.txt">RFC 6184: RTP Payload Format for H.264 Video</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="http://cdmd.cnki.com.cn/Article/CDMD-10293-1016294288.htm">《基于 web 浏览的视频监控与回溯系统的研究与设计》</a></li>
 <li>[3] <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc3550.txt">RFC 3550: RTP: A Transport Protocol for Real-Time Applications</a></li>
@@ -569,22 +477,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\faccfa50\" rel="bookmark">流媒体传输 - RTP 协议</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\8b244ad3\" rel="bookmark">流媒体传输 - RTP 荷载 H265</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -627,42 +524,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -670,132 +539,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/fc237a45/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/fc237a45/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/fc237a45/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

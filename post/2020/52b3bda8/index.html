@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="libevent 的多线程接口文件相比日志模块和内存管理模块文件较多，可大致分为三部分：  内部接口所在头文件：evthread-internal.h 外部接口所在头文件：thread.h 接口实现所在文件：evthread.c &amp; evthread_pthread.c &amp; evthread_win32.c">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="libevent 的多线程接口文件相比日志模块和内存管理模块文件较多，可大致分为三部分：  内部接口所在头文件：evthread-internal.h 外部接口所在头文件：thread.h 接口实现所在文件：evthread.c &amp; evthread_pthread.c &amp; evthread_win32.c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 多线程：锁和条件变量">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/52b3bda8/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="libevent 的多线程接口文件相比日志模块和内存管理模块文件较多，可大致分为三部分：  内部接口所在头文件：evthread-internal.h 外部接口所在头文件：thread.h 接口实现所在文件：evthread.c &amp; evthread_pthread.c &amp; evthread_win32.c">
+<meta property="og:description" content="libevent 的多线程接口文件相比日志模块和内存管理模块文件较多，可大致分为三部分：  内部接口所在头文件：evthread-internal.h 外部接口所在头文件：thread.h 接口实现所在文件：evthread.c &amp; evthread_pthread.c &amp; evthread_win32.c">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-21T06:53:56.000Z">
-<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/52b3bda8/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 多线程：锁和条件变量 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/52b3bda8/","path":"post/2020/52b3bda8/","title":"源码阅读 libevent - 多线程：锁和条件变量"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 多线程：锁和条件变量 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">开启多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">锁和条件变量结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libevent-%E6%8F%90%E4%BE%9B%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">libevent 提供的多线程函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">锁相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-lock-alloc"><span class="nav-number">3.1.1.</span> <span class="nav-text">evthread_posix_lock_alloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-lock-free"><span class="nav-number">3.1.2.</span> <span class="nav-text">evthread_posix_lock_free</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-lock"><span class="nav-number">3.1.3.</span> <span class="nav-text">evthread_posix_lock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-unlock"><span class="nav-number">3.1.4.</span> <span class="nav-text">evthread_posix_unlock</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">条件变量相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-cond-alloc"><span class="nav-number">3.2.1.</span> <span class="nav-text">evthread_posix_cond_alloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-cond-free"><span class="nav-number">3.2.2.</span> <span class="nav-text">evthread_posix_cond_free</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-cond-signal"><span class="nav-number">3.2.3.</span> <span class="nav-text">evthread_posix_cond_signal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-posix-cond-wait"><span class="nav-number">3.2.4.</span> <span class="nav-text">evthread_posix_cond_wait</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%87%BD%E6%95%B0%E8%AE%BE%E7%BD%AE%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">定制函数设置相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-set-lock-callbacks-%E5%92%8C-evthread-set-condition-callbacks"><span class="nav-number">3.3.1.</span> <span class="nav-text">evthread_set_lock_callbacks 和 evthread_set_condition_callbacks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread-set-id-callback"><span class="nav-number">3.3.2.</span> <span class="nav-text">evthread_set_id_callback</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">开启多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">锁和条件变量结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libevent-%E6%8F%90%E4%BE%9B%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">libevent 提供的多线程函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">锁相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_lock_alloc"><span class="nav-number">3.1.1.</span> <span class="nav-text">evthread_posix_lock_alloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_lock_free"><span class="nav-number">3.1.2.</span> <span class="nav-text">evthread_posix_lock_free</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_lock"><span class="nav-number">3.1.3.</span> <span class="nav-text">evthread_posix_lock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_unlock"><span class="nav-number">3.1.4.</span> <span class="nav-text">evthread_posix_unlock</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">条件变量相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_cond_alloc"><span class="nav-number">3.2.1.</span> <span class="nav-text">evthread_posix_cond_alloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_cond_free"><span class="nav-number">3.2.2.</span> <span class="nav-text">evthread_posix_cond_free</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_cond_signal"><span class="nav-number">3.2.3.</span> <span class="nav-text">evthread_posix_cond_signal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_posix_cond_wait"><span class="nav-number">3.2.4.</span> <span class="nav-text">evthread_posix_cond_wait</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%87%BD%E6%95%B0%E8%AE%BE%E7%BD%AE%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">定制函数设置相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_set_lock_callbacks-%E5%92%8C-evthread_set_condition_callbacks"><span class="nav-number">3.3.1.</span> <span class="nav-text">evthread_set_lock_callbacks 和 evthread_set_condition_callbacks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evthread_set_id_callback"><span class="nav-number">3.3.2.</span> <span class="nav-text">evthread_set_id_callback</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/52b3bda8/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 多线程：锁和条件变量" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/52b3bda8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/52b3bda8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -370,120 +278,290 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><code>libevent</code> 的多线程接口文件相比日志模块和内存管理模块文件较多，可大致分为三部分：</p>
-<ol>
+<ol type="1">
 <li>内部接口所在头文件：<code>evthread-internal.h</code></li>
 <li>外部接口所在头文件：<code>thread.h</code></li>
 <li>接口实现所在文件：<code>evthread.c</code> &amp; <code>evthread_pthread.c</code> &amp; <code>evthread_win32.c</code></li>
 </ol>
-<a id="more"></a>
-<h2 id="开启多线程"><a href="#开启多线程" class="headerlink" title="开启多线程"></a>开启多线程</h2><p><code>libevent</code> 的多线程模块与日志模块和内存管理模块不同，在默认的情况下并没有进行实现，而是仅仅提供了函数接口，即 <code>libevent</code> 在默认情况下是不支持多线程的。</p>
+<span id="more"></span>
+<h2 id="开启多线程">开启多线程</h2>
+<p><code>libevent</code> 的多线程模块与日志模块和内存管理模块不同，在默认的情况下并没有进行实现，而是仅仅提供了函数接口，即 <code>libevent</code> 在默认情况下是不支持多线程的。</p>
 <p>如果要让 <code>libevent</code> 支持多线程，则需要在使用 <code>libevent</code> 之前，即在调用 <code>event_base_new</code> 函数之前调用 <code>evthread_use_windows_threads()</code> 或 <code>evthread_use_pthreads()</code> 或 <code>evthread_set_lock_callbacks</code> 函数定制自己的多线程、锁、条件变量才会开启多线程功能。</p>
 <p>以上三个线程定制函数均定义在 <code>thread.h</code>，而线程的使用接口定义在 <code>evthread-internal.h</code>，即对于用户来说，只能定制 <code>libevent</code> 的线程函数，而这些函数的使用方式还是由 <code>libevent</code> 自行管理的。</p>
-<h2 id="锁和条件变量结构体"><a href="#锁和条件变量结构体" class="headerlink" title="锁和条件变量结构体"></a>锁和条件变量结构体</h2><p><code>libevent</code> 允许用户定制自己的锁和条件变量。其实现原理和日志和内存分配一样，都是内部有一个全局变量，全局变量中保存着自己定制的相关功能实现函数。而要定制自己的锁和条件变量，就是对这个全局变量进行赋值。</p>
+<h2 id="锁和条件变量结构体">锁和条件变量结构体</h2>
+<p><code>libevent</code> 允许用户定制自己的锁和条件变量。其实现原理和日志和内存分配一样，都是内部有一个全局变量，全局变量中保存着自己定制的相关功能实现函数。而要定制自己的锁和条件变量，就是对这个全局变量进行赋值。</p>
 <p><code>libevent</code> 中锁和条件变量定制对应的全局变量如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">evthread_lock_callbacks</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> lock_api_version;</span><br><span class="line">    <span class="keyword">unsigned</span> supported_locktypes;</span><br><span class="line">    <span class="keyword">void</span> *(*alloc)(<span class="keyword">unsigned</span> locktype);</span><br><span class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *lock, <span class="keyword">unsigned</span> locktype);</span><br><span class="line">    <span class="keyword">int</span> (*lock)(<span class="keyword">unsigned</span> mode, <span class="keyword">void</span> *lock);</span><br><span class="line">    <span class="keyword">int</span> (*unlock)(<span class="keyword">unsigned</span> mode, <span class="keyword">void</span> *lock);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">evthread_condition_callbacks</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> condition_api_version;</span><br><span class="line">    <span class="keyword">void</span> *(*alloc_condition)(<span class="keyword">unsigned</span> condtype);</span><br><span class="line">    <span class="keyword">void</span> (*free_condition)(<span class="keyword">void</span> *cond);</span><br><span class="line">    <span class="keyword">int</span> (*signal_condition)(<span class="keyword">void</span> *cond, <span class="keyword">int</span> broadcast);</span><br><span class="line">    <span class="keyword">int</span> (*wait_condition)(<span class="keyword">void</span> *cond, <span class="keyword">void</span> *lock, <span class="keyword">const</span> struct timeval *timeout);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">GLOBAL <span class="class"><span class="keyword">struct</span> <span class="title">evthread_lock_callbacks</span> <span class="title">evthread_lock_fns_</span> = &#123;</span><span class="number">0</span>, <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;;</span><br><span class="line">GLOBAL <span class="class"><span class="keyword">struct</span> <span class="title">evthread_condition_callbacks</span> <span class="title">evthread_cond_fns_</span> = &#123;</span><span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">evthread_lock_callbacks</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> lock_api_version<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> supported_locktypes<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>alloc<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> locktype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>free<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>lock<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> locktype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> mode<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>unlock<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> mode<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">evthread_condition_callbacks</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> condition_api_version<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>alloc_condition<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> condtype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>free_condition<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>signal_condition<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond<span class="token punctuation">,</span> <span class="token keyword">int</span> broadcast<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>wait_condition<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+GLOBAL <span class="token keyword">struct</span> <span class="token class-name">evthread_lock_callbacks</span> evthread_lock_fns_ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+GLOBAL <span class="token keyword">struct</span> <span class="token class-name">evthread_condition_callbacks</span> evthread_cond_fns_ <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该全局变量结构体中每个参数意义如下:</p>
-<ol>
-<li><code>evthread_lock_fns_</code><ul>
+<ol type="1">
+<li><code>evthread_lock_fns_</code>
+<ul>
 <li><code>.lock_api_version</code> 锁函数的版本</li>
 <li><code>.supported_locktypes</code> 指示支持的锁类型</li>
 <li><code>.alloc</code> 初始化（申请）一个锁</li>
 <li><code>.free</code> 反初始化（销毁）一个锁</li>
 <li><code>.lock</code> 加锁</li>
 <li><code>.unlock</code> 解锁</li>
-</ul>
-</li>
-<li><code>evthread_cond_fns_</code><ul>
+</ul></li>
+<li><code>evthread_cond_fns_</code>
+<ul>
 <li><code>.condition_api_version</code> 条件变量函数版本</li>
 <li><code>.alloc_condition</code> 初始化（申请）一个条件变量</li>
 <li><code>.free_condition</code> 反初始化（销毁）一个条件变量</li>
 <li><code>.signal_condition</code> 通知</li>
 <li><code>.wait_condition</code> 等待通知</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<h2 id="libevent-提供的多线程函数"><a href="#libevent-提供的多线程函数" class="headerlink" title="libevent 提供的多线程函数"></a>libevent 提供的多线程函数</h2><p>对于用户来说，如果想让 <code>libevent</code> 支持多线程。<code>Windows</code> 用户直接调用 <code>evthread_use_windows_threads()</code>，遵循 <code>POSIX</code> 标准的系统直接调用 <code>evthread_use_pthreads()</code> 就可以了。</p>
+<h2 id="libevent-提供的多线程函数">libevent 提供的多线程函数</h2>
+<p>对于用户来说，如果想让 <code>libevent</code> 支持多线程。<code>Windows</code> 用户直接调用 <code>evthread_use_windows_threads()</code>，遵循 <code>POSIX</code> 标准的系统直接调用 <code>evthread_use_pthreads()</code> 就可以了。</p>
 <p>在 <code>Linux 2.6</code> 以上版本中，已经对 <code>pthread</code> 线程有了完善的支持，以下我们就分析一下 <code>libevent</code> 提供的多线程函数 <code>evthread_use_pthreads()</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVTHREAD_LOCK_API_VERSION 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVTHREAD_LOCKTYPE_RECURSIVE 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVTHREAD_CONDITION_API_VERSION 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_mutexattr_t</span> attr_recursive;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">evthread_use_pthreads</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evthread_lock_callbacks</span> <span class="title">cbs</span> = &#123;</span></span><br><span class="line">        EVTHREAD_LOCK_API_VERSION,</span><br><span class="line">        EVTHREAD_LOCKTYPE_RECURSIVE,</span><br><span class="line">        evthread_posix_lock_alloc,</span><br><span class="line">        evthread_posix_lock_free,</span><br><span class="line">        evthread_posix_lock,</span><br><span class="line">        evthread_posix_unlock</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evthread_condition_callbacks</span> <span class="title">cond_cbs</span> = &#123;</span></span><br><span class="line">        EVTHREAD_CONDITION_API_VERSION,</span><br><span class="line">        evthread_posix_cond_alloc,</span><br><span class="line">        evthread_posix_cond_free,</span><br><span class="line">        evthread_posix_cond_signal,</span><br><span class="line">        evthread_posix_cond_wait</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">/* Set ourselves up to get recursive locks. */</span></span><br><span class="line">    <span class="keyword">if</span> (pthread_mutexattr_init(&amp;attr_recursive)) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span> (pthread_mutexattr_settype(&amp;attr_recursive, PTHREAD_MUTEX_RECURSIVE)) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    evthread_set_lock_callbacks(&amp;cbs);</span><br><span class="line">    evthread_set_condition_callbacks(&amp;cond_cbs);</span><br><span class="line">    evthread_set_id_callback(evthread_posix_get_id);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EVTHREAD_LOCK_API_VERSION 1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVTHREAD_LOCKTYPE_RECURSIVE 1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVTHREAD_CONDITION_API_VERSION 1</span>
+
+<span class="token keyword">static</span> pthread_mutexattr_t attr_recursive<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">evthread_use_pthreads</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">evthread_lock_callbacks</span> cbs <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        EVTHREAD_LOCK_API_VERSION<span class="token punctuation">,</span>
+        EVTHREAD_LOCKTYPE_RECURSIVE<span class="token punctuation">,</span>
+        evthread_posix_lock_alloc<span class="token punctuation">,</span>
+        evthread_posix_lock_free<span class="token punctuation">,</span>
+        evthread_posix_lock<span class="token punctuation">,</span>
+        evthread_posix_unlock
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">evthread_condition_callbacks</span> cond_cbs <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        EVTHREAD_CONDITION_API_VERSION<span class="token punctuation">,</span>
+        evthread_posix_cond_alloc<span class="token punctuation">,</span>
+        evthread_posix_cond_free<span class="token punctuation">,</span>
+        evthread_posix_cond_signal<span class="token punctuation">,</span>
+        evthread_posix_cond_wait
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token comment">/* Set ourselves up to get recursive locks. */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">pthread_mutexattr_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>attr_recursive<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">pthread_mutexattr_settype</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>attr_recursive<span class="token punctuation">,</span> PTHREAD_MUTEX_RECURSIVE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token function">evthread_set_lock_callbacks</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cbs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">evthread_set_condition_callbacks</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cond_cbs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">evthread_set_id_callback</span><span class="token punctuation">(</span>evthread_posix_get_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从代码可看出，<code>evthread_use_pthreads</code> 函数主要有三个步骤：</p>
-<ol>
+<ol type="1">
 <li>定义并初始化了一个 <code>evthread_lock_callbacks</code> 结构体和一个 <code>evthread_condition_callbacks</code> 结构体，以便后续定制修改全局锁和条件变量结构体</li>
 <li>初始化全局变量 <code>attr_recursive</code>，这个变量会在初始化锁时被传递，代表需要申请锁的属性，在该函数里其被设置成为递归属性。</li>
 <li>调用全局锁和条件变量结构体的 <code>set</code> 函数将步骤 1 中的结构体赋值到全局变量中。</li>
 </ol>
-<h3 id="锁相关函数"><a href="#锁相关函数" class="headerlink" title="锁相关函数"></a>锁相关函数</h3><h4 id="evthread-posix-lock-alloc"><a href="#evthread-posix-lock-alloc" class="headerlink" title="evthread_posix_lock_alloc"></a>evthread_posix_lock_alloc</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">evthread_posix_lock_alloc</span><span class="params">(<span class="keyword">unsigned</span> locktype)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_mutexattr_t</span> *attr = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> *lock = mm_malloc(<span class="keyword">sizeof</span>(<span class="keyword">pthread_mutex_t</span>));</span><br><span class="line">    <span class="keyword">if</span> (!lock) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (locktype &amp; EVTHREAD_LOCKTYPE_RECURSIVE) attr = &amp;attr_recursive;</span><br><span class="line">    <span class="keyword">if</span> (pthread_mutex_init(lock, attr)) &#123;</span><br><span class="line">        mm_free(lock);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lock;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="锁相关函数">锁相关函数</h3>
+<h4 id="evthread_posix_lock_alloc">evthread_posix_lock_alloc</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">evthread_posix_lock_alloc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> locktype<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_mutexattr_t <span class="token operator">*</span>attr <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    pthread_mutex_t <span class="token operator">*</span>lock <span class="token operator">=</span> <span class="token function">mm_malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>pthread_mutex_t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>lock<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>locktype <span class="token operator">&amp;</span> EVTHREAD_LOCKTYPE_RECURSIVE<span class="token punctuation">)</span> attr <span class="token operator">=</span> <span class="token operator">&amp;</span>attr_recursive<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span>lock<span class="token punctuation">,</span> attr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_free</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> lock<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_lock_alloc</code> 函数封装了 <code>pthread_mutex_init</code> 函数，根据传入参数 <code>locktype</code> 不同，创建不同类型的锁：</p>
 <ul>
 <li><code>locktype == 0</code> ：创建普通互斥锁</li>
 <li><code>locktype == EVTHREAD_LOCKTYPE_RECURSIVE</code> ：创建递归锁</li>
 <li><code>locktype == EVTHREAD_LOCKTYPE_READWRITE</code> ：创建读写锁（<code>evthread_posix_lock_alloc</code> 函数中未实现）</li>
 </ul>
-<h4 id="evthread-posix-lock-free"><a href="#evthread-posix-lock-free" class="headerlink" title="evthread_posix_lock_free"></a>evthread_posix_lock_free</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">evthread_posix_lock_free</span><span class="params">(<span class="keyword">void</span> *lock_, <span class="keyword">unsigned</span> locktype)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> *lock = lock_;</span><br><span class="line">    pthread_mutex_destroy(lock);</span><br><span class="line">    mm_free(lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_lock_free">evthread_posix_lock_free</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">evthread_posix_lock_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>lock_<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> locktype<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_mutex_t <span class="token operator">*</span>lock <span class="token operator">=</span> lock_<span class="token punctuation">;</span>
+    <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">mm_free</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_lock_free</code> 函数对 <code>pthread_mutex_destroy</code> 函数进行了封装。</p>
-<h4 id="evthread-posix-lock"><a href="#evthread-posix-lock" class="headerlink" title="evthread_posix_lock"></a>evthread_posix_lock</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evthread_posix_lock</span><span class="params">(<span class="keyword">unsigned</span> mode, <span class="keyword">void</span> *lock_)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> *lock = lock_;</span><br><span class="line">    <span class="keyword">if</span> (mode &amp; EVTHREAD_TRY) <span class="keyword">return</span> pthread_mutex_trylock(lock);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> pthread_mutex_lock(lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_lock">evthread_posix_lock</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">evthread_posix_lock</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> mode<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_mutex_t <span class="token operator">*</span>lock <span class="token operator">=</span> lock_<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mode <span class="token operator">&amp;</span> EVTHREAD_TRY<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">pthread_mutex_trylock</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_lock</code> 对 <code>pthread</code> 的 <code>lock</code> 相关函数进行了封装：</p>
 <ul>
 <li>当 <code>mode == 0</code> 时，相当于调用 <code>pthread_mutex_lock</code> 函数</li>
 <li>当 <code>mode == EVTHREAD_TRY</code> 时，相当于调用 <code>pthread_mutex_trylock</code> 函数</li>
 </ul>
-<h4 id="evthread-posix-unlock"><a href="#evthread-posix-unlock" class="headerlink" title="evthread_posix_unlock"></a>evthread_posix_unlock</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evthread_posix_unlock</span><span class="params">(<span class="keyword">unsigned</span> mode, <span class="keyword">void</span> *lock_)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> *lock = lock_;</span><br><span class="line">    <span class="keyword">return</span> pthread_mutex_unlock(lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_unlock">evthread_posix_unlock</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">evthread_posix_unlock</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> mode<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_mutex_t <span class="token operator">*</span>lock <span class="token operator">=</span> lock_<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_unlock</code> 函数对 <code>pthread_mutex_unlock</code> 函数进行了封装。</p>
-<h3 id="条件变量相关函数"><a href="#条件变量相关函数" class="headerlink" title="条件变量相关函数"></a>条件变量相关函数</h3><h4 id="evthread-posix-cond-alloc"><a href="#evthread-posix-cond-alloc" class="headerlink" title="evthread_posix_cond_alloc"></a>evthread_posix_cond_alloc</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">evthread_posix_cond_alloc</span><span class="params">(<span class="keyword">unsigned</span> condflags)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> *cond = mm_malloc(<span class="keyword">sizeof</span>(<span class="keyword">pthread_cond_t</span>));</span><br><span class="line">    <span class="keyword">if</span> (!cond) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (pthread_cond_init(cond, <span class="literal">NULL</span>)) &#123;</span><br><span class="line">        mm_free(cond);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cond;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="条件变量相关函数">条件变量相关函数</h3>
+<h4 id="evthread_posix_cond_alloc">evthread_posix_cond_alloc</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span> <span class="token function">evthread_posix_cond_alloc</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> condflags<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_cond_t <span class="token operator">*</span>cond <span class="token operator">=</span> <span class="token function">mm_malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>pthread_cond_t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cond<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">pthread_cond_init</span><span class="token punctuation">(</span>cond<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_free</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> cond<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_cond_alloc</code> 函数对 <code>pthread_cond_init</code> 函数进行了封装。</p>
-<h4 id="evthread-posix-cond-free"><a href="#evthread-posix-cond-free" class="headerlink" title="evthread_posix_cond_free"></a>evthread_posix_cond_free</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">evthread_posix_cond_free</span><span class="params">(<span class="keyword">void</span> *cond_)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> *cond = cond_;</span><br><span class="line">    pthread_cond_destroy(cond);</span><br><span class="line">    mm_free(cond);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_cond_free">evthread_posix_cond_free</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">evthread_posix_cond_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_cond_t <span class="token operator">*</span>cond <span class="token operator">=</span> cond_<span class="token punctuation">;</span>
+    <span class="token function">pthread_cond_destroy</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">mm_free</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_cond_free</code> 函数对 <code>pthread_cond_destroy</code> 函数进行了封装。</p>
-<h4 id="evthread-posix-cond-signal"><a href="#evthread-posix-cond-signal" class="headerlink" title="evthread_posix_cond_signal"></a>evthread_posix_cond_signal</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evthread_posix_cond_signal</span><span class="params">(<span class="keyword">void</span> *cond_, <span class="keyword">int</span> broadcast)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> *cond = cond_;</span><br><span class="line">    <span class="keyword">int</span> r;</span><br><span class="line">    <span class="keyword">if</span> (broadcast) r = pthread_cond_broadcast(cond);</span><br><span class="line">    <span class="keyword">else</span> r = pthread_cond_signal(cond);</span><br><span class="line">    <span class="keyword">return</span> r ? <span class="number">-1</span> : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_cond_signal">evthread_posix_cond_signal</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">evthread_posix_cond_signal</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond_<span class="token punctuation">,</span> <span class="token keyword">int</span> broadcast<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pthread_cond_t <span class="token operator">*</span>cond <span class="token operator">=</span> cond_<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> r<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>broadcast<span class="token punctuation">)</span> r <span class="token operator">=</span> <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> r <span class="token operator">=</span> <span class="token function">pthread_cond_signal</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> r <span class="token operator">?</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_cond_signal</code> 函数对 <code>pthread</code> 的通知相关函数进行了封装：</p>
 <ul>
 <li>当 <code>broadcast == 0</code> 时，相当于调用 <code>pthread_cond_signal</code> 函数</li>
 <li>当 <code>broadcast != 0</code> 时，相当于调用 <code>pthread_cond_broadcast</code> 函数</li>
 </ul>
-<h4 id="evthread-posix-cond-wait"><a href="#evthread-posix-cond-wait" class="headerlink" title="evthread_posix_cond_wait"></a>evthread_posix_cond_wait</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evthread_posix_cond_wait</span><span class="params">(<span class="keyword">void</span> *cond_, <span class="keyword">void</span> *lock_, <span class="keyword">const</span> struct timeval *tv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> *cond = cond_;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> *lock = lock_;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tv) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">now</span>, <span class="title">abstime</span>;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> <span class="title">ts</span>;</span></span><br><span class="line">        evutil_gettimeofday(&amp;now, <span class="literal">NULL</span>);</span><br><span class="line">        evutil_timeradd(&amp;now, tv, &amp;abstime);</span><br><span class="line">        ts.tv_sec = abstime.tv_sec;</span><br><span class="line">        ts.tv_nsec = abstime.tv_usec*<span class="number">1000</span>;</span><br><span class="line">        r = pthread_cond_timedwait(cond, lock, &amp;ts);</span><br><span class="line">        <span class="keyword">if</span> (r == ETIMEDOUT) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (r) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        r = pthread_cond_wait(cond, lock);</span><br><span class="line">        <span class="keyword">return</span> r ? <span class="number">-1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_posix_cond_wait">evthread_posix_cond_wait</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">evthread_posix_cond_wait</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>cond_<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>lock_<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>tv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> r<span class="token punctuation">;</span>
+    pthread_cond_t <span class="token operator">*</span>cond <span class="token operator">=</span> cond_<span class="token punctuation">;</span>
+    pthread_mutex_t <span class="token operator">*</span>lock <span class="token operator">=</span> lock_<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>tv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">struct</span> <span class="token class-name">timeval</span> now<span class="token punctuation">,</span> abstime<span class="token punctuation">;</span>
+        <span class="token keyword">struct</span> <span class="token class-name">timespec</span> ts<span class="token punctuation">;</span>
+        <span class="token function">evutil_gettimeofday</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>now<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">evutil_timeradd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>now<span class="token punctuation">,</span> tv<span class="token punctuation">,</span> <span class="token operator">&amp;</span>abstime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ts<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> abstime<span class="token punctuation">.</span>tv_sec<span class="token punctuation">;</span>
+        ts<span class="token punctuation">.</span>tv_nsec <span class="token operator">=</span> abstime<span class="token punctuation">.</span>tv_usec<span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">;</span>
+        r <span class="token operator">=</span> <span class="token function">pthread_cond_timedwait</span><span class="token punctuation">(</span>cond<span class="token punctuation">,</span> lock<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">==</span> ETIMEDOUT<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        r <span class="token operator">=</span> <span class="token function">pthread_cond_wait</span><span class="token punctuation">(</span>cond<span class="token punctuation">,</span> lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> r <span class="token operator">?</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_cond_signal</code> 函数对 <code>pthread</code> 的等待通知相关函数进行了封装：</p>
 <ul>
 <li>当 <code>tv == 0</code> 时，相当于调用 <code>pthread_cond_wait</code> 函数</li>
-<li>当 <code>tv != 0</code> 时，相当于调用 <code>pthread_cond_timedwait</code> 函数<blockquote>
-<p>需要注意的是：<code>evthread_posix_cond_wait</code> 的时间参数是相对时间，而 <code>pthread_cond_timedwait</code> 函数的时间参数是绝对时间，<code>evthread_posix_cond_wait</code> 在内部对两种时间进行了转换，要注意在调用 <code>evthread_posix_cond_wait</code> 时不要使用绝对时间！</p>
-</blockquote>
-</li>
+<li>当 <code>tv != 0</code> 时，相当于调用 <code>pthread_cond_timedwait</code> 函数 &gt; 需要注意的是：<code>evthread_posix_cond_wait</code> 的时间参数是相对时间，而 <code>pthread_cond_timedwait</code> 函数的时间参数是绝对时间，<code>evthread_posix_cond_wait</code> 在内部对两种时间进行了转换，要注意在调用 <code>evthread_posix_cond_wait</code> 时不要使用绝对时间！</li>
 </ul>
-<h3 id="定制函数设置相关函数"><a href="#定制函数设置相关函数" class="headerlink" title="定制函数设置相关函数"></a>定制函数设置相关函数</h3><h4 id="evthread-set-lock-callbacks-和-evthread-set-condition-callbacks"><a href="#evthread-set-lock-callbacks-和-evthread-set-condition-callbacks" class="headerlink" title="evthread_set_lock_callbacks 和 evthread_set_condition_callbacks"></a>evthread_set_lock_callbacks 和 evthread_set_condition_callbacks</h4><p><code>evthread_set_lock_callbacks</code> 和 <code>evthread_set_condition_callbacks</code> 函数实现极其相似，本文中给出 <code>evthread_set_lock_callbacks</code> 的实现代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span></span><br><span class="line">evthread_set_lock_callbacks(<span class="keyword">const</span> struct evthread_lock_callbacks *cbs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evthread_lock_callbacks</span> *<span class="title">target</span> = <span class="title">evthread_get_lock_callbacks</span>();</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (event_debug_mode_on_) &#123;</span><br><span class="line">        <span class="keyword">if</span> (event_debug_created_threadable_ctx_) &#123;</span><br><span class="line">            event_errx(<span class="number">1</span>, <span class="string">&quot;evthread initialization must be called BEFORE anything else!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cbs) &#123;</span><br><span class="line">        <span class="keyword">if</span> (target-&gt;alloc)</span><br><span class="line">            event_warnx(<span class="string">&quot;Trying to disable lock functions after they have been set up will probaby not work.&quot;</span>);</span><br><span class="line">        <span class="built_in">memset</span>(target, <span class="number">0</span>, <span class="keyword">sizeof</span>(evthread_lock_fns_));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (target-&gt;alloc) &#123;</span><br><span class="line">        <span class="comment">/* Uh oh; we already had locking callbacks set up.*/</span></span><br><span class="line">        <span class="keyword">if</span> (target-&gt;lock_api_version == cbs-&gt;lock_api_version &amp;&amp;</span><br><span class="line">            target-&gt;supported_locktypes == cbs-&gt;supported_locktypes &amp;&amp;</span><br><span class="line">            target-&gt;alloc == cbs-&gt;alloc &amp;&amp;</span><br><span class="line">            target-&gt;<span class="built_in">free</span> == cbs-&gt;<span class="built_in">free</span> &amp;&amp;</span><br><span class="line">            target-&gt;lock == cbs-&gt;lock &amp;&amp;</span><br><span class="line">            target-&gt;unlock == cbs-&gt;unlock) &#123;</span><br><span class="line">            <span class="comment">/* no change -- allow this. */</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        event_warnx(<span class="string">&quot;Can&#x27;t change lock callbacks once they have been initialized.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cbs-&gt;alloc &amp;&amp; cbs-&gt;<span class="built_in">free</span> &amp;&amp; cbs-&gt;lock &amp;&amp; cbs-&gt;unlock) &#123;</span><br><span class="line">        <span class="built_in">memcpy</span>(target, cbs, <span class="keyword">sizeof</span>(evthread_lock_fns_));</span><br><span class="line">        <span class="keyword">return</span> event_global_setup_locks_(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="定制函数设置相关函数">定制函数设置相关函数</h3>
+<h4 id="evthread_set_lock_callbacks-和-evthread_set_condition_callbacks">evthread_set_lock_callbacks 和 evthread_set_condition_callbacks</h4>
+<p><code>evthread_set_lock_callbacks</code> 和 <code>evthread_set_condition_callbacks</code> 函数实现极其相似，本文中给出 <code>evthread_set_lock_callbacks</code> 的实现代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span>
+<span class="token function">evthread_set_lock_callbacks</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">evthread_lock_callbacks</span> <span class="token operator">*</span>cbs<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">evthread_lock_callbacks</span> <span class="token operator">*</span>target <span class="token operator">=</span> <span class="token function">evthread_get_lock_callbacks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>event_debug_mode_on_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>event_debug_created_threadable_ctx_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">event_errx</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"evthread initialization must be called BEFORE anything else!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cbs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token operator">-></span>alloc<span class="token punctuation">)</span>
+            <span class="token function">event_warnx</span><span class="token punctuation">(</span><span class="token string">"Trying to disable lock functions after they have been set up will probaby not work."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>evthread_lock_fns_<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token operator">-></span>alloc<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* Uh oh; we already had locking callbacks set up.*/</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token operator">-></span>lock_api_version <span class="token operator">==</span> cbs<span class="token operator">-></span>lock_api_version <span class="token operator">&amp;&amp;</span>
+            target<span class="token operator">-></span>supported_locktypes <span class="token operator">==</span> cbs<span class="token operator">-></span>supported_locktypes <span class="token operator">&amp;&amp;</span>
+            target<span class="token operator">-></span>alloc <span class="token operator">==</span> cbs<span class="token operator">-></span>alloc <span class="token operator">&amp;&amp;</span>
+            target<span class="token operator">-></span>free <span class="token operator">==</span> cbs<span class="token operator">-></span>free <span class="token operator">&amp;&amp;</span>
+            target<span class="token operator">-></span>lock <span class="token operator">==</span> cbs<span class="token operator">-></span>lock <span class="token operator">&amp;&amp;</span>
+            target<span class="token operator">-></span>unlock <span class="token operator">==</span> cbs<span class="token operator">-></span>unlock<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/* no change -- allow this. */</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">event_warnx</span><span class="token punctuation">(</span><span class="token string">"Can't change lock callbacks once they have been initialized."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cbs<span class="token operator">-></span>alloc <span class="token operator">&amp;&amp;</span> cbs<span class="token operator">-></span>free <span class="token operator">&amp;&amp;</span> cbs<span class="token operator">-></span>lock <span class="token operator">&amp;&amp;</span> cbs<span class="token operator">-></span>unlock<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">memcpy</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> cbs<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>evthread_lock_fns_<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">event_global_setup_locks_</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从代码中可以看出 <code>evthread_set_lock_callbacks</code> 函数做了以下工作：</p>
-<ol>
-<li>获取全局锁结构体地址：<code>evthread_get_lock_callbacks()</code><blockquote>
-<p>全局锁结构体在开启、关闭调试锁时所对应的变量不同，具体可参考：<a href="/post/2020/a26c1bab/" title="源码阅读 libevent - 多线程：调试锁">源码阅读 libevent - 多线程：调试锁</a></p>
-<pre><code> * 如果没有开启调试锁，全局锁结构体对应全局变量 evthread_lock_fns_
- * 如果开启调试锁，全局锁结构体对应全局变量 original_lock_fns_
-</code></pre></blockquote>
-</li>
-<li>如果传入定制函数结构体指针为空：<ul>
+<ol type="1">
+<li>获取全局锁结构体地址：<code>evthread_get_lock_callbacks()</code> &gt; 全局锁结构体在开启、关闭调试锁时所对应的变量不同，具体可参考：<a href="/post/2020/a26c1bab/" title="源码阅读 libevent - 多线程：调试锁">源码阅读 libevent - 多线程：调试锁</a> * 如果没有开启调试锁，全局锁结构体对应全局变量 evthread_lock_fns_ * 如果开启调试锁，全局锁结构体对应全局变量 original_lock_fns_</li>
+<li>如果传入定制函数结构体指针为空：
+<ul>
 <li>如果当前全局锁结构体未设置，则对该结构体进行清 0 操作</li>
 <li>如果当前全局锁结构体已设置，则会先输出警告日志后，对该结构体进行清 0 操作</li>
-</ul>
-</li>
-<li>如果传入的结构体指针不为空<ul>
-<li>如果当前全局锁结构体未设置<ul>
+</ul></li>
+<li>如果传入的结构体指针不为空
+<ul>
+<li>如果当前全局锁结构体未设置
+<ul>
 <li>结构体中所有函数指针均指向非空，设置全局锁结构体成功</li>
 <li>结构体中所有函数指针存在空指针，设置全局锁结构体失败</li>
-</ul>
-</li>
-<li>如果当前全局锁结构体已设置<ul>
+</ul></li>
+<li>如果当前全局锁结构体已设置
+<ul>
 <li>传入的结构体与当前全局锁结构体完全一致，设置全局锁结构体成功</li>
 <li>传入的结构体与当前全局锁结构体不完全一致，设置全局锁结构体失败</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 </ol>
-<h4 id="evthread-set-id-callback"><a href="#evthread-set-id-callback" class="headerlink" title="evthread_set_id_callback"></a>evthread_set_id_callback</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">evthread_set_id_callback</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> (*id_fn)(<span class="keyword">void</span>))</span> </span>&#123;</span><br><span class="line">    evthread_id_fn_ = id_fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evthread_set_id_callback">evthread_set_id_callback</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">evthread_set_id_callback</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token punctuation">(</span><span class="token operator">*</span>id_fn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    evthread_id_fn_ <span class="token operator">=</span> id_fn<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_set_id_callback</code> 函数看上去非常简单，就是让 <code>_evthread_id_fn</code> 这个全局变量指向了传入的函数指针参数，在 <code>evthread_use_pthreads</code> 函数的实现中，传入参数为 <code>evthread_posix_get_id</code>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">evthread_posix_get_id</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">pthread_t</span> thr;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> EVENT__SIZEOF_PTHREAD_T &gt; EVENT__SIZEOF_LONG</span></span><br><span class="line">        <span class="keyword">ev_uint64_t</span> id;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> id;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    &#125; r;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> EVENT__SIZEOF_PTHREAD_T &lt; EVENT__SIZEOF_LONG</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;r, <span class="number">0</span>, <span class="keyword">sizeof</span>(r));</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    r.thr = pthread_self();</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">long</span>)r.id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">evthread_posix_get_id</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">union</span> <span class="token punctuation">&#123;</span>
+        pthread_t thr<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> EVENT__SIZEOF_PTHREAD_T > EVENT__SIZEOF_LONG</span>
+        ev_uint64_t id<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">else</span></span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">long</span> id<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+    <span class="token punctuation">&#125;</span> r<span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">if</span> EVENT__SIZEOF_PTHREAD_T &lt; EVENT__SIZEOF_LONG</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>r<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+    r<span class="token punctuation">.</span>thr <span class="token operator">=</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span>r<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evthread_posix_get_id</code> 函数中 <code>r</code> 是一个联合体，有两个成员 <code>thr</code> 和 <code>id</code>，联合体的特点是联合体内部的成员地址是相同的，然后看到 <code>r.thr = pthread_self()</code>，这是获取当前线程的 <code>id</code> 然后放到 <code>thr</code> 中，由于 <code>r.id</code> 与 <code>r.thr</code> 地址相同，而 <code>pthread_t</code> 本身就是 <code>unsigned long</code> 类型，因此实际上返回的 <code>r.id</code> 就等于获取到的线程 <code>id</code>。</p>
 <p>由此也可以知道：<code>evthread_set_id_callback</code> 函数就是用来指定获取当前线程 <code>id</code> 的函数。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/luotuo44/article/details/38350633">Libevent 源码分析 - 多线程、锁、条件变量 (一)_luotuo44 的专栏 - CSDN 博客</a></li>
-<li>[2] <a target="_blank" rel="noopener" href="http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html">http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html" class="uri">http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html</a></li>
 </ul>
 
     </div>
@@ -491,31 +569,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -558,42 +616,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -601,132 +631,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/52b3bda8/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/52b3bda8/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/52b3bda8/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,16 +16,14 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta property="og:type" content="website">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta property="og:type" content="website">
 <meta property="og:title" content="何照江的博客">
 <meta property="og:url" content="http://github.hezhaojiang.io/index.html">
 <meta property="og:site_name" content="何照江的博客">
@@ -35,59 +35,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -98,7 +58,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -125,36 +85,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -165,8 +101,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -175,7 +110,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -191,7 +126,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -209,13 +144,14 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -224,21 +160,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -248,14 +181,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -264,7 +195,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -277,9 +208,7 @@
 
 
     <div class="main-inner index posts-expand">
-      
 
-      
     
 
 
@@ -287,7 +216,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/b1770ae8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -301,8 +230,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/b1770ae8/" class="post-title-link" itemprop="url">数据结构与算法 - 最短路径</a>
+          <a href="/post/2021/b1770ae8/" class="post-title-link" itemprop="url">数据结构与算法 - 最短路径</a>
         </h2>
 
         <div class="post-meta-container">
@@ -320,7 +248,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-04 00:26:32" itemprop="dateModified" datetime="2021-03-04T00:26:32+08:00">2021-03-04</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -333,27 +261,6 @@
     </span>
 
   
-    <span id="/post/2021/b1770ae8/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 最短路径" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/b1770ae8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/b1770ae8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -365,15 +272,15 @@
     <div class="post-body" itemprop="articleBody">
           <p>图的最短路算法有很多，在此记录一下非常常用的四个算法</p>
 <ul>
-<li>单源最短路：<ul>
+<li>单源最短路：
+<ul>
 <li>不带负权边：<code>Dijkstra</code></li>
 <li>带负权边：<code>Bellman-Ford</code>、<code>SPFA</code></li>
-</ul>
-</li>
-<li>多源最短路：<ul>
+</ul></li>
+<li>多源最短路：
+<ul>
 <li>适用于正负权边：<code>Floyd</code>（但不能有负环）</li>
-</ul>
-</li>
+</ul></li>
 </ul>
           <!--noindex-->
           <!--/noindex-->
@@ -402,7 +309,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/2d042192/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -416,8 +323,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/2d042192/" class="post-title-link" itemprop="url">数据结构与算法 - 最小生成树</a>
+          <a href="/post/2021/2d042192/" class="post-title-link" itemprop="url">数据结构与算法 - 最小生成树</a>
         </h2>
 
         <div class="post-meta-container">
@@ -435,7 +341,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-04 00:26:32" itemprop="dateModified" datetime="2021-03-04T00:26:32+08:00">2021-03-04</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -447,27 +353,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/2d042192/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 最小生成树" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/2d042192/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/2d042192/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -509,7 +394,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/759c397f/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -523,8 +408,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/759c397f/" class="post-title-link" itemprop="url">数据结构与算法 - 链表</a>
+          <a href="/post/2021/759c397f/" class="post-title-link" itemprop="url">数据结构与算法 - 链表</a>
         </h2>
 
         <div class="post-meta-container">
@@ -549,27 +433,6 @@
     </span>
 
   
-    <span id="/post/2021/759c397f/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 链表" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/759c397f/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/759c397f/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -579,7 +442,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="链表基础"><a href="#链表基础" class="headerlink" title="链表基础"></a>链表基础</h2><p>链表的定义（来自维基百科）：</p>
+          <h2 id="链表基础">链表基础</h2>
+<p>链表的定义（来自维基百科）：</p>
 <p>在计算机科学中，链表作为一种基础的数据结构可以用来生成其它类型的数据结构。链表通常由一连串节点组成，每个节点包含任意的实例数据和一或两个用来指向上一个或下一个节点的位置的链接。</p>
           <!--noindex-->
           <!--/noindex-->
@@ -608,7 +472,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/70c4ac0c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -622,8 +486,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/70c4ac0c/" class="post-title-link" itemprop="url">数据结构与算法 - 泛洪填充算法</a>
+          <a href="/post/2021/70c4ac0c/" class="post-title-link" itemprop="url">数据结构与算法 - 泛洪填充算法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -641,7 +504,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-17 15:48:18" itemprop="dateModified" datetime="2021-02-17T15:48:18+08:00">2021-02-17</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -653,27 +516,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/70c4ac0c/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 泛洪填充算法" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/70c4ac0c/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/70c4ac0c/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -712,7 +554,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/e059d0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -726,8 +568,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/e059d0/" class="post-title-link" itemprop="url">编解码技术：H264 - 去块效应滤波</a>
+          <a href="/post/2021/e059d0/" class="post-title-link" itemprop="url">编解码技术：H264 - 去块效应滤波</a>
         </h2>
 
         <div class="post-meta-container">
@@ -758,27 +599,6 @@
     </span>
 
   
-    <span id="/post/2021/e059d0/" class="post-meta-item leancloud_visitors" data-flag-title="编解码技术：H264 - 去块效应滤波" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/e059d0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/e059d0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -790,7 +610,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>我们知道现在的主流编码器都是使用基于块的混合编码框架，以编码块为单位进行预测、变换、量化。</p>
 <p>这就导致不同的编码块会使用不同的编码参数，进而不同编码重建块之间的存在一定的差异，尤其在编码块边界处较为明显。编码块边界处不连续的现象就是块效应，产生这种效应的原因主要有两个：</p>
-<ol>
+<ol type="1">
 <li>预测时出现不准的地方称为残量（<code>Residual</code>），残量会利用离散余弦变换（<code>Discrete Cosine Transform, DCT</code>）做量化（<code>Quantization</code>），由于量化与反量化会产生误差，因此会在区块边界上产生视觉上的不连续。</li>
 <li>运动补偿，同一个画面内相邻区块可能不是从前几个编码影像中相邻区块获取来做预测，因此造成不连续的现象。同样地，画面内预测的方式也可能会造成影像不连续。</li>
 </ol>
@@ -823,7 +643,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/10604d20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -837,8 +657,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/10604d20/" class="post-title-link" itemprop="url">源码阅读 x264 - 去块效应滤波</a>
+          <a href="/post/2021/10604d20/" class="post-title-link" itemprop="url">源码阅读 x264 - 去块效应滤波</a>
         </h2>
 
         <div class="post-meta-container">
@@ -856,7 +675,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -869,27 +688,6 @@
     </span>
 
   
-    <span id="/post/2021/10604d20/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 去块效应滤波" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/10604d20/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/10604d20/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -900,10 +698,10 @@
     
     <div class="post-body" itemprop="articleBody">
           <p><code>x264_deblock_init()</code> 中初始化了一系列环路滤波函数。</p>
-<ol>
-<li>包含 “v” 的是垂直滤波器，用于处理水平边界；包含 “h” 的是水平滤波器，用于处理垂直边界。</li>
-<li>包含 “luma” 的是亮度滤波器，包含 “chroma” 的是色度滤波器。</li>
-<li>包含 “intra” 的是处理边界强度 Bs 为 4 的强滤波器，不包含 “intra” 的是普通滤波器。</li>
+<ol type="1">
+<li>包含 "v" 的是垂直滤波器，用于处理水平边界；包含 "h" 的是水平滤波器，用于处理垂直边界。</li>
+<li>包含 "luma" 的是亮度滤波器，包含 "chroma" 的是色度滤波器。</li>
+<li>包含 "intra" 的是处理边界强度 Bs 为 4 的强滤波器，不包含 "intra" 的是普通滤波器。</li>
 </ol>
           <!--noindex-->
           <!--/noindex-->
@@ -932,7 +730,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/6db02507/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -946,8 +744,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/6db02507/" class="post-title-link" itemprop="url">音视频日记 - 手写 H264 编码器</a>
+          <a href="/post/2021/6db02507/" class="post-title-link" itemprop="url">音视频日记 - 手写 H264 编码器</a>
         </h2>
 
         <div class="post-meta-container">
@@ -957,10 +754,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-01-30 10:58:31 / 修改时间：21:00:23" itemprop="dateCreated datePublished" datetime="2021-01-30T10:58:31+08:00">2021-01-30</time>
+      <time title="创建时间：2021-01-30 10:58:31" itemprop="dateCreated datePublished" datetime="2021-01-30T10:58:31+08:00">2021-01-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -971,27 +774,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/6db02507/" class="post-meta-item leancloud_visitors" data-flag-title="音视频日记 - 手写 H264 编码器" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/6db02507/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/6db02507/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1032,7 +814,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/6f5ffb09/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1046,8 +828,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/6f5ffb09/" class="post-title-link" itemprop="url">源码阅读 x264 - 量化</a>
+          <a href="/post/2021/6f5ffb09/" class="post-title-link" itemprop="url">源码阅读 x264 - 量化</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1065,7 +846,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-11 22:11:42" itemprop="dateModified" datetime="2021-04-11T22:11:42+08:00">2021-04-11</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1077,27 +858,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/6f5ffb09/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 量化" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/6f5ffb09/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/6f5ffb09/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1136,7 +896,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/2633a00a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1150,8 +910,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/2633a00a/" class="post-title-link" itemprop="url">源码阅读 x264 - SPS & PPS</a>
+          <a href="/post/2021/2633a00a/" class="post-title-link" itemprop="url">源码阅读 x264 - SPS & PPS</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1169,7 +928,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 21:00:23" itemprop="dateModified" datetime="2021-01-30T21:00:23+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1181,27 +940,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/2633a00a/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - SPS & PPS" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/2633a00a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/2633a00a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1244,7 +982,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/47588647/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1258,8 +996,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/47588647/" class="post-title-link" itemprop="url">数据结构与算法 - 逆元</a>
+          <a href="/post/2021/47588647/" class="post-title-link" itemprop="url">数据结构与算法 - 逆元</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1277,7 +1014,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:38:38" itemprop="dateModified" datetime="2021-02-09T19:38:38+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1290,27 +1027,6 @@
     </span>
 
   
-    <span id="/post/2021/47588647/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 逆元" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/47588647/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/47588647/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -1321,12 +1037,12 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>对于加减乘运算都会满足：</p>
-<p>　　<script type="math/tex">(a + b) \bmod p = a \bmod p + b \bmod p</script></p>
-<p>　　<script type="math/tex">(a - b) \bmod p = a \bmod p - b \bmod p</script></p>
-<p>　　<script type="math/tex">(a \times b) \bmod p = a \bmod p \times (b \bmod p)</script></p>
-<p>但是对于除法而言 $ (a/b) \bmod p \neq (a \bmod p) / (b \bmod p) $</p>
-<p>这个可以通过举例验证一下或者可以通过 $b \bmod p$ 可以为 0 但是分母不能为 0 得到对于除法而言不满足这个运算的结论。</p>
-<p>但是如果非要求 $(a/b) \bmod p$ 要怎么办呢？</p>
+<p>　　<span class="math display">\[ (a + b) \bmod p = a \bmod p + b \bmod p \]</span></p>
+<p>　　<span class="math display">\[ (a - b) \bmod p = a \bmod p - b \bmod p \]</span></p>
+<p>　　<span class="math display">\[ (a \times b) \bmod p = a \bmod p \times (b \bmod p) \]</span></p>
+<p>但是对于除法而言 $ (a/b) p (a p) / (b p) $</p>
+<p>这个可以通过举例验证一下或者可以通过 <span class="math inline">\(b \bmod p\)</span> 可以为 0 但是分母不能为 0 得到对于除法而言不满足这个运算的结论。</p>
+<p>但是如果非要求 <span class="math inline">\((a/b) \bmod p\)</span> 要怎么办呢？</p>
           <!--noindex-->
           <!--/noindex-->
         
@@ -1354,7 +1070,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/b556f4df/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1368,8 +1084,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/b556f4df/" class="post-title-link" itemprop="url">编解码技术：H264 - 运动补偿</a>
+          <a href="/post/2021/b556f4df/" class="post-title-link" itemprop="url">编解码技术：H264 - 运动补偿</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1399,27 +1114,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/b556f4df/" class="post-meta-item leancloud_visitors" data-flag-title="编解码技术：H264 - 运动补偿" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/b556f4df/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/b556f4df/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1458,7 +1152,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/83dc3ab7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1472,8 +1166,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/83dc3ab7/" class="post-title-link" itemprop="url">源码阅读 x264 - 运动补偿</a>
+          <a href="/post/2021/83dc3ab7/" class="post-title-link" itemprop="url">源码阅读 x264 - 运动补偿</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1491,7 +1184,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1503,27 +1196,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/83dc3ab7/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 运动补偿" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/83dc3ab7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/83dc3ab7/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1562,7 +1234,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/f0753f9a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1576,8 +1248,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/f0753f9a/" class="post-title-link" itemprop="url">源码阅读 x264 - 离散余弦变换</a>
+          <a href="/post/2021/f0753f9a/" class="post-title-link" itemprop="url">源码阅读 x264 - 离散余弦变换</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1595,7 +1266,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1607,27 +1278,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/f0753f9a/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 离散余弦变换" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/f0753f9a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/f0753f9a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1666,7 +1316,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/ae3a0f38/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1680,8 +1330,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/ae3a0f38/" class="post-title-link" itemprop="url">源码阅读 x264 - 代价计算</a>
+          <a href="/post/2021/ae3a0f38/" class="post-title-link" itemprop="url">源码阅读 x264 - 代价计算</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1699,7 +1348,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1711,27 +1360,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/ae3a0f38/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 代价计算" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/ae3a0f38/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/ae3a0f38/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1777,7 +1405,7 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://github.hezhaojiang.io/post/2021/b66cfff2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1791,8 +1419,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2021/b66cfff2/" class="post-title-link" itemprop="url">源码阅读 x264 - 帧内预测</a>
+          <a href="/post/2021/b66cfff2/" class="post-title-link" itemprop="url">源码阅读 x264 - 帧内预测</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1810,7 +1437,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1822,27 +1449,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/b66cfff2/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 帧内预测" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/b66cfff2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/b66cfff2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -1874,49 +1480,18 @@
 
 
 
-
-  
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
-
-
-      
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -1924,166 +1499,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":false,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

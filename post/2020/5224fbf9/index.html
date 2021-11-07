@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="H.264 Profiles2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。 H.264 是一个 “系列” 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是 Bas">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="H.264 Profiles 2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。 H.264 是一个 &quot;系列&quot; 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编解码技术：H264 - Profile">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/5224fbf9/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="H.264 Profiles2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。 H.264 是一个 “系列” 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是 Bas">
+<meta property="og:description" content="H.264 Profiles 2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。 H.264 是一个 &quot;系列&quot; 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-05T05:44:30.000Z">
 <meta property="article:modified_time" content="2021-01-30T12:55:21.151Z">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/5224fbf9/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>编解码技术：H264 - Profile | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/5224fbf9/","path":"post/2020/5224fbf9/","title":"编解码技术：H264 - Profile"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>编解码技术：H264 - Profile | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#H-264-Profiles"><span class="nav-number">1.</span> <span class="nav-text">H.264 Profiles</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Baseline-Profile"><span class="nav-number">1.1.</span> <span class="nav-text">Baseline Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseline-Profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">Baseline Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseline-Profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">Baseline Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseline-Profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">Baseline Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseline-Profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">Baseline Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main-Profile"><span class="nav-number">1.2.</span> <span class="nav-text">Main Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Main-Profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">Main Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Main-Profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.2.2.</span> <span class="nav-text">Main Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Main-Profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">Main Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Main-Profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">Main Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#High-Profile"><span class="nav-number">1.3.</span> <span class="nav-text">High Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#High-Profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">High Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#High-Profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.3.2.</span> <span class="nav-text">High Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#High-Profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.3.</span> <span class="nav-text">High Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#High-Profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">High Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-Profile"><span class="nav-number">1.4.</span> <span class="nav-text">其他 Profile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#h.264-profiles"><span class="nav-number">1.</span> <span class="nav-text">H.264 Profiles</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#baseline-profile"><span class="nav-number">1.1.</span> <span class="nav-text">Baseline Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline-profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">Baseline Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline-profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">Baseline Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline-profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">Baseline Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline-profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">Baseline Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-profile"><span class="nav-number">1.2.</span> <span class="nav-text">Main Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#main-profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">Main Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main-profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.2.2.</span> <span class="nav-text">Main Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main-profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">Main Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main-profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">Main Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#high-profile"><span class="nav-number">1.3.</span> <span class="nav-text">High Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#high-profile-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">High Profile 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#high-profile-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.3.2.</span> <span class="nav-text">High Profile 约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#high-profile-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.3.</span> <span class="nav-text">High Profile 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#high-profile-%E8%A7%A3%E7%A0%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">High Profile 解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-profile"><span class="nav-number">1.4.</span> <span class="nav-text">其他 Profile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/5224fbf9/" class="post-meta-item leancloud_visitors" data-flag-title="编解码技术：H264 - Profile" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/5224fbf9/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/5224fbf9/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -369,42 +277,56 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="H-264-Profiles"><a href="#H-264-Profiles" class="headerlink" title="H.264 Profiles"></a>H.264 Profiles</h2><p>2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。</p>
-<p>H.264 是一个 “系列” 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是 Baseline, Main 和 High。每个 profile 定义用于压缩文件的特定编码技术和算法。</p>
-<a id="more"></a>
-<h3 id="Baseline-Profile"><a href="#Baseline-Profile" class="headerlink" title="Baseline Profile"></a>Baseline Profile</h3><h4 id="Baseline-Profile-简介"><a href="#Baseline-Profile-简介" class="headerlink" title="Baseline Profile 简介"></a>Baseline Profile 简介</h4><p>这是最简单的 Profile，主要用于低功耗、低成本设备，包括一些视频会议和移动应用程序。基线配置文件可以达到大约 1000：1 的压缩比，即 1 Gbps 的流可以压缩到大约 1 Mbps。它们使用 4：2：0 色度采样，这意味着颜色信息采样为黑白信息的一半垂直分辨率和水平分辨率的一半。基线配置文件的其他重要功能是使用通用可变长度编码 （UVLC） 和上下文自适应可变长度编码 （CAVLC） 熵编码技术。</p>
-<h4 id="Baseline-Profile-约束"><a href="#Baseline-Profile-约束" class="headerlink" title="Baseline Profile 约束"></a>Baseline Profile 约束</h4><p>根据 H264 官方文档，Baseline Profile 有如下限制：</p>
+        <h2 id="h.264-profiles">H.264 Profiles</h2>
+<p>2003 年，MPEG 完成了称为 MPEG-4 第 10 部分（H.264）的压缩标准的第一个版本。虽然 H.264 并不是唯一的压缩方法，但它已成为录制、压缩和流式处理高清视频最常用的格式。</p>
+<p>H.264 是一个 "系列" 标准，包括许多不同的功能集， 即 profiles。所有的 profile 都严重依赖时态压缩和运动预测来减少帧数。最常用的三个配置文件是 Baseline, Main 和 High。每个 profile 定义用于压缩文件的特定编码技术和算法。</p>
+<span id="more"></span>
+<h3 id="baseline-profile">Baseline Profile</h3>
+<h4 id="baseline-profile-简介">Baseline Profile 简介</h4>
+<p>这是最简单的 Profile，主要用于低功耗、低成本设备，包括一些视频会议和移动应用程序。基线配置文件可以达到大约 1000：1 的压缩比，即 1 Gbps 的流可以压缩到大约 1 Mbps。它们使用 4：2：0 色度采样，这意味着颜色信息采样为黑白信息的一半垂直分辨率和水平分辨率的一半。基线配置文件的其他重要功能是使用通用可变长度编码 （UVLC） 和上下文自适应可变长度编码 （CAVLC） 熵编码技术。</p>
+<h4 id="baseline-profile-约束">Baseline Profile 约束</h4>
+<p>根据 H264 官方文档，Baseline Profile 有如下限制：</p>
 <ul>
 <li>只有 I 与 P 条带；</li>
 <li>NAL unit 流不应包含取值范围为 2 到 4 的 nal_unit_type，包括 2 与 4；</li>
 <li>序列参数集中 frame_mbs_only_flag 应为 1；</li>
-<li>语法元素 chroma_format_idc ， bit_depth_luma_minus8, bit_depth_chroma_minus8, qpprime_y_zero_<br>transform_bypass_flag，seq_scaling_matrix_present_flag 不应出现在序列参数集中；</li>
+<li>语法元素 chroma_format_idc ， bit_depth_luma_minus8, bit_depth_chroma_minus8, qpprime_y_zero_ transform_bypass_flag，seq_scaling_matrix_present_flag 不应出现在序列参数集中；</li>
 <li>图像参数集中的参数 weighted_pred_flag 与 weighted_bipred_idc 的取值应该为 0；</li>
 <li>图像参数集中的参数 entropy_coding_mode_flag 的取值应为 0；</li>
 <li>图像参数集中 slice_groups_minus1 取值应该在 0 到 7 之间，包括 0 与 7；</li>
-<li>语法元素 transform_8x8_mode_flag，pic_scaling_matrix_present_flag，与 second_chroma_qp_index_offset<br>不应出现在图像参数集中；</li>
+<li>语法元素 transform_8x8_mode_flag，pic_scaling_matrix_present_flag，与 second_chroma_qp_index_offset 不应出现在图像参数集中；</li>
 <li>语法元素 level_prefix 的取值不应大于 15；</li>
 <li>应满足 A.3 节中对于 Baseline Profile 所定义的级别规定。</li>
 </ul>
-<h4 id="Baseline-Profile-配置"><a href="#Baseline-Profile-配置" class="headerlink" title="Baseline Profile 配置"></a>Baseline Profile 配置</h4><p>Baseline Profile 的 profile_idc 的取值为 66 。</p>
-<h4 id="Baseline-Profile-解码"><a href="#Baseline-Profile-解码" class="headerlink" title="Baseline Profile 解码"></a>Baseline Profile 解码</h4><p>与 Baseline Profile 某一级别相一致的解码器应可以对所有满足 profile_idc 等于 66 或 constraint_set0 等于 1，且 level_idc 和 constraint_set3_flag 所表征的级别小于或等于该级别的流进行解码。</p>
-<h3 id="Main-Profile"><a href="#Main-Profile" class="headerlink" title="Main Profile"></a>Main Profile</h3><h4 id="Main-Profile-简介"><a href="#Main-Profile-简介" class="headerlink" title="Main Profile 简介"></a>Main Profile 简介</h4><p>Main Profile 包括 Baseline Profile 的所有功能，但改进了帧预测算法。它用于使用 MPEG-4 格式的 SD 数字电视广播，但不包括高清广播。</p>
-<h4 id="Main-Profile-约束"><a href="#Main-Profile-约束" class="headerlink" title="Main Profile 约束"></a>Main Profile 约束</h4><p>根据 H264 官方文档，Main Profile 有如下限制：</p>
+<h4 id="baseline-profile-配置">Baseline Profile 配置</h4>
+<p>Baseline Profile 的 profile_idc 的取值为 66 。</p>
+<h4 id="baseline-profile-解码">Baseline Profile 解码</h4>
+<p>与 Baseline Profile 某一级别相一致的解码器应可以对所有满足 profile_idc 等于 66 或 constraint_set0 等于 1，且 level_idc 和 constraint_set3_flag 所表征的级别小于或等于该级别的流进行解码。</p>
+<h3 id="main-profile">Main Profile</h3>
+<h4 id="main-profile-简介">Main Profile 简介</h4>
+<p>Main Profile 包括 Baseline Profile 的所有功能，但改进了帧预测算法。它用于使用 MPEG-4 格式的 SD 数字电视广播，但不包括高清广播。</p>
+<h4 id="main-profile-约束">Main Profile 约束</h4>
+<p>根据 H264 官方文档，Main Profile 有如下限制：</p>
 <ul>
 <li>只有 I、P 和 B 条带；</li>
 <li>NAL unit 流不应包含从 2 到 4 取值的 nal_unit_type，包括 2 与 4；</li>
 <li>不允许任意的条带顺序；</li>
-<li>语法元素 hroma_format_idc, bit_depth_luma_minus8, bit_depth_chroma_minus8, qpprime_y_zero_<br>transform_bypass_flag, 与 seq_scaling_matrix_present_flag 不应在序列参数集中出现。</li>
+<li>语法元素 hroma_format_idc, bit_depth_luma_minus8, bit_depth_chroma_minus8, qpprime_y_zero_ transform_bypass_flag, 与 seq_scaling_matrix_present_flag 不应在序列参数集中出现。</li>
 <li>图像参数集中应该具有只等于 0 的 num_slice_groups_minus1；</li>
 <li>图像参数集中应该具有只等于 0 的 redundant_pic_cnt_present_flag；</li>
 <li>语法元素 transform_8x8_mode_flag, pic_scaling_matrix_present_flag, 与 second_chroma_qp_index_offset 不应出现在图像参数集中；</li>
-<li>语法元素 level_prefix 不应大于 15（如果出现时）；<br>– 语法元素 pcm_sample_luma[i] (i = 0..255)，和 pcm_sample_chroma[i] (i = 0..2 <em> MbWidthC </em> MbHeightC − 1) 不应等于 0 (如果出现时)。</li>
+<li>语法元素 level_prefix 不应大于 15（如果出现时）； – 语法元素 pcm_sample_luma[i] (i = 0..255)，和 pcm_sample_chroma[i] (i = 0..2 * MbWidthC * MbHeightC − 1) 不应等于 0 (如果出现时)。</li>
 <li>应满足 A.3 节中对于 Main Profile 所定义的级别的规定。</li>
 </ul>
-<h4 id="Main-Profile-配置"><a href="#Main-Profile-配置" class="headerlink" title="Main Profile 配置"></a>Main Profile 配置</h4><p>Main Profile 的 profile_idc 的取值为 77 。</p>
-<h4 id="Main-Profile-解码"><a href="#Main-Profile-解码" class="headerlink" title="Main Profile 解码"></a>Main Profile 解码</h4><p>与 Main Profile 某一级别相一致的解码器应可以对所有满足 profile_idc 等于 77 或 constraint_set1 等于 1，且 level_idc 和 constraint_set3_flag 所表征的级别小于或等于该级别的流进行解码。</p>
-<h3 id="High-Profile"><a href="#High-Profile" class="headerlink" title="High Profile"></a>High Profile</h3><h4 id="High-Profile-简介"><a href="#High-Profile-简介" class="headerlink" title="High Profile 简介"></a>High Profile 简介</h4><p>H.264 High Profile 是 H.264 系列中最高效、最强大的配置文件，是广播和光盘存储的主要配置文件，尤其是 HDTV 和 Bluray 光盘存储格式。它可以达到约 2000：1 的压缩比。高轮廓还使用可选择 4x4 或 8x8 像素块的自适应变换。例如，4x4 块用于图片中细节密集的部分，而细节很少的部分使用 8x8 块进行压缩。结果是保持视频图像质量，同时将网络带宽要求降低高达 50%。通过应用 H.264 高配置文件压缩，1 Gbps 流可以压缩到大约 512 Kbps。</p>
-<h4 id="High-Profile-约束"><a href="#High-Profile-约束" class="headerlink" title="High Profile 约束"></a>High Profile 约束</h4><p>根据 H264 官方文档，High Profile 有如下限制：</p>
+<h4 id="main-profile-配置">Main Profile 配置</h4>
+<p>Main Profile 的 profile_idc 的取值为 77 。</p>
+<h4 id="main-profile-解码">Main Profile 解码</h4>
+<p>与 Main Profile 某一级别相一致的解码器应可以对所有满足 profile_idc 等于 77 或 constraint_set1 等于 1，且 level_idc 和 constraint_set3_flag 所表征的级别小于或等于该级别的流进行解码。</p>
+<h3 id="high-profile">High Profile</h3>
+<h4 id="high-profile-简介">High Profile 简介</h4>
+<p>H.264 High Profile 是 H.264 系列中最高效、最强大的配置文件，是广播和光盘存储的主要配置文件，尤其是 HDTV 和 Bluray 光盘存储格式。它可以达到约 2000：1 的压缩比。高轮廓还使用可选择 4x4 或 8x8 像素块的自适应变换。例如，4x4 块用于图片中细节密集的部分，而细节很少的部分使用 8x8 块进行压缩。结果是保持视频图像质量，同时将网络带宽要求降低高达 50%。通过应用 H.264 高配置文件压缩，1 Gbps 流可以压缩到大约 512 Kbps。</p>
+<h4 id="high-profile-约束">High Profile 约束</h4>
+<p>根据 H264 官方文档，High Profile 有如下限制：</p>
 <ul>
 <li>只有 I，P 与 B 条带；</li>
 <li>NAL unit 流不应包含取值为 2 到 4 的 nal_unit_type 参数，包括 2 和 4；</li>
@@ -417,13 +339,16 @@
 <li>序列参数集中应有只为 0 的 qpprime_y_zero_transform_bypass_flag 参数。</li>
 <li>应满足 A.3 节中规定的 High Profile 的级别限制。</li>
 </ul>
-<h4 id="High-Profile-配置"><a href="#High-Profile-配置" class="headerlink" title="High Profile 配置"></a>High Profile 配置</h4><p>High Profile 的 profile_idc 的取值为 100 。</p>
-<h4 id="High-Profile-解码"><a href="#High-Profile-解码" class="headerlink" title="High Profile 解码"></a>High Profile 解码</h4><p>与 High Profile 某一级别相一致的解码器应可以对所有满足下列两个条件之一的流进行解码，：</p>
+<h4 id="high-profile-配置">High Profile 配置</h4>
+<p>High Profile 的 profile_idc 的取值为 100 。</p>
+<h4 id="high-profile-解码">High Profile 解码</h4>
+<p>与 High Profile 某一级别相一致的解码器应可以对所有满足下列两个条件之一的流进行解码，：</p>
 <ul>
 <li>Profile_idc 为 77 或 constraint_set1_flag 为 1，并且 level_idc 和 constraint_set3_flag 组合所表征的级别小于或等于该级别的流进行解码。</li>
 <li>profile_idc 为 100 并且 level_idc 所表征的级别小于或等于该级别的流进行解码。</li>
 </ul>
-<h3 id="其他-Profile"><a href="#其他-Profile" class="headerlink" title="其他 Profile"></a>其他 Profile</h3><ul>
+<h3 id="其他-profile">其他 Profile</h3>
+<ul>
 <li>Extended profile : profile_idc = 88.</li>
 <li>High 10 profile : profile_idc = 110.</li>
 <li>High 4:2:2 profile : profile_idc = 122.</li>
@@ -433,7 +358,8 @@
 <li>High 4:4:4 Intra profile : profile_idc = 44/100/110/122/244.</li>
 <li>CAVLC 4:4:4 Intra profile : profile_idc = 44.</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] 《 T-REC-H.264-201906-I.pdf 》</li>
 <li>[2] 《 T-REC-H.264-200503-S.pdf 官方中文版 》</li>
 </ul>
@@ -443,31 +369,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\4f888bde\" rel="bookmark">编解码技术：H264 - CAVLC</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\3552c034\" rel="bookmark">编解码技术：H264 - Level</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f2a4ae37\" rel="bookmark">编解码技术：H264 - NAL Unit</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\49096de1\" rel="bookmark">编解码技术：H264 - PPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\4b4fd3b8\" rel="bookmark">编解码技术：H264 - SPS</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -510,42 +416,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -553,132 +431,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/5224fbf9/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/5224fbf9/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/5224fbf9/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

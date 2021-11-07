@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,25 +16,23 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="在 Post not found: 源码阅读 libevent - event_io_map 和 Post not found: 源码阅读 libevent - event_signal_map 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上： 12345LIST_HEAD (event_dlist, event);&#x2F;* 以上宏定义展开后结果为如下所示">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在 Post not found: 源码阅读 libevent - event_io_map 和 Post not found: 源码阅读 libevent - event_signal_map 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上： LIST_HEAD (event_dlist, event); &#x2F;* 以上宏定义展开后结果为如下所示 *&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 结构体：event">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/afa6fb2f/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="在 Post not found: 源码阅读 libevent - event_io_map 和 Post not found: 源码阅读 libevent - event_signal_map 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上： 12345LIST_HEAD (event_dlist, event);&#x2F;* 以上宏定义展开后结果为如下所示">
+<meta property="og:description" content="在 Post not found: 源码阅读 libevent - event_io_map 和 Post not found: 源码阅读 libevent - event_signal_map 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上： LIST_HEAD (event_dlist, event); &#x2F;* 以上宏定义展开后结果为如下所示 *&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png">
 <meta property="article:published_time" content="2020-11-01T05:54:26.000Z">
-<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/afa6fb2f/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 结构体：event | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/afa6fb2f/","path":"post/2020/afa6fb2f/","title":"源码阅读 libevent - 结构体：event"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 结构体：event | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#struct-event-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">struct event 的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ev-evcallback"><span class="nav-number">1.1.</span> <span class="nav-text">ev_evcallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev-timeout-pos"><span class="nav-number">1.2.</span> <span class="nav-text">ev_timeout_pos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev-base"><span class="nav-number">1.3.</span> <span class="nav-text">ev_base</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev"><span class="nav-number">1.4.</span> <span class="nav-text">ev_</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="nav-number">1.5.</span> <span class="nav-text">其他参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">event 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-event"><span class="nav-number">3.</span> <span class="nav-text">创建 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-event-%E5%88%B0-event-base"><span class="nav-number">4.</span> <span class="nav-text">添加 event 到 event_base</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#event-add-nolock"><span class="nav-number">4.1.</span> <span class="nav-text">event_add_nolock_()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-event-base-%E5%88%A0%E9%99%A4-event"><span class="nav-number">5.</span> <span class="nav-text">从 event_base 删除 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8A%E6%94%BE-event"><span class="nav-number">6.</span> <span class="nav-text">释放 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#struct-event-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">struct event 的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ev_evcallback"><span class="nav-number">1.1.</span> <span class="nav-text">ev_evcallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev_timeout_pos"><span class="nav-number">1.2.</span> <span class="nav-text">ev_timeout_pos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev_base"><span class="nav-number">1.3.</span> <span class="nav-text">ev_base</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ev_"><span class="nav-number">1.4.</span> <span class="nav-text">ev_</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="nav-number">1.5.</span> <span class="nav-text">其他参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">event 的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-event"><span class="nav-number">3.</span> <span class="nav-text">创建 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-event-%E5%88%B0-event_base"><span class="nav-number">4.</span> <span class="nav-text">添加 event 到 event_base</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#event_add_nolock_"><span class="nav-number">4.1.</span> <span class="nav-text">event_add_nolock_()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-event_base-%E5%88%A0%E9%99%A4-event"><span class="nav-number">5.</span> <span class="nav-text">从 event_base 删除 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8A%E6%94%BE-event"><span class="nav-number">6.</span> <span class="nav-text">释放 event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -328,7 +257,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2020/afa6fb2f/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 结构体：event" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/afa6fb2f/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/afa6fb2f/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -372,46 +280,124 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>在 <a href="#">Post not found: 源码阅读 libevent - event_io_map</a> 和 <a href="#">Post not found: 源码阅读 libevent - event_signal_map</a> 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LIST_HEAD (event_dlist, event);</span><br><span class="line"><span class="comment">/* 以上宏定义展开后结果为如下所示 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event_dlist</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">lh_first</span>;</span>  <span class="comment">/* first element */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">LIST_HEAD</span> <span class="token punctuation">(</span>event_dlist<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* 以上宏定义展开后结果为如下所示 */</span>
+<span class="token keyword">struct</span> <span class="token class-name">event_dlist</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>lh_first<span class="token punctuation">;</span>  <span class="token comment">/* first element */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该双向量表的表头为结构体 <code>struct event_dlist</code>，链表中元素的结构体为 <code>struct event</code>，其中每个 <code>struct event</code> 链表元素代表着一个事件，本文主要分析这个事件结构体：<code>struct event</code>。</p>
-<a id="more"></a>
-<h2 id="struct-event-的定义"><a href="#struct-event-的定义" class="headerlink" title="struct event 的定义"></a>struct event 的定义</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_callback</span> <span class="title">ev_evcallback</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">union</span> &#123; <span class="comment">/* for managing timeouts */</span></span><br><span class="line">        TAILQ_ENTRY(event) ev_next_with_common_timeout;</span><br><span class="line">        <span class="keyword">int</span> min_heap_idx;</span><br><span class="line">    &#125; ev_timeout_pos;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">evutil_socket_t</span> ev_fd; <span class="comment">/* 对于 `I/O` 事件是文件描述符，对于 `signal` 事件是信号值 */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_base</span> *<span class="title">ev_base</span>;</span> <span class="comment">/* 与 event 对应的 event_base */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="comment">/* used for io events */</span></span><br><span class="line">            LIST_ENTRY (event) ev_io_next;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">ev_timeout</span>;</span></span><br><span class="line">        &#125; ev_io;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="comment">/* used by signal events */</span></span><br><span class="line">            LIST_ENTRY (event) ev_signal_next;</span><br><span class="line">            <span class="keyword">short</span> ev_ncalls;</span><br><span class="line">            <span class="keyword">short</span> *ev_pncalls; <span class="comment">/* Allows deletes in callback */</span></span><br><span class="line">        &#125; ev_signal;</span><br><span class="line">    &#125; ev_;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">short</span> ev_events; <span class="comment">/* 关注的事件类型 超时、读、写、永久 */</span></span><br><span class="line">    <span class="keyword">short</span> ev_res;    <span class="comment">/* result passed to event callback 事件激活的类型 */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">ev_timeout</span>;</span> <span class="comment">/* 超时时间，存储的是一个绝对超时值（从 1970 年 1 月 1 日开始） */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="struct-event-的定义">struct event 的定义</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_callback</span> ev_evcallback<span class="token punctuation">;</span>
+
+    <span class="token keyword">union</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* for managing timeouts */</span>
+        <span class="token function">TAILQ_ENTRY</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_next_with_common_timeout<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> min_heap_idx<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> ev_timeout_pos<span class="token punctuation">;</span>
+
+    evutil_socket_t ev_fd<span class="token punctuation">;</span> <span class="token comment">/* 对于 `I/O` 事件是文件描述符，对于 `signal` 事件是信号值 */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token operator">*</span>ev_base<span class="token punctuation">;</span> <span class="token comment">/* 与 event 对应的 event_base */</span>
+
+    <span class="token keyword">union</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* used for io events */</span>
+            <span class="token function">LIST_ENTRY</span> <span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_io_next<span class="token punctuation">;</span>
+            <span class="token keyword">struct</span> <span class="token class-name">timeval</span> ev_timeout<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> ev_io<span class="token punctuation">;</span>
+        <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* used by signal events */</span>
+            <span class="token function">LIST_ENTRY</span> <span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_signal_next<span class="token punctuation">;</span>
+            <span class="token keyword">short</span> ev_ncalls<span class="token punctuation">;</span>
+            <span class="token keyword">short</span> <span class="token operator">*</span>ev_pncalls<span class="token punctuation">;</span> <span class="token comment">/* Allows deletes in callback */</span>
+        <span class="token punctuation">&#125;</span> ev_signal<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> ev_<span class="token punctuation">;</span>
+
+    <span class="token keyword">short</span> ev_events<span class="token punctuation">;</span> <span class="token comment">/* 关注的事件类型 超时、读、写、永久 */</span>
+    <span class="token keyword">short</span> ev_res<span class="token punctuation">;</span>    <span class="token comment">/* result passed to event callback 事件激活的类型 */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">timeval</span> ev_timeout<span class="token punctuation">;</span> <span class="token comment">/* 超时时间，存储的是一个绝对超时值（从 1970 年 1 月 1 日开始） */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从结构体定义中可以发现，其中有几个我们之前文章提过的结构，如：<code>TAILQ_ENTRY</code>、<code>LIST_ENTRY</code>，这代表同一个 event 结构体可能会出现在多个不同的链表或队列中。</p>
 <p>下面我们分块了解下每个结构体成员：</p>
-<h3 id="ev-evcallback"><a href="#ev-evcallback" class="headerlink" title="ev_evcallback"></a>ev_evcallback</h3><p><code>ev_evcallback</code> 的定义为：<code>struct event_callback ev_evcallback;</code>，其中 <code>struct event_callback</code> 定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event_callback</span> &#123;</span></span><br><span class="line">    TAILQ_ENTRY(event_callback) evcb_active_next;</span><br><span class="line">    <span class="keyword">short</span> evcb_flags;</span><br><span class="line">    <span class="keyword">ev_uint8_t</span> evcb_pri;    <span class="comment">/* smaller numbers are higher priority */</span></span><br><span class="line">    <span class="keyword">ev_uint8_t</span> evcb_closure;</span><br><span class="line">    <span class="comment">/* allows us to adopt for different types of events */</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> (*evcb_callback)(<span class="keyword">evutil_socket_t</span>, <span class="keyword">short</span>, <span class="keyword">void</span> *);</span><br><span class="line">        <span class="keyword">void</span> (*evcb_selfcb)(struct event_callback *, <span class="keyword">void</span> *);</span><br><span class="line">        <span class="keyword">void</span> (*evcb_evfinalize)(struct event *, <span class="keyword">void</span> *);</span><br><span class="line">        <span class="keyword">void</span> (*evcb_cbfinalize)(struct event_callback *, <span class="keyword">void</span> *);</span><br><span class="line">    &#125; evcb_cb_union;</span><br><span class="line">    <span class="keyword">void</span> *evcb_arg;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><code>evcb_active_next</code>：尾队列的成员，保存其在尾队列中的位置等信息（注意，该尾队列的元素类型为 <code>struct event_callback</code>，而非 <code>struct event</code> ）</li>
+<h3 id="ev_evcallback">ev_evcallback</h3>
+<p><code>ev_evcallback</code> 的定义为：<code>struct event_callback ev_evcallback;</code>，其中 <code>struct event_callback</code> 定义如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">event_callback</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">TAILQ_ENTRY</span><span class="token punctuation">(</span>event_callback<span class="token punctuation">)</span> evcb_active_next<span class="token punctuation">;</span>
+    <span class="token keyword">short</span> evcb_flags<span class="token punctuation">;</span>
+    ev_uint8_t evcb_pri<span class="token punctuation">;</span>    <span class="token comment">/* smaller numbers are higher priority */</span>
+    ev_uint8_t evcb_closure<span class="token punctuation">;</span>
+    <span class="token comment">/* allows us to adopt for different types of events */</span>
+    <span class="token keyword">union</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>evcb_callback<span class="token punctuation">)</span><span class="token punctuation">(</span>evutil_socket_t<span class="token punctuation">,</span> <span class="token keyword">short</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>evcb_selfcb<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_callback</span> <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>evcb_evfinalize<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>evcb_cbfinalize<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_callback</span> <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> evcb_cb_union<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>evcb_arg<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol type="1">
+<li><p><code>evcb_active_next</code>：尾队列的成员，保存其在尾队列中的位置等信息（注意，该尾队列的元素类型为 <code>struct event_callback</code>，而非 <code>struct event</code> ）</p></li>
 <li><p><code>evcb_flags</code>：反映 <code>event</code> 目前的状态，是处于超时队列、已添加队列、激活队列、信号队列等</p>
 <ul>
-<li><p>描述 <code>event</code> 的状态，由 <code>libevent</code> 内部设置。比如说 <code>event</code> 被初始化，那么 <code>flags</code> 就会设置为 <code>EVLIST_INIT</code>，有如下几种状态：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_TIMEOUT      0x01    <span class="comment">// event 在 time min_heap 中</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_INSERTED     0x02    <span class="comment">// event 在已注册事件链表中</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_SIGNAL       0x04    <span class="comment">// event 属于信号队列</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_ACTIVE       0x08    <span class="comment">// event 在激活链表中</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_INTERNAL     0x10    <span class="comment">// event 为内部使用</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_ACTIVE_LATER 0x20    <span class="comment">// event 在下一次激活链表中</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_FINALIZING   0x40    <span class="comment">// event 已经终止</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_INIT         0x80    <span class="comment">// event 已被初始化，但是哪儿都不在</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVLIST_ALL          0xff    <span class="comment">// 包含所有事件状态，用于判断合法性</span></span></span><br></pre></td></tr></table></figure>
-</li>
+<li>描述 <code>event</code> 的状态，由 <code>libevent</code> 内部设置。比如说 <code>event</code> 被初始化，那么 <code>flags</code> 就会设置为 <code>EVLIST_INIT</code>，有如下几种状态：</li>
 </ul>
-</li>
-<li><p><code>evcb_pri</code>：回调优先级，数字越小优先级越高，实际上就是 <code>event</code> 激活时在激活队列中的索引值</p>
-</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_TIMEOUT      0x01    </span><span class="token comment">// event 在 time min_heap 中</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_INSERTED     0x02    </span><span class="token comment">// event 在已注册事件链表中</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_SIGNAL       0x04    </span><span class="token comment">// event 属于信号队列</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_ACTIVE       0x08    </span><span class="token comment">// event 在激活链表中</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_INTERNAL     0x10    </span><span class="token comment">// event 为内部使用</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_ACTIVE_LATER 0x20    </span><span class="token comment">// event 在下一次激活链表中</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_FINALIZING   0x40    </span><span class="token comment">// event 已经终止</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_INIT         0x80    </span><span class="token comment">// event 已被初始化，但是哪儿都不在</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> EVLIST_ALL          0xff    </span><span class="token comment">// 包含所有事件状态，用于判断合法性</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
+<li><p><code>evcb_pri</code>：回调优先级，数字越小优先级越高，实际上就是 <code>event</code> 激活时在激活队列中的索引值</p></li>
 <li><p><code>evcb_closure</code>：描述 event 在激活时的处理方式。</p>
 <ul>
-<li><p>对于永久事件来说就需要重新添加到定时器中并调用回调函数，而对于一般的事件来说则是直接调用回调函数。<code>ev_closure</code> 可以设置为以下几种：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_EVENT                0   <span class="comment">// 常规事件，使用 evcb_callback 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_EVENT_SIGNAL         1   <span class="comment">// 信号事件；使用 evcb_callback 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_EVENT_PERSIST        2   <span class="comment">// 永久性非信号事件；使用 evcb_callback 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_CB_SELF              3   <span class="comment">// 简单回调，使用 evcb_selfcb 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_CB_FINALIZE          4   <span class="comment">// 结束的回调，使用 evcb_cbfinalize 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_EVENT_FINALIZE       5   <span class="comment">// 结束事件回调，使用 evcb_evfinalize 回调</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSURE_EVENT_FINALIZE_FREE  6   <span class="comment">// 结束事件之后应该释放，使用 evcb_evfinalize 回调</span></span></span><br></pre></td></tr></table></figure>
-</li>
+<li>对于永久事件来说就需要重新添加到定时器中并调用回调函数，而对于一般的事件来说则是直接调用回调函数。<code>ev_closure</code> 可以设置为以下几种：</li>
 </ul>
-</li>
-<li><p><code>evcb_cb_union</code>：回调函数联合体，其中根据不同的事件类型决定其回调函数的类型</p>
-</li>
-<li><code>evcb_arg</code>：传给回调函数的参数</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_EVENT                0   </span><span class="token comment">// 常规事件，使用 evcb_callback 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_EVENT_SIGNAL         1   </span><span class="token comment">// 信号事件；使用 evcb_callback 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_EVENT_PERSIST        2   </span><span class="token comment">// 永久性非信号事件；使用 evcb_callback 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_CB_SELF              3   </span><span class="token comment">// 简单回调，使用 evcb_selfcb 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_CB_FINALIZE          4   </span><span class="token comment">// 结束的回调，使用 evcb_cbfinalize 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_EVENT_FINALIZE       5   </span><span class="token comment">// 结束事件回调，使用 evcb_evfinalize 回调</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSURE_EVENT_FINALIZE_FREE  6   </span><span class="token comment">// 结束事件之后应该释放，使用 evcb_evfinalize 回调</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
+<li><p><code>evcb_cb_union</code>：回调函数联合体，其中根据不同的事件类型决定其回调函数的类型</p></li>
+<li><p><code>evcb_arg</code>：传给回调函数的参数</p></li>
 </ol>
-<h3 id="ev-timeout-pos"><a href="#ev-timeout-pos" class="headerlink" title="ev_timeout_pos"></a>ev_timeout_pos</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> &#123; <span class="comment">/* for managing timeouts */</span></span><br><span class="line">    TAILQ_ENTRY(event) ev_next_with_common_timeout;</span><br><span class="line">    <span class="keyword">int</span> min_heap_idx;</span><br><span class="line">&#125; ev_timeout_pos;</span><br></pre></td></tr></table></figure>
+<h3 id="ev_timeout_pos">ev_timeout_pos</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">union</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* for managing timeouts */</span>
+    <span class="token function">TAILQ_ENTRY</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_next_with_common_timeout<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> min_heap_idx<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> ev_timeout_pos<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>libevent</code> 有两种超时管理机制：</p>
 <ul>
 <li><code>min_heap</code> 机制：使用 <code>min_heap_idx</code>，</li>
 <li><code>min_heap</code>+<code>common_timeout</code> 机制：使用 <code>ev_next_with_common_timeout</code></li>
 </ul>
 <p>上述两种机制只会使用其中一个，使用联合体存储更加节约空间。</p>
-<h3 id="ev-base"><a href="#ev-base" class="headerlink" title="ev_base"></a>ev_base</h3><p><code>ev_base</code> 是一个指向 <code>event_base</code> 的指针，用于描述该 <code>event</code> 所属的 <code>event_base</code>。</p>
+<h3 id="ev_base">ev_base</h3>
+<p><code>ev_base</code> 是一个指向 <code>event_base</code> 的指针，用于描述该 <code>event</code> 所属的 <code>event_base</code>。</p>
 <p>在 <code>libevent</code> 中，每一个 <code>event_base</code> 都定义了以下几种事件集合：已添加事件队列 <code>eventqueue</code>、已激活事件队列 <code>activequeues</code>、定时器 <code>min_heap</code>、公用超时事件队列 <code>common_timeout_queues</code>、<code>io</code> 事件集合以及 <code>signal</code> 事件集合，如下所示：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event_base</span> &#123;</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/** An array of nactivequeues queues for active events (ones that</span></span><br><span class="line"><span class="comment">        * have triggered, and whose callbacks need to be called).  Low</span></span><br><span class="line"><span class="comment">        * priority numbers are more important, and stall higher ones.</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_list</span> *<span class="title">activequeues</span>;</span>   <span class="comment">// 激活的事件队列</span></span><br><span class="line">    <span class="comment">/** An array of common_timeout_list* for all of the common timeout</span></span><br><span class="line"><span class="comment">        * values we know. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">common_timeout_list</span> **<span class="title">common_timeout_queues</span>;</span> <span class="comment">// 公用超时事件队列</span></span><br><span class="line">    <span class="comment">/** Mapping from file descriptors to enabled (added) events */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_io_map</span> <span class="title">io</span>;</span> <span class="comment">//io 事件集合</span></span><br><span class="line">    <span class="comment">/** Mapping from signal numbers to enabled (added) events. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_signal_map</span> <span class="title">sigmap</span>;</span> <span class="comment">//signal 事件集合</span></span><br><span class="line">    <span class="comment">/** All events that have been enabled (added) in this event_base */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_list</span> <span class="title">eventqueue</span>;</span> <span class="comment">// 已添加事件队列</span></span><br><span class="line">    <span class="comment">/** Priority queue of events with timeouts. */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">min_heap</span> <span class="title">timeheap</span>;</span> <span class="comment">// 定时器</span></span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment">/** An array of nactivequeues queues for active events (ones that
+        * have triggered, and whose callbacks need to be called).  Low
+        * priority numbers are more important, and stall higher ones.
+        */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_list</span> <span class="token operator">*</span>activequeues<span class="token punctuation">;</span>   <span class="token comment">// 激活的事件队列</span>
+    <span class="token comment">/** An array of common_timeout_list* for all of the common timeout
+        * values we know. */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">common_timeout_list</span> <span class="token operator">*</span><span class="token operator">*</span>common_timeout_queues<span class="token punctuation">;</span> <span class="token comment">// 公用超时事件队列</span>
+    <span class="token comment">/** Mapping from file descriptors to enabled (added) events */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_io_map</span> io<span class="token punctuation">;</span> <span class="token comment">//io 事件集合</span>
+    <span class="token comment">/** Mapping from signal numbers to enabled (added) events. */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> sigmap<span class="token punctuation">;</span> <span class="token comment">//signal 事件集合</span>
+    <span class="token comment">/** All events that have been enabled (added) in this event_base */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_list</span> eventqueue<span class="token punctuation">;</span> <span class="token comment">// 已添加事件队列</span>
+    <span class="token comment">/** Priority queue of events with timeouts. */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">min_heap</span> timeheap<span class="token punctuation">;</span> <span class="token comment">// 定时器</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>激活事件队列：所有感兴趣事件发生或者已经超时的 <code>event</code> 的集合</li>
 <li>公用超时事件队列：具有相同超时时长的 <code>event</code> 的集合</li>
@@ -421,66 +407,204 @@
 <li>定时器：所有添加了并设置超时时间的 <code>event</code> 集合</li>
 </ul>
 <p>任何一个 <code>event</code>，一旦通过 <code>event_add</code> 进行了添加，那么它就会存在于以上几个集合中的一个或多个中。</p>
-<h3 id="ev"><a href="#ev" class="headerlink" title="ev_"></a>ev_</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="comment">/* used for io events */</span></span><br><span class="line">        LIST_ENTRY (event) ev_io_next;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">ev_timeout</span>;</span></span><br><span class="line">    &#125; ev_io;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="comment">/* used by signal events */</span></span><br><span class="line">        LIST_ENTRY (event) ev_signal_next;</span><br><span class="line">        <span class="keyword">short</span> ev_ncalls;</span><br><span class="line">        <span class="keyword">short</span> *ev_pncalls; <span class="comment">/* Allows deletes in callback */</span></span><br><span class="line">    &#125; ev_signal;</span><br><span class="line">&#125; ev_;</span><br></pre></td></tr></table></figure>
+<h3 id="ev_">ev_</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">union</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* used for io events */</span>
+        <span class="token function">LIST_ENTRY</span> <span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_io_next<span class="token punctuation">;</span>
+        <span class="token keyword">struct</span> <span class="token class-name">timeval</span> ev_timeout<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> ev_io<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* used by signal events */</span>
+        <span class="token function">LIST_ENTRY</span> <span class="token punctuation">(</span>event<span class="token punctuation">)</span> ev_signal_next<span class="token punctuation">;</span>
+        <span class="token keyword">short</span> ev_ncalls<span class="token punctuation">;</span>
+        <span class="token keyword">short</span> <span class="token operator">*</span>ev_pncalls<span class="token punctuation">;</span> <span class="token comment">/* Allows deletes in callback */</span>
+    <span class="token punctuation">&#125;</span> ev_signal<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> ev_<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个联合体中有两个结构体，分别对应了 <code>IO</code> 事件和 <code>Signal</code> 事件，由于同一个 <code>fd</code> 二者不会同时触发，故可用联合体保存两个事件的信息：</p>
 <ul>
-<li><code>ev_io</code>：保存 <code>IO</code> 事件信息<ol>
+<li><code>ev_io</code>：保存 <code>IO</code> 事件信息
+<ol type="1">
 <li><code>ev_io_next</code>：该 <code>event</code> 在 <code>event_io_map</code> 中的双向链表中的位置</li>
 <li><code>ev_timeout</code>：如果 <code>event</code> 是永久事件，那么该变量就存储设置的超时时长，这是一个相对超时值</li>
-</ol>
-</li>
-<li><code>ev_signal</code>：保存 <code>Signal</code> 事件信息<ol>
+</ol></li>
+<li><code>ev_signal</code>：保存 <code>Signal</code> 事件信息
+<ol type="1">
 <li><code>ev_signal_next</code>：该 <code>event</code> 在 <code>event_signal_map</code> 中的双向链表中的位置</li>
 <li><code>ev_ncalls</code>：当 <code>signal</code> 事件激活时，调用回调函数的次数</li>
 <li><code>ev_pncalls</code>：指向 <code>ev_ncalls</code></li>
-</ol>
-</li>
+</ol></li>
 </ul>
 <blockquote>
-<p>为什么同一个 <code>fd</code> 不会同时触发  <code>IO</code> 事件和 <code>Signal</code> 事件？参见：<a href="/post/2020/89de67d/" title="源码阅读 libevent - 信号事件处理">源码阅读 libevent - 信号事件处理</a></p>
+<p>为什么同一个 <code>fd</code> 不会同时触发 <code>IO</code> 事件和 <code>Signal</code> 事件？参见：<a href="/post/2020/89de67d/" title="源码阅读 libevent - 信号事件处理">源码阅读 libevent - 信号事件处理</a></p>
 </blockquote>
-<h3 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h3><p><code>ev_events</code>：<code>event</code> 感兴趣的事件类型，可以定义为以下组合：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_TIMEOUT  0x01    <span class="comment">// 超时事件</span></span></span><br><span class="line"><span class="comment">/** Wait for a socket or FD to become readable */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_READ     0x02    <span class="comment">// 读事件</span></span></span><br><span class="line"><span class="comment">/** Wait for a socket or FD to become writeable */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_WRITE    0x04    <span class="comment">// 写事件</span></span></span><br><span class="line"><span class="comment">/** Wait for a POSIX signal to be raised*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_SIGNAL   0x08    <span class="comment">// 信号事件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_PERSIST  0x10    <span class="comment">// 永久事件，激活执行后会重新加到队列中等待下一次激活，否则激活执行后会自动移除</span></span></span><br><span class="line"><span class="comment">/** Select edge-triggered behavior, if supported by the backend. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_ET       0x20    <span class="comment">// 边沿触发，一般需要后端方法支持</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_FINALIZE 0x40    <span class="comment">// 终止事件，如果设置这个选项，则 event_del 不会阻塞，需要使用 event_finalize 或者 event_free_finalize 以保证多线程安全 */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CLOSED   0x80    <span class="comment">// 关闭事件，可以使用这个选项来检测链接是否关闭，而不需要读取此链接所有未决数据；</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="其他参数">其他参数</h3>
+<p><code>ev_events</code>：<code>event</code> 感兴趣的事件类型，可以定义为以下组合：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EV_TIMEOUT  0x01    </span><span class="token comment">// 超时事件</span>
+<span class="token comment">/** Wait for a socket or FD to become readable */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_READ     0x02    </span><span class="token comment">// 读事件</span>
+<span class="token comment">/** Wait for a socket or FD to become writeable */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_WRITE    0x04    </span><span class="token comment">// 写事件</span>
+<span class="token comment">/** Wait for a POSIX signal to be raised*/</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_SIGNAL   0x08    </span><span class="token comment">// 信号事件</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_PERSIST  0x10    </span><span class="token comment">// 永久事件，激活执行后会重新加到队列中等待下一次激活，否则激活执行后会自动移除</span>
+<span class="token comment">/** Select edge-triggered behavior, if supported by the backend. */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_ET       0x20    </span><span class="token comment">// 边沿触发，一般需要后端方法支持</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_FINALIZE 0x40    </span><span class="token comment">// 终止事件，如果设置这个选项，则 event_del 不会阻塞，需要使用 event_finalize 或者 event_free_finalize 以保证多线程安全 */</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_CLOSED   0x80    </span><span class="token comment">// 关闭事件，可以使用这个选项来检测链接是否关闭，而不需要读取此链接所有未决数据；</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>ev_timeout</code>：与前面的 <code>ev_io</code> 中的 <code>ev_timeout</code> 不同，<code>ev_io</code> 中的 <code>ev_timeout</code> 保存的是相对超时时长，而这里的 <code>ev_timeout</code> 保存的是绝对超时时间。比如说现在 <code>8:00</code>，设置 <code>event</code> 的超时时长为 <code>3</code> 分钟中，那么这个 <code>3</code> 分钟实际上是相对于现在来说的 <code>3</code> 分钟，也就是相对超时时长，而 <code>event</code> 最终会在 <code>8:03</code> 时超时，这个 <code>8:03</code> 就是绝对超时时间。<code>libevent</code> 中绝对超时时间是相对于 <code>1970</code> 年 <code>1</code> 月 <code>1</code> 日 <code>0</code> 时来说的。</p>
 <p><code>ev_res</code>：<code>event</code> 的激活类型，由 <code>libevent</code> 内部设置。比如说 <code>event</code> 可以设置为 <code>EV_READ|EV_WRITE</code> 来监听读和写事件，如果最终 <code>event</code> 被读事件激活，那么 <code>ev_res</code> 就是 <code>EV_READ</code>。</p>
-<h2 id="event-的生命周期"><a href="#event-的生命周期" class="headerlink" title="event 的生命周期"></a>event 的生命周期</h2><p>前面提到的中文翻译的文档里，有一张图完美的诠释了 <code>event</code> 的生命周期，带箭头实线表示函数调用，实线矩形表示 <code>event</code> 的状态，虚线矩形表示用来检测事件状态的函数：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png" alt="event 的生命周期"></p>
+<h2 id="event-的生命周期">event 的生命周期</h2>
+<p>前面提到的中文翻译的文档里，有一张图完美的诠释了 <code>event</code> 的生命周期，带箭头实线表示函数调用，实线矩形表示 <code>event</code> 的状态，虚线矩形表示用来检测事件状态的函数：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201128204050.png" alt="event 的生命周期" /><figcaption aria-hidden="true">event 的生命周期</figcaption>
+</figure>
 <p>由于 <code>event</code> 结构体是 <code>libevent</code> 事件处理的核心，涉及问题较多，本文先对图中上半部分进行解析。</p>
-<h2 id="创建-event"><a href="#创建-event" class="headerlink" title="创建 event"></a>创建 event</h2><p>通过前面 <code>event</code> 的结构可以知道，<code>event</code> 结构体成员分为两类：一类是 <code>event</code> 本身的属性，另一类则是用于描述 <code>event</code> 在某些 <code>event</code> 集合中的位置。前者既然是属性，那么就应当在 <code>event</code> 创建时就制定好，而后者则应该是当 <code>event</code> 被添加到 <code>event_base</code> 之后才进行设置的。那么现在就来看看 <code>event</code> 的创建。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event</span> *</span></span><br><span class="line"><span class="class"><span class="title">event_new</span>(<span class="title">struct</span> <span class="title">event_base</span> *<span class="title">base</span>, <span class="title">evutil_socket_t</span> <span class="title">fd</span>, <span class="title">short</span> <span class="title">events</span>, <span class="title">void</span> (*<span class="title">cb</span>)(<span class="title">evutil_socket_t</span>, <span class="title">short</span>, <span class="title">void</span> *), <span class="title">void</span> *<span class="title">arg</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event</span> *<span class="title">ev</span>;</span></span><br><span class="line">    ev = mm_malloc(<span class="keyword">sizeof</span>(struct event));</span><br><span class="line">    <span class="keyword">if</span> (ev == <span class="literal">NULL</span>) <span class="keyword">return</span> (<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (event_assign(ev, base, fd, events, cb, arg) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        mm_free(ev);</span><br><span class="line">        <span class="keyword">return</span> (<span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (ev);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建-event">创建 event</h2>
+<p>通过前面 <code>event</code> 的结构可以知道，<code>event</code> 结构体成员分为两类：一类是 <code>event</code> 本身的属性，另一类则是用于描述 <code>event</code> 在某些 <code>event</code> 集合中的位置。前者既然是属性，那么就应当在 <code>event</code> 创建时就制定好，而后者则应该是当 <code>event</code> 被添加到 <code>event_base</code> 之后才进行设置的。那么现在就来看看 <code>event</code> 的创建。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>
+<span class="token function">event_new</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> evutil_socket_t fd<span class="token punctuation">,</span> <span class="token keyword">short</span> events<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>cb<span class="token punctuation">)</span><span class="token punctuation">(</span>evutil_socket_t<span class="token punctuation">,</span> <span class="token keyword">short</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">;</span>
+    ev <span class="token operator">=</span> <span class="token function">mm_malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ev <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">event_assign</span><span class="token punctuation">(</span>ev<span class="token punctuation">,</span> base<span class="token punctuation">,</span> fd<span class="token punctuation">,</span> events<span class="token punctuation">,</span> cb<span class="token punctuation">,</span> arg<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_free</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>主要做了 <code>2</code> 个事情：分配内存、初始化结构。</p>
 <p>首先通过 <code>mm_malloc()</code> 先从堆上分配 <code>struct event</code> 的空间，为了监听这个事件，要保证这个事件一直在整个事件循环的过程中是存在的，因此只能从堆上分配。</p>
 <p>分配内存后的 <code>event</code> 通过 <code>event_assign()</code> 根据参数对其各个字段初始化，<code>event_assign()</code> 定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_assign</span><span class="params">(struct event *ev, struct event_base *base, <span class="keyword">evutil_socket_t</span> fd, <span class="keyword">short</span> events,</span></span></span><br><span class="line"><span class="function"><span class="params">                 <span class="keyword">void</span> (*callback)(<span class="keyword">evutil_socket_t</span>, <span class="keyword">short</span>, <span class="keyword">void</span> *), <span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!base) base = current_base;</span><br><span class="line">    <span class="keyword">if</span> (arg == &amp;event_self_cbarg_ptr_) arg = ev;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(events &amp; EV_SIGNAL)) event_debug_assert_socket_nonblocking_(fd);</span><br><span class="line">    event_debug_assert_not_added_(ev);</span><br><span class="line"></span><br><span class="line">    ev-&gt;ev_base = base;</span><br><span class="line">    ev-&gt;ev_callback = callback;</span><br><span class="line">    ev-&gt;ev_arg = arg;</span><br><span class="line">    ev-&gt;ev_fd = fd;</span><br><span class="line">    ev-&gt;ev_events = events;</span><br><span class="line">    ev-&gt;ev_res = <span class="number">0</span>;</span><br><span class="line">    ev-&gt;ev_flags = EVLIST_INIT;</span><br><span class="line">    ev-&gt;ev_ncalls = <span class="number">0</span>;</span><br><span class="line">    ev-&gt;ev_pncalls = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (events &amp; EV_SIGNAL) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((events &amp; (EV_READ|EV_WRITE|EV_CLOSED)) != <span class="number">0</span>) &#123;</span><br><span class="line">            event_warnx(<span class="string">&quot;%s: EV_SIGNAL is not compatible with EV_READ, EV_WRITE or EV_CLOSED&quot;</span>, __func__);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ev-&gt;ev_closure = EV_CLOSURE_EVENT_SIGNAL;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (events &amp; EV_PERSIST) &#123;</span><br><span class="line">            evutil_timerclear(&amp;ev-&gt;ev_io_timeout);</span><br><span class="line">            ev-&gt;ev_closure = EV_CLOSURE_EVENT_PERSIST;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ev-&gt;ev_closure = EV_CLOSURE_EVENT;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    min_heap_elem_init_(ev);</span><br><span class="line">    <span class="keyword">if</span> (base != <span class="literal">NULL</span>) ev-&gt;ev_pri = base-&gt;nactivequeues / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    event_debug_note_setup_(ev);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">event_assign</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> evutil_socket_t fd<span class="token punctuation">,</span> <span class="token keyword">short</span> events<span class="token punctuation">,</span>
+                 <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>callback<span class="token punctuation">)</span><span class="token punctuation">(</span>evutil_socket_t<span class="token punctuation">,</span> <span class="token keyword">short</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>base<span class="token punctuation">)</span> base <span class="token operator">=</span> current_base<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>arg <span class="token operator">==</span> <span class="token operator">&amp;</span>event_self_cbarg_ptr_<span class="token punctuation">)</span> arg <span class="token operator">=</span> ev<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>events <span class="token operator">&amp;</span> EV_SIGNAL<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">event_debug_assert_socket_nonblocking_</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_debug_assert_not_added_</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    ev<span class="token operator">-></span>ev_base <span class="token operator">=</span> base<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_callback <span class="token operator">=</span> callback<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_arg <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_fd <span class="token operator">=</span> fd<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_events <span class="token operator">=</span> events<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_flags <span class="token operator">=</span> EVLIST_INIT<span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_ncalls <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    ev<span class="token operator">-></span>ev_pncalls <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>events <span class="token operator">&amp;</span> EV_SIGNAL<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>events <span class="token operator">&amp;</span> <span class="token punctuation">(</span>EV_READ<span class="token operator">|</span>EV_WRITE<span class="token operator">|</span>EV_CLOSED<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">event_warnx</span><span class="token punctuation">(</span><span class="token string">"%s: EV_SIGNAL is not compatible with EV_READ, EV_WRITE or EV_CLOSED"</span><span class="token punctuation">,</span> <span class="token constant">__func__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        ev<span class="token operator">-></span>ev_closure <span class="token operator">=</span> EV_CLOSURE_EVENT_SIGNAL<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>events <span class="token operator">&amp;</span> EV_PERSIST<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">evutil_timerclear</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ev<span class="token operator">-></span>ev_io_timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ev<span class="token operator">-></span>ev_closure <span class="token operator">=</span> EV_CLOSURE_EVENT_PERSIST<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            ev<span class="token operator">-></span>ev_closure <span class="token operator">=</span> EV_CLOSURE_EVENT<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">min_heap_elem_init_</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>base <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> ev<span class="token operator">-></span>ev_pri <span class="token operator">=</span> base<span class="token operator">-></span>nactivequeues <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+    <span class="token function">event_debug_note_setup_</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>event_assign()</code> 实际上就是通过传入的参数对 <code>event</code> 进行了设置，并且对一些值进行了初始化：<code>signal</code> 事件的激活处理方式为 <code>EV_CLOSURE_SIGNAL</code>，永久事件的激活处理方式为 <code>EV_CLOSURE_PERSIST</code>，一般的 <code>IO</code> 事件激活处理方式则为 <code>EV_CLOSURE_NONE</code>。需要注意的是，如果一个 <code>event</code> 的感兴趣事件类型设置为了 <code>EV_SIGNAL</code>，那么它就不能再同时设置读或写事件为感兴趣事件，反之亦然。</p>
 <p>如果是要创建超时事件，<code>fd</code> 和 <code>events</code> 的值分别设置为 <code>-1</code> 和 <code>0</code>，<code>libevent</code> 用一个宏来表示，超时事件的创建：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> evtimer_new(b, cb, arg) event_new((b), -1, 0, (cb), (arg))</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> evtimer_new(b, cb, arg) event_new((b), -1, 0, (cb), (arg))</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>此时新创建的 <code>event</code> 处于 <code>non-pending</code> 状态，<code>event_assign()</code> 为其设置超时的时间，这个步骤会推迟到 <code>event</code> 被添加到 <code>reactor</code> 中的时候。跟着箭头向下，<code>event_add()</code> 会将 <code>non-pending</code> 的 <code>event</code> 添加到 <code>reactor</code> 中，同时为其设置超时时间。</p>
 <ul>
 <li><p><code>event_assign()</code> 中使用了宏来对 <code>event</code> 中的参数赋值，所以看起来像赋值了很多 <code>event</code> 中没有的成员，部分宏定义如下：</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_ncalls       ev_.ev_signal.ev_ncalls</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_pncalls      ev_.ev_signal.ev_pncalls</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_pri          ev_evcallback.evcb_pri</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_flags        ev_evcallback.evcb_flags</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_closure      ev_evcallback.evcb_closure</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_callback     ev_evcallback.evcb_cb_union.evcb_callback</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ev_arg          ev_evcallback.evcb_arg</span></span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> ev_ncalls       ev_.ev_signal.ev_ncalls</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_pncalls      ev_.ev_signal.ev_pncalls</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_pri          ev_evcallback.evcb_pri</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_flags        ev_evcallback.evcb_flags</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_closure      ev_evcallback.evcb_closure</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_callback     ev_evcallback.evcb_cb_union.evcb_callback</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ev_arg          ev_evcallback.evcb_arg</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 </ul>
 <p>创建好一个 <code>event</code> 之后，接着就需要将其添加到 <code>event_base</code> 中的相关集合中，以供后续进行监听和处理：</p>
-<h2 id="添加-event-到-event-base"><a href="#添加-event-到-event-base" class="headerlink" title="添加 event 到 event_base"></a>添加 event 到 event_base</h2><p><code>libevent</code> 向用户提供的添加接口是 <code>event_add()</code> 函数，实际上这个函数内部主要是调用 <code>event_add_nolock_()</code> 函数来完成 <code>event</code> 的添加：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_add</span><span class="params">(struct event *ev, <span class="keyword">const</span> struct timeval *tv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (EVUTIL_FAILURE_CHECK(!ev-&gt;ev_base)) &#123;</span><br><span class="line">        event_warnx(<span class="string">&quot;%s: event has no event_base set.&quot;</span>, __func__);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    EVBASE_ACQUIRE_LOCK(ev-&gt;ev_base, th_base_lock);</span><br><span class="line">    res = event_add_nolock_(ev, tv, <span class="number">0</span>);</span><br><span class="line">    EVBASE_RELEASE_LOCK(ev-&gt;ev_base, th_base_lock);</span><br><span class="line">    <span class="keyword">return</span> (res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加-event-到-event_base">添加 event 到 event_base</h2>
+<p><code>libevent</code> 向用户提供的添加接口是 <code>event_add()</code> 函数，实际上这个函数内部主要是调用 <code>event_add_nolock_()</code> 函数来完成 <code>event</code> 的添加：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">event_add</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>tv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> res<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">EVUTIL_FAILURE_CHECK</span><span class="token punctuation">(</span><span class="token operator">!</span>ev<span class="token operator">-></span>ev_base<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">event_warnx</span><span class="token punctuation">(</span><span class="token string">"%s: event has no event_base set."</span><span class="token punctuation">,</span> <span class="token constant">__func__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">EVBASE_ACQUIRE_LOCK</span><span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_base<span class="token punctuation">,</span> th_base_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res <span class="token operator">=</span> <span class="token function">event_add_nolock_</span><span class="token punctuation">(</span>ev<span class="token punctuation">,</span> tv<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">EVBASE_RELEASE_LOCK</span><span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_base<span class="token punctuation">,</span> th_base_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>event_add</code> 并不做实际的工作，而是获得锁之后，将任务交给 <code>event_add_nolock_()</code> 来完成，关于 <code>libevent</code> 线程安全的内容暂且不说，后边单独开一篇来讨论。</p>
-<h3 id="event-add-nolock"><a href="#event-add-nolock" class="headerlink" title="event_add_nolock_()"></a>event_add_nolock_()</h3><p><code>event_add_nolock_()</code> 干的活儿非常多，为了深入理解这里也不会一一展开，同样也需要留到后边剖析 (事件管理框架，超时时间管理)，这里仅仅摘出一条主线，省略其他干扰项：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_add_nolock_</span><span class="params">(struct event *ev, <span class="keyword">const</span> struct timeval *tv, <span class="keyword">int</span> tv_is_absolute)</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> ((ev-&gt;ev_events &amp; (EV_READ|EV_WRITE|EV_CLOSED|EV_SIGNAL)) &amp;&amp;</span><br><span class="line">        !(ev-&gt;ev_flags &amp; (EVLIST_INSERTED|EVLIST_ACTIVE|EVLIST_ACTIVE_LATER))) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ev-&gt;ev_events &amp; (EV_READ|EV_WRITE|EV_CLOSED))</span><br><span class="line">            res = evmap_io_add_(base, ev-&gt;ev_fd, ev);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ev-&gt;ev_events &amp; EV_SIGNAL)</span><br><span class="line">            res = evmap_signal_add_(base, (<span class="keyword">int</span>)ev-&gt;ev_fd, ev);</span><br><span class="line">        <span class="keyword">if</span> (res != <span class="number">-1</span>)</span><br><span class="line">            event_queue_insert_inserted(base, ev);</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">/* evmap says we need to notify the main thread. */</span></span><br><span class="line">            notify = <span class="number">1</span>;</span><br><span class="line">            res = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    event_queue_insert_timeout(base, ev);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="event_add_nolock_">event_add_nolock_()</h3>
+<p><code>event_add_nolock_()</code> 干的活儿非常多，为了深入理解这里也不会一一展开，同样也需要留到后边剖析 (事件管理框架，超时时间管理)，这里仅仅摘出一条主线，省略其他干扰项：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">event_add_nolock_</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>tv<span class="token punctuation">,</span> <span class="token keyword">int</span> tv_is_absolute<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_events <span class="token operator">&amp;</span> <span class="token punctuation">(</span>EV_READ<span class="token operator">|</span>EV_WRITE<span class="token operator">|</span>EV_CLOSED<span class="token operator">|</span>EV_SIGNAL<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token operator">!</span><span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_flags <span class="token operator">&amp;</span> <span class="token punctuation">(</span>EVLIST_INSERTED<span class="token operator">|</span>EVLIST_ACTIVE<span class="token operator">|</span>EVLIST_ACTIVE_LATER<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_events <span class="token operator">&amp;</span> <span class="token punctuation">(</span>EV_READ<span class="token operator">|</span>EV_WRITE<span class="token operator">|</span>EV_CLOSED<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            res <span class="token operator">=</span> <span class="token function">evmap_io_add_</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_events <span class="token operator">&amp;</span> EV_SIGNAL<span class="token punctuation">)</span>
+            res <span class="token operator">=</span> <span class="token function">evmap_signal_add_</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>res <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token function">event_queue_insert_inserted</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>res <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/* evmap says we need to notify the main thread. */</span>
+            notify <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token function">event_queue_insert_timeout</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>之前的文章提到过：<code>libevent</code> 分别利用两个数组分别管理 <code>I/O</code> 事件和信号事件（<code>Windows</code> 上使用 <code>hashmap</code> 管理 <code>I/O</code> 事件），利用 <code>min_heap</code> 管理超时事件。<code>event</code> 变量正是通过 <code>event_add_nolock_</code> 函数被调加到对应的数据结构上，分别是 <code>evmap_io_add_()</code>、<code>evmap_signal_add_()</code> 和 <code>event_queue_insert_timeout()</code> 三个函数。</p>
 <p>至此，<code>event</code> 的状态就变为了 <code>pending</code> 状态，可以通过 <code>event_pending</code> 函数获取。事件循环开始工作后，<code>event</code> 就处于被监听的状态了。</p>
-<h2 id="从-event-base-删除-event"><a href="#从-event-base-删除-event" class="headerlink" title="从 event_base 删除 event"></a>从 event_base 删除 event</h2><p><code>libevent</code> 同样提供了接口让我们取消监听 <code>event</code>，和 <code>event_add()</code> 类似，<code>event_del()</code> 也是讲任务交给 <code>event_del_nolock_()</code> 来完成。取消监听和监听是逆操作，这在代码里边也有体现, 同样地，只摘出了主线：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_del_nolock_</span><span class="params">(struct event *ev, <span class="keyword">int</span> blocking)</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_flags &amp; EVLIST_TIMEOUT) event_queue_remove_timeout(base, ev);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_flags &amp; EVLIST_ACTIVE) event_queue_remove_active(base, event_to_event_callback(ev));</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (ev-&gt;ev_flags &amp; EVLIST_ACTIVE_LATER) event_queue_remove_active_later(base, event_to_event_callback(ev));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ev-&gt;ev_flags &amp; EVLIST_INSERTED) &#123;</span><br><span class="line">        event_queue_remove_inserted(base, ev);</span><br><span class="line">        <span class="keyword">if</span> (ev-&gt;ev_events &amp; (EV_READ|EV_WRITE|EV_CLOSED)) res = evmap_io_del_(base, ev-&gt;ev_fd, ev);</span><br><span class="line">        <span class="keyword">else</span> res = evmap_signal_del_(base, (<span class="keyword">int</span>)ev-&gt;ev_fd, ev);</span><br><span class="line">        <span class="keyword">if</span> (res == <span class="number">1</span>) &#123;</span><br><span class="line">            notify = <span class="number">1</span>; <span class="comment">/* evmap says we need to notify the main thread. */</span></span><br><span class="line">            res = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从-event_base-删除-event">从 event_base 删除 event</h2>
+<p><code>libevent</code> 同样提供了接口让我们取消监听 <code>event</code>，和 <code>event_add()</code> 类似，<code>event_del()</code> 也是讲任务交给 <code>event_del_nolock_()</code> 来完成。取消监听和监听是逆操作，这在代码里边也有体现, 同样地，只摘出了主线：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">event_del_nolock_</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">,</span> <span class="token keyword">int</span> blocking<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_flags <span class="token operator">&amp;</span> EVLIST_TIMEOUT<span class="token punctuation">)</span> <span class="token function">event_queue_remove_timeout</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_flags <span class="token operator">&amp;</span> EVLIST_ACTIVE<span class="token punctuation">)</span> <span class="token function">event_queue_remove_active</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> <span class="token function">event_to_event_callback</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_flags <span class="token operator">&amp;</span> EVLIST_ACTIVE_LATER<span class="token punctuation">)</span> <span class="token function">event_queue_remove_active_later</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> <span class="token function">event_to_event_callback</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_flags <span class="token operator">&amp;</span> EVLIST_INSERTED<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">event_queue_remove_inserted</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ev<span class="token operator">-></span>ev_events <span class="token operator">&amp;</span> <span class="token punctuation">(</span>EV_READ<span class="token operator">|</span>EV_WRITE<span class="token operator">|</span>EV_CLOSED<span class="token punctuation">)</span><span class="token punctuation">)</span> res <span class="token operator">=</span> <span class="token function">evmap_io_del_</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> res <span class="token operator">=</span> <span class="token function">evmap_signal_del_</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>res <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            notify <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">/* evmap says we need to notify the main thread. */</span>
+            res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因为 <code>event</code> 的回调函数可能在其他线程正在运行着，为了线程安全，<code>blocking</code> 参数是必要的。</p>
 <p><code>event_del_nolock_()</code> 主要做的事情正和 <code>event_add_nolock_()</code> 相反，它把定时器从超时事件最小堆上移除，然后将其从信号或者 <code>I/O</code> 的 <code>hashmap</code> 上移除。额外地，还需要将就绪的回调函数从待处理的回调函数链表上摘除，也就是说如果这个 event 已经触发，顺利调用了 <code>event_del()</code> 之后，它的回调函数不会被运行。</p>
 <p><code>event</code> 的状态会从 <code>pending</code> 回到 <code>non-pending</code> 状态。</p>
-<h2 id="释放-event"><a href="#释放-event" class="headerlink" title="释放 event"></a>释放 event</h2><p>和 <code>event_new()</code> 对应，<code>event_free()</code> 先取消监听 <code>event</code>，然后释放其内存：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_free</span><span class="params">(struct event *ev)</span> </span>&#123;</span><br><span class="line">    event_del(ev);</span><br><span class="line">    mm_free(ev);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="释放-event">释放 event</h2>
+<p>和 <code>event_new()</code> 对应，<code>event_free()</code> 先取消监听 <code>event</code>，然后释放其内存：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">event_free</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">event_del</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">mm_free</span><span class="token punctuation">(</span>ev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>虽然简单，但是却很重要，尤其不要忘记释放内存，造成内存泄漏。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz">libevent-2.1.11-stable.tar.gz (Released 2019-08-01)</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28114615/article/details/96864601">libevent 源码学习（9）：事件 event_HerofH_的博客 - CSDN 博客</a></li>
-<li>[3] <a target="_blank" rel="noopener" href="http://www.ilovecpp.com/2018/05/01/libevent-event-analyze/">抽丝剥茧 libevent——初识 event | Baixiangcpp’s Blog</a></li>
+<li>[3] <a target="_blank" rel="noopener" href="http://www.ilovecpp.com/2018/05/01/libevent-event-analyze/">抽丝剥茧 libevent——初识 event | Baixiangcpp's Blog</a></li>
 <li>[4] <a target="_blank" rel="noopener" href="https://www.gitbook.com/book/aceld/libevent">Libevent 深入浅出 · libevent 深入浅出</a></li>
 </ul>
 
@@ -489,31 +613,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -556,42 +660,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -599,132 +675,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/afa6fb2f/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/afa6fb2f/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/afa6fb2f/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

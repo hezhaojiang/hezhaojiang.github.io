@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="mp4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496-12 和 ISO&#x2F;IEC 14496-14。 ISO&#x2F;IEC 14496-12 定义了一种封装媒体数据的基础文件格式，mp4、3gp、ismv 等我们常见媒体封装格式都是以这种基础文件格式为基础衍生的。 ISO&#x2F;IEC 14496-14 基于 ISO-14496-12 定义了 mp4 文件格式。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="mp4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496-12 和 ISO&#x2F;IEC 14496-14。 ISO&#x2F;IEC 14496-12 定义了一种封装媒体数据的基础文件格式，mp4、3gp、ismv 等我们常见媒体封装格式都是以这种基础文件格式为基础衍生的。 ISO&#x2F;IEC 14496-14 基于 ISO-14496-12 定义了 mp4 文件格式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频封装 - MP4 封装格式">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/e90af351/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="mp4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496-12 和 ISO&#x2F;IEC 14496-14。 ISO&#x2F;IEC 14496-12 定义了一种封装媒体数据的基础文件格式，mp4、3gp、ismv 等我们常见媒体封装格式都是以这种基础文件格式为基础衍生的。 ISO&#x2F;IEC 14496-14 基于 ISO-14496-12 定义了 mp4 文件格式。">
+<meta property="og:description" content="mp4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496-12 和 ISO&#x2F;IEC 14496-14。 ISO&#x2F;IEC 14496-12 定义了一种封装媒体数据的基础文件格式，mp4、3gp、ismv 等我们常见媒体封装格式都是以这种基础文件格式为基础衍生的。 ISO&#x2F;IEC 14496-14 基于 ISO-14496-12 定义了 mp4 文件格式。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130213738.png">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130214743.png">
@@ -66,7 +66,7 @@
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000004.png">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000821.png">
 <meta property="article:published_time" content="2020-11-29T07:39:12.000Z">
-<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="MP4">
 <meta name="twitter:card" content="summary">
@@ -76,59 +76,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/e90af351/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>音视频封装 - MP4 封装格式 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/e90af351/","path":"post/2020/e90af351/","title":"音视频封装 - MP4 封装格式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>音视频封装 - MP4 封装格式 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -139,7 +99,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -166,36 +126,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -206,8 +142,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -216,7 +151,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -232,7 +167,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -250,14 +185,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F-Box"><span class="nav-number">1.</span> <span class="nav-text">基础文件格式 - Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MP4-%E6%A0%BC%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">MP4 格式介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">第一层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ftyp"><span class="nav-number">3.1.</span> <span class="nav-text">ftyp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#moov"><span class="nav-number">3.2.</span> <span class="nav-text">moov</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdat"><span class="nav-number">3.3.</span> <span class="nav-text">mdat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#free"><span class="nav-number">3.4.</span> <span class="nav-text">free</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">第二层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mvhd"><span class="nav-number">4.1.</span> <span class="nav-text">mvhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iods"><span class="nav-number">4.2.</span> <span class="nav-text">iods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trak"><span class="nav-number">4.3.</span> <span class="nav-text">trak</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82"><span class="nav-number">5.</span> <span class="nav-text">第三层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tkhd"><span class="nav-number">5.1.</span> <span class="nav-text">tkhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edts"><span class="nav-number">5.2.</span> <span class="nav-text">edts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdia"><span class="nav-number">5.3.</span> <span class="nav-text">mdia</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82"><span class="nav-number">6.</span> <span class="nav-text">第四层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mdhd"><span class="nav-number">6.1.</span> <span class="nav-text">mdhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hdlr"><span class="nav-number">6.2.</span> <span class="nav-text">hdlr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minf"><span class="nav-number">6.3.</span> <span class="nav-text">minf</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82"><span class="nav-number">7.</span> <span class="nav-text">第五层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vmhd"><span class="nav-number">7.1.</span> <span class="nav-text">vmhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smhd"><span class="nav-number">7.2.</span> <span class="nav-text">smhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dinf"><span class="nav-number">7.3.</span> <span class="nav-text">dinf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stbl"><span class="nav-number">7.4.</span> <span class="nav-text">stbl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E5%B1%82"><span class="nav-number">8.</span> <span class="nav-text">第六层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dref"><span class="nav-number">8.1.</span> <span class="nav-text">dref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsd"><span class="nav-number">8.2.</span> <span class="nav-text">stsd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stts"><span class="nav-number">8.3.</span> <span class="nav-text">stts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctts"><span class="nav-number">8.4.</span> <span class="nav-text">ctts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stss"><span class="nav-number">8.5.</span> <span class="nav-text">stss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsc"><span class="nav-number">8.6.</span> <span class="nav-text">stsc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsz"><span class="nav-number">8.7.</span> <span class="nav-text">stsz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stco-co64"><span class="nav-number">8.8.</span> <span class="nav-text">stco | co64</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F---box"><span class="nav-number">1.</span> <span class="nav-text">基础文件格式 - Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mp4-%E6%A0%BC%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">MP4 格式介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">第一层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ftyp"><span class="nav-number">3.1.</span> <span class="nav-text">ftyp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#moov"><span class="nav-number">3.2.</span> <span class="nav-text">moov</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdat"><span class="nav-number">3.3.</span> <span class="nav-text">mdat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#free"><span class="nav-number">3.4.</span> <span class="nav-text">free</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">第二层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mvhd"><span class="nav-number">4.1.</span> <span class="nav-text">mvhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iods"><span class="nav-number">4.2.</span> <span class="nav-text">iods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trak"><span class="nav-number">4.3.</span> <span class="nav-text">trak</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82"><span class="nav-number">5.</span> <span class="nav-text">第三层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tkhd"><span class="nav-number">5.1.</span> <span class="nav-text">tkhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edts"><span class="nav-number">5.2.</span> <span class="nav-text">edts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdia"><span class="nav-number">5.3.</span> <span class="nav-text">mdia</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82"><span class="nav-number">6.</span> <span class="nav-text">第四层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mdhd"><span class="nav-number">6.1.</span> <span class="nav-text">mdhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hdlr"><span class="nav-number">6.2.</span> <span class="nav-text">hdlr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minf"><span class="nav-number">6.3.</span> <span class="nav-text">minf</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82"><span class="nav-number">7.</span> <span class="nav-text">第五层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vmhd"><span class="nav-number">7.1.</span> <span class="nav-text">vmhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smhd"><span class="nav-number">7.2.</span> <span class="nav-text">smhd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dinf"><span class="nav-number">7.3.</span> <span class="nav-text">dinf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stbl"><span class="nav-number">7.4.</span> <span class="nav-text">stbl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E5%B1%82"><span class="nav-number">8.</span> <span class="nav-text">第六层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dref"><span class="nav-number">8.1.</span> <span class="nav-text">dref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsd"><span class="nav-number">8.2.</span> <span class="nav-text">stsd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stts"><span class="nav-number">8.3.</span> <span class="nav-text">stts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctts"><span class="nav-number">8.4.</span> <span class="nav-text">ctts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stss"><span class="nav-number">8.5.</span> <span class="nav-text">stss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsc"><span class="nav-number">8.6.</span> <span class="nav-text">stsc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stsz"><span class="nav-number">8.7.</span> <span class="nav-text">stsz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stco-co64"><span class="nav-number">8.8.</span> <span class="nav-text">stco | co64</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -266,21 +202,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -290,14 +223,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -306,7 +237,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -319,9 +250,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -362,7 +291,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -374,27 +303,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2020/e90af351/" class="post-meta-item leancloud_visitors" data-flag-title="音视频封装 - MP4 封装格式" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/e90af351/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/e90af351/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -408,51 +316,84 @@
         <p><code>mp4</code> 文件封装格式，对应的标准为 <code>ISO/IEC 14496-12</code> 和 <code>ISO/IEC 14496-14</code>。</p>
 <p><code>ISO/IEC 14496-12</code> 定义了一种封装媒体数据的基础文件格式，<code>mp4</code>、<code>3gp</code>、<code>ismv</code> 等我们常见媒体封装格式都是以这种基础文件格式为基础衍生的。</p>
 <p><code>ISO/IEC 14496-14</code> 基于 <code>ISO-14496-12</code> 定义了 <code>mp4</code> 文件格式。</p>
-<a id="more"></a>
-<h2 id="基础文件格式-Box"><a href="#基础文件格式-Box" class="headerlink" title="基础文件格式 - Box"></a>基础文件格式 - Box</h2><p>按照 <code>ISO-14496-12</code>，文件由一系列对象 <code>Box</code> 构成, <code>Box</code> 可以嵌套包含其他 <code>Box</code></p>
+<span id="more"></span>
+<h2 id="基础文件格式---box">基础文件格式 - Box</h2>
+<p>按照 <code>ISO-14496-12</code>，文件由一系列对象 <code>Box</code> 构成, <code>Box</code> 可以嵌套包含其他 <code>Box</code></p>
 <p><code>Box</code> 分为两类: 一类是元数据 <code>Box</code>，一类是媒体数据 <code>Box</code></p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130213738.png" alt="Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130213738.png" alt="Box" /><figcaption aria-hidden="true">Box</figcaption>
+</figure>
 <p><code>Box Header</code> 的格式可用如下代码表示:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class <span class="title">Box</span> <span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) boxtype, optional <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">8</span>)[<span class="number">16</span>] extended_type)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> <span class="built_in">size</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> type </span>= boxtype;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> largesize</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">size</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// box extends to end of file</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (boxtype == <span class="string">&quot;uuid&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">8</span>)[<span class="number">16</span>] usertype = extended_type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">Box</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> boxtype<span class="token punctuation">,</span> optional <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span> extended_type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> size<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> type <span class="token operator">=</span> boxtype<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> largesize<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// box extends to end of file</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>boxtype <span class="token operator">==</span> <span class="token string">"uuid"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span> usertype <span class="token operator">=</span> extended_type<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>一些 <code>Box</code> 对象的 <code>Box Header</code> 可能会包含有版本号和标志域:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class <span class="title">FullBox</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) boxtype, <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">8</span>) v, <span class="built_in">bit</span>(<span class="number">24</span>) f)</span> extends <span class="title">Box</span><span class="params">(boxtype)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">8</span>)</span> version </span>= v;</span><br><span class="line">    <span class="built_in">bit</span>(<span class="number">24</span>) flags = f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="MP4-格式介绍"><a href="#MP4-格式介绍" class="headerlink" title="MP4 格式介绍"></a>MP4 格式介绍</h2><p><code>Box</code> 种类非常多，下图中例举了一些重要的 <code>Box</code> 类型:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130214743.png" alt="MP4"></p>
-<ol>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">FullBox</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> boxtype<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> v<span class="token punctuation">,</span> <span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> f<span class="token punctuation">)</span> extends <span class="token function">Box</span><span class="token punctuation">(</span>boxtype<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> version <span class="token operator">=</span> v<span class="token punctuation">;</span>
+    <span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> flags <span class="token operator">=</span> f<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="mp4-格式介绍">MP4 格式介绍</h2>
+<p><code>Box</code> 种类非常多，下图中例举了一些重要的 <code>Box</code> 类型:</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130214743.png" alt="MP4" /><figcaption aria-hidden="true">MP4</figcaption>
+</figure>
+<ol type="1">
 <li>分析时会从外到里进行分析，先分析第一层的 <code>Box</code> 各个字段，再分析第二层 <code>Box</code> 各个字段，以此类推</li>
 <li><code>Box</code> 由于种类非常多，这里只分析一个标准的 <code>mp4</code> 文件的 <code>Box</code> 含义</li>
 <li><code>Box</code> 里面字段也不是所有的都需要关注，我们只需要关注核心和有用的，对于一些不太用的就可以忽略不计了</li>
 </ol>
-<h2 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h2><p>使用 <code>mp4info</code> 打开一个 <code>mp4</code> 文件，可以看到，该 <code>mp4</code> 文件第一层 <code>Box</code> 有 <code>4</code> 种:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130215440.png" alt="第一层"></p>
-<ol>
+<h2 id="第一层">第一层</h2>
+<p>使用 <code>mp4info</code> 打开一个 <code>mp4</code> 文件，可以看到，该 <code>mp4</code> 文件第一层 <code>Box</code> 有 <code>4</code> 种:</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130215440.png" alt="第一层" /><figcaption aria-hidden="true">第一层</figcaption>
+</figure>
+<ol type="1">
 <li><code>ftyp</code></li>
 <li><code>free</code></li>
 <li><code>mdat</code></li>
 <li><code>moov</code></li>
 </ol>
 <p>我们逐个分析该 <code>4</code> 种 <code>Box</code> 的含义和内容。</p>
-<h3 id="ftyp"><a href="#ftyp" class="headerlink" title="ftyp"></a>ftyp</h3><p><code>ftyp</code> 是 <code>mp4</code> 文件的第一个 <code>Box</code>，包含了视频文件使用的编码格式、标准等，这个 <code>Box</code> 作用基本就是 <code>mp4</code> 这种封装格式的标识，同时在一份 <code>mp4</code> 文件中只有一个这样的 <code>Box</code>。<code>ftyp box</code> 通常放在文件的开始，通过对该 <code>Box</code> 解析可以让我们的软件（播放器、demux、解析器）知道应该使用哪种协议对这该文件解析，是后续解读文件基础。</p>
+<h3 id="ftyp">ftyp</h3>
+<p><code>ftyp</code> 是 <code>mp4</code> 文件的第一个 <code>Box</code>，包含了视频文件使用的编码格式、标准等，这个 <code>Box</code> 作用基本就是 <code>mp4</code> 这种封装格式的标识，同时在一份 <code>mp4</code> 文件中只有一个这样的 <code>Box</code>。<code>ftyp box</code> 通常放在文件的开始，通过对该 <code>Box</code> 解析可以让我们的软件（播放器、demux、解析器）知道应该使用哪种协议对这该文件解析，是后续解读文件基础。</p>
 <p>分析如下码流:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130234447.png" alt="ftyp box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130234447.png" alt="ftyp box" /><figcaption aria-hidden="true">ftyp box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class FileTypeBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;ftyp&quot;</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> major_brand</span>;           <span class="comment">// 不同厂商要实现这种规范都要向 ISO 注册的一个四字节的标识码</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> minor_version</span>;         <span class="comment">// 商标版本号</span></span><br><span class="line">    unsigned int(32) compatible_brands[];   // 兼容其他的版本号，表示可以兼容和遵从那些协议标准，是一个列表</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">FileTypeBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"ftyp"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> major_brand<span class="token punctuation">;</span>           <span class="token comment">// 不同厂商要实现这种规范都要向 ISO 注册的一个四字节的标识码</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> minor_version<span class="token punctuation">;</span>         <span class="token comment">// 商标版本号</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> compatible_brands<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 兼容其他的版本号，表示可以兼容和遵从那些协议标准，是一个列表</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 1C</code> 表示该 <code>Box</code> 长度为 <code>28</code> 字节</li>
 <li>Box type: <code>0x66 74 79 70</code> 是 <code>ftyp</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>major brand: <code>0x69 73 6F 6D</code> 是 <code>isom</code> 的 <code>ASCII</code> 值，说明本文件是符合这个规范的。</li>
 <li>minor version: <code>0x00 00 02 00</code> 代表 <code>isom</code> 的版本号</li>
 <li>compatible brand: <code>0x69 73 6F 6D 69 73 6F 32 6D 70 34 31</code> <code>ASCII</code> 值为 <code>iosmios2mp4l</code> 表示本文件可以兼容的协议和标准</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130235834.png" alt="ftyp Mp4Explorer"></p>
-<h3 id="moov"><a href="#moov" class="headerlink" title="moov"></a>moov</h3><ul>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201130235834.png" alt="ftyp Mp4Explorer" /><figcaption aria-hidden="true">ftyp Mp4Explorer</figcaption>
+</figure>
+<h3 id="moov">moov</h3>
+<ul>
 <li><code>Container</code>: <code>File</code></li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one</code></li>
@@ -461,66 +402,103 @@
 <p>所谓的媒体元数据主要包含类似 <code>SPS</code>、<code>PPS</code> 的编解码参数信息，还有音视频的时间戳等信息。对于 <code>MP4</code> 还有一个重要的采样表 <code>stbl</code> 信息，这里面定义了采样 <code>Sample</code>、<code>Chunk</code>、<code>Track</code> 的映射关系，是 <code>MP4</code> 能够进行随机拖动和播放的关键，也是需要好好理解的部分，对于实现一些音视频特殊操作很有帮助。</p>
 <p>根据 <code>ISO-14496-12</code>，文件中必须要包括唯一一个元数据容器: <code>Movie Box(moov)</code>，该 <code>Box</code> 一般在文件的头部或尾部，方便定位。</p>
 <p>分析如下码流:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201000619.png" alt="moov box"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class MovieBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;moov&quot;</span>)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201000619.png" alt="moov box" /><figcaption aria-hidden="true">moov box</figcaption>
+</figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">MovieBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"moov"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 2E 49</code> 表示该 <code>Box</code> 长度为 <code>11849</code> 字节</li>
 <li>Box type: <code>0x6D 6F 6F 76</code> 就是 <code>moov</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#mvhd">第二层 - mvhd</a></li>
 <li>参见: <a href="#iods">第二层 - iods</a></li>
 <li>参见: <a href="#trak">第二层 - trak</a></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201000000.png" alt="moov Mp4Explorer"></p>
-<h3 id="mdat"><a href="#mdat" class="headerlink" title="mdat"></a>mdat</h3><p><code>mdat Box</code> 这个 <code>Box</code> 是存储音视频数据的 <code>Box</code>，要从这个 <code>Box</code> 解封装出真实的媒体数据。当然这个 <code>Box</code> 一般都会存在，但是不是必须的。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201000000.png" alt="moov Mp4Explorer" /><figcaption aria-hidden="true">moov Mp4Explorer</figcaption>
+</figure>
+<h3 id="mdat">mdat</h3>
+<p><code>mdat Box</code> 这个 <code>Box</code> 是存储音视频数据的 <code>Box</code>，要从这个 <code>Box</code> 解封装出真实的媒体数据。当然这个 <code>Box</code> 一般都会存在，但是不是必须的。</p>
 <p>说明:</p>
-<ol>
+<ol type="1">
 <li><code>mdat Box</code> 基本组成还是有头部和数据两部分组成，但是这里注意如果 <code>Box length</code> 长度不够时，要用后面 <code>8</code> 字节的扩展长度字段，<code>Box Type</code> 还是 <code>mdat</code> 的 <code>ASCII</code> 码值</li>
 <li>真实的数据字段是一个个 <code>NALU header</code> + <code>NALU Data</code>，但是没有用 <code>NALU</code> 的分解符 <code>00 00 00 01</code>, 是在每个 <code>NALU</code> 前面加了长度字段，和 <code>RTP</code> 打包类似</li>
 <li>这里的 <code>NLAU</code> 一般不再包含 <code>SPS</code> <code>PPS</code> 等数据，这些数据已经放到 <code>moov Box</code> 里面了，至于是如何放到 <code>moov Box</code> 的，下面文章会讲解。这里一般 <code>NALU</code> 类型就是 <code>I\B\P</code> 帧数据以及 <code>SEI</code> 用户增强信息</li>
 </ol>
 <p>分析如下码流:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201001516.png" alt="mdat box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201001516.png" alt="mdat box" /><figcaption aria-hidden="true">mdat box</figcaption>
+</figure>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 25 4B F7</code> 表示该 <code>Box</code> 长度为 <code>2444279</code> 字节，即后面的 <code>NALU</code> 整个长度为 <code>2444279 - 8 = 2444271</code> 字节</li>
 <li>Box type: <code>0x6D 64 61 74</code> 这就是 <code>mdat</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
+</ul></li>
 <li>Box Data</li>
 </ul>
-<h3 id="free"><a href="#free" class="headerlink" title="free"></a>free</h3><p><code>free Box</code> 中的内容是无关紧要的，可以被忽略即该 <code>Box</code> 被删除后，不会对播放产生任何影响。这种类型的 <code>Box</code> 也不是必须的，可有可无，类似的 <code>Box</code> 还有 <code>sikp Box</code>. 虽然在解析是可以忽略，但是需要注意该 <code>Box</code> 的删除对其它 <code>Box</code> 的偏移量影响，特别是当 <code>moov Box</code> 放到 <code>mdat Box</code> 后面的情况。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201222436.png" alt="free box"></p>
+<h3 id="free">free</h3>
+<p><code>free Box</code> 中的内容是无关紧要的，可以被忽略即该 <code>Box</code> 被删除后，不会对播放产生任何影响。这种类型的 <code>Box</code> 也不是必须的，可有可无，类似的 <code>Box</code> 还有 <code>sikp Box</code>. 虽然在解析是可以忽略，但是需要注意该 <code>Box</code> 的删除对其它 <code>Box</code> 的偏移量影响，特别是当 <code>moov Box</code> 放到 <code>mdat Box</code> 后面的情况。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201222436.png" alt="free box" /><figcaption aria-hidden="true">free box</figcaption>
+</figure>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 08</code> 表示该 <code>Box</code> 长度为 <code>9</code> 字节</li>
 <li>Box type: <code>0x66 72 65 65</code> 这就是 <code>free</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
+</ul></li>
 <li>Box Data</li>
 </ul>
-<h2 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h2><p>从第二层开始，后续的每一层基本都封装于 <code>moov Box</code>。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201224431.png" alt="moov Box"></p>
-<h3 id="mvhd"><a href="#mvhd" class="headerlink" title="mvhd"></a>mvhd</h3><p>这个 Box 也是全文件唯一的一个 Box, 一般处于 moov Box 的第一个子 Box, 这个 Box 对整个媒体文件所包含的媒体数据（包含 Video track 和 Audio Track 等）进行全面的描述。其中包含了媒体的创建和修改时间，默认音量、色域、时长等信息。</p>
+<h2 id="第二层">第二层</h2>
+<p>从第二层开始，后续的每一层基本都封装于 <code>moov Box</code>。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201224431.png" alt="moov Box" /><figcaption aria-hidden="true">moov Box</figcaption>
+</figure>
+<h3 id="mvhd">mvhd</h3>
+<p>这个 Box 也是全文件唯一的一个 Box, 一般处于 moov Box 的第一个子 Box, 这个 Box 对整个媒体文件所包含的媒体数据（包含 Video track 和 Audio Track 等）进行全面的描述。其中包含了媒体的创建和修改时间，默认音量、色域、时长等信息。</p>
 <p>分析如下码流:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201231209.png" alt="mvhd Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201231209.png" alt="mvhd Box" /><figcaption aria-hidden="true">mvhd Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class MovieHeaderBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;mvhd&quot;</span>, version, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (version==<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> creation_time</span>;     <span class="comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> modification_time</span>; <span class="comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> timescale</span>;         <span class="comment">// 文件媒体在 1 秒时间内的刻度值，可以理解为 1 秒长度的时间单元数，这个只用来计算了该 Mp4 文件的长度，但是没有参与 PTS 和 DTS 的计算。</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> duration</span>;          <span class="comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// version==0</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) creation_time;     <span class="comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> modification_time</span>; <span class="comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> timescale</span>;         <span class="comment">// 文件媒体在 1 秒时间内的刻度值，可以理解为 1 秒长度的时间单元数，这个只用来计算了该 Mp4 文件的长度，但是没有参与 PTS 和 DTS 的计算。</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> duration</span>;          <span class="comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> rate </span>= <span class="number">0x00010000</span>; <span class="comment">// 推荐播放速率，[16.16] 格式，1.0 表示 1 倍速播放</span></span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> volume </span>= <span class="number">0x0100</span>;   <span class="comment">// 与 rate 类似，[8.8] 格式，1.0 表示最大音量</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="title">bit</span><span class="params">(<span class="number">16</span>)</span> reserved </span>= <span class="number">0</span>;</span><br><span class="line">    const unsigned int(32)[2] reserved = 0;</span><br><span class="line">    template int(32)[9] matrix =</span><br><span class="line">    &#123;<span class="number">0x00010000</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0x00010000</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0x40000000</span>&#125;; <span class="comment">// Unity matrix</span></span><br><span class="line">    <span class="built_in">bit</span>(<span class="number">32</span>)[<span class="number">6</span>] pre_defined = <span class="number">0</span>;     <span class="comment">// 预览相关的信息，一般都是填充 0，所以不用太关心</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> next_track_ID</span>; <span class="comment">// 下一个 Track 使用的 id 号，通过该值减去 1 可以判断当前文件的 Track 数量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">MovieHeaderBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"mvhd"</span><span class="token punctuation">,</span> version<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>version<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> timescale<span class="token punctuation">;</span>         <span class="token comment">// 文件媒体在 1 秒时间内的刻度值，可以理解为 1 秒长度的时间单元数，这个只用来计算了该 Mp4 文件的长度，但是没有参与 PTS 和 DTS 的计算。</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// version==0</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> timescale<span class="token punctuation">;</span>         <span class="token comment">// 文件媒体在 1 秒时间内的刻度值，可以理解为 1 秒长度的时间单元数，这个只用来计算了该 Mp4 文件的长度，但是没有参与 PTS 和 DTS 的计算。</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> rate <span class="token operator">=</span> <span class="token number">0x00010000</span><span class="token punctuation">;</span> <span class="token comment">// 推荐播放速率，[16.16] 格式，1.0 表示 1 倍速播放</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> volume <span class="token operator">=</span> <span class="token number">0x0100</span><span class="token punctuation">;</span>   <span class="token comment">// 与 rate 类似，[8.8] 格式，1.0 表示最大音量</span>
+    <span class="token keyword">const</span> <span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> matrix <span class="token operator">=</span>
+    <span class="token punctuation">&#123;</span><span class="token number">0x00010000</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x00010000</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x40000000</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// Unity matrix</span>
+    <span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> pre_defined <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// 预览相关的信息，一般都是填充 0，所以不用太关心</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> next_track_ID<span class="token punctuation">;</span> <span class="token comment">// 下一个 Track 使用的 id 号，通过该值减去 1 可以判断当前文件的 Track 数量</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 6c</code> 表示该 <code>Box</code> 长度为 <code>108</code> 字节</li>
 <li>Box type: <code>0x6d 76 68 64</code> 这就是 <code>mvhd</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>creation time: <code>0x00 00 00 00</code></li>
 <li>modification time: <code>0x00 00 00 00</code></li>
 <li>time_scale: <code>0x00 00 03 E8</code> 代表 <code>1</code> 秒的时间单位是 <code>1000</code>，即把 <code>1</code> 秒划分为 <code>1000</code> 份，这样描述的更精确</li>
@@ -528,45 +506,79 @@
 <li>rate: <code>0x00 01 00 00</code> 推荐采样原始倍速播放，一般就是 <code>1</code> 倍速进行播放该视频</li>
 <li>volume: <code>01 00</code> 推荐采样原始视频音量进行播放</li>
 <li>next_track_id: <code>0x00 00 00 03</code> 这个值表示如果要增加下一个 <code>Track</code> 时，需要的编号是 <code>3</code>，那同时也就说明本文件里面有 <code>2</code> 个 <code>Track</code>，实际发现刚好是 <code>2</code> 个 <code>Track</code></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201224755.png" alt="mvhd Mp4Explorer"></p>
-<h3 id="iods"><a href="#iods" class="headerlink" title="iods"></a>iods</h3><p>这个 <code>Box</code> 也是非必须 <code>Box</code>，不算核心 <code>Box</code>, 实际也是 <code>24</code> 字节的固定值，解析时直接跳过即可。封装直接给填写固定 <code>24</code> 字节即可，注意该 <code>Box</code> 也是 Full <code>Box</code> 意味这 <code>Header</code> 里面有 <code>1</code> 字节的 <code>Version</code> 和 <code>3</code> 字节的 <code>Flag</code> 字段。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201224755.png" alt="mvhd Mp4Explorer" /><figcaption aria-hidden="true">mvhd Mp4Explorer</figcaption>
+</figure>
+<h3 id="iods">iods</h3>
+<p>这个 <code>Box</code> 也是非必须 <code>Box</code>，不算核心 <code>Box</code>, 实际也是 <code>24</code> 字节的固定值，解析时直接跳过即可。封装直接给填写固定 <code>24</code> 字节即可，注意该 <code>Box</code> 也是 Full <code>Box</code> 意味这 <code>Header</code> 里面有 <code>1</code> 字节的 <code>Version</code> 和 <code>3</code> 字节的 <code>Flag</code> 字段。</p>
 <p>定义的内容应该是 <code>Audio</code> 和 <code>Video ProfileLevel</code> 方面的描述。但是现在没有用。</p>
-<h3 id="trak"><a href="#trak" class="headerlink" title="trak"></a>trak</h3><p><code>trak Box</code> 定义了媒体文件中媒体中一个 <code>Track</code> 的信息，视频有 <code>Video Track</code>, 音频有 <code>Audio Track</code>，媒体文件中可以有多个 <code>Track</code>，每个 <code>Track</code> 具有自己独立的时间和空间的信息，可以进行独立操作。</p>
+<h3 id="trak">trak</h3>
+<p><code>trak Box</code> 定义了媒体文件中媒体中一个 <code>Track</code> 的信息，视频有 <code>Video Track</code>, 音频有 <code>Audio Track</code>，媒体文件中可以有多个 <code>Track</code>，每个 <code>Track</code> 具有自己独立的时间和空间的信息，可以进行独立操作。</p>
 <p>每个 <code>trak Box</code> 都需要有一个 <code>tkhd Box</code> 和 <code>mdia Box</code>，其它的 <code>Box</code> 都是可选择的</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201233103.png" alt="trak Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201233103.png" alt="trak Box" /><figcaption aria-hidden="true">trak Box</figcaption>
+</figure>
 <p><code>Trak Box</code> 这里自身只是一个分界符，属于 <code>Container Box</code>，它的 <code>Box Data</code> 其实是其他的 <code>Box</code> 类型。</p>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 10 1E</code> 表示该 <code>Box</code> 长度为 <code>4126</code> 字节</li>
 <li>Box type: <code>0x74 72 61 6B</code> 这就是 <code>trak</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#tkhd">第三层 - tkhd</a></li>
 <li>参见: <a href="#edts">第三层 - edts</a></li>
 <li>参见: <a href="#mdia">第三层 - mdia</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h2><h3 id="tkhd"><a href="#tkhd" class="headerlink" title="tkhd"></a>tkhd</h3><p><code>Container</code>: <code>Track Box</code> (<code>&quot;trak&quot;</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<h2 id="第三层">第三层</h2>
+<h3 id="tkhd">tkhd</h3>
+<p><code>Container</code>: <code>Track Box</code> (<code>"trak"</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>该 <code>Box</code> 描述了该 <code>Track</code> 的媒体整体信息包括时长、图像的宽度和高度等，实际比较重要，同时该 <code>Box</code> 是 <code>Full Box</code> 即 <code>Box Header</code> 后面有 <code>Version</code> 和 <code>Flag</code> 字段。</p>
 <p>分析如下码流:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201234750.png" alt="tkhd Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201234750.png" alt="tkhd Box" /><figcaption aria-hidden="true">tkhd Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class TrackHeaderBox extends <span class="title">FullBox</span><span class="params">(‘tkhd’, version, flags)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (version==<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> creation_time</span>;     <span class="comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> modification_time</span>; <span class="comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> track_ID</span>;          <span class="comment">// 唯一标识该 Track 的一个非零值</span></span><br><span class="line">        <span class="function"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> reserved </span>= <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> duration</span>;          <span class="comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// version==0</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) creation_time;     <span class="comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> modification_time</span>; <span class="comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> track_ID</span>;          <span class="comment">// 唯一标识该 Track 的一个非零值</span></span><br><span class="line">        <span class="function"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> reserved </span>= <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> duration</span>;          <span class="comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span></span><br><span class="line">    &#125;</span><br><span class="line">    const unsigned int(32)[2] reserved = 0;</span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> layer </span>= <span class="number">0</span>;             <span class="comment">// 视频层，值小的在上层</span></span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> alternate_group </span>= <span class="number">0</span>;   <span class="comment">// Track 分组信息，一般默认为 0，表示该 Track 和其它 Track 没有建立群组关系</span></span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> volume </span>= &#123;<span class="keyword">if</span> track_is_audio <span class="number">0x0100</span> <span class="keyword">else</span> <span class="number">0</span>&#125;; <span class="comment">// [8.8] 格式，1.0 表示最大音量</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> reserved </span>= <span class="number">0</span>;</span><br><span class="line">    template int(32)[9] matrix=</span><br><span class="line">    &#123;<span class="number">0x00010000</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0x00010000</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0x40000000</span>&#125;;</span><br><span class="line">    <span class="comment">// unity matrix</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> <span class="built_in">width</span></span>;     <span class="comment">// 如果该 Track 为 Video Track，则表示图像的宽度（16.16 浮点表示）</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> <span class="built_in">height</span></span>;    <span class="comment">// 如果该 Track 为 Video Track，则表示图像的高度（16.16 浮点表示）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">TrackHeaderBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span>‘tkhd’<span class="token punctuation">,</span> version<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>version<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> track_ID<span class="token punctuation">;</span>          <span class="token comment">// 唯一标识该 Track 的一个非零值</span>
+        <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// version==0</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> track_ID<span class="token punctuation">;</span>          <span class="token comment">// 唯一标识该 Track 的一个非零值</span>
+        <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 该影片的播放时长，该值除以 time scale 字段即可以得到该影片的总时长单位秒 s</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> layer <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>             <span class="token comment">// 视频层，值小的在上层</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> alternate_group <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// Track 分组信息，一般默认为 0，表示该 Track 和其它 Track 没有建立群组关系</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> volume <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token keyword">if</span> track_is_audio <span class="token number">0x0100</span> <span class="token keyword">else</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// [8.8] 格式，1.0 表示最大音量</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> matrix<span class="token operator">=</span>
+    <span class="token punctuation">&#123;</span><span class="token number">0x00010000</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x00010000</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0x40000000</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token comment">// unity matrix</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> width<span class="token punctuation">;</span>     <span class="token comment">// 如果该 Track 为 Video Track，则表示图像的宽度（16.16 浮点表示）</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> height<span class="token punctuation">;</span>    <span class="token comment">// 如果该 Track 为 Video Track，则表示图像的高度（16.16 浮点表示）</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 5c</code> 表示该 <code>Box</code> 长度为 <code>92</code> 字节</li>
 <li>Box type: <code>0x74 6B 68 64</code> 这就是 <code>tkhd</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 03</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>creation time: <code>0x00 00 00 00</code></li>
 <li>modification time: <code>0x00 00 00 00</code></li>
 <li>track_id: <code>0x00 00 00 01</code> 这是该 <code>Track</code> 的唯一标识</li>
@@ -576,89 +588,126 @@
 <li>volume: <code>00 00</code></li>
 <li>width: <code>0x03 55 55 55</code> 表示该视频图像的宽度是 <code>853.21845</code></li>
 <li>height: <code>0x01 e0 00 00</code> 表示该视频图像的宽度是 <code>480.0</code></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201235125.png" alt="tkhd Mp4Explorer"></p>
-<h3 id="edts"><a href="#edts" class="headerlink" title="edts"></a>edts</h3><h3 id="mdia"><a href="#mdia" class="headerlink" title="mdia"></a>mdia</h3><ul>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201235125.png" alt="tkhd Mp4Explorer" /><figcaption aria-hidden="true">tkhd Mp4Explorer</figcaption>
+</figure>
+<h3 id="edts">edts</h3>
+<h3 id="mdia">mdia</h3>
+<ul>
 <li><code>Container</code>: <code>Track Box</code> (<code>trak</code>)</li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one</code></li>
 </ul>
 <p>这个 <code>Box</code> 也是 <code>Container Box</code>，里面包含子 <code>Box</code>，一般必须有 <code>mdhd Box</code>、<code>hdlr Box</code>、<code>minf Box</code>。基本就是当前 <code>Track</code> 媒体头信息和媒体句柄以及媒体信息。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001301.png" alt="mdia Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001301.png" alt="mdia Box" /><figcaption aria-hidden="true">mdia Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class MediaBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;mdia&quot;</span>)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">MediaBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"mdia"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 10 1E</code> 表示该 <code>Box</code> 长度为 <code>4126</code> 字节</li>
 <li>Box type: <code>0x74 72 61 6B</code> 这就是 <code>trak</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#hdlr">第四层 - mdhd</a></li>
 <li>参见: <a href="#hdlr">第四层 - hdlr</a></li>
 <li>参见: <a href="#minf">第四层 - minf</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="第四层"><a href="#第四层" class="headerlink" title="第四层"></a>第四层</h2><h3 id="mdhd"><a href="#mdhd" class="headerlink" title="mdhd"></a>mdhd</h3><ul>
+<h2 id="第四层">第四层</h2>
+<h3 id="mdhd">mdhd</h3>
+<ul>
 <li><code>Container</code>: <code>Media Box</code> (<code>mdia</code>)</li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one</code></li>
 </ul>
 <p>这个 <code>Box</code> 是 <code>Full Box</code>，意味这 <code>Box Header</code> 有 <code>Version</code> 和 <code>Flag</code> 字段，该 <code>Box</code> 里面主要定义了该 <code>Track</code> 的媒体头信息，其中我们最关心的两个字段是 <code>Time scale</code> 和 <code>Duration</code>，分别表示了该 <code>Track</code> 的时间戳和时长信息，这个时间戳信息也是 <code>PTS</code> 和 <code>DTS</code> 的单位。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001857.png" alt="mdhd Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001857.png" alt="mdhd Box" /><figcaption aria-hidden="true">mdhd Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class MediaHeaderBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;mdhd&quot;</span>, version, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (version==<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> creation_time</span>;     <span class="comment">// 当前 Track 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> modification_time</span>; <span class="comment">// 当前 Track 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> timescale</span>;         <span class="comment">// 当前 Track 的时间计算单位</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> duration</span>;          <span class="comment">// 当前 Track 的播放时长，需要参考前面的 timescale 计算</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// version==0</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) creation_time;     <span class="comment">// 当前 Track 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> modification_time</span>; <span class="comment">// 当前 Track 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> timescale</span>;         <span class="comment">// 当前 Track 的时间计算单位</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> duration</span>;          <span class="comment">// 当前 Track 的播放时长，需要参考前面的 timescale 计算</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">bit</span>(<span class="number">1</span>) pad = <span class="number">0</span>;</span><br><span class="line">    unsigned int(5)[3] language;            // 媒体语言码，参考 ISO-639-2/T</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> pre_defined </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">MediaHeaderBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"mdhd"</span><span class="token punctuation">,</span> version<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>version<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 当前 Track 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 当前 Track 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> timescale<span class="token punctuation">;</span>         <span class="token comment">// 当前 Track 的时间计算单位</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 当前 Track 的播放时长，需要参考前面的 timescale 计算</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// version==0</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> creation_time<span class="token punctuation">;</span>     <span class="token comment">// 当前 Track 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> modification_time<span class="token punctuation">;</span> <span class="token comment">// 当前 Track 修改时间（相对于 UTC 时间 1904-01-01 零点的秒数）</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> timescale<span class="token punctuation">;</span>         <span class="token comment">// 当前 Track 的时间计算单位</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> duration<span class="token punctuation">;</span>          <span class="token comment">// 当前 Track 的播放时长，需要参考前面的 timescale 计算</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> pad <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> language<span class="token punctuation">;</span>            <span class="token comment">// 媒体语言码，参考 ISO-639-2/T</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> pre_defined <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 20</code> 表示该 <code>Box</code> 长度为 <code>32</code> 字节</li>
 <li>Box type: <code>0x6d 64 68 64</code> 这就是 <code>mdhd</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>creation time: <code>0x00 00 00 00</code></li>
 <li>modification time: <code>0x00 00 00 00</code></li>
 <li>timescale: <code>0x00 00 30 00</code> 表示当前 <code>Track</code> 的时间戳单位是 <code>12288</code></li>
 <li>duration: <code>0x00 03 60 00</code> 这样我们换算下该段 <code>mp4</code> 文件的时长是 <code>221184/12288</code> 即 <code>18</code> 秒</li>
-<li>language: <code>0x55 c4</code> 最高位为 <code>0</code>，后面 <code>15</code> 位代表三个字符<ul>
+<li>language: <code>0x55 c4</code> 最高位为 <code>0</code>，后面 <code>15</code> 位代表三个字符
+<ul>
 <li><code>0x55 c4</code> 转为二进制 <code>BIN: 01010101 11000100</code> 去掉首位 <code>0</code> 得到 <code>15</code> 位二进制数字</li>
 <li>每 <code>5</code> 位二进制一组: <code>10101 01110 00100</code> 代表三个数字 <code>21</code>、<code>15</code>、<code>4</code></li>
 <li>三个数字对应从 <code>a</code> 开始的第 <code>21</code>、<code>15</code>、<code>4</code> 个字母，即 <code>u</code>、<code>n</code>、<code>d</code>，查询 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes">ISO 639-2/T</a> 可知其含义</li>
-</ul>
-</li>
+</ul></li>
 <li>qualiiy: <code>0x00 00</code></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001924.png" alt="mdhd Mp4Explorer"></p>
-<h3 id="hdlr"><a href="#hdlr" class="headerlink" title="hdlr"></a>hdlr</h3><p><code>Container</code>: <code>Media Box</code> (<code>mdia</code>) or <code>Meta Box</code> (<code>meta</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202001924.png" alt="mdhd Mp4Explorer" /><figcaption aria-hidden="true">mdhd Mp4Explorer</figcaption>
+</figure>
+<h3 id="hdlr">hdlr</h3>
+<p><code>Container</code>: <code>Media Box</code> (<code>mdia</code>) or <code>Meta Box</code> (<code>meta</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>这个 <code>Box</code> 是 <code>Full Box</code>，该 <code>Box</code> 解释了媒体的播放过程信息，用来设置不同 <code>Track</code> 的处理方式，标识了该 <code>Track</code> 的类型。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202003746.png" alt="hdlr Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202003746.png" alt="hdlr Box" /><figcaption aria-hidden="true">hdlr Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class HandlerBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;hdlr&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> pre_defined </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> handler_type</span>;  <span class="comment">// Handle 的类型: 视频: &#x27;vide&#x27;，音频: &#x27;soun&#x27;</span></span><br><span class="line">    const unsigned int(32)[3] reserved = 0;</span><br><span class="line">    <span class="built_in">string</span> name; <span class="comment">// 这个 component 的名字，其实这里就是你给该 Track 其的名字，打包时填写一个有意义字符串就可以</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">HandlerBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"hdlr"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> pre_defined <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> handler_type<span class="token punctuation">;</span>  <span class="token comment">// Handle 的类型: 视频: 'vide'，音频: 'soun'</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    string name<span class="token punctuation">;</span> <span class="token comment">// 这个 component 的名字，其实这里就是你给该 Track 其的名字，打包时填写一个有意义字符串就可以</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 2d</code> 表示该 <code>Box</code> 长度为 <code>45</code> 字节</li>
 <li>Box type: <code>0x68 64 6c 72</code> 这就是 <code>hdlr</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
-<li>handle type: <code>0x76 69 64 65</code> 即’vide’，代表当前 Track 为视频数据</li>
+</ul></li>
+<li>Box Data
+<ul>
+<li>handle type: <code>0x76 69 64 65</code> 即'vide'，代表当前 Track 为视频数据</li>
 <li>name: <code>VideoHandler</code></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202003621.png" alt="hdlr Mp4Explorer"></p>
-<h3 id="minf"><a href="#minf" class="headerlink" title="minf"></a>minf</h3><p><code>Container</code>: <code>Media Box</code> (<code>mdia</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202003621.png" alt="hdlr Mp4Explorer" /><figcaption aria-hidden="true">hdlr Mp4Explorer</figcaption>
+</figure>
+<h3 id="minf">minf</h3>
+<p><code>Container</code>: <code>Media Box</code> (<code>mdia</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>这个 <code>Box</code> 是我认为 moov <code>Box</code> 里面最重要最复杂的 <code>Box</code>，内部还有子 <code>Box</code>。该 <code>Box</code> 建立了时间到真实音视频 <code>Sample</code> 的映射关系，对于音视频数据操作时很有帮助的。</p>
 <p>同时该 <code>Box</code> 是 <code>Container Box</code>，下面一般含有三大必须的子 <code>Box</code>:</p>
 <ul>
@@ -666,213 +715,312 @@
 <li>数据信息 <code>Box</code>: <code>dinf Box</code></li>
 <li>采样表 <code>Box</code>:<code>stbl Box</code></li>
 </ul>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202124113.png" alt="minf Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202124113.png" alt="minf Box" /><figcaption aria-hidden="true">minf Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class MediaInformationBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;minf&quot;</span>)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">MediaInformationBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"minf"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 0f 41</code> 表示该 <code>Box</code> 长度为 <code>3905</code> 字节</li>
 <li>Box type: <code>0x6d 69 6e 66</code> 这就是 <code>trak</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#vmhd">第五层 - vmhd</a></li>
 <li>参见: <a href="#smhd">第五层 - smhd</a></li>
 <li>参见: <a href="#dinf">第五层 - dinf</a></li>
 <li>参见: <a href="#stbl">第五层 - stbl</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="第五层"><a href="#第五层" class="headerlink" title="第五层"></a>第五层</h2><h3 id="vmhd"><a href="#vmhd" class="headerlink" title="vmhd"></a>vmhd</h3><ul>
+<h2 id="第五层">第五层</h2>
+<h3 id="vmhd">vmhd</h3>
+<ul>
 <li><code>Container</code>: <code>Media Information Box</code> (<code>minf</code>)</li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one</code></li>
 </ul>
 <p>这个 <code>Box</code> 的大小是固定的，大小是 <code>24</code> 字节，一般都是用默认值填充。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202125231.png" alt="vmhd Box"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202125231.png" alt="vmhd Box" /><figcaption aria-hidden="true">vmhd Box</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class VideoMediaHeaderBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;vmhd&quot;</span>, version = <span class="number">0</span>, <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> graphicsmode </span>= <span class="number">0</span>; <span class="comment">// 视频合成模式，为 0 时拷贝原始图像，否则与 opcolor 进行合成</span></span><br><span class="line">    template unsigned int(16)[3] opcolor = &#123;0, 0, 0&#125;; // 颜色值，RGB 颜色值，&#123;R,G,B&#125; 一般默认 0x00 00 00 00 00 00</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="smhd"><a href="#smhd" class="headerlink" title="smhd"></a>smhd</h3><ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">VideoMediaHeaderBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"vmhd"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">template</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> graphicsmode <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 视频合成模式，为 0 时拷贝原始图像，否则与 opcolor 进行合成</span>
+    <span class="token keyword">template</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> opcolor <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">// 颜色值，RGB 颜色值，&#123;R,G,B&#125; 一般默认 0x00 00 00 00 00 00</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="smhd">smhd</h3>
+<ul>
 <li><code>Container</code>: <code>Media Information Box</code> (<code>minf</code>)</li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one specific media header shall be present</code></li>
 </ul>
 <p>这个 <code>Box</code> 的大小是固定的，大小是 <code>16</code> 字节，一般都是用默认值填充。</p>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class SoundMediaHeaderBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;smhd&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">template</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> balance </span>= <span class="number">0</span>;   <span class="comment">// 音频的均衡是用来控制计算机的两个扬声器的声音混合效果，一般是 0</span></span><br><span class="line">    <span class="function"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> reserved </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="dinf"><a href="#dinf" class="headerlink" title="dinf"></a>dinf</h3><p><code>Container</code>: <code>Media Information Box</code> (<code>minf</code>) or <code>Meta Box</code> (<code>meta</code>)<br><code>Mandatory</code>: <code>Yes</code> (required within <code>minf box</code>) and <code>No</code> (optional within <code>meta box</code>)<br><code>Quantity</code>: <code>Exactly one</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SoundMediaHeaderBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"smhd"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">template</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> balance <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 音频的均衡是用来控制计算机的两个扬声器的声音混合效果，一般是 0</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="dinf">dinf</h3>
+<p><code>Container</code>: <code>Media Information Box</code> (<code>minf</code>) or <code>Meta Box</code> (<code>meta</code>) <code>Mandatory</code>: <code>Yes</code> (required within <code>minf box</code>) and <code>No</code> (optional within <code>meta box</code>) <code>Quantity</code>: <code>Exactly one</code></p>
 <p>这个 <code>Box</code> 也是一个 <code>Container Box</code>，一般用来定位媒体信息。一般会包含一个 <code>dref Box</code> 即 <code>data reference box</code>，<code>dref</code> 下面会有若干个 <code>url Box</code> 或者也叫 <code>urn Box</code>，这些 <code>Box</code> 组成一个表，用来定位 <code>Track</code> 的数据。</p>
 <p><code>Track</code> 可以被分成若干个段，每一段都可以根据 <code>Url</code> 或者 <code>Urn</code> 指向的地址来获取数据，<code>sample</code> 描述中会用这些片段的序号将这些片段组成一个完整的 <code>track</code>，一般情况下当数据完全包含在文件中，<code>Url</code> 和 <code>urn Box</code> 的字符串是空的。</p>
 <p>这个 <code>Box</code> 存在的意义就是允许 <code>MP4</code> 文件的媒体数据分开最后还能进行恢复合并操作，但是实际上，<code>Track</code> 的数据都保存再文件中，所以该字段的重要性还体现不出来。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202130034.png" alt="dinf"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202130034.png" alt="dinf" /><figcaption aria-hidden="true">dinf</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class DataInformationBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;dinf&quot;</span>)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">DataInformationBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"dinf"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 24</code> 表示该 <code>Box</code> 长度为 <code>36</code> 字节</li>
 <li>Box type: <code>0x64 69 6e 66</code> 这就是 <code>dinf</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#dref">第六层 - dref</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="stbl"><a href="#stbl" class="headerlink" title="stbl"></a>stbl</h3><ul>
+<h3 id="stbl">stbl</h3>
+<ul>
 <li><code>Container</code>: <code>Media Information Box</code> (<code>minf</code>)</li>
 <li><code>Mandatory</code>: <code>Yes</code></li>
 <li><code>Quantity</code>: <code>Exactly one</code></li>
 </ul>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202215751.png" alt="stbl"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202215751.png" alt="stbl" /><figcaption aria-hidden="true">stbl</figcaption>
+</figure>
 <p>stbl Box 同样是 Container Box，使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class SampleTableBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;stbl&quot;</span>)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SampleTableBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"stbl"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 0f 01</code> 表示该 <code>Box</code> 长度为 <code>3841</code> 字节</li>
 <li>Box type: <code>0x73 74 62 6c</code> 这就是 <code>stbl</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>参见: <a href="#stsd">第六层 - stsd</a></li>
 <li>参见: <a href="#stts">第六层 - stts</a></li>
 <li>参见: <a href="#stss">第六层 - stss</a></li>
 <li>参见: <a href="#stsc">第六层 - stsc</a></li>
 <li>参见: <a href="#stsz">第六层 - stsz</a></li>
 <li>参见: <a href="#stco">第六层 - stco</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="第六层"><a href="#第六层" class="headerlink" title="第六层"></a>第六层</h2><h3 id="dref"><a href="#dref" class="headerlink" title="dref"></a>dref</h3><p><code>Container</code>: <code>Data Information Box</code> (<code>dinf</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<h2 id="第六层">第六层</h2>
+<h3 id="dref">dref</h3>
+<p><code>Container</code>: <code>Data Information Box</code> (<code>dinf</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>由于 <code>Track</code> 可以分为多个段，所以该 <code>Box</code> 是用来定义当前 <code>Track</code> 各个段的 <code>URL</code> 或 <code>URN</code>。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202130842.png" alt="dref"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202130842.png" alt="dref" /><figcaption aria-hidden="true">dref</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class <span class="title">DataEntryUrlBox</span> <span class="params">(<span class="built_in">bit</span>(<span class="number">24</span>) flags)</span> extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;url&quot;</span>, version = <span class="number">0</span>, flags)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> location;</span><br><span class="line">&#125;</span><br><span class="line">aligned(<span class="number">8</span>) <span class="function">class <span class="title">DataEntryUrnBox</span> <span class="params">(<span class="built_in">bit</span>(<span class="number">24</span>) flags)</span> extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;urn&quot;</span>, version = <span class="number">0</span>, flags)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">string</span> location;</span><br><span class="line">&#125;</span><br><span class="line">aligned(<span class="number">8</span>) <span class="function">class DataReferenceBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;dref&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= entry_count; i++) &#123;</span><br><span class="line">        DataEntryBox(entry_version, entry_flags) data_entry;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">DataEntryUrlBox</span> <span class="token punctuation">(</span><span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> flags<span class="token punctuation">)</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> flags<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    string location<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">DataEntryUrnBox</span> <span class="token punctuation">(</span><span class="token function">bit</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> flags<span class="token punctuation">)</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"urn"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> flags<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    string name<span class="token punctuation">;</span>
+    string location<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">DataReferenceBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"dref"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">DataEntryBox</span><span class="token punctuation">(</span>entry_version<span class="token punctuation">,</span> entry_flags<span class="token punctuation">)</span> data_entry<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 1c</code> 表示该 <code>Box</code> 长度为 <code>28</code> 字节</li>
 <li>Box type: <code>0x64 72 65 66</code> 这就是 <code>dref</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 00 01</code> 说明下面的 <code>url</code> 列表数量是 <code>1</code>，只有一个 <code>url Box</code></li>
-<li>URL Box 1<ul>
+<li>URL Box 1
+<ul>
 <li>Box Length: <code>0x00 00 00 0c</code> 表示该 <code>Box</code> 长度为 <code>12</code> 字节</li>
-<li>Box type: <code>0x75 72 6c 20</code> 这就是 <code>&quot;url&quot;</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
+<li>Box type: <code>0x75 72 6c 20</code> 这就是 <code>"url"</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 01</code></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="stsd"><a href="#stsd" class="headerlink" title="stsd"></a>stsd</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<h3 id="stsd">stsd</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>该 <code>Box</code> 存储了编码类型和初始化解码器需要的信息，于特定的 <code>track-type</code> 有关，根于不同的 <code>Track</code> 使用不一样的编码标准。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202220310.png" alt="stsd"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201202220310.png" alt="stsd" /><figcaption aria-hidden="true">stsd</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">abstract class <span class="title">SampleEntry</span> <span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) format)</span> extends <span class="title">Box</span><span class="params">(format)</span></span>&#123;</span><br><span class="line">    const unsigned int(8)[6] reserved = 0;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">16</span>)</span> data_reference_index</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">class BitRateBox extends <span class="title">Box</span><span class="params">(<span class="string">&quot;btrt&quot;</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> bufferSizeDB</span>;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> maxBitrate</span>;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> avgBitrate</span>;</span><br><span class="line">&#125;</span><br><span class="line">aligned(<span class="number">8</span>) <span class="function">class <span class="title">SampleDescriptionBox</span> <span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">32</span>) handler_type)</span> extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stsd&quot;</span>, version, <span class="number">0</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;   <span class="comment">//sample description 数目, 同时不同的 Track 有不同的 sample description</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= entry_count ; i++)&#123;</span><br><span class="line">        SampleEntry(); <span class="comment">// an instance of a class derived from SampleEntry</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> abstract <span class="token keyword">class</span> <span class="token class-name">SampleEntry</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> format<span class="token punctuation">)</span> extends <span class="token function">Box</span><span class="token punctuation">(</span>format<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> reserved <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> data_reference_index<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">BitRateBox</span> extends <span class="token function">Box</span><span class="token punctuation">(</span><span class="token string">"btrt"</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> bufferSizeDB<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> maxBitrate<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> avgBitrate<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SampleDescriptionBox</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> handler_type<span class="token punctuation">)</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stsd"</span><span class="token punctuation">,</span> version<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>   <span class="token comment">//sample description 数目, 同时不同的 Track 有不同的 sample description</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> entry_count <span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">SampleEntry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// an instance of a class derived from SampleEntry</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 01 09</code> 表示该 <code>Box</code> 长度为 <code>265</code> 字节</li>
 <li>Box type: <code>0x73 74 73 64</code> 这就是 <code>stsd</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 00 01</code> 说明下面的 <code>Sample Description Box</code> 列表数量是 <code>1</code></li>
 <li>Sample Description Box: 参见文档 ISO-IEC 14496-15 AVC file format</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="stts"><a href="#stts" class="headerlink" title="stts"></a>stts</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<h3 id="stts">stts</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>这个 Box 是 <code>Sample number</code> 和解码时间 <code>DTS</code> 之间的映射表，通过这个表格，我们可以找到任何时间的 <code>Sample</code>，但用这个表格只是能找到当前时间的 <code>Sample</code> 的序号，<code>Sample</code> 的长度和指针还要靠其它表格获取。</p>
 <p><code>Sample delta</code> 简单可以理解为采样点 <code>Sample</code> 的 <code>duration</code>，所有 <code>duration</code> 相加应该为总的 <code>Track</code> 的时长。大家把这个时间理解为该帧数据当前的解码时间即可，计算公式：</p>
-<pre><code>DT(n+1) = DT(n) + STTS(n)
-</code></pre><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203130420.png" alt="stts"></p>
+<pre><code>DT(n+1) = DT(n) + STTS(n)</code></pre>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203130420.png" alt="stts" /><figcaption aria-hidden="true">stts</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class TimeToSampleBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stts&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; entry_count; i++) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_count</span>;  <span class="comment">// 连续相同时间长度 `sample delta` 的 `sample` 个数</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_delta</span>;  <span class="comment">// 每个 `sample delta` 以 `timescale` 为单位的时间长度</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">TimeToSampleBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stts"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_count<span class="token punctuation">;</span>  <span class="token comment">// 连续相同时间长度 `sample delta` 的 `sample` 个数</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_delta<span class="token punctuation">;</span>  <span class="token comment">// 每个 `sample delta` 以 `timescale` 为单位的时间长度</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 18</code> 表示该 <code>Box</code> 长度为 <code>24</code> 字节</li>
 <li>Box type: <code>0x73 74 74 73</code> 这就是 <code>stts</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 00 01</code> 说明下面的 <code>sample conut</code> 和 <code>sample delta</code> 组成的二元组信息个数 列表数量是 <code>1</code></li>
-<li>entry 1<ul>
+<li>entry 1
+<ul>
 <li>sample conut: <code>0x00 00 01 b0</code> 值为 <code>sample delta</code> 的 <code>sample</code> 个数为 <code>432</code> 个</li>
 <li>sample delta: <code>0x00 00 02 00</code> 值为 <code>512</code>，这样我们计算出帧率就是 <code>12288/512</code> 即 <code>24fps</code>，参见 <a href="#mdhd">第四层 - mdhd</a>。</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203131946.png" alt="stts Mp4Explorer"></p>
-<h3 id="ctts"><a href="#ctts" class="headerlink" title="ctts"></a>ctts</h3><h3 id="stss"><a href="#stss" class="headerlink" title="stss"></a>stss</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203131946.png" alt="stts Mp4Explorer" /><figcaption aria-hidden="true">stts Mp4Explorer</figcaption>
+</figure>
+<h3 id="ctts">ctts</h3>
+<h3 id="stss">stss</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p><code>I</code> 帧是播放的起始位置，只有编码器拿到第一个 <code>I</code> 帧才能渲染出第一幅画面。所以后续的一些特殊随机操作，高标清切换时都需要找 <code>I</code> 帧，只有随机找到 <code>I</code> 帧才能完成这些特殊操作。</p>
 <p>其中该 <code>Box</code> 就是存储了那些 <code>Sample</code> 是 <code>I</code> 帧，很显然音频 <code>Track</code> 也是不存在这个 <code>Box</code> 的。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203132044.png" alt="stss"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203132044.png" alt="stss" /><figcaption aria-hidden="true">stss</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class SyncSampleBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stss&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;           <span class="comment">// 关键帧的 sample 个数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; entry_count; i++) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_number</span>;     <span class="comment">// 关键帧 sample 序号</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SyncSampleBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stss"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>           <span class="token comment">// 关键帧的 sample 个数</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_number<span class="token punctuation">;</span>     <span class="token comment">// 关键帧 sample 序号</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 18</code> 表示该 <code>Box</code> 长度为 <code>24</code> 字节</li>
 <li>Box type: <code>0x73 74 73 73</code> 这就是 <code>stss</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 00 02</code> 说明本文件有 <code>2</code> 个关键帧</li>
 <li>sample number 1: <code>0x00 00 00 01</code> 关键帧 <code>1</code> 的 <code>Sample</code> 序号为 <code>1</code></li>
 <li>sample number 2: <code>0x00 00 00 fb</code> 关键帧 <code>2</code> 的 <code>Sample</code> 序号为 <code>251</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="stsc"><a href="#stsc" class="headerlink" title="stsc"></a>stsc</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one</code></p>
+<h3 id="stsc">stsc</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one</code></p>
 <p>这个 <code>Box</code> 就是说明那些 <code>Sample</code> 可以划分为一个 <code>Trunk</code></p>
 <p>媒体数据被分为若干个 <code>Chunk</code>, <code>Chunk</code> 可以有不同的大小，同一个 <code>Chunk</code> 中的样点 <code>Sample</code> 也允许有不同的大小；通过本表可以定位一个样点的 <code>Chunk</code> 位置，并可以得知该 <code>MP4</code> 中有多少个 <code>Chunks</code>，每个 <code>Chunks</code> 有多少个 <code>Samples</code>。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203132226.png" alt="stsc"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203132226.png" alt="stsc" /><figcaption aria-hidden="true">stsc</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class SampleToChunkBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stsc&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= entry_count; i++) &#123;</span><br><span class="line">        <span class="comment">/* 具有相同采样点 sample 和 `sample_description_index 的 chunk 中，第一个 chunk 的索引值</span></span><br><span class="line"><span class="comment">        ** 也就是说该 chunk 索引值一直到下一个索引值之间的所有 chunk 都具有相同的 sample 个数</span></span><br><span class="line"><span class="comment">        ** 同时这些 sample 的描述 description 也一样； */</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> first_chunk</span>;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> samples_per_chunk</span>;         <span class="comment">// 上面所有 chunk 的 sample 个数</span></span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_description_index</span>;  <span class="comment">// 描述采样点的采样描述项的索引值，范围为 1 到样本描述表中的表项数目</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SampleToChunkBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stsc"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* 具有相同采样点 sample 和 `sample_description_index 的 chunk 中，第一个 chunk 的索引值
+        ** 也就是说该 chunk 索引值一直到下一个索引值之间的所有 chunk 都具有相同的 sample 个数
+        ** 同时这些 sample 的描述 description 也一样； */</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> first_chunk<span class="token punctuation">;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> samples_per_chunk<span class="token punctuation">;</span>         <span class="token comment">// 上面所有 chunk 的 sample 个数</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_description_index<span class="token punctuation">;</span>  <span class="token comment">// 描述采样点的采样描述项的索引值，范围为 1 到样本描述表中的表项数目</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 00 18</code> 表示该 <code>Box</code> 长度为 <code>24</code> 字节</li>
 <li>Box type: <code>0x73 74 73 73</code> 这就是 <code>stss</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 00 01</code> 这说明三元组信息的个数只有 <code>1</code> 个</li>
 <li>first chunk 1: <code>0x00 00 00 01</code> 具有相同 <code>Sample</code> 个数和 <code>description</code> 的 <code>Chunk</code> 起始索引是 <code>1</code></li>
 <li>samples per chunk 1: <code>0x00 00 00 01</code> 每个 <code>Chunk</code> 具有的 <code>Sample</code> 的个数是 <code>1</code></li>
 <li>sample description index 1 <code>0x00 00 00 01</code> 这些 <code>Sample</code> 的 <code>description index</code> 是 1，一般用默认值即可</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203231441.png" alt="stsc Mp4Explorer"></p>
-<h3 id="stsz"><a href="#stsz" class="headerlink" title="stsz"></a>stsz</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one variant must be present</code></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203231441.png" alt="stsc Mp4Explorer" /><figcaption aria-hidden="true">stsc Mp4Explorer</figcaption>
+</figure>
+<h3 id="stsz">stsz</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one variant must be present</code></p>
 <p>前面分析了 <code>Sample</code> 的 <code>PTS</code>、<code>DTS</code> 等，也分析了 <code>Chunk</code> 里面 <code>Sample</code> 的信息，但是没有分析 <code>Sample</code> 的大小，这是我们在文件读取和解析 <code>Sample</code> 的关键。这里给出每个 <code>Sample</code> 的 <code>Size</code> 即包含的字节数。</p>
 <p>包含了媒体中全部 <code>Sample</code> 的数目和一张给出每个 <code>Sample</code> 大小的表。这个 <code>Box</code> 相对来说体积是比较大的。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203233016.png" alt="stsz"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203233016.png" alt="stsz" /><figcaption aria-hidden="true">stsz</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class SampleSizeBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stsz&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_size</span>;   <span class="comment">// 指定默认的 Sample 大小，如果每个 Sample 大小不相等，则这个字段值为 0，每个 Sample 大小存在下表中</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> sample_count</span>;  <span class="comment">// 该 Track 中所有 Sample 的数量</span></span><br><span class="line">    <span class="keyword">if</span> (sample_size == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sample_count; i++) &#123;</span><br><span class="line">            <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_size</span>;    <span class="comment">// 每个 Sample 的大小</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">SampleSizeBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stsz"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_size<span class="token punctuation">;</span>   <span class="token comment">// 指定默认的 Sample 大小，如果每个 Sample 大小不相等，则这个字段值为 0，每个 Sample 大小存在下表中</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> sample_count<span class="token punctuation">;</span>  <span class="token comment">// 该 Track 中所有 Sample 的数量</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sample_size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> sample_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_size<span class="token punctuation">;</span>    <span class="token comment">// 每个 Sample 的大小</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 06 d4</code> 表示该 <code>Box</code> 长度为 <code>24</code> 字节</li>
 <li>Box type: <code>0x73 74 73 7a</code> 这就是 <code>stsz</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>sample size: <code>0x00 00 00 00</code> 说明 <code>Sample</code> 的具体大小在表后面项目中的 <code>entry size</code></li>
 <li>sample count: <code>0x00 00 01 b0</code> 说明本 <code>Track</code> 的大小为 <code>432</code> 个 <code>Sample</code></li>
 <li>entry size 1: <code>0x00 00 73 5f</code> 说明第一个 <code>Sample</code> 大小为 <code>29535</code> 字节</li>
@@ -880,39 +1028,58 @@
 <li>entry size 3: <code>0x00 00 1f be</code> 说明第三个 <code>Sample</code> 大小为 <code>8126</code> 字节</li>
 <li>entry size 4: <code>0x00 00 1b e2</code> 说明第四个 <code>Sample</code> 大小为 <code>7138</code> 字节</li>
 <li>entry size 5: <code>0x00 00 25 eb</code> 说明第五个 <code>Sample</code> 大小为 <code>9707</code> 字节</li>
-<li>…</li>
-</ul>
-</li>
+<li>...</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203232256.png" alt="stsz Mp4Explorer"></p>
-<h3 id="stco-co64"><a href="#stco-co64" class="headerlink" title="stco | co64"></a>stco | co64</h3><p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>)<br><code>Mandatory</code>: <code>Yes</code><br><code>Quantity</code>: <code>Exactly one variant must be present</code></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201203232256.png" alt="stsz Mp4Explorer" /><figcaption aria-hidden="true">stsz Mp4Explorer</figcaption>
+</figure>
+<h3 id="stco-co64">stco | co64</h3>
+<p><code>Container</code>: <code>Sample Table Box</code> (<code>stbl</code>) <code>Mandatory</code>: <code>Yes</code> <code>Quantity</code>: <code>Exactly one variant must be present</code></p>
 <p>该 <code>Box</code> 存储了 <code>Chunk Offset</code>，表示了每个 <code>Chunk</code> 在文件中的位置，这样我们就能找到了 <code>Chunk</code> 在文件的偏移量，然后根据其它表的关联关系就可以读取每个 <code>Sample</code> 的大小。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000004.png" alt="stco"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000004.png" alt="stco" /><figcaption aria-hidden="true">stco</figcaption>
+</figure>
 <p>使用代码描述其结构:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">aligned(<span class="number">8</span>) <span class="function">class ChunkOffsetBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;stco&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= entry_count; i++) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> chunk_offset</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aligned(<span class="number">8</span>) <span class="function">class ChunkLargeOffsetBox extends <span class="title">FullBox</span><span class="params">(<span class="string">&quot;co64&quot;</span>, version = <span class="number">0</span>, <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> entry_count</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= entry_count; i++) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> chunk_offset</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">ChunkOffsetBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"stco"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> chunk_offset<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">aligned</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token keyword">class</span> <span class="token class-name">ChunkLargeOffsetBox</span> extends <span class="token function">FullBox</span><span class="token punctuation">(</span><span class="token string">"co64"</span><span class="token punctuation">,</span> version <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span> entry_count<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> entry_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> chunk_offset<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li>Box Header<ul>
+<li>Box Header
+<ul>
 <li>Box Length: <code>0x00 00 06 d0</code> 表示该 <code>Box</code> 长度为 <code>24</code> 字节</li>
 <li>Box type: <code>0x73 74 63 6f</code> 这就是 <code>stco</code> 的 <code>ASCII</code> 值，标识了该 <code>Box</code> 的类型</li>
 <li>Box version: <code>0x00</code></li>
 <li>Box flags: <code>0x00 00 00</code></li>
-</ul>
-</li>
-<li>Box Data<ul>
+</ul></li>
+<li>Box Data
+<ul>
 <li>entry count: <code>0x00 00 01 b0</code> 说明本 <code>Track</code> 的大小为 <code>432</code> 个 <code>Sample</code></li>
 <li>chunk offset 1: <code>0x00 00 00 43</code> 说明本文件第一个 <code>Chunk</code> 的偏移量是 <code>67</code> 字节</li>
 <li>chunk offset 2: <code>0x00 00 74 a2</code> 说明本文件第二个 <code>Chunk</code> 的偏移量是 <code>29858</code> 字节</li>
 <li>chunk offset 3: <code>0x00 00 7e 35</code> 说明本文件第三个 <code>Chunk</code> 的偏移量是 <code>32309</code> 字节</li>
 <li>chunk offset 4: <code>0x00 00 a0 53</code> 说明本文件第四个 <code>Chunk</code> 的偏移量是 <code>41043</code> 字节</li>
 <li>chunk offset 5: <code>0x00 00 be 3f</code> 说明本文件第五个 <code>Chunk</code> 的偏移量是 <code>48703</code> 字节</li>
-<li>…</li>
-</ul>
-</li>
+<li>...</li>
+</ul></li>
 </ul>
 <p>通过 <code>Mp4Explorer</code> 验证分析结果:</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000821.png" alt="stco Mp4Explorer"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201204000821.png" alt="stco Mp4Explorer" /><figcaption aria-hidden="true">stco Mp4Explorer</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a href="/slave/MP4/ISO-IEC-14496-12-Base-Format-2015.pdf">ISO/IEC 14496-12</a></li>
 <li>[2] <a href="/slave/MP4/ISO-IEC-14496-14-MP4-2003.pdf">ISO/IEC 14496-14</a></li>
 </ul>
@@ -922,13 +1089,11 @@
     
     
     
-      
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -971,42 +1136,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -1014,132 +1151,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/e90af351/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/e90af351/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/e90af351/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

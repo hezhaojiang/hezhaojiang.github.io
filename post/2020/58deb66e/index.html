@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="libevent 的内存管理模块的头文件为 mm-internal.h，而相关函数的定义在文件 event_mm_malloc_ 中。 从头文件名就可以看出，同日志模块一样，libevent 的内存管理相关函数也只提供 libevent 内部使用，并不提供外部接口。 同时，也同日志模块一样，libevent 的内存管理模块也向用户提供了设置回调函数的接口，以方便用户自行实现内存管理函数。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="libevent 的内存管理模块的头文件为 mm-internal.h，而相关函数的定义在文件 event_mm_malloc_ 中。 从头文件名就可以看出，同日志模块一样，libevent 的内存管理相关函数也只提供 libevent 内部使用，并不提供外部接口。 同时，也同日志模块一样，libevent 的内存管理模块也向用户提供了设置回调函数的接口，以方便用户自行实现内存管理函数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 内存管理">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/58deb66e/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="libevent 的内存管理模块的头文件为 mm-internal.h，而相关函数的定义在文件 event_mm_malloc_ 中。 从头文件名就可以看出，同日志模块一样，libevent 的内存管理相关函数也只提供 libevent 内部使用，并不提供外部接口。 同时，也同日志模块一样，libevent 的内存管理模块也向用户提供了设置回调函数的接口，以方便用户自行实现内存管理函数。">
+<meta property="og:description" content="libevent 的内存管理模块的头文件为 mm-internal.h，而相关函数的定义在文件 event_mm_malloc_ 中。 从头文件名就可以看出，同日志模块一样，libevent 的内存管理相关函数也只提供 libevent 内部使用，并不提供外部接口。 同时，也同日志模块一样，libevent 的内存管理模块也向用户提供了设置回调函数的接口，以方便用户自行实现内存管理函数。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-21T05:37:19.000Z">
-<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/58deb66e/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 内存管理 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/58deb66e/","path":"post/2020/58deb66e/","title":"源码阅读 libevent - 内存管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 内存管理 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">内存管理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mm-malloc-amp-mm-free-amp-mm-realloc"><span class="nav-number">1.2.1.</span> <span class="nav-text">mm_malloc &amp; mm_free &amp; mm_realloc</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mm-strdup"><span class="nav-number">1.3.</span> <span class="nav-text">mm_strdup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mm-calloc"><span class="nav-number">1.4.</span> <span class="nav-text">mm_calloc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">定制内存管理函数接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">内存管理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mm_malloc-mm_free-mm_realloc"><span class="nav-number">1.2.1.</span> <span class="nav-text">mm_malloc &amp; mm_free &amp; mm_realloc</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mm_strdup"><span class="nav-number">1.3.</span> <span class="nav-text">mm_strdup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mm_calloc"><span class="nav-number">1.4.</span> <span class="nav-text">mm_calloc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">定制内存管理函数接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,27 +267,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2020/58deb66e/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 内存管理" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/58deb66e/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/58deb66e/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -372,25 +280,106 @@
         <p><code>libevent</code> 的内存管理模块的头文件为 <code>mm-internal.h</code>，而相关函数的定义在文件 <code>event_mm_malloc_</code> 中。</p>
 <p>从头文件名就可以看出，同日志模块一样，<code>libevent</code> 的内存管理相关函数也只提供 <code>libevent</code> 内部使用，并不提供外部接口。</p>
 <p>同时，也同日志模块一样，<code>libevent</code> 的内存管理模块也向用户提供了设置回调函数的接口，以方便用户自行实现内存管理函数。</p>
-<a id="more"></a>
-<h2 id="内存管理函数"><a href="#内存管理函数" class="headerlink" title="内存管理函数"></a>内存管理函数</h2><h3 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h3><p>从 <code>mm-internal.h</code> 文件中可以得到内存管理模块函数的声明：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> *<span class="title">event_mm_malloc_</span><span class="params">(<span class="keyword">size_t</span> sz)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> *<span class="title">event_mm_calloc_</span><span class="params">(<span class="keyword">size_t</span> count, <span class="keyword">size_t</span> <span class="built_in">size</span>)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">char</span> *<span class="title">event_mm_strdup_</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> *<span class="title">event_mm_realloc_</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> sz)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_mm_free_</span><span class="params">(<span class="keyword">void</span> *p)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_malloc(sz) event_mm_malloc_(sz)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_calloc(count, size) event_mm_calloc_((count), (size))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_strdup(s) event_mm_strdup_(s)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_realloc(p, sz) event_mm_realloc_((p), (sz))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_free(p) event_mm_free_(p)</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="内存管理函数">内存管理函数</h2>
+<h3 id="函数声明">函数声明</h3>
+<p>从 <code>mm-internal.h</code> 文件中可以得到内存管理模块函数的声明：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_malloc_</span><span class="token punctuation">(</span>size_t sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_calloc_</span><span class="token punctuation">(</span>size_t count<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">event_mm_strdup_</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_realloc_</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>p<span class="token punctuation">,</span> size_t sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_mm_free_</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_malloc(sz) event_mm_malloc_(sz)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_calloc(count, size) event_mm_calloc_((count), (size))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_strdup(s) event_mm_strdup_(s)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_realloc(p, sz) event_mm_realloc_((p), (sz))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_free(p) event_mm_free_(p)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意，以上声明是在 <code>libevent</code> 编译时没有使用 <code>--disable-malloc-replacement</code> 参数的声明，如果 <code>libevent</code> 编译时使用了 <code>--disable-malloc-replacement</code> 参数，即：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># disable support for replacing the memory mgt functions</span></span><br><span class="line">./configure --<span class="built_in">disable</span>-malloc-replacement</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># disable support for replacing the memory mgt functions</span>
+./configure --disable-malloc-replacement<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>则 <code>libevent</code> 的内存管理函数使用系统的内存管理函数，即：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_malloc(sz) malloc(sz)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_calloc(n, sz) calloc((n), (sz))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_strdup(s) strdup(s)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_realloc(p, sz) realloc((p), (sz))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_free(p) free(p)</span></span><br></pre></td></tr></table></figure>
-<h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><h4 id="mm-malloc-amp-mm-free-amp-mm-realloc"><a href="#mm-malloc-amp-mm-free-amp-mm-realloc" class="headerlink" title="mm_malloc &amp; mm_free &amp; mm_realloc"></a>mm_malloc &amp; mm_free &amp; mm_realloc</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_malloc(sz) event_mm_malloc_(sz)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_free(p) event_mm_free_(p)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mm_realloc(p, sz) event_mm_realloc_((p), (sz))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">event_mm_malloc_</span><span class="params">(<span class="keyword">size_t</span> sz)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sz == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (mm_malloc_fn_) <span class="keyword">return</span> mm_malloc_fn_(sz);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">malloc</span>(sz);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_mm_free_</span><span class="params">(<span class="keyword">void</span> *ptr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mm_free_fn_) mm_free_fn_(ptr);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">free</span>(ptr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">event_mm_realloc_</span><span class="params">(<span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> sz)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mm_realloc_fn_) <span class="keyword">return</span> mm_realloc_fn_(ptr, sz);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">realloc</span>(ptr, sz);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> mm_malloc(sz) malloc(sz)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_calloc(n, sz) calloc((n), (sz))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_strdup(s) strdup(s)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_realloc(p, sz) realloc((p), (sz))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_free(p) free(p)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="函数定义">函数定义</h3>
+<h4 id="mm_malloc-mm_free-mm_realloc">mm_malloc &amp; mm_free &amp; mm_realloc</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> mm_malloc(sz) event_mm_malloc_(sz)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_free(p) event_mm_free_(p)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> mm_realloc(p, sz) event_mm_realloc_((p), (sz))</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_malloc_</span><span class="token punctuation">(</span>size_t sz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sz <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm_malloc_fn_<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">mm_malloc_fn_</span><span class="token punctuation">(</span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">malloc</span><span class="token punctuation">(</span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">event_mm_free_</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm_free_fn_<span class="token punctuation">)</span> <span class="token function">mm_free_fn_</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_realloc_</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span> size_t sz<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm_realloc_fn_<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">mm_realloc_fn_</span><span class="token punctuation">(</span>ptr<span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">realloc</span><span class="token punctuation">(</span>ptr<span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>mm_malloc</code> &amp; <code>mm_free</code> &amp; <code>mm_realloc</code> 的实现最为简单，实现方式是有回调函数调用回调函数，没有回调函数直接调用系统函数。</p>
-<h3 id="mm-strdup"><a href="#mm-strdup" class="headerlink" title="mm_strdup"></a>mm_strdup</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">event_mm_strdup_</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!str) &#123;</span><br><span class="line">        errno = EINVAL;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mm_malloc_fn_) &#123;</span><br><span class="line">        <span class="keyword">size_t</span> ln = <span class="built_in">strlen</span>(str);</span><br><span class="line">        <span class="keyword">void</span> *p = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span> (ln == EV_SIZE_MAX) <span class="keyword">goto</span> error;</span><br><span class="line">        p = mm_malloc_fn_(ln+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (p) <span class="keyword">return</span> <span class="built_in">memcpy</span>(p, str, ln+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> strdup(str);</span><br><span class="line">error:</span><br><span class="line">    errno = ENOMEM;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="mm_strdup">mm_strdup</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">event_mm_strdup_</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        errno <span class="token operator">=</span> EINVAL<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm_malloc_fn_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        size_t ln <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ln <span class="token operator">==</span> EV_SIZE_MAX<span class="token punctuation">)</span> <span class="token keyword">goto</span> error<span class="token punctuation">;</span>
+        p <span class="token operator">=</span> <span class="token function">mm_malloc_fn_</span><span class="token punctuation">(</span>ln<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">memcpy</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> str<span class="token punctuation">,</span> ln<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">strdup</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+error<span class="token operator">:</span>
+    errno <span class="token operator">=</span> ENOMEM<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>strdup</code> 的功能：<code>strdup</code> 是指新开辟一段空间，并将传入的字符串复制到新开辟的空间中，并返回这段空间的指针。</p>
 <p>该函数的实现在 <code>_mm_malloc_fn</code> 为空的情形下调用系统函数 <code>strdup()</code> 来实现 <code>strdup</code> 功能。</p>
 <p>而在 <code>_mm_malloc_fn</code> 不为空时的实现的方法是：先获取字符串长度，再加上一个终止符作为总长度，开辟该长度的空间，并取得指向该空间的指针，然后将字符串复制到这段空间。</p>
-<h3 id="mm-calloc"><a href="#mm-calloc" class="headerlink" title="mm_calloc"></a>mm_calloc</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">event_mm_calloc_</span><span class="params">(<span class="keyword">size_t</span> count, <span class="keyword">size_t</span> <span class="built_in">size</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span> || <span class="built_in">size</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mm_malloc_fn_) &#123;</span><br><span class="line">        <span class="keyword">size_t</span> sz = count * <span class="built_in">size</span>;</span><br><span class="line">        <span class="keyword">void</span> *p = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span> (count&gt; EV_SIZE_MAX / <span class="built_in">size</span>) <span class="keyword">goto</span> error;</span><br><span class="line">        p = mm_malloc_fn_(sz);</span><br><span class="line">        <span class="keyword">if</span> (p) <span class="keyword">return</span> <span class="built_in">memset</span>(p, <span class="number">0</span>, sz);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> *p = <span class="built_in">calloc</span>(count, <span class="built_in">size</span>);</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">error:</span><br><span class="line">    errno = ENOMEM;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="mm_calloc">mm_calloc</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">event_mm_calloc_</span><span class="token punctuation">(</span>size_t count<span class="token punctuation">,</span> size_t size<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>mm_malloc_fn_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        size_t sz <span class="token operator">=</span> count <span class="token operator">*</span> size<span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>count<span class="token operator">></span> EV_SIZE_MAX <span class="token operator">/</span> size<span class="token punctuation">)</span> <span class="token keyword">goto</span> error<span class="token punctuation">;</span>
+        p <span class="token operator">=</span> <span class="token function">mm_malloc_fn_</span><span class="token punctuation">(</span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">memset</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">calloc</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+error<span class="token operator">:</span>
+    errno <span class="token operator">=</span> ENOMEM<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>calloc</code> 功能：<code>calloc</code> 和 <code>malloc</code> 函数相似，都是开辟一段连续的空间，不同点在于 <code>calloc</code> 函数需要传入 <code>count</code> 和 <code>size</code> 两个参数，用来开辟 <code>count</code> 个大小为 <code>size</code> 的连续空间 (总大小为 <code>count*size</code>)，并且为这些空间全部赋值为 <code>0</code>。然后返回指向这段空间的泛型指针。</p>
 <p>该函数的实现在 <code>_mm_malloc_fn</code> 为空的情形下调用系统函数 <code>calloc()</code> 来实现 <code>calloc</code> 功能。</p>
 <p>而在 <code>_mm_malloc_fn</code> 不为空时的实现的方法是：先计算开辟空间总大小 <code>sz</code>，然后调用 <code>_mm_malloc_fn</code> 所指向的函数，而调用的函数也应当实现 <code>malloc</code> 的效果，开辟一段空间，然后再用 <code>memset</code> 对这段空间初始化为 <code>0</code>，并返回指向这段空间的泛型指针。</p>
-<h2 id="定制内存管理函数接口"><a href="#定制内存管理函数接口" class="headerlink" title="定制内存管理函数接口"></a>定制内存管理函数接口</h2><p><code>libevent</code> 库提供了修改 <code>mm_malloc</code> &amp; <code>mm_free</code> &amp; <code>mm_realloc</code> 内存管理方式的函数 <code>event_set_mem_functions</code>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_set_mem_functions</span><span class="params">(<span class="keyword">void</span> *(*malloc_fn)(<span class="keyword">size_t</span> sz),</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">void</span> *(*realloc_fn)(<span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> sz),</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">void</span> (*free_fn)(<span class="keyword">void</span> *ptr))</span> </span>&#123;</span><br><span class="line">    mm_malloc_fn_ = malloc_fn;</span><br><span class="line">    mm_realloc_fn_ = realloc_fn;</span><br><span class="line">    mm_free_fn_ = free_fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="定制内存管理函数接口">定制内存管理函数接口</h2>
+<p><code>libevent</code> 库提供了修改 <code>mm_malloc</code> &amp; <code>mm_free</code> &amp; <code>mm_realloc</code> 内存管理方式的函数 <code>event_set_mem_functions</code>：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">event_set_mem_functions</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>malloc_fn<span class="token punctuation">)</span><span class="token punctuation">(</span>size_t sz<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>realloc_fn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span> size_t sz<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>free_fn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    mm_malloc_fn_ <span class="token operator">=</span> malloc_fn<span class="token punctuation">;</span>
+    mm_realloc_fn_ <span class="token operator">=</span> realloc_fn<span class="token punctuation">;</span>
+    mm_free_fn_ <span class="token operator">=</span> free_fn<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>event_set_mem_functions</code> 的声明位于文件 <code>event.h</code>，故可以被用户调用。</p>
 <p>通过 <code>event_set_mem_functions</code> 函数，设置 <code>mm_malloc_fn_</code>，<code>mm_realloc_fn_</code>，<code>mm_free_fn_</code>，后，可以由用户自行对内存使用进行管理，比如使用内存池等。</p>
 <p>在自行定制内存管理函数时应当注意以下问题：</p>
@@ -402,9 +391,10 @@
 <li>如果在多个线程中使用 <code>libevent</code>，替代的内存管理函数需要是线程安全的</li>
 <li>如果要释放由 <code>libevent</code> 函数分配的内存，并且已经定制了 <code>malloc</code> 和 <code>realloc</code> 函数，那么就应该使用定制的 <code>free</code> 函数释放。否则将会 <code>C</code> 语言标准库的 <code>free</code> 函数释放定制内存分配函数分配的内存，这将发生错误。所以三者要么全部不定制，要么全部定制。</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/luotuo44/article/details/38334979">Libevent 源码分析 - 内存分配_luotuo44 的专栏 - CSDN 博客</a></li>
-<li>[2] <a target="_blank" rel="noopener" href="http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html">http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html</a></li>
+<li>[2] <a target="_blank" rel="noopener" href="http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html" class="uri">http://www.wangafu.net/~nickm/libevent-book/Ref1_libsetup.html</a></li>
 </ul>
 
     </div>
@@ -412,31 +402,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\a867e274\" rel="bookmark">源码阅读 libevent - 初识 Hello World</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -479,42 +449,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -522,132 +464,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/58deb66e/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/58deb66e/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/58deb66e/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

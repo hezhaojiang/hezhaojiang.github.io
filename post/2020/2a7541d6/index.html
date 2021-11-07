@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-2-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-2-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法 - 动态规划（状态压缩）">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/2a7541d6/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-2-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<meta property="og:description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-2-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-04T18:48:06.000Z">
-<meta property="article:modified_time" content="2021-02-09T11:39:14.877Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/2a7541d6/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据结构与算法 - 动态规划（状态压缩） | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/2a7541d6/","path":"post/2020/2a7541d6/","title":"数据结构与算法 - 动态规划（状态压缩）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法 - 动态规划（状态压缩） | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">状态表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">旅行商问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">状态压缩的做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">状态压缩动态规划练习题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">状态表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">旅行商问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">状态压缩的做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">状态压缩动态规划练习题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:39:14" itemprop="dateModified" datetime="2021-02-09T19:39:14+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/2a7541d6/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 动态规划（状态压缩）" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/2a7541d6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/2a7541d6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -369,75 +277,90 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <div class="note success"><h2 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h2><ul>
+        <div class="note success"><h2 id="转载说明">转载说明</h2>
+<ul>
 <li>作者：力扣 (LeetCode)</li>
-<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-2-plus/">https://leetcode-cn.com/leetbook/read/dynamic-programming-2-plus/</a></li>
+<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-2-plus/" class="uri">https://leetcode-cn.com/leetbook/read/dynamic-programming-2-plus/</a></li>
 <li>来源：力扣（LeetCode）</li>
 <li>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </div>
-<a id="more"></a>
-<h2 id="状态表示"><a href="#状态表示" class="headerlink" title="状态表示"></a>状态表示</h2><p>状态压缩动态规划，是利用计算机 二进制 的性质来描述状态的一种动态规划方式。</p>
+<span id="more"></span>
+<h2 id="状态表示">状态表示</h2>
+<p>状态压缩动态规划，是利用计算机 二进制 的性质来描述状态的一种动态规划方式。</p>
 <p>例如：有一个大小为 n*n 的格子，我们可以在任意处放置物品，现在来描述一下某一行的某种状态：</p>
 <p>设 n = 9；</p>
 <p>有 9 位二进制数 101011011，每一位表示该格子是否被放置物品，1 表示放置了，0 表示没放置，这样一种状态就被我们表示出来了：</p>
 <pre><code>列 数   1   2   3   4   5   6   7   8   9
 二进制  1   0   1   0   1   1   0   1   1
-是否用  √   ×   √   ×   √   √   ×   √   √
-</code></pre><p>对于一行的状态，一共有 <code>1 &lt;&lt; n</code> 种。</p>
-<p>现在我们得到了表示状态的方法，这里状态为集合中的各个元素选择情况，用二进制枚举了全部的状态，共 $2^{n}$。</p>
-<p>状压其实是一种很暴力的算法，因为他需要遍历每个状态，所以将会出现 $2^{n}$ 个状态数量，n 一般需要小于等于 20 才可以考虑。</p>
+是否用  √   ×   √   ×   √   √   ×   √   √</code></pre>
+<p>对于一行的状态，一共有 <code>1 &lt;&lt; n</code> 种。</p>
+<p>现在我们得到了表示状态的方法，这里状态为集合中的各个元素选择情况，用二进制枚举了全部的状态，共 <span class="math inline">\(2^{n}\)</span>。</p>
+<p>状压其实是一种很暴力的算法，因为他需要遍历每个状态，所以将会出现 <span class="math inline">\(2^{n}\)</span> 个状态数量，n 一般需要小于等于 20 才可以考虑。</p>
 <p>不过有时可以先排除不合法的方案，使一行的总方案数大大减少从而使得用二进制枚举所有状态成为可能。</p>
-<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p>状态压缩动态规划中，状态是集合，对状态进行操作或访问也就是要对集合进行操作和访问。</p>
+<h2 id="位运算">位运算</h2>
+<p>状态压缩动态规划中，状态是集合，对状态进行操作或访问也就是要对集合进行操作和访问。</p>
 <p>为了更好的理解状压 dp，首先介绍位运算相关的知识。</p>
 <p>与位运算相关的运算符共有 6 种，&amp;，|，^，~，&gt;&gt;，&lt;&lt;</p>
-<ol>
+<ol type="1">
 <li>&amp; 符号，x &amp; y ，会将两个十进制数在二进制下进行与运算，然后返回其十进制下的值。</li>
-<li>| 符号，x | y ，会将两个十进制数在二进制下进行或运算，然后返回其十进制下的值。</li>
+<li><div class="line-block">符号，x | y ，会将两个十进制数在二进制下进行或运算，然后返回其十进制下的值。</div></li>
 <li>^ 符号，x ^ y ，会将两个十进制数在二进制下进行异或运算，然后返回其十进制下的值。</li>
 <li>&lt;&lt; 符号，x &lt;&lt; y 左移操作，将 x 在二进制下的每一位向左移动 y 位，最右边用 0 填充。</li>
-<li>>&gt; 符号，x &gt;&gt; y 右移操作，将 x 在二进制下的每一位向右移动 y 位，最左边用 0 填充。</li>
+<li>&gt;&gt; 符号，x &gt;&gt; y 右移操作，将 x 在二进制下的每一位向右移动 y 位，最左边用 0 填充。</li>
 <li>~ 符号，~x ，按位取反操作，将 x 在二进制下的每一位取反，返回其十进制下的值</li>
 </ol>
 <p>用位运算可以表示集合的常见操作，如下，其中 A,B 表示两个集合，c 表示某个元素。</p>
 <ul>
-<li>c 插入 A ：A |= (1 &lt;&lt; c)</li>
-<li>A 删除 c ：A &amp;= ~(1 &lt;&lt; c)</li>
-<li>A 置空 ：A = 0</li>
-<li>并集 ：A | B</li>
-<li>交集 ：A &amp; B</li>
-<li>全集 ：(1 &lt;&lt; n) - 1</li>
-<li>补集 ：((1 &lt;&lt; n) - 1) ^ A</li>
-<li>子集 ：(A &amp; B) == B</li>
-<li>判断是否是 2 的幂 ：A &amp; (A - 1) == 0</li>
-<li>最低位的 1 变为 0 ：n &amp;= (n - 1)</li>
-<li>最低位的 1：A &amp; (-A)，最低位的 1 一般记为 lowbit(A)，表示 A 的二进制表达式中最低位的 1 所对应的值。</li>
+<li><p>c 插入 A ：A |= (1 &lt;&lt; c)</p></li>
+<li><p>A 删除 c ：A &amp;= ~(1 &lt;&lt; c)</p></li>
+<li><p>A 置空 ：A = 0</p></li>
+<li><p>并集 ：A | B</p></li>
+<li><p>交集 ：A &amp; B</p></li>
+<li><p>全集 ：(1 &lt;&lt; n) - 1</p></li>
+<li><p>补集 ：((1 &lt;&lt; n) - 1) ^ A</p></li>
+<li><p>子集 ：(A &amp; B) == B</p></li>
+<li><p>判断是否是 2 的幂 ：A &amp; (A - 1) == 0</p></li>
+<li><p>最低位的 1 变为 0 ：n &amp;= (n - 1)</p></li>
+<li><p>最低位的 1：A &amp; (-A)，最低位的 1 一般记为 lowbit(A)，表示 A 的二进制表达式中最低位的 1 所对应的值。</p></li>
 <li><p>最高位的 1：</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> p = lowbit(A)</span><br><span class="line"><span class="keyword">while</span>(p != A)</span><br><span class="line">&#123;</span><br><span class="line">    A -= p;</span><br><span class="line">    p = lowbit(A);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> p;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> p <span class="token operator">=</span> <span class="token function">lowbit</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!=</span> A<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    A <span class="token operator">-=</span> p<span class="token punctuation">;</span>
+    p <span class="token operator">=</span> <span class="token function">lowbit</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> p<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>枚举 A 的子集：</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(subset = (A - <span class="number">1</span>) &amp; A; subset != A; subset = (subset - <span class="number">1</span>) &amp; A)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span>subset <span class="token operator">=</span> <span class="token punctuation">(</span>A <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> A<span class="token punctuation">;</span> subset <span class="token operator">!=</span> A<span class="token punctuation">;</span> subset <span class="token operator">=</span> <span class="token punctuation">(</span>subset <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> A<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>枚举全集的子集：</p>
-  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> n<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 </ul>
-<h2 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h2><p>旅行商问题是状态压缩动态规划的经典问题，它的问题描述如下：</p>
+<h2 id="旅行商问题">旅行商问题</h2>
+<p>旅行商问题是状态压缩动态规划的经典问题，它的问题描述如下：</p>
 <blockquote>
 <p>一个商人想要旅行各地并进行贸易。各地之间有若干条单向的通道相连，商人从一个地方出发，想要用最短的路程把所有地区环游一遍，请问环游需要的最短路程是多少？</p>
 </blockquote>
 <p>如果在极端情况下也就是所有点之间都有连线的时候，对于每一个点来说，它可以选择的下一个位置一共有 <code>n-1</code> 种。那么一共可以选择的路线总共有 <code>n!</code> 种。</p>
-<h2 id="状态压缩的做法"><a href="#状态压缩的做法" class="headerlink" title="状态压缩的做法"></a>状态压缩的做法</h2><p>要用动态规划的思路来解决这个问题，就要考虑状态定义和状态转移。</p>
+<h2 id="状态压缩的做法">状态压缩的做法</h2>
+<p>要用动态规划的思路来解决这个问题，就要考虑状态定义和状态转移。</p>
 <p>利用二进制可以用一个整数来表示一个集合的状态，我们很容易会把这个状态当成是动态规划当中的状态，但在这里是不全面的。单纯集合之间的转移没有限制条件，比如有 5 个球，已经拿了 1 号球和 2 号球，后面只要是剩下的球都可以拿，但是对于旅行商问题，有 5 个地方，我们已经去过了 1 和 2 两个地方，我们当前在位置 1，我们只能选与 1 相邻的地方来更新状态，也就是说状态转移是有限制的。</p>
 <p>为了保证地点之间的移动顺序正确，我们还需要加上一维，也就是当前所处的位置。所以真正的状态是我们之前遍历过的位置的状态，加上当前所处的地点，这两者的结合。</p>
 <pre><code>状态定义
 dp[s][i] := 已经选过 s 这些点，最后一个点是 i
 
 状态转移
-dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这里 j 可能已经在 s 中了
-</code></pre><p>状态压缩动态规划的变化不多，以上 TSP 问题的分析过程和做法基本就是状态压缩动态规划的分析过程和做法了。</p>
+dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这里 j 可能已经在 s 中了</code></pre>
+<p>状态压缩动态规划的变化不多，以上 TSP 问题的分析过程和做法基本就是状态压缩动态规划的分析过程和做法了。</p>
 <p>状态压缩动态规划主要的难点是想到用状态压缩动态规划做，下一节有 12 道练习题，通过这些题的练习，我们可以大致了解状态压缩动态规划的常见问题和问法。</p>
-<h2 id="状态压缩动态规划练习题"><a href="#状态压缩动态规划练习题" class="headerlink" title="状态压缩动态规划练习题"></a>状态压缩动态规划练习题</h2><p>以下 12 道题是力扣上的状态压缩的习题，涵盖了状态压缩动态规划的常见套路。</p>
+<h2 id="状态压缩动态规划练习题">状态压缩动态规划练习题</h2>
+<p>以下 12 道题是力扣上的状态压缩的习题，涵盖了状态压缩动态规划的常见套路。</p>
 <ul>
 <li>安卓系统手势解锁</li>
 <li>我能赢吗</li>
@@ -452,7 +375,8 @@ dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这�
 <li>贴纸拼词</li>
 <li>按位与为零的三元组</li>
 </ul>
-<h2 id="推荐阅读顺序"><a href="#推荐阅读顺序" class="headerlink" title="推荐阅读顺序"></a>推荐阅读顺序</h2><ol>
+<h2 id="推荐阅读顺序">推荐阅读顺序</h2>
+<ol type="1">
 <li><a href="/post/2020/aecf6ec6/" title="数据结构与算法 - 动态规划（简介）">数据结构与算法 - 动态规划（简介）</a></li>
 <li><a href="/post/2020/610682be/" title="数据结构与算法 - 动态规划（线性动态规划）">数据结构与算法 - 动态规划（线性动态规划）</a></li>
 <li><a href="/post/2020/9158b835/" title="数据结构与算法 - 动态规划（前缀和）">数据结构与算法 - 动态规划（前缀和）</a></li>
@@ -461,8 +385,7 @@ dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这�
 <li><a href="/post/2020/2a7541d6/" title="数据结构与算法 - 动态规划（状态压缩）">数据结构与算法 - 动态规划（状态压缩）</a></li>
 <li><a href="/post/2020/8ed94cfd/" title="数据结构与算法 - 动态规划（计数问题）">数据结构与算法 - 动态规划（计数问题）</a></li>
 <li><a href="/post/2020/41da3a83/" title="数据结构与算法 - 矩阵快速幂">数据结构与算法 - 矩阵快速幂</a></li>
-<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a>
-</li>
+<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a></li>
 </ol>
 
     </div>
@@ -470,31 +393,11 @@ dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这�
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\9158b835\" rel="bookmark">数据结构与算法 - 动态规划（前缀和）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\cb02a3b0\" rel="bookmark">数据结构与算法 - 动态规划（区间动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\16341583\" rel="bookmark">数据结构与算法 - 动态规划（数位动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\610682be\" rel="bookmark">数据结构与算法 - 动态规划（线性动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\2cea0e37\" rel="bookmark">数据结构与算法 - 动态规划（背包问题）</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -537,42 +440,14 @@ dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这�
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -580,176 +455,52 @@ dp[s][i] = dp[s | (1 &lt;&lt; j)][j] + w[i][j]; 从 i 点转移到 j 点，这�
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/2a7541d6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/2a7541d6/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/2a7541d6/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

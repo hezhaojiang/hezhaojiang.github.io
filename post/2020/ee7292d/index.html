@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,25 +16,23 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="libevent 源码中有一个 queue.h 文件，该文件里面定义了 5 种数据结构：  SLIST - 单向链表 LIST - 双向链表 SIMPLEQ - 简单队列 TAILQ - 尾队列 CIRCLEQ - 环形队列  其中 SLIST&#x2F;SIMPLEQ&#x2F;CIRCLEQ 在 libevent 源码中没有被使用，所以本系列文章针对 LIST&#x2F;TAILQ 进行一下分析。 本文分析的数据结构为 L">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="libevent 源码中有一个 queue.h 文件，该文件里面定义了 5 种数据结构：  SLIST - 单向链表 LIST - 双向链表 SIMPLEQ - 简单队列 TAILQ - 尾队列 CIRCLEQ - 环形队列  其中 SLIST&#x2F;SIMPLEQ&#x2F;CIRCLEQ 在 libevent 源码中没有被使用，所以本系列文章针对 LIST&#x2F;TAILQ 进行一下分析。 本文分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 数据结构：双向链表">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/ee7292d/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="libevent 源码中有一个 queue.h 文件，该文件里面定义了 5 种数据结构：  SLIST - 单向链表 LIST - 双向链表 SIMPLEQ - 简单队列 TAILQ - 尾队列 CIRCLEQ - 环形队列  其中 SLIST&#x2F;SIMPLEQ&#x2F;CIRCLEQ 在 libevent 源码中没有被使用，所以本系列文章针对 LIST&#x2F;TAILQ 进行一下分析。 本文分析的数据结构为 L">
+<meta property="og:description" content="libevent 源码中有一个 queue.h 文件，该文件里面定义了 5 种数据结构：  SLIST - 单向链表 LIST - 双向链表 SIMPLEQ - 简单队列 TAILQ - 尾队列 CIRCLEQ - 环形队列  其中 SLIST&#x2F;SIMPLEQ&#x2F;CIRCLEQ 在 libevent 源码中没有被使用，所以本系列文章针对 LIST&#x2F;TAILQ 进行一下分析。 本文分">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201025200734.jpg">
 <meta property="article:published_time" content="2020-10-25T00:27:29.000Z">
-<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/ee7292d/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 数据结构：双向链表 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/ee7292d/","path":"post/2020/ee7292d/","title":"源码阅读 libevent - 数据结构：双向链表"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 数据结构：双向链表 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">双向链表的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E5%AE%8F"><span class="nav-number">1.1.</span> <span class="nav-text">双向链表的定义宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E5%AE%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">双向链表的定义宏的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">2.</span> <span class="nav-text">双向链表的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%8F"><span class="nav-number">2.1.</span> <span class="nav-text">双向链表的访问宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">双向链表的访问宏的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">双向链表的访问过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">2.3.1.</span> <span class="nav-text">双向链表的遍历</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">双向链表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%8F"><span class="nav-number">3.1.1.</span> <span class="nav-text">初始化宏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">初始化过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">头插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.3.1.</span> <span class="nav-text">头插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.3.2.</span> <span class="nav-text">头插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">前插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.4.1.</span> <span class="nav-text">前插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.4.2.</span> <span class="nav-text">前插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95"><span class="nav-number">3.5.</span> <span class="nav-text">后插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.5.1.</span> <span class="nav-text">后插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.5.2.</span> <span class="nav-text">后插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="nav-number">3.6.</span> <span class="nav-text">删除节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9%E5%AE%8F"><span class="nav-number">3.6.1.</span> <span class="nav-text">删除节点宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.6.2.</span> <span class="nav-text">删除节点步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9"><span class="nav-number">3.7.</span> <span class="nav-text">替换节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9%E5%AE%8F"><span class="nav-number">3.7.1.</span> <span class="nav-text">替换节点宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.7.2.</span> <span class="nav-text">替换节点步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">拓展问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1"><span class="nav-number">4.1.</span> <span class="nav-text">Q1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">双向链表的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E5%AE%8F"><span class="nav-number">1.1.</span> <span class="nav-text">双向链表的定义宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E5%AE%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">双向链表的定义宏的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">2.</span> <span class="nav-text">双向链表的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%8F"><span class="nav-number">2.1.</span> <span class="nav-text">双向链表的访问宏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E5%AE%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">双向链表的访问宏的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E8%AE%BF%E9%97%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">双向链表的访问过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">2.3.1.</span> <span class="nav-text">双向链表的遍历</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">双向链表操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%8F"><span class="nav-number">3.1.1.</span> <span class="nav-text">初始化宏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">初始化过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">头插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.3.1.</span> <span class="nav-text">头插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.3.2.</span> <span class="nav-text">头插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">前插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.4.1.</span> <span class="nav-text">前插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.4.2.</span> <span class="nav-text">前插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95"><span class="nav-number">3.5.</span> <span class="nav-text">后插法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95%E5%AE%8F"><span class="nav-number">3.5.1.</span> <span class="nav-text">后插法宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%8F%92%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.5.2.</span> <span class="nav-text">后插法步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="nav-number">3.6.</span> <span class="nav-text">删除节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9%E5%AE%8F"><span class="nav-number">3.6.1.</span> <span class="nav-text">删除节点宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.6.2.</span> <span class="nav-text">删除节点步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9"><span class="nav-number">3.7.</span> <span class="nav-text">替换节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9%E5%AE%8F"><span class="nav-number">3.7.1.</span> <span class="nav-text">替换节点宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%8A%82%E7%82%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.7.2.</span> <span class="nav-text">替换节点步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">拓展问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q1"><span class="nav-number">4.1.</span> <span class="nav-text">Q1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -328,7 +257,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -340,27 +269,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2020/ee7292d/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 数据结构：双向链表" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/ee7292d/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/ee7292d/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -381,29 +289,88 @@
 </ul>
 <p>其中 <code>SLIST</code>/<code>SIMPLEQ</code>/<code>CIRCLEQ</code> 在 <code>libevent</code> 源码中没有被使用，所以本系列文章针对 <code>LIST</code>/<code>TAILQ</code> 进行一下分析。</p>
 <p>本文分析的数据结构为 <code>LIST</code> 双向链表。</p>
-<a id="more"></a>
+<span id="more"></span>
 <blockquote>
 <p>数据结构 <code>TAILQ</code> 尾队列的分析详见：<a href="/post/2020/e6338d04/" title="源码阅读 libevent - 数据结构：尾队列">源码阅读 libevent - 数据结构：尾队列</a></p>
 </blockquote>
 <p>libevent 中，5 种数据结构的各类操作均通过宏定义实现，且所有宏定义按功能分成了三部分：</p>
-<ol>
+<ol type="1">
 <li>数据结构定义宏</li>
 <li>数据结构访问宏</li>
 <li>数据结构操作宏</li>
 </ol>
-<h2 id="双向链表的定义"><a href="#双向链表的定义" class="headerlink" title="双向链表的定义"></a>双向链表的定义</h2><h3 id="双向链表的定义宏"><a href="#双向链表的定义宏" class="headerlink" title="双向链表的定义宏"></a>双向链表的定义宏</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_HEAD(name, type)                       \</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">name</span> &#123;</span>                                       \</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">type</span> *<span class="title">lh_first</span>;</span>  <span class="comment">/* first element */</span>     \</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_ENTRY(type)                            \</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span>                                            \</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">type</span> *<span class="title">le_next</span>;</span>   <span class="comment">/* next element */</span>      \</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">type</span> **<span class="title">le_prev</span>;</span>  <span class="comment">/* address of previous next element */</span>      \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="双向链表的定义宏的作用"><a href="#双向链表的定义宏的作用" class="headerlink" title="双向链表的定义宏的作用"></a>双向链表的定义宏的作用</h3><p>先来猜测一下这两个宏定义的作用。在宏定义 <code>LIST_HEAD</code> 下的结构体中，只包含了一个结构体成员 <code>lh_first</code>，从成员名就能推测，<code>lh_first</code> 应当是和链表第一个元素有关。再来看宏定义 <code>LIST_ENTRY</code>，其中也包含了两个结构体成员 <code>le_next</code> 和 <code>le_prev</code>，从变量名就会发现，二者应当与前后元素相关。因此，就可以推断，宏定义中所需输入的参数 <code>type</code> 实际上就是节点类型，这个节点类型应该包含但不限于 <code>LIST_ENTRY</code> 所定义的结构，而 <code>LIST_HEAD</code> 则是对于整个双向链表而言的，用于找到首节点元素，因此 <code>LIST_HEAD</code> 中的 <code>type</code> 也应该是与 <code>LIST_ENTRY</code> 中相同的节点类型。</p>
+<h2 id="双向链表的定义">双向链表的定义</h2>
+<h3 id="双向链表的定义宏">双向链表的定义宏</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_HEAD(name, type)                       \
+struct name &#123;                                       \
+    struct type *lh_first;  </span><span class="token comment">/* first element */</span>     \
+<span class="token punctuation">&#125;</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> LIST_ENTRY(type)                            \
+struct &#123;                                            \
+    struct type *le_next;   </span><span class="token comment">/* next element */</span>      \
+    <span class="token keyword">struct</span> <span class="token class-name">type</span> <span class="token operator">*</span><span class="token operator">*</span>le_prev<span class="token punctuation">;</span>  <span class="token comment">/* address of previous next element */</span>      \
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="双向链表的定义宏的作用">双向链表的定义宏的作用</h3>
+<p>先来猜测一下这两个宏定义的作用。在宏定义 <code>LIST_HEAD</code> 下的结构体中，只包含了一个结构体成员 <code>lh_first</code>，从成员名就能推测，<code>lh_first</code> 应当是和链表第一个元素有关。再来看宏定义 <code>LIST_ENTRY</code>，其中也包含了两个结构体成员 <code>le_next</code> 和 <code>le_prev</code>，从变量名就会发现，二者应当与前后元素相关。因此，就可以推断，宏定义中所需输入的参数 <code>type</code> 实际上就是节点类型，这个节点类型应该包含但不限于 <code>LIST_ENTRY</code> 所定义的结构，而 <code>LIST_HEAD</code> 则是对于整个双向链表而言的，用于找到首节点元素，因此 <code>LIST_HEAD</code> 中的 <code>type</code> 也应该是与 <code>LIST_ENTRY</code> 中相同的节点类型。</p>
 <p>那么这里为什么 <code>LIST_HEAD</code> 还需要一个参数 <code>name</code> 呢？前面说了，<code>LIST_ENTRY</code> 应当包含在节点类型的定义中，节点类型一旦定义好了并定义了一个节点，那么自然而然 <code>le_next</code> 和 <code>le_prev</code> 就都包含在该节点中了，此时 <code>LIST_ENTRY</code> 结构体作为一个匿名结构体即可，因此无需指定 <code>name</code> 来定义 <code>LIST_ENTRY</code> 结构体的名称；而对于 <code>LIST_HEAD</code> 来说，它是独立的数据类型，用来描述了双向链表的首尾节点，需要用 <code>LIST_HEAD</code> 来定义一个具体的结构体来存放首尾节点指针，因此这里必须指明结构体名 <code>name</code>。</p>
 <p>根据前面的推测，现在来正式分析一下 <code>LIST_HEAD</code> 与 <code>LIST_ENTRY</code> 中各成员的含义。</p>
 <p>对于 <code>LIST_HEAD</code> 宏定义，其中的 <code>lh_first</code> 为一级指针，也就是说，<code>lh_first</code> 指向一个 <code>struct type</code> 类型的节点。<code>TAILQ_ENTRY</code> 中的 le_next 也是类似，<code>le_prev</code> 则是指向一个指向一个 <code>struct type</code> 类型的节点的指针。</p>
 <p>我们可以写一个测试程序来看看该双向链表的结构：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;queue.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    LIST_ENTRY(Node) node;</span><br><span class="line">&#125; Node;</span><br><span class="line">LIST_HEAD(Head, Node);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Head</span> <span class="title">listHead</span>;</span></span><br><span class="line">    LIST_INIT(&amp;listHead);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        Node* new_item = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">        new_item-&gt;val = i;</span><br><span class="line">        LIST_INSERT_HEAD(&amp;listHead, new_item, node); <span class="comment">// 头插法插入新节点</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node* p;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;[HEAD] %20p [HEAD ADDR] %20p\n\n&quot;</span>,listHead.lh_first, &amp;listHead);</span><br><span class="line">    LIST_FOREACH(p, &amp;listHead, node) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[NODE] %20d [NODE ADDR] %20p\n&quot;</span>, p-&gt;val, p);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[NEXT] %20p [NEXT ADDR] %20p\n&quot;</span>, p-&gt;node.le_next, &amp;p-&gt;node.le_next);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[PREV] %20p [PREV ADDR] %20p\n\n&quot;</span>, p-&gt;node.le_prev, &amp;p-&gt;node.le_prev);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">"queue.h"</span></span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+    <span class="token function">LIST_ENTRY</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span> node<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> Node<span class="token punctuation">;</span>
+<span class="token function">LIST_HEAD</span><span class="token punctuation">(</span>Head<span class="token punctuation">,</span> Node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">Head</span> listHead<span class="token punctuation">;</span>
+    <span class="token function">LIST_INIT</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>listHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Node<span class="token operator">*</span> new_item <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        new_item<span class="token operator">-></span>val <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token function">LIST_INSERT_HEAD</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>listHead<span class="token punctuation">,</span> new_item<span class="token punctuation">,</span> node<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 头插法插入新节点</span>
+    <span class="token punctuation">&#125;</span>
+
+    Node<span class="token operator">*</span> p<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[HEAD] %20p [HEAD ADDR] %20p\n\n"</span><span class="token punctuation">,</span>listHead<span class="token punctuation">.</span>lh_first<span class="token punctuation">,</span> <span class="token operator">&amp;</span>listHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">LIST_FOREACH</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token operator">&amp;</span>listHead<span class="token punctuation">,</span> node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[NODE] %20d [NODE ADDR] %20p\n"</span><span class="token punctuation">,</span> p<span class="token operator">-></span>val<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[NEXT] %20p [NEXT ADDR] %20p\n"</span><span class="token punctuation">,</span> p<span class="token operator">-></span>node<span class="token punctuation">.</span>le_next<span class="token punctuation">,</span> <span class="token operator">&amp;</span>p<span class="token operator">-></span>node<span class="token punctuation">.</span>le_next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"[PREV] %20p [PREV ADDR] %20p\n\n"</span><span class="token punctuation">,</span> p<span class="token operator">-></span>node<span class="token punctuation">.</span>le_prev<span class="token punctuation">,</span> <span class="token operator">&amp;</span>p<span class="token operator">-></span>node<span class="token punctuation">.</span>le_prev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在该程序中，定义了节点类型为 <code>Node</code> 类型，其中包含了一个 <code>int</code> 型的 <code>val</code> 变量以及 <code>LIST_ENTRY</code> 所定义的结构体。可以看到，调用 <code>LIST_HEAD</code> 宏函数时，传入的 <code>name</code> 参数 <code>Head</code> 最终就成为了 <code>LIST_HEAD</code> 下结构体类型名。然后用 <code>struct Head</code> 来定义一个 <code>listHead</code> 变量，其中保存的即是双向链表中的首节点信息了。接着就是以头插法形式插入三个节点，然后遍历输出各个节点中关键成员的值与地址，结果如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201025200734.jpg" alt="libevent 双向链表"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201025200734.jpg" alt="libevent 双向链表" /><figcaption aria-hidden="true">libevent 双向链表</figcaption>
+</figure>
 <p>从代码结果种可得出链表结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">      Head                   Node1                   Node2                   Node3</span><br><span class="line">+--------------+    +--&gt;+--------------+    +--&gt;+--------------+    +--&gt;+--------------+</span><br><span class="line">|   lh_first   |----+   |    value     |    |   |    value     |    |   |    value     |</span><br><span class="line">|              |&lt;--+    +--------------+    |   +--------------+    |   +--------------+</span><br><span class="line">+--------------+   |    |   le_next    |----+   |   le_next    |----+   |   le_next    |-----+</span><br><span class="line">                   |    |              |&lt;--+    |              |&lt;--+    |              |     |</span><br><span class="line">                   |    +--------------+   |    +--------------+   |    +--------------+   -----</span><br><span class="line">                   +----|   le_prev    |   +----|   le_prev    |   +----|   le_prev    |    ---</span><br><span class="line">                        +--------------+        +--------------+        +--------------+     -</span><br></pre></td></tr></table></figure>
-<h2 id="双向链表的访问"><a href="#双向链表的访问" class="headerlink" title="双向链表的访问"></a>双向链表的访问</h2><h3 id="双向链表的访问宏"><a href="#双向链表的访问宏" class="headerlink" title="双向链表的访问宏"></a>双向链表的访问宏</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_FIRST(head)        ((head)-&gt;lh_first)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_END(head)          NULL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_EMPTY(head)        (LIST_FIRST(head) == LIST_END(head))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_NEXT(elm, field)   ((elm)-&gt;field.le_next)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_FOREACH(var, head, field)              \</span></span><br><span class="line">    <span class="keyword">for</span> ((var) = LIST_FIRST(head); (var)!= LIST_END(head); (var) = LIST_NEXT(var, field))</span><br></pre></td></tr></table></figure>
-<h3 id="双向链表的访问宏的作用"><a href="#双向链表的访问宏的作用" class="headerlink" title="双向链表的访问宏的作用"></a>双向链表的访问宏的作用</h3><p>从宏定义名即可看出每个宏的作用：</p>
+<pre class="line-numbers language-node" data-language="node"><code class="language-node">      Head                   Node1                   Node2                   Node3
++--------------+    +--&gt;+--------------+    +--&gt;+--------------+    +--&gt;+--------------+
+|   lh_first   |----+   |    value     |    |   |    value     |    |   |    value     |
+|              |&lt;--+    +--------------+    |   +--------------+    |   +--------------+
++--------------+   |    |   le_next    |----+   |   le_next    |----+   |   le_next    |-----+
+                   |    |              |&lt;--+    |              |&lt;--+    |              |     |
+                   |    +--------------+   |    +--------------+   |    +--------------+   -----
+                   +----|   le_prev    |   +----|   le_prev    |   +----|   le_prev    |    ---
+                        +--------------+        +--------------+        +--------------+     -<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="双向链表的访问">双向链表的访问</h2>
+<h3 id="双向链表的访问宏">双向链表的访问宏</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_FIRST(head)        ((head)->lh_first)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> LIST_END(head)          NULL</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> LIST_EMPTY(head)        (LIST_FIRST(head) == LIST_END(head))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> LIST_NEXT(elm, field)   ((elm)->field.le_next)</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> LIST_FOREACH(var, head, field)              \
+    for ((var) = LIST_FIRST(head); (var)!= LIST_END(head); (var) = LIST_NEXT(var, field))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="双向链表的访问宏的作用">双向链表的访问宏的作用</h3>
+<p>从宏定义名即可看出每个宏的作用：</p>
 <ul>
 <li><code>LIST_FIRST</code>：获取双向链表的首节点</li>
 <li><code>LIST_END</code>：双向链表的末尾，值恒为 <code>NULL</code></li>
@@ -414,7 +381,9 @@
 <blockquote>
 <p>注意：在使用 <code>LIST_FOREACH</code> 遍历双向链表时要避免链表的初始化、删除、替换操作！</p>
 </blockquote>
-<h3 id="双向链表的访问过程"><a href="#双向链表的访问过程" class="headerlink" title="双向链表的访问过程"></a>双向链表的访问过程</h3><h4 id="双向链表的遍历"><a href="#双向链表的遍历" class="headerlink" title="双向链表的遍历"></a>双向链表的遍历</h4><p><code>libevent</code> 的双向链表只支持从首节点向尾节点遍历。</p>
+<h3 id="双向链表的访问过程">双向链表的访问过程</h3>
+<h4 id="双向链表的遍历">双向链表的遍历</h4>
+<p><code>libevent</code> 的双向链表只支持从首节点向尾节点遍历。</p>
 <p>要想完成遍历操作，有三个关键点：遍历的起始节点，遍历的下一节点的获取，遍历的结束条件。</p>
 <p>通过以上对双向链表结构的分析轻易得出以上内容，即可完成链表的遍历操作：</p>
 <ul>
@@ -422,11 +391,25 @@
 <li>遍历的下一节点的获取：可以通过当前节点的 <code>le_next</code> 元素指向的地址获取</li>
 <li>遍历的结束条件：<code>le_next</code> 元素指向的地址为空</li>
 </ul>
-<h2 id="双向链表操作"><a href="#双向链表操作" class="headerlink" title="双向链表操作"></a>双向链表操作</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><h4 id="初始化宏"><a href="#初始化宏" class="headerlink" title="初始化宏"></a>初始化宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_INIT(head) do &#123;                        \</span></span><br><span class="line">    LIST_FIRST(head) = LIST_END(head);              \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="初始化过程"><a href="#初始化过程" class="headerlink" title="初始化过程"></a>初始化过程</h3><p>链表的初始化实际上只是初始化了头节点，由于头节点的 <code>lh_first</code> 与首节点相连，而此时链表为空，因此将头节点的 <code>lh_first</code> 置为 <code>NULL</code>。</p>
-<h3 id="头插法"><a href="#头插法" class="headerlink" title="头插法"></a>头插法</h3><h4 id="头插法宏"><a href="#头插法宏" class="headerlink" title="头插法宏"></a>头插法宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_INSERT_HEAD(head, elm, field) do &#123;     \</span></span><br><span class="line">    <span class="keyword">if</span> (((elm)-&gt;field.le_next = (head)-&gt;lh_first) != <span class="literal">NULL</span>)              \</span><br><span class="line">        (head)-&gt;lh_first-&gt;field.le_prev = &amp;(elm)-&gt;field.le_next;        \</span><br><span class="line">    (head)-&gt;lh_first = (elm);                       \</span><br><span class="line">    (elm)-&gt;field.le_prev = &amp;(head)-&gt;lh_first;       \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="头插法步骤"><a href="#头插法步骤" class="headerlink" title="头插法步骤"></a>头插法步骤</h4><p>头插法适用于已知头节点时，在首节点前插入新节点，不用关心首节点的有无，操作步骤如下：</p>
-<ol>
+<h2 id="双向链表操作">双向链表操作</h2>
+<h3 id="初始化">初始化</h3>
+<h4 id="初始化宏">初始化宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_INIT(head) do &#123;                        \
+    LIST_FIRST(head) = LIST_END(head);              \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="初始化过程">初始化过程</h3>
+<p>链表的初始化实际上只是初始化了头节点，由于头节点的 <code>lh_first</code> 与首节点相连，而此时链表为空，因此将头节点的 <code>lh_first</code> 置为 <code>NULL</code>。</p>
+<h3 id="头插法">头插法</h3>
+<h4 id="头插法宏">头插法宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_INSERT_HEAD(head, elm, field) do &#123;     \
+    if (((elm)->field.le_next = (head)->lh_first) != NULL)              \
+        (head)->lh_first->field.le_prev = &amp;(elm)->field.le_next;        \
+    (head)->lh_first = (elm);                       \
+    (elm)->field.le_prev = &amp;(head)->lh_first;       \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="头插法步骤">头插法步骤</h4>
+<p>头插法适用于已知头节点时，在首节点前插入新节点，不用关心首节点的有无，操作步骤如下：</p>
+<ol type="1">
 <li>将新节点的 <code>next</code> 指向原来的首节点</li>
 <li>将原来的首节点的 prev 从指向 first 改为指向新节点的 <code>next</code> 指针</li>
 <li>将 <code>first</code> 指针从指向原来首节点改为指向新节点</li>
@@ -436,9 +419,17 @@
 <ul>
 <li>必须保证步骤 1 在步骤 3 之前。</li>
 </ul>
-<h3 id="前插法"><a href="#前插法" class="headerlink" title="前插法"></a>前插法</h3><h4 id="前插法宏"><a href="#前插法宏" class="headerlink" title="前插法宏"></a>前插法宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_INSERT_BEFORE(listelm, elm, field) do &#123;                    \</span></span><br><span class="line">    (elm)-&gt;field.le_prev = (listelm)-&gt;field.le_prev;                    \</span><br><span class="line">    (elm)-&gt;field.le_next = (listelm);               \</span><br><span class="line">    *(listelm)-&gt;field.le_prev = (elm);              \</span><br><span class="line">    (listelm)-&gt;field.le_prev = &amp;(elm)-&gt;field.le_next;                   \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="前插法步骤"><a href="#前插法步骤" class="headerlink" title="前插法步骤"></a>前插法步骤</h4><p>前插法适用于已知非头节点时，在已知节点前插入新节点，不用关心头节点是否已知，操作步骤如下：</p>
-<ol>
+<h3 id="前插法">前插法</h3>
+<h4 id="前插法宏">前插法宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_INSERT_BEFORE(listelm, elm, field) do &#123;                    \
+    (elm)->field.le_prev = (listelm)->field.le_prev;                    \
+    (elm)->field.le_next = (listelm);               \
+    *(listelm)->field.le_prev = (elm);              \
+    (listelm)->field.le_prev = &amp;(elm)->field.le_next;                   \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="前插法步骤">前插法步骤</h4>
+<p>前插法适用于已知非头节点时，在已知节点前插入新节点，不用关心头节点是否已知，操作步骤如下：</p>
+<ol type="1">
 <li>将新节点的 <code>prev</code> 指向已知节点的 <code>prev</code> 指向的位置</li>
 <li>将新节点的 <code>next</code> 指向已知节点的地址</li>
 <li>将已知节点的 <code>prev</code> 指向的地址的指向改为新节点的地址</li>
@@ -448,9 +439,17 @@
 <ul>
 <li>必须保证步骤 1 在步骤 3 之前，必须保证步骤 3 在步骤 4 之前。</li>
 </ul>
-<h3 id="后插法"><a href="#后插法" class="headerlink" title="后插法"></a>后插法</h3><h4 id="后插法宏"><a href="#后插法宏" class="headerlink" title="后插法宏"></a>后插法宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_INSERT_AFTER(listelm, elm, field) do &#123;                     \</span></span><br><span class="line">    <span class="keyword">if</span> (((elm)-&gt;field.le_next = (listelm)-&gt;field.le_next) != <span class="literal">NULL</span>)      \</span><br><span class="line">        (listelm)-&gt;field.le_next-&gt;field.le_prev = &amp;(elm)-&gt;field.le_next;\</span><br><span class="line">    (listelm)-&gt;field.le_next = (elm);               \</span><br><span class="line">    (elm)-&gt;field.le_prev = &amp;(listelm)-&gt;field.le_next;                   \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="后插法步骤"><a href="#后插法步骤" class="headerlink" title="后插法步骤"></a>后插法步骤</h4><p>前插法适用于已知非头节点时，在已知节点后插入新节点，操作步骤如下：</p>
-<ol>
+<h3 id="后插法">后插法</h3>
+<h4 id="后插法宏">后插法宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_INSERT_AFTER(listelm, elm, field) do &#123;                     \
+    if (((elm)->field.le_next = (listelm)->field.le_next) != NULL)      \
+        (listelm)->field.le_next->field.le_prev = &amp;(elm)->field.le_next;\
+    (listelm)->field.le_next = (elm);               \
+    (elm)->field.le_prev = &amp;(listelm)->field.le_next;                   \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="后插法步骤">后插法步骤</h4>
+<p>前插法适用于已知非头节点时，在已知节点后插入新节点，操作步骤如下：</p>
+<ol type="1">
 <li>将新节点的 <code>next</code> 指向已知节点的 <code>next</code> 指向的位置</li>
 <li>将已知节点的 <code>next</code> 指向的节点的 prev 指向新节点的 <code>next</code> 元素地址</li>
 <li>将已知节点的 <code>next</code> 指向新节点的地址</li>
@@ -460,17 +459,32 @@
 <ul>
 <li>必须保证步骤 1 或步骤 2 在步骤 3 之前，因为要保证能找到已知节点的后一个节点。</li>
 </ul>
-<h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><h4 id="删除节点宏"><a href="#删除节点宏" class="headerlink" title="删除节点宏"></a>删除节点宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_REMOVE(elm, field) do &#123;                \</span></span><br><span class="line">    <span class="keyword">if</span> ((elm)-&gt;field.le_next != <span class="literal">NULL</span>)               \</span><br><span class="line">        (elm)-&gt;field.le_next-&gt;field.le_prev = (elm)-&gt;field.le_prev;     \</span><br><span class="line">    *(elm)-&gt;field.le_prev = (elm)-&gt;field.le_next;   \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="删除节点步骤"><a href="#删除节点步骤" class="headerlink" title="删除节点步骤"></a>删除节点步骤</h4><p>删除节点只需要对待删除节点的前后（可能包括头节点）节点进行操作：</p>
-<ol>
+<h3 id="删除节点">删除节点</h3>
+<h4 id="删除节点宏">删除节点宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_REMOVE(elm, field) do &#123;                \
+    if ((elm)->field.le_next != NULL)               \
+        (elm)->field.le_next->field.le_prev = (elm)->field.le_prev;     \
+    *(elm)->field.le_prev = (elm)->field.le_next;   \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除节点步骤">删除节点步骤</h4>
+<p>删除节点只需要对待删除节点的前后（可能包括头节点）节点进行操作：</p>
+<ol type="1">
 <li>如果存在后继节点，则将后继节点的 <code>prev</code> 赋值为待删除节点的 <code>prev</code></li>
 <li>将待删除节点的 <code>prev</code> 指向的指针赋值为待删除节点的 <code>next</code></li>
 </ol>
 <blockquote>
 <p>注意：libevent 中实现的双向链表，删除操作不需要知道表头信息，仅需要直到待删除节点信息</p>
 </blockquote>
-<h3 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h3><h4 id="替换节点宏"><a href="#替换节点宏" class="headerlink" title="替换节点宏"></a>替换节点宏</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIST_REPLACE(elm, elm2, field) do &#123;         \</span></span><br><span class="line">    <span class="keyword">if</span> (((elm2)-&gt;field.le_next = (elm)-&gt;field.le_next) != <span class="literal">NULL</span>)         \</span><br><span class="line">        (elm2)-&gt;field.le_next-&gt;field.le_prev = &amp;(elm2)-&gt;field.le_next;  \</span><br><span class="line">    (elm2)-&gt;field.le_prev = (elm)-&gt;field.le_prev;   \</span><br><span class="line">    *(elm2)-&gt;field.le_prev = (elm2);                \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="替换节点步骤"><a href="#替换节点步骤" class="headerlink" title="替换节点步骤"></a>替换节点步骤</h4><ol>
+<h3 id="替换节点">替换节点</h3>
+<h4 id="替换节点宏">替换节点宏</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> LIST_REPLACE(elm, elm2, field) do &#123;         \
+    if (((elm2)->field.le_next = (elm)->field.le_next) != NULL)         \
+        (elm2)->field.le_next->field.le_prev = &amp;(elm2)->field.le_next;  \
+    (elm2)->field.le_prev = (elm)->field.le_prev;   \
+    *(elm2)->field.le_prev = (elm2);                \
+&#125; while (0)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="替换节点步骤">替换节点步骤</h4>
+<ol type="1">
 <li>将新节点的 <code>next</code> 指向旧节点的 <code>next</code> 指向的位置</li>
 <li>将旧节点的 <code>next</code> 指向的节点的 <code>prev</code> 指向新节点指 next 地址</li>
 <li>将新节点的 <code>prev</code> 指向旧节点的 <code>prev</code> 指向的位置</li>
@@ -479,15 +493,16 @@
 <blockquote>
 <p>注意：libevent 中实现的双向链表，替换操作不需要知道表头信息，仅需要直到待替换节点信息和新节点信息</p>
 </blockquote>
-<h2 id="拓展问题"><a href="#拓展问题" class="headerlink" title="拓展问题"></a>拓展问题</h2><h3 id="Q1"><a href="#Q1" class="headerlink" title="Q1"></a>Q1</h3><p>Q1：节点的 <code>le_prev</code> 指针为什么不指向前一节点的首地址，而是指向前一节点的 <code>le_next</code> 指针或头节点的 <code>lh_first</code> 指针</p>
+<h2 id="拓展问题">拓展问题</h2>
+<h3 id="q1">Q1</h3>
+<p>Q1：节点的 <code>le_prev</code> 指针为什么不指向前一节点的首地址，而是指向前一节点的 <code>le_next</code> 指针或头节点的 <code>lh_first</code> 指针</p>
 <p>A1：节点的 <code>le_prev</code> 指针为一个二级之指针，其指向前一节点的 <code>le_next</code> 指针或头节点的 <code>lh_first</code> 指针的原因有两点：</p>
-<ol>
-<li><p>节点中存在一个和其余节点结构不一致的头节点，<code>le_prev</code> 在指向头节点时无法指向头节点的首地址，否则在头节点中包含其他结构元素时，增加了寻找头节点中 <code>lh_first</code> 难度，故直接指向头节点中 <code>lh_first</code> 所在地址。</p>
-</li>
-<li><p>如果节点的 <code>le_prev</code> 指向前一节点的首地址，在进行前插法、删除节点、替换节点时就必须知道头节点的地址，因为前插法在首节点前插入、删除首节点、替换首节点时需要修改头节点的 lh_first 指针，这样增加了参数的传递个数。而指向前一节点的 <code>le_next</code> 指针或头节点的 <code>lh_first</code> 指针在进行以上操作时，只需要简单地修改 <code>le_prev</code> 指针指向位置的值即可，大大降低使用以上接口进行链表操作的难度。</p>
-</li>
+<ol type="1">
+<li><p>节点中存在一个和其余节点结构不一致的头节点，<code>le_prev</code> 在指向头节点时无法指向头节点的首地址，否则在头节点中包含其他结构元素时，增加了寻找头节点中 <code>lh_first</code> 难度，故直接指向头节点中 <code>lh_first</code> 所在地址。</p></li>
+<li><p>如果节点的 <code>le_prev</code> 指向前一节点的首地址，在进行前插法、删除节点、替换节点时就必须知道头节点的地址，因为前插法在首节点前插入、删除首节点、替换首节点时需要修改头节点的 lh_first 指针，这样增加了参数的传递个数。而指向前一节点的 <code>le_next</code> 指针或头节点的 <code>lh_first</code> 指针在进行以上操作时，只需要简单地修改 <code>le_prev</code> 指针指向位置的值即可，大大降低使用以上接口进行链表操作的难度。</p></li>
 </ol>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz">libevent-2.1.11-stable.tar.gz (Released 2019-08-01)</a></li>
 </ul>
 
@@ -496,31 +511,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -563,42 +558,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -606,132 +573,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/ee7292d/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/ee7292d/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/ee7292d/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

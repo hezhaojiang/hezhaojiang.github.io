@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,27 +16,25 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="二叉搜索树的缺陷二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="二叉搜索树的缺陷 二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：  二叉搜索树的缺陷">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法 - 自平衡二叉搜索树">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/4e311301/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="二叉搜索树的缺陷二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：">
+<meta property="og:description" content="二叉搜索树的缺陷 二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：  二叉搜索树的缺陷">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809204257.gif">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif">
 <meta property="article:published_time" content="2020-08-09T04:39:48.000Z">
-<meta property="article:modified_time" content="2021-02-09T11:38:47.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary">
@@ -44,59 +44,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/4e311301/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据结构与算法 - 自平衡二叉搜索树 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/4e311301/","path":"post/2020/4e311301/","title":"数据结构与算法 - 自平衡二叉搜索树"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法 - 自平衡二叉搜索树 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -107,7 +67,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -134,36 +94,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -174,8 +110,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -184,7 +119,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -200,7 +135,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -218,14 +153,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-number">1.</span> <span class="nav-text">二叉搜索树的缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">平衡二叉搜索树的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">平衡二叉搜索树的生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E5%9B%A0%E5%AD%90"><span class="nav-number">3.1.</span> <span class="nav-text">平衡因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">添加节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LL%EF%BC%88%E5%8F%B3%E6%97%8B%EF%BC%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">LL（右旋）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RR%EF%BC%88%E5%B7%A6%E6%97%8B%EF%BC%89"><span class="nav-number">3.2.2.</span> <span class="nav-text">RR（左旋）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-number">1.</span> <span class="nav-text">二叉搜索树的缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">平衡二叉搜索树的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">平衡二叉搜索树的生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E5%9B%A0%E5%AD%90"><span class="nav-number">3.1.</span> <span class="nav-text">平衡因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">添加节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ll%E5%8F%B3%E6%97%8B"><span class="nav-number">3.2.1.</span> <span class="nav-text">LL（右旋）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rr%E5%B7%A6%E6%97%8B"><span class="nav-number">3.2.2.</span> <span class="nav-text">RR（左旋）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -234,21 +170,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -258,14 +191,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -274,7 +205,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -287,9 +218,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -330,7 +259,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:38:47" itemprop="dateModified" datetime="2021-02-09T19:38:47+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -343,27 +272,6 @@
     </span>
 
   
-    <span id="/post/2020/4e311301/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 自平衡二叉搜索树" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/4e311301/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/4e311301/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -373,31 +281,91 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="二叉搜索树的缺陷"><a href="#二叉搜索树的缺陷" class="headerlink" title="二叉搜索树的缺陷"></a>二叉搜索树的缺陷</h2><p>二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809204257.gif" alt="二叉搜索树的缺陷"></p>
-<a id="more"></a>
+        <h2 id="二叉搜索树的缺陷">二叉搜索树的缺陷</h2>
+<p>二叉搜索树的插入顺序决定了二叉搜索树的结构，如果按照 [1,2,3,4,5,6] 这样的顺序插入，其流程是这样的：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809204257.gif" alt="二叉搜索树的缺陷" /><figcaption aria-hidden="true">二叉搜索树的缺陷</figcaption>
+</figure>
+<span id="more"></span>
 <p>如果在上面的二叉搜索树中查找 6，是要将所有节点都遍历一遍的，时间复杂度就变成了 O(n)，几乎就是一个链表。</p>
 <p>细心的朋友可能已经发现，插入的序列越接近有序，生成的二叉搜索树就越像一个链表。</p>
 <p>为了避免二叉搜索树变成 “链表”，我们引入了自平衡二叉搜索树（平衡二叉树，AVL 树），即让树的结构看起来尽量 “均匀”，左右子树的节点数尽量一样多。</p>
-<h2 id="平衡二叉搜索树的特点"><a href="#平衡二叉搜索树的特点" class="headerlink" title="平衡二叉搜索树的特点"></a>平衡二叉搜索树的特点</h2><p>平衡二叉搜索树（Self-balancing binary search tree）又被称为 AVL 树（有别于 AVL 算法），且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过 1，并且左右两个子树都是一棵平衡二叉树。</p>
-<h2 id="平衡二叉搜索树的生成"><a href="#平衡二叉搜索树的生成" class="headerlink" title="平衡二叉搜索树的生成"></a>平衡二叉搜索树的生成</h2><p>那给定插入序列，如何生成一棵平衡二叉树呢？</p>
-<h3 id="平衡因子"><a href="#平衡因子" class="headerlink" title="平衡因子"></a>平衡因子</h3><p>某结点的左子树与右子树的高度 (深度) 差即为该结点的平衡因子（BF,Balance Factor）。平衡二叉树上所有结点的平衡因子只可能是 -1，0 或 1。如果某一结点的平衡因子绝对值大于 1 则说明此树不是平衡二叉树。</p>
-<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><p>往平衡二叉树中添加节点很可能会导致二叉树失去平衡，所以我们需要在每次插入节点后进行平衡的维护操作。插入节点破坏平衡性有如下四种情况：</p>
-<ol>
+<h2 id="平衡二叉搜索树的特点">平衡二叉搜索树的特点</h2>
+<p>平衡二叉搜索树（Self-balancing binary search tree）又被称为 AVL 树（有别于 AVL 算法），且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过 1，并且左右两个子树都是一棵平衡二叉树。</p>
+<h2 id="平衡二叉搜索树的生成">平衡二叉搜索树的生成</h2>
+<p>那给定插入序列，如何生成一棵平衡二叉树呢？</p>
+<h3 id="平衡因子">平衡因子</h3>
+<p>某结点的左子树与右子树的高度 (深度) 差即为该结点的平衡因子（BF,Balance Factor）。平衡二叉树上所有结点的平衡因子只可能是 -1，0 或 1。如果某一结点的平衡因子绝对值大于 1 则说明此树不是平衡二叉树。</p>
+<h3 id="添加节点">添加节点</h3>
+<p>往平衡二叉树中添加节点很可能会导致二叉树失去平衡，所以我们需要在每次插入节点后进行平衡的维护操作。插入节点破坏平衡性有如下四种情况：</p>
+<ol type="1">
 <li>新加入节点为 node.left 的左孩子， height(node.left) - height(node.right) &gt; 1 。直接对 node 节点右旋。</li>
 <li>新加入节点为 node.left 的右孩子， height(node.left) - height(node.right) &gt; 1 。这时候要先对 node.left 左旋，调整为 1 的情况，再进行右旋。</li>
 <li>新加入节点为 node.right 的右孩子， height(node.right) - height(node.left) &gt; 1 。直接对 node 节点左旋。</li>
 <li>新加入节点为 node.right 的左孩子， height(node.right) - height(node.left) &gt; 1 。这时候要先对 node.right 右旋，调整为 3 的情况，再进行左旋。</li>
 </ol>
 <p>要注意的是，节点旋转的时候，高度不是简单的 +/-1，而是要根据从当前节点旋转调整后的左右节点高度中获取较大值 +1。旋转高度调整完成后，返回 node 节点时候，也要重新计算一下新的高度，其高度为左右子树最大值 +1。</p>
-<h4 id="LL（右旋）"><a href="#LL（右旋）" class="headerlink" title="LL（右旋）"></a>LL（右旋）</h4><p>LL 的意思是向左子树（L）的左孩子（L）中插入新节点后导致不平衡，这种情况下需要右旋操作。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif" alt="右旋"></p>
+<h4 id="ll右旋">LL（右旋）</h4>
+<p>LL 的意思是向左子树（L）的左孩子（L）中插入新节点后导致不平衡，这种情况下需要右旋操作。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif" alt="右旋" /><figcaption aria-hidden="true">右旋</figcaption>
+</figure>
 <p>代码示例如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* node 节点右旋</span></span><br><span class="line"><span class="comment">* @param node node</span></span><br><span class="line"><span class="comment">* @param nodeHeight node 高度缓存</span></span><br><span class="line"><span class="comment">* @return 旋转后的当前节点</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">TreeNode* <span class="title">rotateRight</span><span class="params">(TreeNode* node, <span class="built_in">map</span>&lt;TreeNode*,<span class="keyword">int</span>&gt;&amp; nodeHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// --- 指针调整</span></span><br><span class="line">    TreeNode* left = node-&gt;left;</span><br><span class="line">    node-&gt;left = left-&gt;right;</span><br><span class="line">    left-&gt;right = node;</span><br><span class="line">    <span class="comment">// --- 高度更新</span></span><br><span class="line">    <span class="comment">// 先更新 node 节点的高度，这个时候 node 是 right 节点的左孩子</span></span><br><span class="line">    <span class="keyword">int</span> newNodeHeight = getCurNodeNewHeight(node, nodeHeight);</span><br><span class="line">    nodeHeight[node] = newNodeHeight;</span><br><span class="line">    <span class="comment">// 更新原 left 节点高度 取现在 right 左右子树最大高度 + 1</span></span><br><span class="line">    nodeHeight[left] = <span class="built_in">max</span>(newNodeHeight, nodeHeight[left-&gt;left]) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 获取当前节点的新高度</span></span><br><span class="line"><span class="comment">* @param node node</span></span><br><span class="line"><span class="comment">* @param nodeHeight node 高度缓存</span></span><br><span class="line"><span class="comment">* @return 当前 node 的新高度</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getCurNodeNewHeight</span><span class="params">(TreeNode&amp; node, <span class="built_in">map</span>&lt;TreeNode*,<span class="keyword">int</span>&gt;&amp; nodeHeight)</span></span>&#123;</span><br><span class="line">    <span class="comment">// node 节点的高度，为现在 node 左右子树最大高度 + 1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(nodeHeight[node.left], nodeHeight[node.right]) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="RR（左旋）"><a href="#RR（左旋）" class="headerlink" title="RR（左旋）"></a>RR（左旋）</h4><p>RR 的意思是向右子树（R）的右孩子（R）中插入新节点后导致不平衡，这种情况下需要左旋操作。</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif" alt="左旋"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* node 节点左旋</span></span><br><span class="line"><span class="comment">* @param node node</span></span><br><span class="line"><span class="comment">* @param nodeHeight node 高度缓存</span></span><br><span class="line"><span class="comment">* @return 旋转后的当前节点</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">TreeNode* <span class="title">rotateLeft</span><span class="params">(TreeNode* node, <span class="built_in">map</span>&lt;TreeNode*,<span class="keyword">int</span>&gt;&amp; nodeHeight)</span></span>&#123;</span><br><span class="line">    <span class="comment">// --- 旋转进行指针调整</span></span><br><span class="line">    TreeNode* right = node-&gt;right;</span><br><span class="line">    node-&gt;right = right-&gt;left;</span><br><span class="line">    right-&gt;left = node;</span><br><span class="line">    <span class="comment">// --- 高度更新</span></span><br><span class="line">    <span class="comment">// 先更新 node 节点的高度，这个时候 node 是 right 节点的左孩子</span></span><br><span class="line">    <span class="keyword">int</span> newNodeHeight = getCurNodeNewHeight(node, nodeHeight);</span><br><span class="line">    nodeHeight[node] = newNodeHeight;</span><br><span class="line">    <span class="comment">// 取现在 right 左右子树最大高度 + 1 更新原 right 节点高度</span></span><br><span class="line">    nodeHeight[right] = <span class="built_in">max</span>(newNodeHeight,nodeHeight.getOrDefault(right.right,<span class="number">0</span>)) + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* node 节点右旋
+* @param node node
+* @param nodeHeight node 高度缓存
+* @return 旋转后的当前节点
+*/</span>
+TreeNode<span class="token operator">*</span> <span class="token function">rotateRight</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> node<span class="token punctuation">,</span> map<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nodeHeight<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// --- 指针调整</span>
+    TreeNode<span class="token operator">*</span> left <span class="token operator">=</span> node<span class="token operator">-></span>left<span class="token punctuation">;</span>
+    node<span class="token operator">-></span>left <span class="token operator">=</span> left<span class="token operator">-></span>right<span class="token punctuation">;</span>
+    left<span class="token operator">-></span>right <span class="token operator">=</span> node<span class="token punctuation">;</span>
+    <span class="token comment">// --- 高度更新</span>
+    <span class="token comment">// 先更新 node 节点的高度，这个时候 node 是 right 节点的左孩子</span>
+    <span class="token keyword">int</span> newNodeHeight <span class="token operator">=</span> <span class="token function">getCurNodeNewHeight</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> nodeHeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nodeHeight<span class="token punctuation">[</span>node<span class="token punctuation">]</span> <span class="token operator">=</span> newNodeHeight<span class="token punctuation">;</span>
+    <span class="token comment">// 更新原 left 节点高度 取现在 right 左右子树最大高度 + 1</span>
+    nodeHeight<span class="token punctuation">[</span>left<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>newNodeHeight<span class="token punctuation">,</span> nodeHeight<span class="token punctuation">[</span>left<span class="token operator">-></span>left<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> left<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/**
+* 获取当前节点的新高度
+* @param node node
+* @param nodeHeight node 高度缓存
+* @return 当前 node 的新高度
+*/</span>
+<span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">getCurNodeNewHeight</span><span class="token punctuation">(</span>TreeNode<span class="token operator">&amp;</span> node<span class="token punctuation">,</span> map<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nodeHeight<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// node 节点的高度，为现在 node 左右子树最大高度 + 1</span>
+    <span class="token keyword">return</span> <span class="token function">max</span><span class="token punctuation">(</span>nodeHeight<span class="token punctuation">[</span>node<span class="token punctuation">.</span>left<span class="token punctuation">]</span><span class="token punctuation">,</span> nodeHeight<span class="token punctuation">[</span>node<span class="token punctuation">.</span>right<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="rr左旋">RR（左旋）</h4>
+<p>RR 的意思是向右子树（R）的右孩子（R）中插入新节点后导致不平衡，这种情况下需要左旋操作。</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200809205756.gif" alt="左旋" /><figcaption aria-hidden="true">左旋</figcaption>
+</figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* node 节点左旋
+* @param node node
+* @param nodeHeight node 高度缓存
+* @return 旋转后的当前节点
+*/</span>
+TreeNode<span class="token operator">*</span> <span class="token function">rotateLeft</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> node<span class="token punctuation">,</span> map<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nodeHeight<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// --- 旋转进行指针调整</span>
+    TreeNode<span class="token operator">*</span> right <span class="token operator">=</span> node<span class="token operator">-></span>right<span class="token punctuation">;</span>
+    node<span class="token operator">-></span>right <span class="token operator">=</span> right<span class="token operator">-></span>left<span class="token punctuation">;</span>
+    right<span class="token operator">-></span>left <span class="token operator">=</span> node<span class="token punctuation">;</span>
+    <span class="token comment">// --- 高度更新</span>
+    <span class="token comment">// 先更新 node 节点的高度，这个时候 node 是 right 节点的左孩子</span>
+    <span class="token keyword">int</span> newNodeHeight <span class="token operator">=</span> <span class="token function">getCurNodeNewHeight</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> nodeHeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nodeHeight<span class="token punctuation">[</span>node<span class="token punctuation">]</span> <span class="token operator">=</span> newNodeHeight<span class="token punctuation">;</span>
+    <span class="token comment">// 取现在 right 左右子树最大高度 + 1 更新原 right 节点高度</span>
+    nodeHeight<span class="token punctuation">[</span>right<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>newNodeHeight<span class="token punctuation">,</span>nodeHeight<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>right<span class="token punctuation">.</span>right<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/balance-a-binary-search-tree/solution/shou-si-avlshu-wo-bu-guan-wo-jiu-shi-yao-xuan-zhua/">手撕 AVL 树，我不管，我就是要旋转 - 将二叉搜索树变平衡 - 力扣（LeetCode）</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25343557/article/details/89110319">详细图文——AVL树_带翅膀的猫的博客 - CSDN博客</a></li>
 </ul>
@@ -407,22 +375,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\42349ee0\" rel="bookmark">数据结构与算法 - 二叉搜索树</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1c1a3b62\" rel="bookmark">数据结构与算法 - 二叉树的遍历</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -465,42 +422,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -508,132 +437,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/4e311301/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/4e311301/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/4e311301/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

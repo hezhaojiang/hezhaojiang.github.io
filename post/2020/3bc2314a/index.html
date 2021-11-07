@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="命令行工具简介x264 命令行工具执行流程如下：  首先调用 parse() 解析输入的命令行参数 parse()首先调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值 循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理 调用 select_output() 解析输出文件格式（例如 raw，flv，MP4…） 调用 sel">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="命令行工具简介 x264 命令行工具执行流程如下：  首先调用 parse() 解析输入的命令行参数  parse()首先调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值 循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理 调用 select_output() 解析输出文件格式（例如 raw，flv，MP4">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 x264 - 命令行工具">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/3bc2314a/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="命令行工具简介x264 命令行工具执行流程如下：  首先调用 parse() 解析输入的命令行参数 parse()首先调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值 循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理 调用 select_output() 解析输出文件格式（例如 raw，flv，MP4…） 调用 sel">
+<meta property="og:description" content="命令行工具简介 x264 命令行工具执行流程如下：  首先调用 parse() 解析输入的命令行参数  parse()首先调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值 循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理 调用 select_output() 解析输出文件格式（例如 raw，flv，MP4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-01T06:02:59.000Z">
-<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="x264">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/3bc2314a/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 x264 - 命令行工具 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/3bc2314a/","path":"post/2020/3bc2314a/","title":"源码阅读 x264 - 命令行工具"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 x264 - 命令行工具 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">命令行工具简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">main 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">parse 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-param-default"><span class="nav-number">3.1.</span> <span class="nav-text">x264_param_default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-param-default-preset"><span class="nav-number">3.2.</span> <span class="nav-text">x264_param_default_preset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-param-parse"><span class="nav-number">3.3.</span> <span class="nav-text">x264_param_parse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-param-apply-fastfirstpass"><span class="nav-number">3.4.</span> <span class="nav-text">x264_param_apply_fastfirstpass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-param-apply-profile"><span class="nav-number">3.5.</span> <span class="nav-text">x264_param_apply_profile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-output"><span class="nav-number">3.6.</span> <span class="nav-text">select_output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-input"><span class="nav-number">3.7.</span> <span class="nav-text">select_input</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encode-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">encode 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">命令行工具简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">main 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">parse 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_param_default"><span class="nav-number">3.1.</span> <span class="nav-text">x264_param_default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_param_default_preset"><span class="nav-number">3.2.</span> <span class="nav-text">x264_param_default_preset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_param_parse"><span class="nav-number">3.3.</span> <span class="nav-text">x264_param_parse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_param_apply_fastfirstpass"><span class="nav-number">3.4.</span> <span class="nav-text">x264_param_apply_fastfirstpass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_param_apply_profile"><span class="nav-number">3.5.</span> <span class="nav-text">x264_param_apply_profile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select_output"><span class="nav-number">3.6.</span> <span class="nav-text">select_output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select_input"><span class="nav-number">3.7.</span> <span class="nav-text">select_input</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encode-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">encode 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/3bc2314a/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 命令行工具" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/3bc2314a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/3bc2314a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -369,42 +277,90 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="命令行工具简介"><a href="#命令行工具简介" class="headerlink" title="命令行工具简介"></a>命令行工具简介</h2><p>x264 命令行工具执行流程如下：</p>
-<ol>
-<li>首先调用 parse() 解析输入的命令行参数<ol>
+        <h2 id="命令行工具简介">命令行工具简介</h2>
+<p>x264 命令行工具执行流程如下：</p>
+<ol type="1">
+<li>首先调用 parse() 解析输入的命令行参数
+<ol type="1">
 <li>parse()首先调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值</li>
 <li>循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理</li>
 <li>调用 select_output() 解析输出文件格式（例如 raw，flv，MP4…）</li>
 <li>调用 select_input() 解析输入文件格式（例如 yuv，y4m…）</li>
-</ol>
-</li>
-<li>然后调用 encode() 进行编码<ol>
+</ol></li>
+<li>然后调用 encode() 进行编码
+<ol type="1">
 <li>encode() 首先调用 x264_encoder_open() 打开 H.264 编码器</li>
 <li>然后调用 x264_encoder_headers() 输出 H.264 码流的头信息（例如 SPS、PPS、SEI）</li>
-<li>循环调用 encode_frame() 逐帧编码视频<ol>
+<li>循环调用 encode_frame() 逐帧编码视频
+<ol type="1">
 <li>encode_frame()中调用了x264_encoder_encode()完成了具体的编码工作</li>
-</ol>
-</li>
+</ol></li>
 <li>调用x264_encoder_close()关闭解码器</li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<a id="more"></a>
-<h2 id="main-函数"><a href="#main-函数" class="headerlink" title="main 函数"></a>main 函数</h2><p>main() 是 x264 控制台程序的入口函数，定义如下所示。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">REALIGN_STACK <span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(argc == <span class="number">4</span> &amp;&amp; !<span class="built_in">strcmp</span>( argv[<span class="number">1</span>], <span class="string">&quot;--autocomplete&quot;</span> ) )</span><br><span class="line">        <span class="keyword">return</span> x264_cli_autocomplete(argv[<span class="number">2</span>], argv[<span class="number">3</span>] );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">x264_param_t</span> param;</span><br><span class="line">    <span class="keyword">cli_opt_t</span> opt = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    FAIL_IF_ERROR(x264_threading_init(), <span class="string">&quot;unable to initialize threading\n&quot;</span> );</span><br><span class="line"></span><br><span class="line">    x264_param_default(&amp;param);</span><br><span class="line">    <span class="comment">/* Parse command line */</span></span><br><span class="line">    <span class="keyword">if</span>(parse( argc, argv, &amp;param, &amp;opt) &lt; <span class="number">0</span> )</span><br><span class="line">        ret = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Control-C handler */</span></span><br><span class="line">    signal(SIGINT, sigint_handler);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!ret)</span><br><span class="line">        ret = encode(&amp;param, &amp;opt);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* clean up handles */</span></span><br><span class="line">    <span class="keyword">if</span>(filter.<span class="built_in">free</span>)</span><br><span class="line">        filter.<span class="built_in">free</span>(opt.hin);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(opt.hin)</span><br><span class="line">        cli_input.close_file(opt.hin);</span><br><span class="line">    <span class="keyword">if</span>(opt.hout)</span><br><span class="line">        cli_output.close_file(opt.hout, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(opt.tcfile_out)</span><br><span class="line">        fclose(opt.tcfile_out);</span><br><span class="line">    <span class="keyword">if</span>(opt.qpfile)</span><br><span class="line">        fclose(opt.qpfile);</span><br><span class="line">    x264_param_cleanup(&amp;param);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="main-函数">main 函数</h2>
+<p>main() 是 x264 控制台程序的入口函数，定义如下所示。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">REALIGN_STACK <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>argc <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"--autocomplete"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">x264_cli_autocomplete</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    x264_param_t param<span class="token punctuation">;</span>
+    cli_opt_t opt <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token function">FAIL_IF_ERROR</span><span class="token punctuation">(</span><span class="token function">x264_threading_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"unable to initialize threading\n"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">x264_param_default</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* Parse command line */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">parse</span><span class="token punctuation">(</span> argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token operator">&amp;</span>param<span class="token punctuation">,</span> <span class="token operator">&amp;</span>opt<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">)</span>
+        ret <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Control-C handler */</span>
+    <span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> sigint_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>ret<span class="token punctuation">)</span>
+        ret <span class="token operator">=</span> <span class="token function">encode</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>param<span class="token punctuation">,</span> <span class="token operator">&amp;</span>opt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* clean up handles */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>filter<span class="token punctuation">.</span>free<span class="token punctuation">)</span>
+        filter<span class="token punctuation">.</span><span class="token function">free</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>hin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>hin<span class="token punctuation">)</span>
+        cli_input<span class="token punctuation">.</span><span class="token function">close_file</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>hin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>hout<span class="token punctuation">)</span>
+        cli_output<span class="token punctuation">.</span><span class="token function">close_file</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>hout<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>tcfile_out<span class="token punctuation">)</span>
+        <span class="token function">fclose</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>tcfile_out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>qpfile<span class="token punctuation">)</span>
+        <span class="token function">fclose</span><span class="token punctuation">(</span>opt<span class="token punctuation">.</span>qpfile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">x264_param_cleanup</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看出 main() 的定义很简单，它主要调用了两个函数：parse() 和 encode()。</p>
 <p>main() 首先调用 parse() 对命令行进行解析并进行参数设置，然后调用 encode() 进行编码压缩。下面分别分析这两个函数。</p>
-<h2 id="parse-函数"><a href="#parse-函数" class="headerlink" title="parse 函数"></a>parse 函数</h2><p>parse() 用于解析命令行输入的参数（存储于 argv[] 中），其定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    参数分析函数</span></span><br><span class="line"><span class="comment">* @param[in]        argc    参数个数</span></span><br><span class="line"><span class="comment">* @param[in]        argv    1 维数组指针，指向每个参数字符串首地址</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   cli_opt_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                   # 0     执行成功</span></span><br><span class="line"><span class="comment">*                           # -1    执行失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parse</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv, <span class="keyword">x264_param_t</span> *param, <span class="keyword">cli_opt_t</span> *opt)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="parse-函数">parse 函数</h2>
+<p>parse() 用于解析命令行输入的参数（存储于 argv[] 中），其定义如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                    参数分析函数
+* @param[in]        argc    参数个数
+* @param[in]        argv    1 维数组指针，指向每个参数字符串首地址
+* @param[in/out]    param   x264_param_t 结构体指针
+* @param[in/out]    param   cli_opt_t 结构体指针
+* @return                   # 0     执行成功
+*                           # -1    执行失败
+*/</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">parse</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">,</span> x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> cli_opt_t <span class="token operator">*</span>opt<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>阅读源代码，可梳理出 parse() 函数的简单流程：</p>
-<ol>
+<ol type="1">
 <li>调用 x264_param_default() 为存储参数的结构体 x264_param_t 赋默认值</li>
 <li>调用 x264_param_default_preset() 为 x264_param_t 赋值</li>
-<li>在一个大循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理。举几个例子：<ol>
+<li>在一个大循环中调用 getopt_long() 逐个解析输入的参数，并作相应的处理。举几个例子：
+<ol type="1">
 <li>对于短选项，直接设置输出参数或调用其他函数进行处理。</li>
 <li>对于长选项，统一调用 x264_param_parse() 进行处理。</li>
-</ol>
-</li>
+</ol></li>
 <li>调用 select_output() 解析输出文件格式（例如 raw，flv，MP4…）</li>
 <li>调用 select_input() 解析输入文件格式（例如 yuv，y4m…）</li>
 </ol>
@@ -412,42 +368,132 @@
 <p>关于 x264_param_t 结构体和 cli_opt_t 结构体的说明，详见：<a href="/post/2020/e6d88726/" title="源码阅读 x264 - 常用结构体">源码阅读 x264 - 常用结构体</a></p>
 </blockquote>
 <p>parse() 中几个比较关键的函数：</p>
-<h3 id="x264-param-default"><a href="#x264-param-default" class="headerlink" title="x264_param_default"></a>x264_param_default</h3><p>x264_param_default() 用于初始化 x264_param_t 类型变量</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    x264_param_t 参数初始化函数</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                   void</span></span><br><span class="line"><span class="comment">* @note:    fill x264_param_t with default values and do CPU detection</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">REALIGN_STACK <span class="keyword">void</span> <span class="title">x264_param_default</span><span class="params">(<span class="keyword">x264_param_t</span> *param)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="x264_param_default">x264_param_default</h3>
+<p>x264_param_default() 用于初始化 x264_param_t 类型变量</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                    x264_param_t 参数初始化函数
+* @param[in/out]    param   x264_param_t 结构体指针
+* @return                   void
+* @note:    fill x264_param_t with default values and do CPU detection
+*/</span>
+REALIGN_STACK <span class="token keyword">void</span> <span class="token function">x264_param_default</span><span class="token punctuation">(</span>x264_param_t <span class="token operator">*</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>x264_param_default(x264_param_t*)，在 parse() 中声明了一个 x264_param_t 类型的局部变量 default，并调用此函数进行初始化，但是目前还不知道 default 的用途。</p>
-<h3 id="x264-param-default-preset"><a href="#x264-param-default-preset" class="headerlink" title="x264_param_default_preset"></a>x264_param_default_preset</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    根据 preset 和 tune 对 x264_param_t 参数进行初始化</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        preset  字符串，指示预设编码类型</span></span><br><span class="line"><span class="comment">* @param[in]        tune    字符串，指示视频类型或视觉优化类型</span></span><br><span class="line"><span class="comment">* @return                   # 0          执行成功</span></span><br><span class="line"><span class="comment">*                           # negative   执行失败 (e.g. invalid preset/tune name)</span></span><br><span class="line"><span class="comment">* @note:    Multiple tunings can be used if separated by a delimiter in &quot;,./-+&quot;,</span></span><br><span class="line"><span class="comment">*           however multiple psy tunings cannot be used.</span></span><br><span class="line"><span class="comment">*           film, animation, grain, stillimage, psnr, and ssim are psy tunings.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">X264_API <span class="keyword">int</span> <span class="title">x264_param_default_preset</span><span class="params">(<span class="keyword">x264_param_t</span> *param, <span class="keyword">const</span> <span class="keyword">char</span> *preset, <span class="keyword">const</span> <span class="keyword">char</span> *tune)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="x264_param_default_preset">x264_param_default_preset</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                    根据 preset 和 tune 对 x264_param_t 参数进行初始化
+* @param[in/out]    param   x264_param_t 结构体指针
+* @param[in]        preset  字符串，指示预设编码类型
+* @param[in]        tune    字符串，指示视频类型或视觉优化类型
+* @return                   # 0          执行成功
+*                           # negative   执行失败 (e.g. invalid preset/tune name)
+* @note:    Multiple tunings can be used if separated by a delimiter in ",./-+",
+*           however multiple psy tunings cannot be used.
+*           film, animation, grain, stillimage, psnr, and ssim are psy tunings.
+*/</span>
+X264_API <span class="token keyword">int</span> <span class="token function">x264_param_default_preset</span><span class="token punctuation">(</span>x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>preset<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>tune<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>—preset 的参数主要调节编码速度和质量的平衡，有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo 这 10 个选项，从快到慢。<br>—tune 的参数主要配合视频类型和视觉优化的参数，或特别的情况。如果视频的内容符合其中一个可用的调整值又或者有其中需要，则可以使用此选项，否则建议不使用。<br>tune 的值有： film、animation、grain、stillimage、psnr、ssim、fastdecode、zerolatency、touhou 这 9 个选项，部分选项可同时设置，可详见 param_apply_tune() 函数。</p>
+<p>--preset 的参数主要调节编码速度和质量的平衡，有 ultrafast、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo 这 10 个选项，从快到慢。 --tune 的参数主要配合视频类型和视觉优化的参数，或特别的情况。如果视频的内容符合其中一个可用的调整值又或者有其中需要，则可以使用此选项，否则建议不使用。 tune 的值有： film、animation、grain、stillimage、psnr、ssim、fastdecode、zerolatency、touhou 这 9 个选项，部分选项可同时设置，可详见 param_apply_tune() 函数。</p>
 </blockquote>
 <p>x264_param_default_preset()，会首先调用 x264_param_default() 对 param 进行初始化，然后根据 preset 和 tune 的值再对 param 进行初始化。</p>
-<h3 id="x264-param-parse"><a href="#x264-param-parse" class="headerlink" title="x264_param_parse"></a>x264_param_parse</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    根据 name 和 value 对 x264_param_t 参数进行设置</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        name    字符串，指示参数名称</span></span><br><span class="line"><span class="comment">* @param[in]        value   字符串，指示参数值</span></span><br><span class="line"><span class="comment">* @return                   # 0                                         执行成功</span></span><br><span class="line"><span class="comment">*                           #define X264_PARAM_BAD_NAME         (-1)    执行失败</span></span><br><span class="line"><span class="comment">*                           #define X264_PARAM_BAD_VALUE        (-2)    执行失败</span></span><br><span class="line"><span class="comment">*                           #define X264_PARAM_ALLOC_FAILED     (-3)    执行失败</span></span><br><span class="line"><span class="comment">* @note:    BAD_VALUE occurs only if it can&#x27;t even parse the value,</span></span><br><span class="line"><span class="comment">*           numerical range is not checked until x264_encoder_open() or x264_encoder_reconfig().</span></span><br><span class="line"><span class="comment">*           value=NULL means &quot;true&quot; for boolean options, but is a BAD_VALUE for non-booleans.</span></span><br><span class="line"><span class="comment">*           can allocate memory which should be freed by call of x264_param_cleanup.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">X264_API <span class="keyword">int</span> <span class="title">x264_param_parse</span><span class="params">(<span class="keyword">x264_param_t</span> *param, <span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">const</span> <span class="keyword">char</span> *value)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="x264_param_parse">x264_param_parse</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                    根据 name 和 value 对 x264_param_t 参数进行设置
+* @param[in/out]    param   x264_param_t 结构体指针
+* @param[in]        name    字符串，指示参数名称
+* @param[in]        value   字符串，指示参数值
+* @return                   # 0                                         执行成功
+*                           #define X264_PARAM_BAD_NAME         (-1)    执行失败
+*                           #define X264_PARAM_BAD_VALUE        (-2)    执行失败
+*                           #define X264_PARAM_ALLOC_FAILED     (-3)    执行失败
+* @note:    BAD_VALUE occurs only if it can't even parse the value,
+*           numerical range is not checked until x264_encoder_open() or x264_encoder_reconfig().
+*           value=NULL means "true" for boolean options, but is a BAD_VALUE for non-booleans.
+*           can allocate memory which should be freed by call of x264_param_cleanup.
+*/</span>
+X264_API <span class="token keyword">int</span> <span class="token function">x264_param_parse</span><span class="token punctuation">(</span>x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>x264_param_parse() 用来对命令行中的长选项进行解析，并完成 param 的设置。</p>
-<h3 id="x264-param-apply-fastfirstpass"><a href="#x264-param-apply-fastfirstpass" class="headerlink" title="x264_param_apply_fastfirstpass"></a>x264_param_apply_fastfirstpass</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* x264_param_apply_fastfirstpass:</span></span><br><span class="line"><span class="comment"> *      If first-pass mode is set (rc.b_stat_read == 0, rc.b_stat_write == 1),</span></span><br><span class="line"><span class="comment"> *      modify the encoder settings to disable options generally not useful on</span></span><br><span class="line"><span class="comment"> *      the first pass.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">X264_API <span class="keyword">void</span> <span class="title">x264_param_apply_fastfirstpass</span><span class="params">(<span class="keyword">x264_param_t</span> *param)</span></span>;</span><br></pre></td></tr></table></figure>
-<h3 id="x264-param-apply-profile"><a href="#x264-param-apply-profile" class="headerlink" title="x264_param_apply_profile"></a>x264_param_apply_profile</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> x264_profile_names[] = &#123;</span><br><span class="line">    <span class="string">&quot;baseline&quot;</span>, <span class="string">&quot;main&quot;</span>, <span class="string">&quot;high&quot;</span>, <span class="string">&quot;high10&quot;</span>, <span class="string">&quot;high422&quot;</span>, <span class="string">&quot;high444&quot;</span>, <span class="number">0</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    根据 profile 对 x264_param_t 参数进行设置</span></span><br><span class="line"><span class="comment">* @param[in/out]    param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        profile 字符串，指示 H264 配置文件</span></span><br><span class="line"><span class="comment">* @return                   # 0         执行成功</span></span><br><span class="line"><span class="comment">*                           # negative  执行失败 (e.g. invalid profile name)</span></span><br><span class="line"><span class="comment">* @note:    (can be NULL, in which case the function will do nothing)</span></span><br><span class="line"><span class="comment">*           Does NOT guarantee that the given profile will be used: if the restrictions</span></span><br><span class="line"><span class="comment">*           of &quot;High&quot; are applied to settings that are already Baseline-compatible, the</span></span><br><span class="line"><span class="comment">*           stream will remain baseline.  In short, it does not increase settings, only</span></span><br><span class="line"><span class="comment">*           decrease them.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">X264_API <span class="keyword">int</span> <span class="title">x264_param_apply_profile</span><span class="params">(<span class="keyword">x264_param_t</span> *param, <span class="keyword">const</span> <span class="keyword">char</span> *profile)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="x264_param_apply_fastfirstpass">x264_param_apply_fastfirstpass</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/* x264_param_apply_fastfirstpass:
+ *      If first-pass mode is set (rc.b_stat_read == 0, rc.b_stat_write == 1),
+ *      modify the encoder settings to disable options generally not useful on
+ *      the first pass.
+ */</span>
+X264_API <span class="token keyword">void</span> <span class="token function">x264_param_apply_fastfirstpass</span><span class="token punctuation">(</span>x264_param_t <span class="token operator">*</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="x264_param_apply_profile">x264_param_apply_profile</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> <span class="token keyword">const</span> x264_profile_names<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"baseline"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">"high"</span><span class="token punctuation">,</span> <span class="token string">"high10"</span><span class="token punctuation">,</span> <span class="token string">"high422"</span><span class="token punctuation">,</span> <span class="token string">"high444"</span><span class="token punctuation">,</span> <span class="token number">0</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token comment">/**
+* @brief                    根据 profile 对 x264_param_t 参数进行设置
+* @param[in/out]    param   x264_param_t 结构体指针
+* @param[in]        profile 字符串，指示 H264 配置文件
+* @return                   # 0         执行成功
+*                           # negative  执行失败 (e.g. invalid profile name)
+* @note:    (can be NULL, in which case the function will do nothing)
+*           Does NOT guarantee that the given profile will be used: if the restrictions
+*           of "High" are applied to settings that are already Baseline-compatible, the
+*           stream will remain baseline.  In short, it does not increase settings, only
+*           decrease them.
+
+*/</span>
+X264_API <span class="token keyword">int</span> <span class="token function">x264_param_apply_profile</span><span class="token punctuation">(</span>x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>profile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>x264_param_apply_profile() 根据 profile 对 param 进行设置，这里 profile 有 6 种选项，分别是 baseline/main/high/high10/high422/high444，如果选择无损压缩的话，profile 会被限制为 high444。</p>
-<h3 id="select-output"><a href="#select-output" class="headerlink" title="select_output"></a>select_output</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                        根据文件名的后缀确定输出的文件格式（raw H264，flv，mp4...）</span></span><br><span class="line"><span class="comment">* @param[in]        muxer       字符串，指示输出文件的 muxer 格式</span></span><br><span class="line"><span class="comment">* @param[in]        filename    字符串，指示输出文件的文件名</span></span><br><span class="line"><span class="comment">* @param[in/out]    param       x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                       # 0         执行成功</span></span><br><span class="line"><span class="comment">*                               # negative  执行失败</span></span><br><span class="line"><span class="comment">* @note:    在指定 muxer 时以 muxer 为准，muxer 为 auto 时，以输出文件拓展名为准</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">select_output</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *muxer, <span class="keyword">char</span> *filename, <span class="keyword">x264_param_t</span> *param)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="select_output">select_output</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                        根据文件名的后缀确定输出的文件格式（raw H264，flv，mp4...）
+* @param[in]        muxer       字符串，指示输出文件的 muxer 格式
+* @param[in]        filename    字符串，指示输出文件的文件名
+* @param[in/out]    param       x264_param_t 结构体指针
+* @return                       # 0         执行成功
+*                               # negative  执行失败
+* @note:    在指定 muxer 时以 muxer 为准，muxer 为 auto 时，以输出文件拓展名为准
+*/</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">select_output</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>muxer<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>filename<span class="token punctuation">,</span> x264_param_t <span class="token operator">*</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>select_output() 会从输入文件路径的字符串中提取出了扩展名，然后根据不同的扩展名设定不同的输出格式。</p>
-<h3 id="select-input"><a href="#select-input" class="headerlink" title="select_input"></a>select_input</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                            根据文件名的后缀确定输出的文件格式（raw H264，flv，mp4...）</span></span><br><span class="line"><span class="comment">* @param[in]        demuxer         字符串，指示输入文件的 demuxer 格式</span></span><br><span class="line"><span class="comment">* @param[in]        used_demuxer    字符串，指示输入文件的 demuxer 格式</span></span><br><span class="line"><span class="comment">* @param[in]        filename        字符串，指示输入文件的文件名</span></span><br><span class="line"><span class="comment">* @param[out]       p_handle        hnd_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[out]       info            video_info_t 结构体指针，保存输入文件信息</span></span><br><span class="line"><span class="comment">* @param[out]       opt             cli_input_opt_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                           # 0         执行成功</span></span><br><span class="line"><span class="comment">*                                   # negative  执行失败</span></span><br><span class="line"><span class="comment">* @note:    在指定 demuxer 时以 demuxer 为准，demuxer 为 auto 时，以输入文件拓展名为准</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">select_input</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *demuxer, <span class="keyword">char</span> *used_demuxer, <span class="keyword">char</span> *filename,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">hnd_t</span> *p_handle, <span class="keyword">video_info_t</span> *info, <span class="keyword">cli_input_opt_t</span> *opt )</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="select_input">select_input</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                            根据文件名的后缀确定输出的文件格式（raw H264，flv，mp4...）
+* @param[in]        demuxer         字符串，指示输入文件的 demuxer 格式
+* @param[in]        used_demuxer    字符串，指示输入文件的 demuxer 格式
+* @param[in]        filename        字符串，指示输入文件的文件名
+* @param[out]       p_handle        hnd_t 结构体指针
+* @param[out]       info            video_info_t 结构体指针，保存输入文件信息
+* @param[out]       opt             cli_input_opt_t 结构体指针
+* @return                           # 0         执行成功
+*                                   # negative  执行失败
+* @note:    在指定 demuxer 时以 demuxer 为准，demuxer 为 auto 时，以输入文件拓展名为准
+*/</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">select_input</span><span class="token punctuation">(</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>demuxer<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>used_demuxer<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>filename<span class="token punctuation">,</span>
+                         hnd_t <span class="token operator">*</span>p_handle<span class="token punctuation">,</span> video_info_t <span class="token operator">*</span>info<span class="token punctuation">,</span> cli_input_opt_t <span class="token operator">*</span>opt <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>select_input() 首先获取输入文件名的扩展名；然后根据扩展名不同调用不用的 open_file 函数来设置不同的输入格式。</p>
-<h2 id="encode-函数"><a href="#encode-函数" class="headerlink" title="encode 函数"></a>encode 函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                    开始进行编码</span></span><br><span class="line"><span class="comment">* @param[in]        param   x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        opt     cli_opt_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                   # 0         执行成功</span></span><br><span class="line"><span class="comment">*                           # negative  执行失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">encode</span><span class="params">( <span class="keyword">x264_param_t</span> *param, <span class="keyword">cli_opt_t</span> *opt )</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="encode-函数">encode 函数</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                    开始进行编码
+* @param[in]        param   x264_param_t 结构体指针
+* @param[in]        opt     cli_opt_t 结构体指针
+* @return                   # 0         执行成功
+*                           # negative  执行失败
+*/</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">encode</span><span class="token punctuation">(</span> x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> cli_opt_t <span class="token operator">*</span>opt <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从源代码可以梳理出来 encode() 的流程：</p>
-<ol>
+<ol type="1">
 <li>调用 x264_encoder_open() 打开 H.264 编码器。</li>
 <li>调用 x264_encoder_parameters() 获得当前的参数集 x264_param_t，用于后续步骤中的一些配置。</li>
 <li>调用输出格式（H.264裸流、FLV、mp4 等）对应 cli_output_t 结构体的 set_param() 方法，为输出格式的封装器设定参数。其中参数源自于上一步骤得到的 x264_param_t。</li>
 <li>如果不是在每个 keyframe 前面都增加 SPS/PPS/SEI 的话，就调用 x264_encoder_headers() 在整个码流前面加 SPS/PPS/SEI。</li>
-<li>进入一个循环中进行一帧一帧的将 YUV 编码为 H.264：<ol>
+<li>进入一个循环中进行一帧一帧的将 YUV 编码为 H.264：
+<ol type="1">
 <li>调用输入格式（YUV、Y4M 等）对应的 cli_vid_filter_t 结构体 get_frame() 方法，获取一帧 YUV 数据。</li>
 <li>调用 encode_frame() 编码该帧 YUV 数据为 H.264 数据，并且输出出来。该函数内部调用 x264_encoder_encode() 完成编码工作，调用输出格式对应 cli_output_t 结构体的 write_frame() 完成了输出工作。</li>
 <li>调用输入格式（YUV、Y4M 等）对应的 cli_vid_filter_t 结构体 release_frame() 方法，释放刚才获取的YUV 数据。</li>
 <li>调用 print_status() 输出一些统计信息。</li>
-</ol>
-</li>
-<li>编码即将结束的时候，进入另一个循环，输出编码器中缓存的视频帧：<ol>
+</ol></li>
+<li>编码即将结束的时候，进入另一个循环，输出编码器中缓存的视频帧：
+<ol type="1">
 <li>不再传递新的 YUV 数据，直接调用 encode_frame()，将编码器中缓存的剩余几帧数据编码输出出来。</li>
 <li>调用 print_status() 输出一些统计信息。</li>
-</ol>
-</li>
+</ol></li>
 <li>调用 x264_encoder_close() 关闭 H.264 编码器。</li>
 </ol>
 <p>encode() 的流程中涉及到 libx264 的几个关键的API，这些函数较为复杂，后续再进行分析：</p>
@@ -457,7 +503,8 @@
 <li>x264_encoder_encode()：编码一帧数据。</li>
 <li>x264_encoder_close()：关闭H.264编码器。</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020/article/details/45583217">x264源代码简单分析：x264命令行工具（x264.exe） 雷霄骅的专栏-CSDN博客</a></li>
 </ul>
 
@@ -466,31 +513,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\2633a00a\" rel="bookmark">源码阅读 x264 - SPS & PPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\ae3a0f38\" rel="bookmark">源码阅读 x264 - 代价计算</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\10604d20\" rel="bookmark">源码阅读 x264 - 去块效应滤波</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\b66cfff2\" rel="bookmark">源码阅读 x264 - 帧内预测</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\f0753f9a\" rel="bookmark">源码阅读 x264 - 离散余弦变换</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -533,42 +560,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -576,132 +575,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/3bc2314a/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/3bc2314a/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/3bc2314a/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

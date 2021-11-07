@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="简介PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO&#x2F;IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器的输">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="简介 PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO&#x2F;IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频封装 - PES 封装格式">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/f33d2f13/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="简介PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO&#x2F;IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器的输">
+<meta property="og:description" content="简介 PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO&#x2F;IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729232326.jpg">
 <meta property="article:published_time" content="2020-07-29T07:29:34.000Z">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/f33d2f13/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>音视频封装 - PES 封装格式 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/f33d2f13/","path":"post/2020/f33d2f13/","title":"音视频封装 - PES 封装格式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>音视频封装 - PES 封装格式 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PES-packet"><span class="nav-number">2.1.</span> <span class="nav-text">PES packet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pes-packet"><span class="nav-number">2.1.</span> <span class="nav-text">PES packet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2020/f33d2f13/" class="post-meta-item leancloud_visitors" data-flag-title="音视频封装 - PES 封装格式" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/f33d2f13/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/f33d2f13/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -371,19 +279,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO/IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器的输出）的携带。 通过将 PES 数据包头内 ES 的顺序数据字节封装组成 PES。</p>
-<a id="more"></a>
-<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="PES-packet"><a href="#PES-packet" class="headerlink" title="PES packet"></a>PES packet</h3><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729232326.jpg" alt="PES Packet"></p>
+        <h2 id="简介">简介</h2>
+<p>PES(Packetized elementary stream) 是 MPEG-2 Part 1, Systems（ISO/IEC 13818-1） 和 ITU-T H.222.0 中的规范，它们定义了 PS(MPEG program streams) 和 TS(MPEG transport streams) 中数据包中 ES(elementary stream)（通常是音频或视频编码器的输出）的携带。 通过将 PES 数据包头内 ES 的顺序数据字节封装组成 PES。</p>
+<span id="more"></span>
+<h2 id="格式">格式</h2>
+<h3 id="pes-packet">PES packet</h3>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200729232326.jpg" alt="PES Packet" /><figcaption aria-hidden="true">PES Packet</figcaption>
+</figure>
 <ul>
-<li><p><strong>Packet start code prefix</strong>：包头起始码，固定为 0x000001，占位 24bit；</p>
-</li>
-<li><p><strong>Stream id</strong>：PES 包中的负载流类型，一般视频为 0xe0，音频为 0xc0，占位 8bit；</p>
-</li>
-<li><p><strong>PES packet length</strong>：PES 包长度，包括此字节后的可选包头和负载的长度，占位 16bit；</p>
-</li>
+<li><p><strong>Packet start code prefix</strong>：包头起始码，固定为 0x000001，占位 24bit；</p></li>
+<li><p><strong>Stream id</strong>：PES 包中的负载流类型，一般视频为 0xe0，音频为 0xc0，占位 8bit；</p></li>
+<li><p><strong>PES packet length</strong>：PES 包长度，包括此字节后的可选包头和负载的长度，占位 16bit；</p></li>
 <li><p>Optional PES Header，顺序依次为：</p>
 <ul>
-<li>“10” 字段：占位 2bit；</li>
+<li>"10" 字段：占位 2bit；</li>
 <li>PES scrambling control：加密模式，占 2bit；00 未加密，01 或 10 或 11 由用户定义；</li>
 <li>PES priority：有效负载的优先级，占位 1bit；值为 1 比值为 0 的负载优先级高；</li>
 <li>Data alignment indicator：数据定位指示器，占位 1bit；</li>
@@ -398,23 +308,21 @@
 <li>PES_CRC_flag：占位 1bit；置 1 表示 PES 分组有 CRC 字段，0 无此字段；</li>
 <li>PES_extension_flag：占位 1bit；扩展标志位，置 1 表示有扩展字段，0 无此字段；</li>
 <li>PES header data length：(UI)PES 首部中可选字段和填充字段的长度；占位 8bit；可选字段的内容由上面 7 个 flags 来进行控制；</li>
-</ul>
-</li>
+</ul></li>
 <li><p>Optional fields：可选字段的描述信息区域，其内容由上面的 7 个 flag 来控制；</p>
 <ul>
 <li><p><strong>PTS/DTS 字段</strong>：显示时间戳 / 解码时间戳，占位 (1~2) * 40bit，当 <code>PTS_DTS_flags == 11</code> 时此字段存在 2 个，占 80bit，当 <code>PTS_DTS_flags == 10</code> 时此字段存在 1 个，占 40bit；时间占用 33 个 bit，PTS 和 DTS 的内容是在这 40bit 中取 33 位，方式相同；</p>
 <ul>
 <li><em>PTS(presentation time stamp) 显示时间戳和 DTS(Decoding Time Stamp) 解码时间戳，是用来音视频同步的，是打在 PES 包的包头里面的，PTS/DTS 是相对 SCR(系统参考) 的时间戳，是以 90000 为单位的，PTS/DTS 到 ms 的转换公式是 PTS/90，系统时钟频率 (H264 采样频率?) 为 90Khz，所以转换到秒为 PTS/90000，所以如果是以 ms 为单位的播放器，PTS/DTS 是要使用公式 ms=pts/90 来转换才行的，而如果是以时钟频率为单位的话，则直接将 PTS/DTS 送进去解码即可；如果没有 B 帧，PTS 和 DTS 的顺序应该是一致的，如果有 B 帧，则需要先解码 P 帧，才能解出来 B 帧，所以需要 PTS 和 DTS 来控制解码时间和显示时间；</em></li>
-<li>start_code：起始码，占位 4bit；若 <code>PTS_DTS_flags == &#39;10&#39;</code> ，则说明只有 PTS；若 <code>PTS_DTS_flags == &#39;11&#39;</code> ，则 PTS 和 DTS 都存在，PTS 的起始码为 0011，DTS 的起始码为 0001；</li>
+<li>start_code：起始码，占位 4bit；若 <code>PTS_DTS_flags == '10'</code> ，则说明只有 PTS；若 <code>PTS_DTS_flags == '11'</code> ，则 PTS 和 DTS 都存在，PTS 的起始码为 0011，DTS 的起始码为 0001；</li>
 <li>PTS[32..30]：占位 3bit；</li>
 <li>marker_bit：占位 1bit；</li>
 <li>PTS[29..15]：占位 15bit；</li>
 <li>marker_bit：占位 1bit；</li>
 <li>PTS[14..0]：占位 15bit；</li>
 <li>marker_bit：占位 1bit；</li>
-<li><em>PTS/DTS  = （PTS1 &amp; 0x0e) &lt;<29 + (PTS2 & 0xfffe) << 14 + (PTS3 & 0xfffe ) >&gt; 1;</em></li>
-</ul>
-</li>
+<li><em>PTS/DTS = （PTS1 &amp; 0x0e) &lt;&lt;29 + (PTS2 &amp; 0xfffe) &lt;&lt; 14 + (PTS3 &amp; 0xfffe ) &gt;&gt; 1;</em></li>
+</ul></li>
 <li><p>ESCR 字段：此字段占位 48bit，由 33bit 的 ESCR_base 字段和 9bit 的 ESCR_extension 字段组成， <code>ESCR_flag == 1</code> 时此字段存在；数据依次顺序：</p>
 <ul>
 <li>Reserved：保留字段，占位 2bit；</li>
@@ -426,56 +334,51 @@
 <li>marker_bit：占位 1bit；</li>
 <li>ESCR_extension：占位 9bit；周期数，取值范围 0~299；循环一次，base+1；</li>
 <li>marker_bit：占位 1bit；</li>
-</ul>
-</li>
+</ul></li>
 <li><p>ES rate 字段：目标解码器接收 PES 分组字节速率，禁止为 0，占位 24bit， <code>ES_rate_flag == 1</code> 时此字段存在；数据顺序为：</p>
 <ul>
 <li>marker_bit：占位 1bit；</li>
 <li>ES_rate：占位 22bit；</li>
 <li>marker_bit：占位 1bit；</li>
-</ul>
-</li>
+</ul></li>
 <li><p>Trick mode control 字段：表示哪种 trick mode 被应用于相应的视频流，占位 8bit， <code>DSM_trick_mode_flag == 1</code> 时此字段存在；其中 trick_mode_control 占前 3bit，根据其值后面有 5bit 的不同内容；</p>
 <ul>
-<li>如果 trick_mode_control == ‘000’，依次字节顺序为：<ul>
+<li>如果 trick_mode_control == ‘000’，依次字节顺序为：
+<ul>
 <li>field_id：占位 2bit；</li>
 <li>intra_slice_refresh ：占 1bit；</li>
 <li>frequency_truncation：占 2bit；</li>
-</ul>
-</li>
-<li>如果 trick_mode_control == ‘001’，依次字节顺序为：<ul>
+</ul></li>
+<li>如果 trick_mode_control == ‘001’，依次字节顺序为：
+<ul>
 <li>rep_cntrl：占位 5bit；</li>
-</ul>
-</li>
-<li>如果 trick_mode_control == ‘010’，依次字节顺序为：<ul>
+</ul></li>
+<li>如果 trick_mode_control == ‘010’，依次字节顺序为：
+<ul>
 <li>field_id：占位 2bit；</li>
 <li>Reserved：占位 3bit；</li>
-</ul>
-</li>
-<li>如果 trick_mode_control == ‘011’，依次字节顺序为：<ul>
+</ul></li>
+<li>如果 trick_mode_control == ‘011’，依次字节顺序为：
+<ul>
 <li>field_id：占位 2bit；</li>
 <li>intra_slice_refresh：占 1bit；</li>
 <li>frequency_truncation：占 2bit；</li>
-</ul>
-</li>
-<li>如果 trick_mode_control== ‘100’，依次字节顺序为：<ul>
+</ul></li>
+<li>如果 trick_mode_control== ‘100’，依次字节顺序为：
+<ul>
 <li>rep_cntrl：占位 5bit；</li>
-</ul>
-</li>
-<li>其他情况，字节顺序为：<ul>
+</ul></li>
+<li>其他情况，字节顺序为：
+<ul>
 <li>reserved ：占位 5bit；</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li><p>Additional copy info 字段：占 8 个 bit， <code>Additional_copy_info_flag == 1</code> 时此字段存在；数据顺序为：</p>
 <ul>
 <li>marker_bit：占位 1bit；</li>
 <li>copy info 字段：占位 7bit；表示和版权相关的私有数据；</li>
-</ul>
-</li>
-<li><p>Previous PES CRC 字段：占位 16bit 字段，包含 CRC 值， <code>PES_CRC_flag == 1</code> 时此字段存在；</p>
-</li>
+</ul></li>
+<li><p>Previous PES CRC 字段：占位 16bit 字段，包含 CRC 值， <code>PES_CRC_flag == 1</code> 时此字段存在；</p></li>
 <li><p>PES extension 字段：PES 扩展字段， <code>PES_extension_flag == 1</code> 时此字段存在；内容如下，字节顺序依次为：</p>
 <ul>
 <li>PES_private_data_flag：占 1bit，置 1 表示有私有数据，0 则无；</li>
@@ -484,46 +387,42 @@
 <li>P-STD_buffer_flag：占位 1bit，置 1 表示有 P-STD_buffer 字段，0 则无此字段；</li>
 <li>Reserved 字段：3bit；</li>
 <li>PES_extension_flag_2：占位 1bit，置 1 表示有扩展字段，0 则无此字段；</li>
-</ul>
-</li>
+</ul></li>
 <li><p>Optional field ：PES 扩展字段的可选字段内容顺序为：</p>
 <ul>
 <li>PES_private_data 字段：私有数据内容，占位 128bit， <code>PES_private_data_flag == 1</code> 时此字段存在；</li>
-<li>Pack_header_field 字段： <code>Pack_header_field_flag == 1</code> 时此字段存在；字段组成顺序如下：<ul>
+<li>Pack_header_field 字段： <code>Pack_header_field_flag == 1</code> 时此字段存在；字段组成顺序如下：
+<ul>
 <li>Pack_field_length 字段：(UI) 指定后面的 field 的长度，占位 8bit；</li>
 <li>pack_header_field()：长度为 Pack_field_length 指定；</li>
-</ul>
-</li>
-<li>Program_packet_sequence_counter 字段：计数器字段，16 个 bit；当 flag 字段 <code>Program_packet_sequence_counter_flag == 1</code> 时此字段存在；字节顺序依次为：<ul>
+</ul></li>
+<li>Program_packet_sequence_counter 字段：计数器字段，16 个 bit；当 flag 字段 <code>Program_packet_sequence_counter_flag == 1</code> 时此字段存在；字节顺序依次为：
+<ul>
 <li>marker_bit：占位 1bit；</li>
 <li>packet_sequence_counter 字段：(UI) 占位 7bit；</li>
 <li>marker_bit：占位 1bit；</li>
 <li>MPEG1_MPEG2_identifier：占位 1bit；置位 1 表示此 PES 包的负载来自 MPEG1 流，置位 0 表示此 PES 包的负载来自 PS 流；</li>
 <li>original_stuff_length：(UI) 占位 6bit；表示 PES 头部填充字节长度；</li>
-</ul>
-</li>
-<li>P-STD_buffer 字段：表示 P-STD_buffer 内容，占位 16bit； <code>P-STD_buffer_flag == &#39;1&#39;</code> 时此字段存在；字节顺序依次为：<ul>
-<li>‘01’字段：占位 2bit；</li>
+</ul></li>
+<li>P-STD_buffer 字段：表示 P-STD_buffer 内容，占位 16bit； <code>P-STD_buffer_flag == '1'</code> 时此字段存在；字节顺序依次为：
+<ul>
+<li>'01'字段：占位 2bit；</li>
 <li>P-STD_buffer_scale：占位 1bit；表示用来解释后面 P-STD_buffer_size 字段的比例因子；如果之前的 stream_id 表示音频流，则此值应为 0，若之前的 stream_id 表示视频流，则此值应为 1，对于其他 stream 类型，此值可以 0 或 1；</li>
 <li>P-STD_buffer_size：占位 13bit；无符号整数；大于或等于所有 P-STD 输入缓冲区大小 BSn 的最大值；若 P-STD_buffer_scale == 0，则 P-STD_buffer_size 以 128 字节为单位；若 P-STD_buffer_scale == 1，则 P-STD_buffer_size 以 1024 字节为单位；</li>
-</ul>
-</li>
-<li>PES_extension2 字段：扩展字段的扩展字段；占用 N*8 个 bit， <code>PES_extension_flag_2 == &#39;1&#39;</code> 时此字段存在；字节顺序依次为：<ul>
+</ul></li>
+<li>PES_extension2 字段：扩展字段的扩展字段；占用 N*8 个 bit， <code>PES_extension_flag_2 == '1'</code> 时此字段存在；字节顺序依次为：
+<ul>
 <li>marker_bit：占位 1bit；</li>
 <li>PES_extension_field_length：占位 7bit，表示扩展区域的长度；</li>
 <li>Reserved 字段：占位 8*PES_extension_field_length 个 bit；</li>
+</ul></li>
+</ul></li>
+<li><p>Stuffing bytes：填充字段，固定为 0xFF；不能超过 32 个字节；</p></li>
+<li><p>PES_packet_data_byte：PES 包负载中的数据，即 ES 原始流数据；</p></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-<li><p>Stuffing bytes：填充字段，固定为 0xFF；不能超过 32 个字节；</p>
-</li>
-<li><p>PES_packet_data_byte：PES 包负载中的数据，即 ES 原始流数据；</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] MPEG-2 Part 1, Systems</li>
 <li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/appledurian/article/details/70851428">PES,TS,PS,RTP等流的打包格式解析之PES流_appledurian的博客</a></li>
 <li>[3] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Packetized_elementary_stream">Packetized elementary stream - Wikipedia</a></li>
@@ -534,13 +433,11 @@
     
     
     
-      
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -583,42 +480,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -626,132 +495,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/f33d2f13/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/f33d2f13/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/f33d2f13/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

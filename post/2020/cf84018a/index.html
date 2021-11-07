@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="概述协议简介RTSPRTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 建立的控制媒体流的传输，该协议用于 C&#x2F;S 模型, 是一个 基于文本 的协议, 用于在客户端和服务器端建立和协商实时流会话。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="概述 协议简介 RTSP RTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 建立的控制媒体流的传输，该协议用于 C&#x2F;S 模型, 是一个 基于文本 的协议, 用于在客户端和服务器端建立和协商实时流会话。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="流媒体传输 - RTSP 协议">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/cf84018a/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="概述协议简介RTSPRTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 建立的控制媒体流的传输，该协议用于 C&#x2F;S 模型, 是一个 基于文本 的协议, 用于在客户端和服务器端建立和协商实时流会话。">
+<meta property="og:description" content="概述 协议简介 RTSP RTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 建立的控制媒体流的传输，该协议用于 C&#x2F;S 模型, 是一个 基于文本 的协议, 用于在客户端和服务器端建立和协商实时流会话。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-27T05:33:00.000Z">
 <meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/cf84018a/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>流媒体传输 - RTSP 协议 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/cf84018a/","path":"post/2020/cf84018a/","title":"流媒体传输 - RTSP 协议"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>流媒体传输 - RTSP 协议 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">协议简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RTSP"><span class="nav-number">1.1.1.</span> <span class="nav-text">RTSP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTP"><span class="nav-number">1.1.2.</span> <span class="nav-text">RTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTCP"><span class="nav-number">1.1.3.</span> <span class="nav-text">RTCP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E6%B8%A0%E9%81%93"><span class="nav-number">1.2.</span> <span class="nav-text">传输渠道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RTSP-%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">RTSP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RTSP-URL"><span class="nav-number">2.1.</span> <span class="nav-text">RTSP URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTSP-%E6%8A%A5%E6%96%87"><span class="nav-number">2.2.</span> <span class="nav-text">RTSP 报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OPTIONS"><span class="nav-number">2.3.</span> <span class="nav-text">OPTIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DESCRIBE"><span class="nav-number">2.4.</span> <span class="nav-text">DESCRIBE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SETUP"><span class="nav-number">2.5.</span> <span class="nav-text">SETUP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLAY"><span class="nav-number">2.6.</span> <span class="nav-text">PLAY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TEARDOWN"><span class="nav-number">2.7.</span> <span class="nav-text">TEARDOWN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">协议简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rtsp"><span class="nav-number">1.1.1.</span> <span class="nav-text">RTSP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rtp"><span class="nav-number">1.1.2.</span> <span class="nav-text">RTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rtcp"><span class="nav-number">1.1.3.</span> <span class="nav-text">RTCP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E6%B8%A0%E9%81%93"><span class="nav-number">1.2.</span> <span class="nav-text">传输渠道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rtsp-%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">RTSP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rtsp-url"><span class="nav-number">2.1.</span> <span class="nav-text">RTSP URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rtsp-%E6%8A%A5%E6%96%87"><span class="nav-number">2.2.</span> <span class="nav-text">RTSP 报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#options"><span class="nav-number">2.3.</span> <span class="nav-text">OPTIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#describe"><span class="nav-number">2.4.</span> <span class="nav-text">DESCRIBE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setup"><span class="nav-number">2.5.</span> <span class="nav-text">SETUP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#play"><span class="nav-number">2.6.</span> <span class="nav-text">PLAY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#teardown"><span class="nav-number">2.7.</span> <span class="nav-text">TEARDOWN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/cf84018a/" class="post-meta-item leancloud_visitors" data-flag-title="流媒体传输 - RTSP 协议" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/cf84018a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/cf84018a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -370,20 +278,25 @@
     
     <div class="post-body" itemprop="articleBody">
         <!-- toc -->
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="协议简介"><a href="#协议简介" class="headerlink" title="协议简介"></a>协议简介</h3><h4 id="RTSP"><a href="#RTSP" class="headerlink" title="RTSP"></a>RTSP</h4><p>RTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 <strong>建立的控制媒体流的传输</strong>，该协议用于 <strong>C/S 模型</strong>, 是一个 <strong>基于文本</strong> 的协议, 用于在客户端和服务器端建立和协商实时流会话。</p>
-<a id="more"></a>
-<h4 id="RTP"><a href="#RTP" class="headerlink" title="RTP"></a>RTP</h4><p>RTP(Real-time Transport Potocol) 实时传输协议，用于 <strong>实时数据的传输</strong>。</p>
+<h2 id="概述">概述</h2>
+<h3 id="协议简介">协议简介</h3>
+<h4 id="rtsp">RTSP</h4>
+<p>RTSP(Real-Time Stream Protocol) 实时流传输协议是一种基于文本的应用层协议，常被用于 <strong>建立的控制媒体流的传输</strong>，该协议用于 <strong>C/S 模型</strong>, 是一个 <strong>基于文本</strong> 的协议, 用于在客户端和服务器端建立和协商实时流会话。</p>
+<span id="more"></span>
+<h4 id="rtp">RTP</h4>
+<p>RTP(Real-time Transport Potocol) 实时传输协议，用于 <strong>实时数据的传输</strong>。</p>
 <blockquote>
 <p>详见：<a href="/post/2020/faccfa50/" title="流媒体传输 - RTP 协议">流媒体传输 - RTP 协议</a></p>
 </blockquote>
-<h4 id="RTCP"><a href="#RTCP" class="headerlink" title="RTCP"></a>RTCP</h4><p>RTCP(Real-time Transport Control Protocol) 实时传输控制协议， <code>RTCP</code> 为 <code>RTP</code> 数据流提供 <strong>信道外控制</strong>，RTCP 的主要功能是保证服务质量，<strong>为 RTP 提供服务质量反馈</strong>。</p>
+<h4 id="rtcp">RTCP</h4>
+<p>RTCP(Real-time Transport Control Protocol) 实时传输控制协议， <code>RTCP</code> 为 <code>RTP</code> 数据流提供 <strong>信道外控制</strong>，RTCP 的主要功能是保证服务质量，<strong>为 RTP 提供服务质量反馈</strong>。</p>
 <blockquote>
 <p>详见：<a href="/post/2020/faccfa50/" title="流媒体传输 - RTP 协议">流媒体传输 - RTP 协议</a></p>
 </blockquote>
-<h3 id="传输渠道"><a href="#传输渠道" class="headerlink" title="传输渠道"></a>传输渠道</h3><div class="table-container">
+<h3 id="传输渠道">传输渠道</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>协议名称</th>
 <th>协议文档</th>
 <th>传输层协议</th>
@@ -391,19 +304,19 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>RTSP</td>
 <td><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc2326.pdf">RFC 2326</a><br><a target="_blank" rel="noopener" href="https://tools.ietf.org/pdf/rfc7826.pdf">RFC 7836</a></td>
 <td>TCP/UDP</td>
 <td>控制媒体流的传输</td>
 </tr>
-<tr>
+<tr class="even">
 <td>RTP</td>
 <td><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc3550.pdf">RFC 3550</a><br><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc3551.pdf">RFC 3551</a><br><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc6184.pdf">RFC 6184</a></td>
 <td>UDP/TCP</td>
 <td>媒体流的传输</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>RTCP</td>
 <td><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc3550.pdf">RFC 3550</a></td>
 <td>UDP/TCP</td>
@@ -411,22 +324,23 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="RTSP-协议"><a href="#RTSP-协议" class="headerlink" title="RTSP 协议"></a>RTSP 协议</h2><h3 id="RTSP-URL"><a href="#RTSP-URL" class="headerlink" title="RTSP URL"></a>RTSP URL</h3><pre><code>rtsp_URL = &quot;rtsp://&quot; host [&quot;:&quot; port] [ abs_path ]
+<h2 id="rtsp-协议">RTSP 协议</h2>
+<h3 id="rtsp-url">RTSP URL</h3>
+<pre><code>rtsp_URL = &quot;rtsp://&quot; host [&quot;:&quot; port] [ abs_path ]
 host: 有效的域名或 IP 地址
 port: 端口号，缺省为 554，若为缺省可不填写，否则必须写明
-例如：rtsp://media.example.com:554/twister/audiotrack
-</code></pre><p>以海康摄像机为例，其 RTSP URL 格式为：</p>
+例如：rtsp://media.example.com:554/twister/audiotrack</code></pre>
+<p>以海康摄像机为例，其 RTSP URL 格式为：</p>
 <pre><code>rtsp://[username]:[password]@[ip]:[port]/[channel]/[subtype]/av_stream
 例如：
 rtsp://admin:12345@192.168.1.67:554/h264/ch1/main/av_stream
-rtsp://admin:12345@192.168.1.67/mpeg4/ch1/sub/av_stream
-</code></pre><h3 id="RTSP-报文"><a href="#RTSP-报文" class="headerlink" title="RTSP 报文"></a>RTSP 报文</h3><p>RTSP 是一种基于文本的协议，用 CRLF(回车换行) 作为每一行的结束符，其好处是，在使用过程中可以方便地增加自定义参数，也方便抓包分析。从消息传送方向上来分，RTSP 的报文有两类：请求报文和响应报文。请求报文是指从客户端向服务器发送的请求 (也有少量从服务器向客户端发送的请求)，响应报文是指从服务器到客户端的回应。</p>
+rtsp://admin:12345@192.168.1.67/mpeg4/ch1/sub/av_stream</code></pre>
+<h3 id="rtsp-报文">RTSP 报文</h3>
+<p>RTSP 是一种基于文本的协议，用 CRLF(回车换行) 作为每一行的结束符，其好处是，在使用过程中可以方便地增加自定义参数，也方便抓包分析。从消息传送方向上来分，RTSP 的报文有两类：请求报文和响应报文。请求报文是指从客户端向服务器发送的请求 (也有少量从服务器向客户端发送的请求)，响应报文是指从服务器到客户端的回应。</p>
 <p>RTSP 请求报文的常用方法：</p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>方法</th>
 <th>方向</th>
 <th>对象</th>
@@ -435,72 +349,77 @@ rtsp://admin:12345@192.168.1.67/mpeg4/ch1/sub/av_stream
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>DESCRIBE</td>
 <td>C-&gt;S</td>
 <td>P, S</td>
 <td>推荐</td>
 <td>得到会话描述信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ANNOUNCE</td>
 <td>C-&gt;S, S-&gt;C</td>
 <td>P, S</td>
 <td>可选</td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>GET_PARAMETER</td>
 <td>C-&gt;S, S-&gt;C</td>
 <td>P, S</td>
 <td>可选</td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>OPTIONS</td>
 <td>C-&gt;S, S-&gt;C</td>
 <td>P, S</td>
 <td>必须 (S-&gt;C: 可选)</td>
 <td>获得服务器提供的可用方法</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PAUSE</td>
 <td>C-&gt;S</td>
 <td>P, S</td>
 <td>推荐</td>
 <td>客户端发起暂停播放请求</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLAY</td>
 <td>C-&gt;S</td>
 <td>P, S</td>
 <td>必须</td>
 <td>客户端发起播放请求</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>RECORD</td>
 <td>C-&gt;S</td>
 <td>P, S</td>
 <td>可选</td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>REDIRECT</td>
 <td>S-&gt;C</td>
 <td>P, S</td>
 <td>可选</td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>SETUP</td>
 <td>C-&gt;S</td>
 <td>S</td>
 <td>必须</td>
 <td>客户端请求建立会话</td>
 </tr>
-<tr>
+<tr class="even">
 <td>SET_PARAMETER</td>
 <td>C-&gt;S, S-&gt;C</td>
 <td>P, S</td>
 <td>可选</td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>TEARDOWN</td>
 <td>C-&gt;S</td>
 <td>P, S</td>
@@ -509,7 +428,6 @@ rtsp://admin:12345@192.168.1.67/mpeg4/ch1/sub/av_stream
 </tr>
 </tbody>
 </table>
-</div>
 <p>通过 <code>VLC</code> 播放 <code>RTSP</code> 网络流，经抓包得以下内容：</p>
 <pre><code>OPTIONS rtsp://192.168.199.152:554/live/test RTSP/1.0
 CSeq: 2
@@ -600,12 +518,11 @@ RTSP/1.0 200 OK
 CSeq: 7
 Date: Mon, Jul 27 2020 15:32:41 GMT
 Server: ZLMediaKit-5.0(build in Jul 12 2020 14:02:13)
-Session: hEu0JzMKcfK2
-</code></pre><p>从上述抓包中看出，VLC 在播放 RTSP 网络流时，客户端与服务端经过了 6 次交互：</p>
-<div class="table-container">
+Session: hEu0JzMKcfK2</code></pre>
+<p>从上述抓包中看出，VLC 在播放 RTSP 网络流时，客户端与服务端经过了 6 次交互：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>序号</th>
 <th>方向</th>
 <th>方法</th>
@@ -613,73 +530,73 @@ Session: hEu0JzMKcfK2
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1</td>
 <td>C-&gt;S</td>
 <td>OPTIONS</td>
 <td>Client 询问 Server 有哪些方法可用</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1</td>
 <td>S-&gt;C</td>
 <td>OPTIONS</td>
 <td>Server 回应所有可用的方法</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>2</td>
 <td>C-&gt;S</td>
 <td>DESCRIBE</td>
 <td>Client 请求得到 Server 提供的媒体初始化描述信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2</td>
 <td>S-&gt;C</td>
 <td>DESCRIBE</td>
 <td>Server 回应媒体初始化信息，主要是 SDP （会话描述协议）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>3</td>
 <td>C-&gt;S</td>
 <td>SETUP</td>
 <td>设置视频会话属性以及传输模式，请求建立会话</td>
 </tr>
-<tr>
+<tr class="even">
 <td>3</td>
 <td>S-&gt;C</td>
 <td>SETUP</td>
 <td>Server 建立会话，返回会话标识以及会话相关信息</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>4</td>
 <td>C-&gt;S</td>
 <td>SETUP</td>
 <td>设置音频会话属性以及传输模式，请求建立会话</td>
 </tr>
-<tr>
+<tr class="even">
 <td>4</td>
 <td>S-&gt;C</td>
 <td>SETUP</td>
 <td>Server 建立会话，返回会话标识以及会话相关信息</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>5</td>
 <td>C-&gt;S</td>
 <td>PLAY</td>
 <td>Client 请求播放</td>
 </tr>
-<tr>
+<tr class="even">
 <td>5</td>
 <td>S-&gt;C</td>
 <td>PLAY</td>
 <td>Server 回应播放请求</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>6</td>
 <td>C-&gt;S</td>
 <td>TEARDOWN</td>
 <td>Client 请求关闭会话</td>
 </tr>
-<tr>
+<tr class="even">
 <td>6</td>
 <td>S-&gt;C</td>
 <td>TEARDOWN</td>
@@ -687,9 +604,9 @@ Session: hEu0JzMKcfK2
 </tr>
 </tbody>
 </table>
-</div>
 <p>下面我们一步一步了解 RTSP 会话建立流程：</p>
-<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>OPTIONS 请求可以在任何时间被发出，而且不会影响到 Server 的状态，例如：</p>
+<h3 id="options">OPTIONS</h3>
+<p>OPTIONS 请求可以在任何时间被发出，而且不会影响到 Server 的状态，例如：</p>
 <pre><code> C-&gt;S:  OPTIONS * RTSP/1.0
         CSeq: 1
         Require: implicit-play
@@ -697,8 +614,9 @@ Session: hEu0JzMKcfK2
 
  S-&gt;C:  RTSP/1.0 200 OK
         CSeq: 1
-        Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE
-</code></pre><h3 id="DESCRIBE"><a href="#DESCRIBE" class="headerlink" title="DESCRIBE"></a>DESCRIBE</h3><p>客户端向服务器请求媒体资源描述，服务器端通过 SDP(Session Description Protocol) 格式回应客户端的请求。资源描述中会列出所请求媒体的媒体流及其相关信息，典型情况下，音频和视频分别作为一个媒体流传输。例如：</p>
+        Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE</code></pre>
+<h3 id="describe">DESCRIBE</h3>
+<p>客户端向服务器请求媒体资源描述，服务器端通过 SDP(Session Description Protocol) 格式回应客户端的请求。资源描述中会列出所请求媒体的媒体流及其相关信息，典型情况下，音频和视频分别作为一个媒体流传输。例如：</p>
 <pre><code> C-&gt;S: DESCRIBE rtsp://server.example.com/fizzle/foo RTSP/1.0
        CSeq: 312
        Accept: application/sdp, application/rtsl, application/mheg
@@ -721,11 +639,12 @@ Session: hEu0JzMKcfK2
        m=audio 3456 RTP/AVP 0
        m=video 2232 RTP/AVP 31
        m=whiteboard 32416 UDP WB
-       a=orient:portrait
-</code></pre><blockquote>
+       a=orient:portrait</code></pre>
+<blockquote>
 <p>媒体流及其相关信息由 SDP(Session Description Protocol) 格式携带，关于 SDP 的详细说明，参见拓展阅读 5</p>
 </blockquote>
-<h3 id="SETUP"><a href="#SETUP" class="headerlink" title="SETUP"></a>SETUP</h3><p>SETUP 请求确定了具体的媒体流如何传输，该请求必须在 PLAY 请求之前发送。SETUP 请求包含媒体流的 URL 和客户端用于接收 RTP 数据 (audio or video) 的端口以及接收 RTCP 数据 (meta information) 的端口。服务器端的回复通常包含客户端请求参数的确认，并会补充缺失的部分，比如服务器选择的发送端口。每一个媒体流在发送 PLAY 请求之前，都要首先通过 SETUP 请求来进行相应的配置。</p>
+<h3 id="setup">SETUP</h3>
+<p>SETUP 请求确定了具体的媒体流如何传输，该请求必须在 PLAY 请求之前发送。SETUP 请求包含媒体流的 URL 和客户端用于接收 RTP 数据 (audio or video) 的端口以及接收 RTCP 数据 (meta information) 的端口。服务器端的回复通常包含客户端请求参数的确认，并会补充缺失的部分，比如服务器选择的发送端口。每一个媒体流在发送 PLAY 请求之前，都要首先通过 SETUP 请求来进行相应的配置。</p>
 <pre><code>C-&gt;S: SETUP rtsp://example.com/foo/bar/baz.rm RTSP/1.0
       CSeq: 302
       Transport: RTP/AVP;unicast;client_port=4588-4589
@@ -734,8 +653,9 @@ S-&gt;C: RTSP/1.0 200 OK
       CSeq: 302
       Date: 23 Jan 1997 15:35:06 GMT
       Session: 47112344
-      Transport: RTP/AVP;unicast;client_port=4588-4589;server_port=6256-6257
-</code></pre><h3 id="PLAY"><a href="#PLAY" class="headerlink" title="PLAY"></a>PLAY</h3><p>客户端通过 PLAY 请求来播放一个或全部媒体流，PLAY 请求可以发送一次或多次，发送一次时，URL 为包含所有媒体流的地址，发送多次时，每一次请求携带的 URL 只包含一个相应的媒体流。PLAY 请求中可指定播放的 range，若未指定，则从媒体流的开始播放到结束，如果媒体流在播放过程中被暂停，则可在暂停处重新启动流的播放。</p>
+      Transport: RTP/AVP;unicast;client_port=4588-4589;server_port=6256-6257</code></pre>
+<h3 id="play">PLAY</h3>
+<p>客户端通过 PLAY 请求来播放一个或全部媒体流，PLAY 请求可以发送一次或多次，发送一次时，URL 为包含所有媒体流的地址，发送多次时，每一次请求携带的 URL 只包含一个相应的媒体流。PLAY 请求中可指定播放的 range，若未指定，则从媒体流的开始播放到结束，如果媒体流在播放过程中被暂停，则可在暂停处重新启动流的播放。</p>
 <pre><code>C-&gt;S: PLAY rtsp://example.com/media.mp4 RTSP/1.0
       CSeq: 4
       Range: npt=5-20
@@ -744,18 +664,20 @@ S-&gt;C: RTSP/1.0 200 OK
 S-&gt;C: RTSP/1.0 200 OK
       CSeq: 4
       Session: 12345678
-      RTP-Info: url=rtsp://example.com/media.mp4/streamid=0;seq=9810092;rtptime=3450012
-</code></pre><blockquote>
+      RTP-Info: url=rtsp://example.com/media.mp4/streamid=0;seq=9810092;rtptime=3450012</code></pre>
+<blockquote>
 <p>Server 处理 client 发来的 PLAY 请求后，就会开始向 client 发送媒体数据，一般采用 RTP 协议进行发送，关于 RTP 协议的相关说明，参见拓展阅读 6</p>
 </blockquote>
-<h3 id="TEARDOWN"><a href="#TEARDOWN" class="headerlink" title="TEARDOWN"></a>TEARDOWN</h3><p>结束会话请求，该请求会停止所有媒体流，并释放服务器上的相关会话数据。</p>
+<h3 id="teardown">TEARDOWN</h3>
+<p>结束会话请求，该请求会停止所有媒体流，并释放服务器上的相关会话数据。</p>
 <pre><code>C-&gt;S: TEARDOWN rtsp://example.com/media.mp4 RTSP/1.0
       CSeq: 8
       Session: 12345678
 
 S-&gt;C: RTSP/1.0 200 OK
-      CSeq: 8
-</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+      CSeq: 8</code></pre>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://github.com/xia-chu/ZLMediaKit">ZLMediaKit</a> （作为 RTSP Server）</li>
 <li>[2] <a target="_blank" rel="noopener" href="https://www.videolan.org/">VLC</a> （作为 RTSP Client）</li>
 <li>[3] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/linhaostudy/p/11140823.html">yooooooo 的博客园：《网络流媒体协议之——RTSP 协议》</a></li>
@@ -770,28 +692,11 @@ S-&gt;C: RTSP/1.0 200 OK
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\65370ad\" rel="bookmark">流媒体传输 - RTSP Over HTTP</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\880163e6\" rel="bookmark">流媒体传输 - RTSP Over HTTPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\c8d9fa71\" rel="bookmark">流媒体传输 - RTSP 协议报文分析</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\dc673a79\" rel="bookmark">流媒体传输 - RTSP 协议认证过程</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -834,42 +739,14 @@ S-&gt;C: RTSP/1.0 200 OK
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -877,132 +754,52 @@ S-&gt;C: RTSP/1.0 200 OK
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/cf84018a/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/cf84018a/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/cf84018a/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

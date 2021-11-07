@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="在 流媒体传输 - RTSP 协议 中，我们分析 RTSP 协议交互的整个流程，在本篇文章中，我们对交互中携带的报文进行详细分析。 RequestRequest     &#x3D;       Request-Line              ; Section 6.1             *(      general-header            ; Section 5">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在 流媒体传输 - RTSP 协议 中，我们分析 RTSP 协议交互的整个流程，在本篇文章中，我们对交互中携带的报文进行详细分析。 Request Request     &#x3D;       Request-Line              ; Section 6.1             *(      general-header            ; Section 5">
 <meta property="og:type" content="article">
 <meta property="og:title" content="流媒体传输 - RTSP 协议报文分析">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/c8d9fa71/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="在 流媒体传输 - RTSP 协议 中，我们分析 RTSP 协议交互的整个流程，在本篇文章中，我们对交互中携带的报文进行详细分析。 RequestRequest     &#x3D;       Request-Line              ; Section 6.1             *(      general-header            ; Section 5">
+<meta property="og:description" content="在 流媒体传输 - RTSP 协议 中，我们分析 RTSP 协议交互的整个流程，在本篇文章中，我们对交互中携带的报文进行详细分析。 Request Request     &#x3D;       Request-Line              ; Section 6.1             *(      general-header            ; Section 5">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-29T07:51:47.000Z">
 <meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/c8d9fa71/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>流媒体传输 - RTSP 协议报文分析 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/c8d9fa71/","path":"post/2020/c8d9fa71/","title":"流媒体传输 - RTSP 协议报文分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>流媒体传输 - RTSP 协议报文分析 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-number">1.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Line"><span class="nav-number">1.1.</span> <span class="nav-text">Request-Line</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Header-Fields"><span class="nav-number">1.2.</span> <span class="nav-text">Request Header Fields</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">2.</span> <span class="nav-text">Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-Line"><span class="nav-number">2.1.</span> <span class="nav-text">Status-Line</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Status-Code-%E5%92%8C-Reason-Phrase"><span class="nav-number">2.1.1.</span> <span class="nav-text">Status Code 和 Reason-Phrase</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-Header-Fields"><span class="nav-number">2.2.</span> <span class="nav-text">Response Header Fields</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-Definitions"><span class="nav-number">3.</span> <span class="nav-text">Method Definitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OPTIONS"><span class="nav-number">3.1.</span> <span class="nav-text">OPTIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DESCRIBE"><span class="nav-number">3.2.</span> <span class="nav-text">DESCRIBE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SETUP"><span class="nav-number">3.3.</span> <span class="nav-text">SETUP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Transport"><span class="nav-number">3.3.1.</span> <span class="nav-text">Transport</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLAY"><span class="nav-number">3.4.</span> <span class="nav-text">PLAY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TEARDOWN"><span class="nav-number">3.5.</span> <span class="nav-text">TEARDOWN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#request"><span class="nav-number">1.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#request-line"><span class="nav-number">1.1.</span> <span class="nav-text">Request-Line</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request-header-fields"><span class="nav-number">1.2.</span> <span class="nav-text">Request Header Fields</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response"><span class="nav-number">2.</span> <span class="nav-text">Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#status-line"><span class="nav-number">2.1.</span> <span class="nav-text">Status-Line</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#status-code-%E5%92%8C-reason-phrase"><span class="nav-number">2.1.1.</span> <span class="nav-text">Status Code 和 Reason-Phrase</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#response-header-fields"><span class="nav-number">2.2.</span> <span class="nav-text">Response Header Fields</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method-definitions"><span class="nav-number">3.</span> <span class="nav-text">Method Definitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options"><span class="nav-number">3.1.</span> <span class="nav-text">OPTIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#describe"><span class="nav-number">3.2.</span> <span class="nav-text">DESCRIBE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setup"><span class="nav-number">3.3.</span> <span class="nav-text">SETUP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#transport"><span class="nav-number">3.3.1.</span> <span class="nav-text">Transport</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#play"><span class="nav-number">3.4.</span> <span class="nav-text">PLAY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#teardown"><span class="nav-number">3.5.</span> <span class="nav-text">TEARDOWN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/c8d9fa71/" class="post-meta-item leancloud_visitors" data-flag-title="流媒体传输 - RTSP 协议报文分析" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/c8d9fa71/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/c8d9fa71/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -370,14 +278,16 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>在 <a href="/post/2020/cf84018a/" title="流媒体传输 - RTSP 协议">流媒体传输 - RTSP 协议</a> 中，我们分析 RTSP 协议交互的整个流程，在本篇文章中，我们对交互中携带的报文进行详细分析。</p>
-<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><pre><code>Request     =       Request-Line              ; Section 6.1
+<h2 id="request">Request</h2>
+<pre><code>Request     =       Request-Line              ; Section 6.1
             *(      general-header            ; Section 5
             |       request-header            ; Section 6.2
             |       entity-header )           ; Section 8.1
                     CRLF
-                    [message-body]            ; Section 4.3
-</code></pre><a id="more"></a>
-<h3 id="Request-Line"><a href="#Request-Line" class="headerlink" title="Request-Line"></a>Request-Line</h3><pre><code>Request-Line = Method SP Request-URI SP RTSP-Version CRLF
+                    [message-body]            ; Section 4.3</code></pre>
+<span id="more"></span>
+<h3 id="request-line">Request-Line</h3>
+<pre><code>Request-Line = Method SP Request-URI SP RTSP-Version CRLF
 
 Method      =         &quot;DESCRIBE&quot;              ; Section 10.2
             |         &quot;ANNOUNCE&quot;              ; Section 10.3
@@ -398,14 +308,12 @@ extension-method = token
 
 Request-URI = &quot;*&quot; | absolute_URI
 
-RTSP-Version = &quot;RTSP&quot; &quot;/&quot; 1*DIGIT &quot;.&quot; 1*DIGIT
-</code></pre><blockquote>
-<p>注意，与 HTTP / 1.1 相比，RTSP 请求始终包含绝对 URL（即，包括 方案、主机、端口），而不仅仅是绝对路径。<br>Request-URI 中的星号 “*” 表示该请求不适用于特定资源，而是适用于服务器本身，并且仅在所使用的方法不一定适用于资源时才被允许。比如：</p>
+RTSP-Version = &quot;RTSP&quot; &quot;/&quot; 1*DIGIT &quot;.&quot; 1*DIGIT</code></pre>
 <blockquote>
-<p><code>OPTIONS * RTSP/1.0</code></p>
+<p>注意，与 HTTP / 1.1 相比，RTSP 请求始终包含绝对 URL（即，包括 方案、主机、端口），而不仅仅是绝对路径。 Request-URI 中的星号 "*" 表示该请求不适用于特定资源，而是适用于服务器本身，并且仅在所使用的方法不一定适用于资源时才被允许。比如： &gt; <code>OPTIONS * RTSP/1.0</code></p>
 </blockquote>
-</blockquote>
-<h3 id="Request-Header-Fields"><a href="#Request-Header-Fields" class="headerlink" title="Request Header Fields"></a>Request Header Fields</h3><pre><code>request-header  =      Accept                   ; Section 12.1
+<h3 id="request-header-fields">Request Header Fields</h3>
+<pre><code>request-header  =      Accept                   ; Section 12.1
                 |      Accept-Encoding          ; Section 12.2
                 |      Accept-Language          ; Section 12.3
                 |      Authorization            ; Section 12.5
@@ -413,22 +321,25 @@ RTSP-Version = &quot;RTSP&quot; &quot;/&quot; 1*DIGIT &quot;.&quot; 1*DIGIT
                 |      If-Modified-Since        ; Section 12.23
                 |      Range                    ; Section 12.29
                 |      Referer                  ; Section 12.30
-                |      User-Agent               ; Section 12.41
-</code></pre><h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><p>在接收并解释了请求消息后，接收者以 RTSP 响应消息进行响应。</p>
+                |      User-Agent               ; Section 12.41</code></pre>
+<h2 id="response">Response</h2>
+<p>在接收并解释了请求消息后，接收者以 RTSP 响应消息进行响应。</p>
 <p>响应消息除了将 HTTP 版本替换为 RTSP 版本之外，其他都适用。 此外，RTSP 定义了其他状态代码，并且没有定义某些 HTTP 代码。 表 1 中定义了有效的响应代码及其可使用的方法。</p>
 <pre><code>Response    =     Status-Line         ; Section 7.1
             *(    general-header      ; Section 5
             |     response-header     ; Section 7.1.2
             |     entity-header )     ; Section 8.1
                   CRLF
-                  [message-body]    ; Section 4.3
-</code></pre><h3 id="Status-Line"><a href="#Status-Line" class="headerlink" title="Status-Line"></a>Status-Line</h3><p>响应消息的第一行是状态行，由协议版本，后跟数字状态代码以及与状态代码关联的文本短语组成，每个元素由 SP 字符分隔。 除最后的 CRLF 序列外，不允许有 CR 或 LF。</p>
+                  [message-body]    ; Section 4.3</code></pre>
+<h3 id="status-line">Status-Line</h3>
+<p>响应消息的第一行是状态行，由协议版本，后跟数字状态代码以及与状态代码关联的文本短语组成，每个元素由 SP 字符分隔。 除最后的 CRLF 序列外，不允许有 CR 或 LF。</p>
 <pre><code>Status-Line    =    RTSP-Version SP Status-Code SP Reason-Phrase CRLF
 
 Status-code    =    3DIGIT
 
-Reason-Phrase  =    *&lt;TEXT, excluding CR, LF&gt;
-</code></pre><h4 id="Status-Code-和-Reason-Phrase"><a href="#Status-Code-和-Reason-Phrase" class="headerlink" title="Status Code 和 Reason-Phrase"></a>Status Code 和 Reason-Phrase</h4><p>Status Code 是 3 位数的整数结果代码，表示请求是否被理解或被满足。这些代码在第 11 节中有完整定义。Reason-Phrase 旨在简要说明 Status Code。Status Code 供机器使用，Reason-Phrase 供人类用户使用。 客户端不需要检查或显示 Reason-Phrase。</p>
+Reason-Phrase  =    *&lt;TEXT, excluding CR, LF&gt;</code></pre>
+<h4 id="status-code-和-reason-phrase">Status Code 和 Reason-Phrase</h4>
+<p>Status Code 是 3 位数的整数结果代码，表示请求是否被理解或被满足。这些代码在第 11 节中有完整定义。Reason-Phrase 旨在简要说明 Status Code。Status Code 供机器使用，Reason-Phrase 供人类用户使用。 客户端不需要检查或显示 Reason-Phrase。</p>
 <p>Status Code 的第一位数字定义了回应的类别，后面两位数字没有具体分类。首位数字有 5 种取值可能：</p>
 <ul>
 <li>1xx：保留，将来使用。</li>
@@ -440,15 +351,18 @@ Reason-Phrase  =    *&lt;TEXT, excluding CR, LF&gt;
 <blockquote>
 <p>具体 Status Code 含义可查看 RFC 2326 Session 11 : Status Code Definitions</p>
 </blockquote>
-<h3 id="Response-Header-Fields"><a href="#Response-Header-Fields" class="headerlink" title="Response Header Fields"></a>Response Header Fields</h3><p>响应头字段允许请求接收者传递关于响应的其他信息，这些信息不能放在状态行中。 这些头字段提供有关服务器以及对由 Request-URI 标识的资源的进一步访问的信息。</p>
+<h3 id="response-header-fields">Response Header Fields</h3>
+<p>响应头字段允许请求接收者传递关于响应的其他信息，这些信息不能放在状态行中。 这些头字段提供有关服务器以及对由 Request-URI 标识的资源的进一步访问的信息。</p>
 <pre><code>response-header  =     Location             ; Section 12.25
                  |     Proxy-Authenticate   ; Section 12.26
                  |     Public               ; Section 12.28
                  |     Retry-After          ; Section 12.31
                  |     Server               ; Section 12.36
                  |     Vary                 ; Section 12.42
-                 |     WWW-Authenticate     ; Section 12.44
-</code></pre><h2 id="Method-Definitions"><a href="#Method-Definitions" class="headerlink" title="Method Definitions"></a>Method Definitions</h2><h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>OPTIONS 用于询问 Server 有哪些方法可用</p>
+                 |     WWW-Authenticate     ; Section 12.44</code></pre>
+<h2 id="method-definitions">Method Definitions</h2>
+<h3 id="options">OPTIONS</h3>
+<p>OPTIONS 用于询问 Server 有哪些方法可用</p>
 <pre><code>C-&gt;S:  OPTIONS * RTSP/1.0
        CSeq: 1
        Require: implicit-play
@@ -456,8 +370,9 @@ Reason-Phrase  =    *&lt;TEXT, excluding CR, LF&gt;
 
 S-&gt;C:  RTSP/1.0 200 OK
        CSeq: 1
-       Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE
-</code></pre><h3 id="DESCRIBE"><a href="#DESCRIBE" class="headerlink" title="DESCRIBE"></a>DESCRIBE</h3><p>DESCRIBE 方法从服务器检索表示的描述或媒体对象，这些资源通过请求统一资源定位符（the request URL）识别。此方法可能结合使用 Accept 首部域来指定客户端理解的描述格式。服务器端用被请求资源的描述对客户端作出响应。 DESCRIBE 的答复 - 响应对（reply-response pair）组成了 RTSP 的媒体初始化阶段。</p>
+       Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE</code></pre>
+<h3 id="describe">DESCRIBE</h3>
+<p>DESCRIBE 方法从服务器检索表示的描述或媒体对象，这些资源通过请求统一资源定位符（the request URL）识别。此方法可能结合使用 Accept 首部域来指定客户端理解的描述格式。服务器端用被请求资源的描述对客户端作出响应。 DESCRIBE 的答复 - 响应对（reply-response pair）组成了 RTSP 的媒体初始化阶段。</p>
 <pre><code>C-&gt;S: DESCRIBE rtsp://server.example.com/fizzle/foo RTSP/1.0
       CSeq: 312
       Accept: application/sdp, application/rtsl, application/mheg
@@ -480,13 +395,14 @@ S-&gt;C: RTSP/1.0 200 OK
       m=audio 3456 RTP/AVP 0
       m=video 2232 RTP/AVP 31
       m=whiteboard 32416 UDP WB
-      a=orient:portrait
-</code></pre><p>DESCRIBE 响应必须包含它描述的资源的所有媒体初始化信息。 如果媒体客户端从 DESCRIBE 以外的来源获得媒体描述，并且该描述包含完整的媒体初始化参数集，则客户端应使用这些参数，而不是通过 RTSP 请求相同媒体描述。</p>
+      a=orient:portrait</code></pre>
+<p>DESCRIBE 响应必须包含它描述的资源的所有媒体初始化信息。 如果媒体客户端从 DESCRIBE 以外的来源获得媒体描述，并且该描述包含完整的媒体初始化参数集，则客户端应使用这些参数，而不是通过 RTSP 请求相同媒体描述。</p>
 <p>DESCRIBE 响应携带的 SDP 信息详见：</p>
 <blockquote>
 <a href="/post/2020/1fa21384/" title="流媒体传输 - SDP 协议">流媒体传输 - SDP 协议</a>
 </blockquote>
-<h3 id="SETUP"><a href="#SETUP" class="headerlink" title="SETUP"></a>SETUP</h3><pre><code>C-&gt;S: SETUP rtsp://example.com/foo/bar/baz.rm RTSP/1.0
+<h3 id="setup">SETUP</h3>
+<pre><code>C-&gt;S: SETUP rtsp://example.com/foo/bar/baz.rm RTSP/1.0
       CSeq: 302
       Transport: RTP/AVP;unicast;client_port=4588-4589
 
@@ -494,11 +410,12 @@ S-&gt;C: RTSP/1.0 200 OK
       CSeq: 302
       Date: 23 Jan 1997 15:35:06 GMT
       Session: 47112344
-      Transport: RTP/AVP;unicast;client_port=4588-4589;server_port=6256-6257
-</code></pre><p>URI 的 SETUP 请求指定要用于流媒体的传输机制。客户端可以对已经播放的流发出 SETUP 请求，以更改传输参数（服务器可以允许）。如果不允许这样做，它必须以错误 “455 方法在此状态下无效” 响应。为了使任何中间的防火墙受益，客户端必须指示传输参数，即使它对这些参数没有影响，例如，在服务器通告固定的多播地址的地方。</p>
+      Transport: RTP/AVP;unicast;client_port=4588-4589;server_port=6256-6257</code></pre>
+<p>URI 的 SETUP 请求指定要用于流媒体的传输机制。客户端可以对已经播放的流发出 SETUP 请求，以更改传输参数（服务器可以允许）。如果不允许这样做，它必须以错误 "455 方法在此状态下无效" 响应。为了使任何中间的防火墙受益，客户端必须指示传输参数，即使它对这些参数没有影响，例如，在服务器通告固定的多播地址的地方。</p>
 <p>由于 SETUP 包含所有传输初始化信息，因此防火墙和其他中间网络设备（需要此信息）可以省去解析 DESCRIBE 响应的更艰巨的任务，该响应已保留给媒体初始化。</p>
 <p>Transport Header 指定客户端可接受的数据传输传输参数；响应将包含服务器选择的传输参数。</p>
-<h4 id="Transport"><a href="#Transport" class="headerlink" title="Transport"></a>Transport</h4><p>以下是与 Transport 关联的配置参数：</p>
+<h4 id="transport">Transport</h4>
+<p>以下是与 Transport 关联的配置参数：</p>
 <pre><code>Transport           =    &quot;Transport&quot; &quot;:&quot; SP transport-spec
 transport-spec      =    transport-protocol/profile[/lower-transport]
                          *parameter
@@ -521,27 +438,21 @@ port                =    1*5(DIGIT)
 ssrc                =    8*8(HEX)
 channel             =    1*3(DIGIT)
 address             =    host
-mode                =    &lt;&quot;&gt; *Method &lt;&quot;&gt; | Method
-</code></pre><ul>
+mode                =    &lt;&quot;&gt; *Method &lt;&quot;&gt; | Method</code></pre>
+<ul>
 <li><p>unicast | multicast:</p>
-<p>  二选一地指定是进行单播还是多播的传输尝试。 默认值为多播。 单播和多播传输均能处理的客户端必须通过包括两个完整的传输规范以及每个独立的参数来指示这种能力</p>
-</li>
-<li><p>destination:<br>  流将被发送到的地址。 客户端可以使用该参数指定多播地址。为了避免在不知情的情况下被用于拒绝服务攻击，服务器应该对客户端进行身份验证，并应该记录此类尝试，然后再允许客户端将媒体流定向到服务器未选择的地址。 这对通过 UDP 发出的 RTSP 命令尤其重要，但是实现不能依赖 TCP 作为可靠的客户端验证手段。 服务器应该不允许客户端将媒体流定向到与命令来源不同的地址上去</p>
-</li>
-<li><p>mode<br>  mode指示会话支持的方法。有效的值有 PLAY 和 RECORD。如果没有提供，默认值是 PLAY</p>
-</li>
-<li><p>port<br>  该参数为多播会话提供 RTP/RTCP 端口号对，它以范围的方式给出，例如：port=34567-34568</p>
-</li>
-<li><p>client_port<br>  该参数提供客户端选择的接收媒体数据和控制信息的单播 RTP/RTCP 端口号对，它以范围的方式给出，例如：client_port=34567-34568</p>
-</li>
-<li><p>server_port<br>  该参数提供服务端选择的接收媒体数据和控制信息的单播 RTP/RTCP 端口号对，它以范围的方式给出，例如：server_port=45678-45679</p>
-</li>
-<li><p>ssrc<br>  该参数指示媒体服务器应该用的（请求）或将要用的（响应）RTSP SSRC 值，该参数只对单播传输有效，他是和媒体流关联的同步源的标识</p>
-</li>
+<p>二选一地指定是进行单播还是多播的传输尝试。 默认值为多播。 单播和多播传输均能处理的客户端必须通过包括两个完整的传输规范以及每个独立的参数来指示这种能力</p></li>
+<li><p>destination: 流将被发送到的地址。 客户端可以使用该参数指定多播地址。为了避免在不知情的情况下被用于拒绝服务攻击，服务器应该对客户端进行身份验证，并应该记录此类尝试，然后再允许客户端将媒体流定向到服务器未选择的地址。 这对通过 UDP 发出的 RTSP 命令尤其重要，但是实现不能依赖 TCP 作为可靠的客户端验证手段。 服务器应该不允许客户端将媒体流定向到与命令来源不同的地址上去</p></li>
+<li><p>mode mode指示会话支持的方法。有效的值有 PLAY 和 RECORD。如果没有提供，默认值是 PLAY</p></li>
+<li><p>port 该参数为多播会话提供 RTP/RTCP 端口号对，它以范围的方式给出，例如：port=34567-34568</p></li>
+<li><p>client_port 该参数提供客户端选择的接收媒体数据和控制信息的单播 RTP/RTCP 端口号对，它以范围的方式给出，例如：client_port=34567-34568</p></li>
+<li><p>server_port 该参数提供服务端选择的接收媒体数据和控制信息的单播 RTP/RTCP 端口号对，它以范围的方式给出，例如：server_port=45678-45679</p></li>
+<li><p>ssrc 该参数指示媒体服务器应该用的（请求）或将要用的（响应）RTSP SSRC 值，该参数只对单播传输有效，他是和媒体流关联的同步源的标识</p></li>
 </ul>
 <p>例如：</p>
-<p>Transport: RTP/AVP;multicast;ttl=127;mode=”PLAY”,<br>           RTP/AVP;unicast;client_port=3456-3457;mode=”PLAY”</p>
-<h3 id="PLAY"><a href="#PLAY" class="headerlink" title="PLAY"></a>PLAY</h3><p>PLAY 方法告诉服务器通过 SETUP 规定的机制开始传输数据。客户端不允许在 SETUP 请求在明确确认成功以前发送 PLAY 请求。</p>
+<p>Transport: RTP/AVP;multicast;ttl=127;mode="PLAY", RTP/AVP;unicast;client_port=3456-3457;mode="PLAY"</p>
+<h3 id="play">PLAY</h3>
+<p>PLAY 方法告诉服务器通过 SETUP 规定的机制开始传输数据。客户端不允许在 SETUP 请求在明确确认成功以前发送 PLAY 请求。</p>
 <p>PLAY 请求通过给出相对于正常播放时间的开始时间和结束时间，来给出播放范围。从开始时间开始传输流数据直到到达结束时间。PLAY 可以用管道（队列）形式，服务器必须按顺序执行收到的 PLAY 请求。即：在前一个 PLAY 请求依然活动期间收到 PLAY 请求，要延迟到前一个 PLAY 请求执行完毕后开始生效。</p>
 <p>例如：不管下面例子中的两个 PLAY 请求的到达间隔多短，服务器将先从第 10 秒播放至第 15 秒，然后马上播放第 20 秒到第 25 秒，再从第 30 秒播放至结束。</p>
 <pre><code>C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
@@ -555,9 +466,11 @@ C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
 C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
       CSeq: 837
       Session: 12345678
-      Range: npt=30-
-</code></pre><h3 id="TEARDOWN"><a href="#TEARDOWN" class="headerlink" title="TEARDOWN"></a>TEARDOWN</h3><p>TEARDOWN 请求会停止所给 URI 的流传输，释放与它相关的资源。如果所给的 URI 是这个表示的表示 URI，任何与此会话相关的会话标识都将不再有效。除非所有传输参数都在会话描述中定义了，否则在再次播放前必须发送 SETUP 请求。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+      Range: npt=30-</code></pre>
+<h3 id="teardown">TEARDOWN</h3>
+<p>TEARDOWN 请求会停止所给 URI 的流传输，释放与它相关的资源。如果所给的 URI 是这个表示的表示 URI，任何与此会话相关的会话标识都将不再有效。除非所有传输参数都在会话描述中定义了，否则在再次播放前必须发送 SETUP 请求。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc2326.txt">RFC 2326: Real Time Streaming Protocol (RTSP)</a></li>
 </ul>
 
@@ -566,28 +479,11 @@ C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\65370ad\" rel="bookmark">流媒体传输 - RTSP Over HTTP</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\880163e6\" rel="bookmark">流媒体传输 - RTSP Over HTTPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\cf84018a\" rel="bookmark">流媒体传输 - RTSP 协议</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\dc673a79\" rel="bookmark">流媒体传输 - RTSP 协议认证过程</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -630,42 +526,14 @@ C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -673,132 +541,52 @@ C-&gt;S: PLAY rtsp://audio.example.com/audio RTSP/1.0
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/c8d9fa71/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/c8d9fa71/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/c8d9fa71/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

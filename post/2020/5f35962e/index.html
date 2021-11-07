@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="libevent 的日志模块的文件为 log.c 和 log-internal.h。 从头文件名就可以看出，libevent 的日志函数只提供 libevent 内部使用，并不提供外部接口。 这些内部日志接口会在运行过程中一些异常情况时被调用，从而将这些异常的情况打印出来，告知用户。而在这些接口不满足用户的需求时，libevent 仍提供了回调函数设置接口方便用户自行修改日志模块的处理方式。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="libevent 的日志模块的文件为 log.c 和 log-internal.h。 从头文件名就可以看出，libevent 的日志函数只提供 libevent 内部使用，并不提供外部接口。 这些内部日志接口会在运行过程中一些异常情况时被调用，从而将这些异常的情况打印出来，告知用户。而在这些接口不满足用户的需求时，libevent 仍提供了回调函数设置接口方便用户自行修改日志模块的处理方式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 日志模块">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/5f35962e/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="libevent 的日志模块的文件为 log.c 和 log-internal.h。 从头文件名就可以看出，libevent 的日志函数只提供 libevent 内部使用，并不提供外部接口。 这些内部日志接口会在运行过程中一些异常情况时被调用，从而将这些异常的情况打印出来，告知用户。而在这些接口不满足用户的需求时，libevent 仍提供了回调函数设置接口方便用户自行修改日志模块的处理方式。">
+<meta property="og:description" content="libevent 的日志模块的文件为 log.c 和 log-internal.h。 从头文件名就可以看出，libevent 的日志函数只提供 libevent 内部使用，并不提供外部接口。 这些内部日志接口会在运行过程中一些异常情况时被调用，从而将这些异常的情况打印出来，告知用户。而在这些接口不满足用户的需求时，libevent 仍提供了回调函数设置接口方便用户自行修改日志模块的处理方式。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-20T06:01:09.000Z">
-<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/5f35962e/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 日志模块 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/5f35962e/","path":"post/2020/5f35962e/","title":"源码阅读 libevent - 日志模块"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 日志模块 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">日志模块函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute"><span class="nav-number">1.2.</span> <span class="nav-text">__attribute__</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">1.3.</span> <span class="nav-text">函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#event-logv"><span class="nav-number">1.3.1.</span> <span class="nav-text">event_logv_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evutil-socket-geterror"><span class="nav-number">1.3.2.</span> <span class="nav-text">evutil_socket_geterror</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#event-exit"><span class="nav-number">1.3.3.</span> <span class="nav-text">event_exit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">日志模块函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attribute__"><span class="nav-number">1.2.</span> <span class="nav-text">__attribute__</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">1.3.</span> <span class="nav-text">函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#event_logv_"><span class="nav-number">1.3.1.</span> <span class="nav-text">event_logv_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evutil_socket_geterror"><span class="nav-number">1.3.2.</span> <span class="nav-text">evutil_socket_geterror</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#event_exit"><span class="nav-number">1.3.3.</span> <span class="nav-text">event_exit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,27 +267,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2020/5f35962e/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 日志模块" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/5f35962e/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/5f35962e/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -372,43 +280,140 @@
         <p><code>libevent</code> 的日志模块的文件为 <code>log.c</code> 和 <code>log-internal.h</code>。</p>
 <p>从头文件名就可以看出，<code>libevent</code> 的日志函数只提供 <code>libevent</code> 内部使用，并不提供外部接口。</p>
 <p>这些内部日志接口会在运行过程中一些异常情况时被调用，从而将这些异常的情况打印出来，告知用户。而在这些接口不满足用户的需求时，<code>libevent</code> 仍提供了回调函数设置接口方便用户自行修改日志模块的处理方式。</p>
-<a id="more"></a>
-<h2 id="日志模块函数"><a href="#日志模块函数" class="headerlink" title="日志模块函数"></a>日志模块函数</h2><h3 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h3><p>从 <code>log-internal.h</code> 文件中即可看到 <code>libevnet</code> 的日志相关函数声明如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_NORETURN __attribute__((noreturn))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVENT2_EXPORT_SYMBOL __attribute__ ((visibility(<span class="meta-string">&quot;default&quot;</span>)))</span></span><br><span class="line"></span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_err</span><span class="params">(<span class="keyword">int</span> eval, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">2</span>,<span class="number">3</span>)</span> EV_NORETURN</span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_warn</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_sock_err</span><span class="params">(<span class="keyword">int</span> eval, <span class="keyword">evutil_socket_t</span> sock, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">3</span>,<span class="number">4</span>)</span> EV_NORETURN</span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_sock_warn</span><span class="params">(<span class="keyword">evutil_socket_t</span> sock, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">2</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_errx</span><span class="params">(<span class="keyword">int</span> eval, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">2</span>,<span class="number">3</span>)</span> EV_NORETURN</span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_warnx</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_msgx</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_debugx_</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">EVENT2_EXPORT_SYMBOL <span class="keyword">void</span> <span class="title">event_logv_</span><span class="params">(<span class="keyword">int</span> severity, <span class="keyword">const</span> <span class="keyword">char</span> *errstr, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, va_list ap)</span> <span class="title">EV_CHECK_FMT</span><span class="params">(<span class="number">3</span>,<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-<h3 id="attribute"><a href="#attribute" class="headerlink" title="__attribute__"></a>__attribute__</h3><p>从上述源码中可以发现，所有的日志 API 均被一些宏定义所修饰，这些宏定义有：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EV_NORETURN __attribute__((noreturn))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EVENT2_EXPORT_SYMBOL __attribute__ ((visibility(<span class="meta-string">&quot;default&quot;</span>)))</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="日志模块函数">日志模块函数</h2>
+<h3 id="函数声明">函数声明</h3>
+<p>从 <code>log-internal.h</code> 文件中即可看到 <code>libevnet</code> 的日志相关函数声明如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_NORETURN __attribute__((noreturn))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVENT2_EXPORT_SYMBOL __attribute__ ((visibility("default")))</span>
+
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_err</span><span class="token punctuation">(</span><span class="token keyword">int</span> eval<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> EV_NORETURN<span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_warn</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_sock_err</span><span class="token punctuation">(</span><span class="token keyword">int</span> eval<span class="token punctuation">,</span> evutil_socket_t sock<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span> EV_NORETURN<span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_sock_warn</span><span class="token punctuation">(</span>evutil_socket_t sock<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_errx</span><span class="token punctuation">(</span><span class="token keyword">int</span> eval<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> EV_NORETURN<span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_warnx</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_msgx</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_debugx_</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+EVENT2_EXPORT_SYMBOL <span class="token keyword">void</span> <span class="token function">event_logv_</span><span class="token punctuation">(</span><span class="token keyword">int</span> severity<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>errstr<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> va_list ap<span class="token punctuation">)</span> <span class="token function">EV_CHECK_FMT</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="attribute__">__attribute__</h3>
+<p>从上述源码中可以发现，所有的日志 API 均被一些宏定义所修饰，这些宏定义有：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EV_NORETURN __attribute__((noreturn))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> EVENT2_EXPORT_SYMBOL __attribute__ ((visibility("default")))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>其意义如下：</p>
-<ol>
+<ol type="1">
 <li><p><code>__attribute__((format(printf, a, b)))</code></p>
-<p> <code>format</code> 属性可以给被声明的函数加上类似 <code>printf</code> 或者 <code>scanf</code> 的特征，它可以使编译器检查函数声明和函数实际调用参数之间的格式化字符串是否匹配。<code>format</code> 属性告诉编译器，按照 <code>printf</code>，<code>scanf</code> 等标准 <code>C</code> 函数参数格式规则对该函数的参数进行检查。</p>
-<p> 如 <code>EV_CHECK_FMT(2,3);</code> 就提示编译器按照 <code>printf</code> 函数格式化的形式来对函数进行编译，并且从第 <code>3</code> 个参数开始按照第 <code>2</code> 个参数字符串的格式进行格式化。</p>
-</li>
+<p><code>format</code> 属性可以给被声明的函数加上类似 <code>printf</code> 或者 <code>scanf</code> 的特征，它可以使编译器检查函数声明和函数实际调用参数之间的格式化字符串是否匹配。<code>format</code> 属性告诉编译器，按照 <code>printf</code>，<code>scanf</code> 等标准 <code>C</code> 函数参数格式规则对该函数的参数进行检查。</p>
+<p>如 <code>EV_CHECK_FMT(2,3);</code> 就提示编译器按照 <code>printf</code> 函数格式化的形式来对函数进行编译，并且从第 <code>3</code> 个参数开始按照第 <code>2</code> 个参数字符串的格式进行格式化。</p></li>
 <li><p><code>__attribute__((noreturn))</code></p>
-<p> <code>noreturn</code> 属性告诉编译器此函数不会返回（注意：是不会返回，而不是没有返回值）。 <code>C</code> 库函数 <code>abort()</code> 和 <code>exit()</code> 都使用此属性声明。</p>
-</li>
-<li><p><code>__attribute__ ((visibility(&quot;default&quot;)))</code></p>
-<p> <code>visibility</code> 属性可以控制共享文件导出符号。<code>&quot;default&quot;</code>：用它定义的符号将被导出，动态库中的函数默认是可见的。<code>&quot;hidden&quot;</code>：用它定义的符号将不被导出，并且不能从其它对象进行使用，动态库中的函数是被隐藏的。<code>default</code> 意味着该方法对其它模块是可见的。而 <code>hidden</code> 表示该方法符号不会被放到动态符号表里，所以其它模块 (可执行文件或者动态库) 不可以通过符号表访问该方法。</p>
-</li>
+<p><code>noreturn</code> 属性告诉编译器此函数不会返回（注意：是不会返回，而不是没有返回值）。 <code>C</code> 库函数 <code>abort()</code> 和 <code>exit()</code> 都使用此属性声明。</p></li>
+<li><p><code>__attribute__ ((visibility("default")))</code></p>
+<p><code>visibility</code> 属性可以控制共享文件导出符号。<code>"default"</code>：用它定义的符号将被导出，动态库中的函数默认是可见的。<code>"hidden"</code>：用它定义的符号将不被导出，并且不能从其它对象进行使用，动态库中的函数是被隐藏的。<code>default</code> 意味着该方法对其它模块是可见的。而 <code>hidden</code> 表示该方法符号不会被放到动态符号表里，所以其它模块 (可执行文件或者动态库) 不可以通过符号表访问该方法。</p></li>
 </ol>
-<h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><p><code>libevnet</code> 的日志 <code>API</code> 的函数定义较为简单，下面列出几个示例，其余函数定义可详见源码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_err</span><span class="params">(<span class="keyword">int</span> eval, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> </span>&#123;</span><br><span class="line">    va_list ap;</span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    event_logv_(EVENT_LOG_ERR, strerror(errno), fmt, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">    event_exit(eval);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_sock_err</span><span class="params">(<span class="keyword">int</span> eval, <span class="keyword">evutil_socket_t</span> sock, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> </span>&#123;</span><br><span class="line">    va_list ap;</span><br><span class="line">    <span class="keyword">int</span> err = evutil_socket_geterror(sock);</span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    event_logv_(EVENT_LOG_ERR, evutil_socket_error_to_string(err), fmt, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">    event_exit(eval);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_debugx_</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> </span>&#123;</span><br><span class="line">    va_list ap;</span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    event_logv_(EVENT_LOG_DEBUG, <span class="literal">NULL</span>, fmt, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="函数定义">函数定义</h3>
+<p><code>libevnet</code> 的日志 <code>API</code> 的函数定义较为简单，下面列出几个示例，其余函数定义可详见源码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">event_err</span><span class="token punctuation">(</span><span class="token keyword">int</span> eval<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    va_list ap<span class="token punctuation">;</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> fmt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_logv_</span><span class="token punctuation">(</span>EVENT_LOG_ERR<span class="token punctuation">,</span> <span class="token function">strerror</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">,</span> fmt<span class="token punctuation">,</span> ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">va_end</span><span class="token punctuation">(</span>ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_exit</span><span class="token punctuation">(</span>eval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">event_sock_err</span><span class="token punctuation">(</span><span class="token keyword">int</span> eval<span class="token punctuation">,</span> evutil_socket_t sock<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    va_list ap<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> err <span class="token operator">=</span> <span class="token function">evutil_socket_geterror</span><span class="token punctuation">(</span>sock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> fmt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_logv_</span><span class="token punctuation">(</span>EVENT_LOG_ERR<span class="token punctuation">,</span> <span class="token function">evutil_socket_error_to_string</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">,</span> fmt<span class="token punctuation">,</span> ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">va_end</span><span class="token punctuation">(</span>ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_exit</span><span class="token punctuation">(</span>eval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">event_debugx_</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    va_list ap<span class="token punctuation">;</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>ap<span class="token punctuation">,</span> fmt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">event_logv_</span><span class="token punctuation">(</span>EVENT_LOG_DEBUG<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> fmt<span class="token punctuation">,</span> ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">va_end</span><span class="token punctuation">(</span>ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从上述定义中可以发现，这些函数调用的函数为：</p>
-<ol>
+<ol type="1">
 <li><code>event_logv_</code></li>
 <li><code>evutil_socket_geterror</code> 和 <code>evutil_socket_error_to_string</code></li>
 <li><code>event_exit</code></li>
 </ol>
-<h4 id="event-logv"><a href="#event-logv" class="headerlink" title="event_logv_"></a>event_logv_</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">event_log</span><span class="params">(<span class="keyword">int</span> severity, <span class="keyword">const</span> <span class="keyword">char</span> *msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (log_fn) log_fn(severity, msg);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *severity_str;</span><br><span class="line">        <span class="keyword">switch</span> (severity) &#123;</span><br><span class="line">        <span class="keyword">case</span> EVENT_LOG_DEBUG:</span><br><span class="line">            severity_str = <span class="string">&quot;debug&quot;</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EVENT_LOG_MSG:</span><br><span class="line">            severity_str = <span class="string">&quot;msg&quot;</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EVENT_LOG_WARN:</span><br><span class="line">            severity_str = <span class="string">&quot;warn&quot;</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EVENT_LOG_ERR:</span><br><span class="line">            severity_str = <span class="string">&quot;err&quot;</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            severity_str = <span class="string">&quot;???&quot;</span>; <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        (<span class="keyword">void</span>)<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;[%s] %s\n&quot;</span>, severity_str, msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_logv_</span><span class="params">(<span class="keyword">int</span> severity, <span class="keyword">const</span> <span class="keyword">char</span> *errstr, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, va_list ap)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line">    <span class="keyword">size_t</span> len;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* DEBUG 等级日志需要在 DEBUG 打开是才能输出 */</span></span><br><span class="line">    <span class="keyword">if</span> (severity == EVENT_LOG_DEBUG &amp;&amp; !event_debug_get_logging_mask_()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (fmt != <span class="literal">NULL</span>) evutil_vsnprintf(buf, <span class="keyword">sizeof</span>(buf), fmt, ap);</span><br><span class="line">    <span class="keyword">else</span> buf[<span class="number">0</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (errstr) &#123;</span><br><span class="line">        len = <span class="built_in">strlen</span>(buf);</span><br><span class="line">        <span class="keyword">if</span> (len &lt; <span class="keyword">sizeof</span>(buf) - <span class="number">3</span>) evutil_snprintf(buf + len, <span class="keyword">sizeof</span>(buf) - len, <span class="string">&quot;: %s&quot;</span>, errstr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event_log(severity, buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="event_logv_">event_logv_</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">event_log</span><span class="token punctuation">(</span><span class="token keyword">int</span> severity<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>msg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>log_fn<span class="token punctuation">)</span> <span class="token function">log_fn</span><span class="token punctuation">(</span>severity<span class="token punctuation">,</span> msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>severity_str<span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>severity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> EVENT_LOG_DEBUG<span class="token operator">:</span>
+            severity_str <span class="token operator">=</span> <span class="token string">"debug"</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> EVENT_LOG_MSG<span class="token operator">:</span>
+            severity_str <span class="token operator">=</span> <span class="token string">"msg"</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> EVENT_LOG_WARN<span class="token operator">:</span>
+            severity_str <span class="token operator">=</span> <span class="token string">"warn"</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> EVENT_LOG_ERR<span class="token operator">:</span>
+            severity_str <span class="token operator">=</span> <span class="token string">"err"</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token operator">:</span>
+            severity_str <span class="token operator">=</span> <span class="token string">"???"</span><span class="token punctuation">;</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"[%s] %s\n"</span><span class="token punctuation">,</span> severity_str<span class="token punctuation">,</span> msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">event_logv_</span><span class="token punctuation">(</span><span class="token keyword">int</span> severity<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>errstr<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>fmt<span class="token punctuation">,</span> va_list ap<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    size_t len<span class="token punctuation">;</span>
+
+    <span class="token comment">/* DEBUG 等级日志需要在 DEBUG 打开是才能输出 */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>severity <span class="token operator">==</span> EVENT_LOG_DEBUG <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">event_debug_get_logging_mask_</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>fmt <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token function">evutil_vsnprintf</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">,</span> fmt<span class="token punctuation">,</span> ap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> buf<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'\0'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>errstr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>len <span class="token operator">&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token function">evutil_snprintf</span><span class="token punctuation">(</span>buf <span class="token operator">+</span> len<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">-</span> len<span class="token punctuation">,</span> <span class="token string">": %s"</span><span class="token punctuation">,</span> errstr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">event_log</span><span class="token punctuation">(</span>severity<span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从源代码中可以看出 <code>event_logv_</code> 的功能较为简单，其根本上是调用 <code>fprintf</code> 将错误日志打印到 <code>stderr</code>，并且也提供了函数指针 <code>log_fn</code> 以供用户自行替换打印日志函数，替换打印日志函数可调用 <code>event_set_log_callback</code> 函数实现，该函数的声明位于 <code>event.h</code>，实现位于 <code>log.c</code>，可以被用户调用：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> event_log_cb log_fn = <span class="literal">NULL</span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*event_log_cb)</span><span class="params">(<span class="keyword">int</span> severity, <span class="keyword">const</span> <span class="keyword">char</span> *msg)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_set_log_callback</span><span class="params">(event_log_cb cb)</span> </span>&#123;</span><br><span class="line">    log_fn = cb;</span><br><span class="line">&#125;：</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> event_log_cb log_fn <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>event_log_cb<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> severity<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">event_set_log_callback</span><span class="token punctuation">(</span>event_log_cb cb<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    log_fn <span class="token operator">=</span> cb<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>：<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>libevent</code> 默认的日志处理行为是打印在终端屏幕，这往往不符合我们真正的需求。如果我们想按照自己的方式进行日志处理，那么就可以自定义一个日志处理函数（比如说将错误或警告信息输出到文件中），再将该函数名作为参数调用 <code>event_set_log_callback</code> 即可，如果想再恢复默认的日志处理行为，那么再次调用 <code>event_set_log_callback</code> 函数传入 <code>NULL</code> 即可。</p>
-<h4 id="evutil-socket-geterror"><a href="#evutil-socket-geterror" class="headerlink" title="evutil_socket_geterror"></a>evutil_socket_geterror</h4><p><code>evutil_socket_geterror</code> 函数实现在 <code>GNU</code> 编译环境下非常简单，仅仅是对 <code>errno</code> 和 <code>strerror(errno)</code> 的封装，定义该函数的目的是区分不同平台的不同编译环境，如果各位读者有兴趣可自行学习该函数在 <code>Window</code> 平台下的实现。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> evutil_socket_geterror(sock) (errno)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> evutil_socket_error_to_string(errcode) (strerror(errcode))</span></span><br></pre></td></tr></table></figure>
-<h4 id="event-exit"><a href="#event-exit" class="headerlink" title="event_exit"></a>event_exit</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">event_exit</span><span class="params">(<span class="keyword">int</span> errcode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (fatal_fn) &#123;</span><br><span class="line">        fatal_fn(errcode);</span><br><span class="line">        <span class="built_in">exit</span>(errcode);  <span class="comment">/* should never be reached */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (errcode == EVENT_ERR_ABORT_)</span><br><span class="line">        <span class="built_in">abort</span>();</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">exit</span>(errcode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="evutil_socket_geterror">evutil_socket_geterror</h4>
+<p><code>evutil_socket_geterror</code> 函数实现在 <code>GNU</code> 编译环境下非常简单，仅仅是对 <code>errno</code> 和 <code>strerror(errno)</code> 的封装，定义该函数的目的是区分不同平台的不同编译环境，如果各位读者有兴趣可自行学习该函数在 <code>Window</code> 平台下的实现。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> evutil_socket_geterror(sock) (errno)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> evutil_socket_error_to_string(errcode) (strerror(errcode))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="event_exit">event_exit</h4>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">event_exit</span><span class="token punctuation">(</span><span class="token keyword">int</span> errcode<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>fatal_fn<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">fatal_fn</span><span class="token punctuation">(</span>errcode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span>errcode<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* should never be reached */</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>errcode <span class="token operator">==</span> EVENT_ERR_ABORT_<span class="token punctuation">)</span>
+        <span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span>errcode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>event_exit</code> 的功能也较为简单，其根本上是调用 <code>abort()</code> 或者 <code>exit()</code> 退出程序运行。 当然，<code>event_exit</code> 也和 <code>event_logv_</code> 一样，提供了函数指针 <code>fatal_fn</code> 以供用户自行替换退出程序的方式，替换退出程序函数可调用 <code>event_set_fatal_callback</code> 函数实现，该函数的声明位于 <code>event.h</code>，实现位于 <code>log.c</code>，可以被用户调用：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*event_fatal_cb)</span><span class="params">(<span class="keyword">int</span> err)</span></span>;</span><br><span class="line"><span class="keyword">static</span> event_fatal_cb fatal_fn = <span class="literal">NULL</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">event_set_fatal_callback</span><span class="params">(event_fatal_cb cb)</span> </span>&#123;</span><br><span class="line">    fatal_fn = cb;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>event_fatal_cb<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> event_fatal_cb fatal_fn <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">event_set_fatal_callback</span><span class="token punctuation">(</span>event_fatal_cb cb<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    fatal_fn <span class="token operator">=</span> cb<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>libevent</code> 的错误处理仅在发生 <code>error</code> 的时候进行，在进行错误处理之前会先进行日志处理，默认的错误处理行为是直接 <code>abort</code> 或者 <code>exit</code>。如果想在发生错误后，程序退出之前做一些其他处理，那么就可以自定义一个错误处理函数，并将该函数名作为参数调用 <code>event_set_fatal_callback</code> 即可，如果想再恢复默认的错误处理行为，那么再次调用 <code>event_set_fatal_callback</code> 函数传入 <code>NULL</code> 即可。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28114615/article/details/89194018#%E6%97%A5%E5%BF%97%E5%8F%8A%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B">libevent 源码学习（1）：日志及错误处理_HerofH_的博客 - CSDN 博客</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/luotuo44/article/details/38317797">Libevent 源码分析 - 日志和错误处理_luotuo44 的专栏 - CSDN 博客</a></li>
 </ul>
@@ -418,31 +423,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -485,42 +470,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -528,132 +485,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/5f35962e/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/5f35962e/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/5f35962e/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

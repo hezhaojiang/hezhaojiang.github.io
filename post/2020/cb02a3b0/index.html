@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,26 +16,24 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法 - 动态规划（区间动态规划）">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/cb02a3b0/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<meta property="og:description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002230946.png">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002231126.png">
 <meta property="article:published_time" content="2020-10-04T18:42:28.000Z">
-<meta property="article:modified_time" content="2021-02-09T11:39:21.755Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
@@ -43,59 +43,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/cb02a3b0/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据结构与算法 - 动态规划（区间动态规划） | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/cb02a3b0/","path":"post/2020/cb02a3b0/","title":"数据结构与算法 - 动态规划（区间动态规划）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法 - 动态规划（区间动态规划） | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -106,7 +66,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -133,36 +93,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -173,8 +109,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -183,7 +118,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -199,7 +134,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -217,14 +152,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">区间动态规划简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dp-i-j-%E4%BB%85%E4%B8%8E%E5%B8%B8%E6%95%B0%E4%B8%AA%E6%9B%B4%E5%B0%8F%E8%A7%84%E6%A8%A1%E5%AD%90%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">2.1.</span> <span class="nav-text">dp[i][j] 仅与常数个更小规模子问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dp-i-j-%E4%B8%8E-O-n-%E4%B8%AA%E6%9B%B4%E5%B0%8F%E8%A7%84%E6%A8%A1%E5%AD%90%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">2.2.</span> <span class="nav-text">dp[i][j] 与 O(n) 个更小规模子问题有关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">区间动态规划经典问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E4%B8%8E%E5%B8%B8%E6%95%B0%E4%B8%AA%E5%B0%8F%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">3.1.</span> <span class="nav-text">大规模问题与常数个小规模问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E4%B8%8E-O-n-%E4%B8%AA%E5%B0%8F%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">3.2.</span> <span class="nav-text">大规模问题与 O(n) 个小规模问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%9B%9E%E6%96%87%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">区间动态规划回文相关问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98"><span class="nav-number">3.4.</span> <span class="nav-text">区间动态规划其它问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">区间动态规总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">区间动态规划简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dpij-%E4%BB%85%E4%B8%8E%E5%B8%B8%E6%95%B0%E4%B8%AA%E6%9B%B4%E5%B0%8F%E8%A7%84%E6%A8%A1%E5%AD%90%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">2.1.</span> <span class="nav-text">dp[i][j] 仅与常数个更小规模子问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dpij-%E4%B8%8E-on-%E4%B8%AA%E6%9B%B4%E5%B0%8F%E8%A7%84%E6%A8%A1%E5%AD%90%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">2.2.</span> <span class="nav-text">dp[i][j] 与 O(n) 个更小规模子问题有关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">区间动态规划经典问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E4%B8%8E%E5%B8%B8%E6%95%B0%E4%B8%AA%E5%B0%8F%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">3.1.</span> <span class="nav-text">大规模问题与常数个小规模问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E4%B8%8E-on-%E4%B8%AA%E5%B0%8F%E8%A7%84%E6%A8%A1%E9%97%AE%E9%A2%98%E6%9C%89%E5%85%B3"><span class="nav-number">3.2.</span> <span class="nav-text">大规模问题与 O(n) 个小规模问题有关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%9B%9E%E6%96%87%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">区间动态规划回文相关问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98"><span class="nav-number">3.4.</span> <span class="nav-text">区间动态规划其它问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">区间动态规总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -233,21 +169,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -257,14 +190,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -273,7 +204,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -286,9 +217,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -329,7 +258,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:39:21" itemprop="dateModified" datetime="2021-02-09T19:39:21+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -342,27 +271,6 @@
     </span>
 
   
-    <span id="/post/2020/cb02a3b0/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 动态规划（区间动态规划）" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/cb02a3b0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/cb02a3b0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -372,34 +280,51 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <div class="note success"><h2 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h2><ul>
+        <div class="note success"><h2 id="转载说明">转载说明</h2>
+<ul>
 <li>作者：力扣 (LeetCode)</li>
-<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/">https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/</a></li>
+<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/" class="uri">https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/</a></li>
 <li>来源：力扣（LeetCode）</li>
 <li>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </div>
-<a id="more"></a>
+<span id="more"></span>
 <p>在输入为长度为 n 的数组时，子问题用区间 <code>[i..j]</code> 表示。</p>
 <p>状态的定义和转移都与区间有关，称为区间动态规划</p>
-<h2 id="区间动态规划简介"><a href="#区间动态规划简介" class="headerlink" title="区间动态规划简介"></a>区间动态规划简介</h2><p>区间 DP 是状态的定义和转移都与区间有关，其中区间用两个端点表示。</p>
+<h2 id="区间动态规划简介">区间动态规划简介</h2>
+<p>区间 DP 是状态的定义和转移都与区间有关，其中区间用两个端点表示。</p>
 <p>状态定义 dp[i][j] = [i..j] 上原问题的解。i 变大，j 变小都可以得到更小规模的子问题。</p>
 <p>对于单串上的问题，我们可以对比一下线性动态规划和区间动态规划。线性动态规划, 一般是定义 dp[i]， 表示考虑到前 i 个元素，原问题的解，i 变小即得到更小规模的子问题，推导状态时候是从前往后，即 i 从小到大推的。区间动态规划，一般是定义 dp[i][j]，表示考虑 [i..j] 范围内的元素，原问题的解增加 i，减小 j 都可以得到更小规模的子问题。推导状态一般是按照区间长度从短到长推的。</p>
 <p>区间动态规划的状态设计，状态转移都与线性动态规划有明显区别，但是由于这两种方法都经常用在单串问题上，拿到一个单串的问题时，往往不能快速地判断到底是用线性动态规划还是区间动态规划，这也是区间动态规划的难点之一。</p>
 <p>状态转移，推导状态 dp[i][j] 时，有两种常见情况</p>
-<h3 id="dp-i-j-仅与常数个更小规模子问题有关"><a href="#dp-i-j-仅与常数个更小规模子问题有关" class="headerlink" title="dp[i][j] 仅与常数个更小规模子问题有关"></a>dp[i][j] 仅与常数个更小规模子问题有关</h3><p>一般是与 dp[i + 1][j], dp[i][j - 1], dp[i + 1][j - 1] 有关。</p>
+<h3 id="dpij-仅与常数个更小规模子问题有关">dp[i][j] 仅与常数个更小规模子问题有关</h3>
+<p>一般是与 dp[i + 1][j], dp[i][j - 1], dp[i + 1][j - 1] 有关。</p>
 <p>dp[i][j] = f(dp[i + 1][j], dp[i][j - 1], dp[i + 1][j - 1])</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002230946.png" alt="dp[i][j] 仅与常数个更小规模子问题有关"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002230946.png" alt="dp[i][j] 仅与常数个更小规模子问题有关" /><figcaption aria-hidden="true">dp[i][j] 仅与常数个更小规模子问题有关</figcaption>
+</figure>
 <p>代码常见写法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> len = <span class="number">1.</span>.n</span><br><span class="line">    <span class="keyword">for</span> i = i..len</span><br><span class="line">        j = i + len - <span class="number">1</span></span><br><span class="line">        dp[i][j] = <span class="built_in">max</span>(dp[i][j], f(dp[i+<span class="number">1</span>][j], dp[i][j<span class="number">-1</span>], dp[i+<span class="number">1</span>][j<span class="number">-1</span>]))</span><br></pre></td></tr></table></figure>
-<p>时间复杂度和空间复杂度均为 $O(n^{2})$</p>
-<h3 id="dp-i-j-与-O-n-个更小规模子问题有关"><a href="#dp-i-j-与-O-n-个更小规模子问题有关" class="headerlink" title="dp[i][j] 与 O(n) 个更小规模子问题有关"></a>dp[i][j] 与 O(n) 个更小规模子问题有关</h3><p>一般是枚举 [i,j] 的分割点，将区间分为 [i,k] 和 [k+1,j]，对每个 k 分别求解（下面公式的 f），再汇总（下面公式的 g）。</p>
-<pre><code>dp[i][j] = g(f(dp[i][k], dp[k + 1][j])) 其中 k = i .. j-1。
-</code></pre><p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002231126.png" alt="dp[i][j] 与 O(n) 个更小规模子问题有关"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> len <span class="token operator">=</span> <span class="token number">1.</span><span class="token punctuation">.</span>n
+    <span class="token keyword">for</span> i <span class="token operator">=</span> i<span class="token punctuation">.</span><span class="token punctuation">.</span>len
+        j <span class="token operator">=</span> i <span class="token operator">+</span> len <span class="token operator">-</span> <span class="token number">1</span>
+        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">f</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>时间复杂度和空间复杂度均为 <span class="math inline">\(O(n^{2})\)</span></p>
+<h3 id="dpij-与-on-个更小规模子问题有关">dp[i][j] 与 O(n) 个更小规模子问题有关</h3>
+<p>一般是枚举 [i,j] 的分割点，将区间分为 [i,k] 和 [k+1,j]，对每个 k 分别求解（下面公式的 f），再汇总（下面公式的 g）。</p>
+<pre><code>dp[i][j] = g(f(dp[i][k], dp[k + 1][j])) 其中 k = i .. j-1。</code></pre>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201002231126.png" alt="dp[i][j] 与 O(n) 个更小规模子问题有关" /><figcaption aria-hidden="true">dp[i][j] 与 O(n) 个更小规模子问题有关</figcaption>
+</figure>
 <p>代码常见写法, 以下代码以 f 为 max 为例</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> len = <span class="number">1.</span>.n</span><br><span class="line">    <span class="keyword">for</span> i = i..len</span><br><span class="line">        j = i + len - <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> k = i..j</span><br><span class="line">            dp[i][j] = <span class="built_in">max</span>(dp[i][j], f(dp[i][k], dp[k][j]))</span><br></pre></td></tr></table></figure>
-<p>时间复杂度可以达到 $O(n^3)$，空间复杂度还是 $O(n^2)$</p>
-<h2 id="区间动态规划经典问题"><a href="#区间动态规划经典问题" class="headerlink" title="区间动态规划经典问题"></a>区间动态规划经典问题</h2><h3 id="大规模问题与常数个小规模问题有关"><a href="#大规模问题与常数个小规模问题有关" class="headerlink" title="大规模问题与常数个小规模问题有关"></a>大规模问题与常数个小规模问题有关</h3><p>最常见的形式如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> len <span class="token operator">=</span> <span class="token number">1.</span><span class="token punctuation">.</span>n
+    <span class="token keyword">for</span> i <span class="token operator">=</span> i<span class="token punctuation">.</span><span class="token punctuation">.</span>len
+        j <span class="token operator">=</span> i <span class="token operator">+</span> len <span class="token operator">-</span> <span class="token number">1</span>
+        <span class="token keyword">for</span> k <span class="token operator">=</span> i<span class="token punctuation">.</span><span class="token punctuation">.</span>j
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">f</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>时间复杂度可以达到 <span class="math inline">\(O(n^3)\)</span>，空间复杂度还是 <span class="math inline">\(O(n^2)\)</span></p>
+<h2 id="区间动态规划经典问题">区间动态规划经典问题</h2>
+<h3 id="大规模问题与常数个小规模问题有关">大规模问题与常数个小规模问题有关</h3>
+<p>最常见的形式如下：</p>
 <p>推导 dp[i][j] 时，需要用到 dp[i][j-1], dp[i+1][j], dp[i+1][j-1] 三个子问题</p>
 <ul>
 <li>最长回文子序列</li>
@@ -408,34 +333,36 @@
 <p>考虑一个字符串 s 的所有子序列, 这些子序列中最长的回文子序列长度是多少</p>
 </blockquote>
 <p>这个问题如果用线性动态规划的经典思路，状态如下：</p>
-<pre><code>dp[i] := 考虑 [0..i] , 原问题的答案
-</code></pre><p>但是此后我们就遇到了困难，会发现这个状态有些难以转移</p>
+<pre><code>dp[i] := 考虑 [0..i] , 原问题的答案</code></pre>
+<p>但是此后我们就遇到了困难，会发现这个状态有些难以转移</p>
 <p>而如果考虑区间动态规划，状态如下：</p>
-<pre><code>dp[i][j] := 区间 [i..j] 上, 原问题的答案
-</code></pre><p>转移的时候，考虑 <code>dp[i][j-1]</code>, <code>dp[i+1][j]</code>, <code>dp[i+1][j-1]</code> 这三个子问题，这是考虑把边界去掉的模式，回文的特点恰好时候这种模式，</p>
+<pre><code>dp[i][j] := 区间 [i..j] 上, 原问题的答案</code></pre>
+<p>转移的时候，考虑 <code>dp[i][j-1]</code>, <code>dp[i+1][j]</code>, <code>dp[i+1][j-1]</code> 这三个子问题，这是考虑把边界去掉的模式，回文的特点恰好时候这种模式，</p>
 <p>根据两个边界的元素关系可以得到转移方程如下：</p>
 <pre><code>dp[i][j] = dp[i + 1][j - 1] + 2;                if (s[i] == s[j])
-dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);     if (s[i] != s[j])
-</code></pre><p>回文是用区间动态规划解决的常见问题，有很多变种，下一节中列出的练习题有很多类似的。</p>
-<h3 id="大规模问题与-O-n-个小规模问题有关"><a href="#大规模问题与-O-n-个小规模问题有关" class="headerlink" title="大规模问题与 O(n) 个小规模问题有关"></a>大规模问题与 <code>O(n)</code> 个小规模问题有关</h3><p>推导 <code>dp[i][j]</code> 时，需要 <code>[i..j]</code> 的所有子区间信息，其中子区间的其中一个端点与原区间重合，共 <code>O(n)</code> 个子区间</p>
+dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);     if (s[i] != s[j])</code></pre>
+<p>回文是用区间动态规划解决的常见问题，有很多变种，下一节中列出的练习题有很多类似的。</p>
+<h3 id="大规模问题与-on-个小规模问题有关">大规模问题与 <code>O(n)</code> 个小规模问题有关</h3>
+<p>推导 <code>dp[i][j]</code> 时，需要 <code>[i..j]</code> 的所有子区间信息，其中子区间的其中一个端点与原区间重合，共 <code>O(n)</code> 个子区间</p>
 <p>最常见的形式</p>
-<pre><code>dp[i][j] = g(f(dp[i][k], dp[k][j])) 其中 k = i+1 .. j-1。
-</code></pre><p>其中 <code>g</code> 常见的有 <code>max</code>/<code>min</code>，例如 <code>664</code> 就是 <code>min</code></p>
+<pre><code>dp[i][j] = g(f(dp[i][k], dp[k][j])) 其中 k = i+1 .. j-1。</code></pre>
+<p>其中 <code>g</code> 常见的有 <code>max</code>/<code>min</code>，例如 <code>664</code> 就是 <code>min</code></p>
 <p>下面就以 <code>664</code> 题讲解这种模式的思考方式</p>
 <p>==【奇怪的打印机】==</p>
 <blockquote>
-<p>有台奇怪的打印机有以下两个特殊要求：<br>打印机每次只能打印同一个字符序列。<br>每次可以在任意起始和结束位置打印新字符，并且会覆盖掉原来已有的字符。<br>给定一个只包含小写英文字母的字符串 s，你的任务是计算这个打印机打印它需要的最少次数。</p>
+<p>有台奇怪的打印机有以下两个特殊要求： 打印机每次只能打印同一个字符序列。 每次可以在任意起始和结束位置打印新字符，并且会覆盖掉原来已有的字符。 给定一个只包含小写英文字母的字符串 s，你的任务是计算这个打印机打印它需要的最少次数。</p>
 </blockquote>
 <p>首先区间动态规划的状态定义与前面一样，还是经典的定义方式，状态定义模式化这也是区间动态规划的一个特点。</p>
-<pre><code>dp[i][j] := 打印出 [i..j] 上的字符需要的最少次数
-</code></pre><p>在转移时，枚举中间的切分位置 <code>k</code>，考虑 <code>i</code> 边界以及中间枚举的切分位置 <code>k</code> 转移时的情况</p>
+<pre><code>dp[i][j] := 打印出 [i..j] 上的字符需要的最少次数</code></pre>
+<p>在转移时，枚举中间的切分位置 <code>k</code>，考虑 <code>i</code> 边界以及中间枚举的切分位置 <code>k</code> 转移时的情况</p>
 <p><code>i</code> 要自己涂一次，则 <code>dp[i][j] = 1 + dp[i + 1][j]</code></p>
 <p>其中第一项 <code>1</code> 表示 <code>i</code> 位置单独花费一次次数 <code>i</code> 与中间的某个切分位置 <code>k</code> 一起打印 (条件是 <code>s[i] = s[k]</code>)，则 <code>dp[i][j] = dp[i+1][k] + dp[k+1][j]</code></p>
 <p>其中第一项 <code>dp[i+1][k]</code> 表示 <code>i</code> 位置跟着 <code>k</code> 一起转移了，不在单独考虑 <code>i</code> 花费的次数了</p>
 <p>综合以上分析可以写出状态转移方程如下：</p>
 <pre><code>dp[i][j] = dp[i + 1][j] + 1;
-dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j 且 s[i] == s[k]
-</code></pre><h3 id="区间动态规划回文相关问题"><a href="#区间动态规划回文相关问题" class="headerlink" title="区间动态规划回文相关问题"></a>区间动态规划回文相关问题</h3><ul>
+dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j 且 s[i] == s[k]</code></pre>
+<h3 id="区间动态规划回文相关问题">区间动态规划回文相关问题</h3>
+<ul>
 <li>最长回文子串</li>
 <li>回文子串</li>
 <li>最长回文子序列</li>
@@ -443,7 +370,8 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
 <li>统计不同回文子字符串</li>
 <li>让字符串成为回文串的最少插入次数 —— 最长回文子序列</li>
 </ul>
-<h3 id="区间动态规划其它问题"><a href="#区间动态规划其它问题" class="headerlink" title="区间动态规划其它问题"></a>区间动态规划其它问题</h3><ul>
+<h3 id="区间动态规划其它问题">区间动态规划其它问题</h3>
+<ul>
 <li>戳气球</li>
 <li>移除盒子 —— 戳气球升级版，[i][j] 基础上加了一维 k 状态，k 是 j 右侧与 j 相同的元素个数, 记忆化</li>
 <li>多边形三角剖分的最低得分</li>
@@ -452,8 +380,10 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
 <li>预测赢家</li>
 <li>编码最短长度的字符串</li>
 </ul>
-<h2 id="区间动态规总结"><a href="#区间动态规总结" class="headerlink" title="区间动态规总结"></a>区间动态规总结</h2><p>区间动态规划一般用在单串问题上，以区间 [i, j] 为单位思考状态的设计和转移。它与线性动态规划在状态设计和状态转移上都有明显的不同，但由于这两个方法都经常用在单串问题上，导致我们拿到一个单串的问题时，经常不能快速反映出应该用哪种方法。这是区间动态规划的难点之一，但是这个难点也是好解决的，就是做一定数量的练习题，因为区间动态规划的题目比线性动态规划少很多，并且区间动态规划的状态设计和转移都比较朴素，变化也比线性动态规划少很多，所以通过不多的题目数量就可以把区间动态规划常见的方法和变化看个大概了。</p>
-<h2 id="推荐阅读顺序"><a href="#推荐阅读顺序" class="headerlink" title="推荐阅读顺序"></a>推荐阅读顺序</h2><ol>
+<h2 id="区间动态规总结">区间动态规总结</h2>
+<p>区间动态规划一般用在单串问题上，以区间 [i, j] 为单位思考状态的设计和转移。它与线性动态规划在状态设计和状态转移上都有明显的不同，但由于这两个方法都经常用在单串问题上，导致我们拿到一个单串的问题时，经常不能快速反映出应该用哪种方法。这是区间动态规划的难点之一，但是这个难点也是好解决的，就是做一定数量的练习题，因为区间动态规划的题目比线性动态规划少很多，并且区间动态规划的状态设计和转移都比较朴素，变化也比线性动态规划少很多，所以通过不多的题目数量就可以把区间动态规划常见的方法和变化看个大概了。</p>
+<h2 id="推荐阅读顺序">推荐阅读顺序</h2>
+<ol type="1">
 <li><a href="/post/2020/aecf6ec6/" title="数据结构与算法 - 动态规划（简介）">数据结构与算法 - 动态规划（简介）</a></li>
 <li><a href="/post/2020/610682be/" title="数据结构与算法 - 动态规划（线性动态规划）">数据结构与算法 - 动态规划（线性动态规划）</a></li>
 <li><a href="/post/2020/9158b835/" title="数据结构与算法 - 动态规划（前缀和）">数据结构与算法 - 动态规划（前缀和）</a></li>
@@ -462,8 +392,7 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
 <li><a href="/post/2020/2a7541d6/" title="数据结构与算法 - 动态规划（状态压缩）">数据结构与算法 - 动态规划（状态压缩）</a></li>
 <li><a href="/post/2020/8ed94cfd/" title="数据结构与算法 - 动态规划（计数问题）">数据结构与算法 - 动态规划（计数问题）</a></li>
 <li><a href="/post/2020/41da3a83/" title="数据结构与算法 - 矩阵快速幂">数据结构与算法 - 矩阵快速幂</a></li>
-<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a>
-</li>
+<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a></li>
 </ol>
 
     </div>
@@ -471,31 +400,11 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\9158b835\" rel="bookmark">数据结构与算法 - 动态规划（前缀和）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\16341583\" rel="bookmark">数据结构与算法 - 动态规划（数位动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\2a7541d6\" rel="bookmark">数据结构与算法 - 动态规划（状态压缩）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\610682be\" rel="bookmark">数据结构与算法 - 动态规划（线性动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\2cea0e37\" rel="bookmark">数据结构与算法 - 动态规划（背包问题）</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -538,42 +447,14 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -581,176 +462,52 @@ dp[i][j] = min(dp[i][j], dp[i + 1][k] + dp[k + 1][j]); 其中 i &lt; k &lt;= j �
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/cb02a3b0/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/cb02a3b0/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/cb02a3b0/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

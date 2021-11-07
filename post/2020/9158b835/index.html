@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法 - 动态规划（前缀和）">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/9158b835/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="转载说明 作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
+<meta property="og:description" content="转载说明  作者：力扣 (LeetCode) 链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;dynamic-programming-1-plus&#x2F; 来源：力扣（LeetCode） 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-04T18:39:16.000Z">
-<meta property="article:modified_time" content="2021-02-09T11:39:24.757Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/9158b835/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据结构与算法 - 动态规划（前缀和） | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/9158b835/","path":"post/2020/9158b835/","title":"数据结构与算法 - 动态规划（前缀和）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法 - 动态规划（前缀和） | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">前缀和简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%8C%BA%E9%97%B4%E5%92%8C"><span class="nav-number">3.</span> <span class="nav-text">求区间和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%8C%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">求区间和相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BB%B4%E6%8A%A4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">4.</span> <span class="nav-text">数据结构维护前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BB%B4%E6%8A%A4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">数据结构维护前缀和相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%8E%A8%E5%B9%BF"><span class="nav-number">5.</span> <span class="nav-text">运算推广</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%8E%A8%E5%B9%BF%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">运算推广相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%AE%E5%88%86"><span class="nav-number">6.</span> <span class="nav-text">差分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">6.1.</span> <span class="nav-text">差分相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E8%BD%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">转载说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">前缀和简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%8C%BA%E9%97%B4%E5%92%8C"><span class="nav-number">3.</span> <span class="nav-text">求区间和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%8C%BA%E9%97%B4%E5%92%8C%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">求区间和相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BB%B4%E6%8A%A4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">4.</span> <span class="nav-text">数据结构维护前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BB%B4%E6%8A%A4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">数据结构维护前缀和相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%8E%A8%E5%B9%BF"><span class="nav-number">5.</span> <span class="nav-text">运算推广</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%8E%A8%E5%B9%BF%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">运算推广相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%AE%E5%88%86"><span class="nav-number">6.</span> <span class="nav-text">差分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%E7%9B%B8%E5%85%B3%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">6.1.</span> <span class="nav-text">差分相关练习题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.</span> <span class="nav-text">推荐阅读顺序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:39:24" itemprop="dateModified" datetime="2021-02-09T19:39:24+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/9158b835/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 动态规划（前缀和）" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/9158b835/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/9158b835/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -369,93 +277,98 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <div class="note success"><h2 id="转载说明"><a href="#转载说明" class="headerlink" title="转载说明"></a>转载说明</h2><ul>
+        <div class="note success"><h2 id="转载说明">转载说明</h2>
+<ul>
 <li>作者：力扣 (LeetCode)</li>
-<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/">https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/</a></li>
+<li>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/" class="uri">https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/</a></li>
 <li>来源：力扣（LeetCode）</li>
 <li>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
 </ul>
 </div>
-<a id="more"></a>
+<span id="more"></span>
 <p>前缀和是一种查询数组中任意区间的元素的和的数据结构，这里数组给定之后就不变了。针对这个不变的数组，前缀和用于多次查询区间 <code>[i, j]</code> 上元素的和。</p>
 <p>对于动态规划而言，前缀和的意义主要有两点：</p>
-<ol>
+<ol type="1">
 <li>一维和二维前缀和的推导，分别用到了单串和矩阵中最经典的状态设计以及状态转移；</li>
 <li>在一些更复杂的动态规划问题中，状态转移的时候需要依赖区间和，因为状态转移是非常频繁的操作，因此必须高效地求区间和才能使得状态转移的时间复杂度可接受，此时就必须用到前缀和了。</li>
 </ol>
 <p>除此之外，一些问题需要前缀和与其它数据结构配合来解决，也有两类：</p>
-<ol>
+<ol type="1">
 <li>先预处理出前缀和数组，这一步是动态规划，然后在前缀和数组上用其它数据结构解决；</li>
 <li>还是按照动态规划的方式求前缀和，也需要额外的数据结构维护前缀和，但不是预处理好前缀和数组之后再用数据结构计算，而是每求出一个前缀和，就更新一次数据结构并维护答案。</li>
 </ol>
 <p>前缀和的推导和计算隐含着动态规划的基本思想，同时它的状态设计是线性动态规划中比较简单的那一类。与线性动态规划一样，前缀和也有一维和二维两种场景。</p>
 <p>虽然前缀和本身很简单，但需要用到它解决的问题非常多，与其它数据结构配合的变化也很多，因此需要从线性动态规划中剥离出来单独学习。</p>
-<h2 id="前缀和简介"><a href="#前缀和简介" class="headerlink" title="前缀和简介"></a>前缀和简介</h2><p>考虑以下问题：</p>
-<p>给定长度 <code>n</code> 的序列 <code>a</code>：$a_{0}, a_{1}, …, a_{n-1}$，给每个前缀求一次和，$S_{0} = 0$, $S_{i}=\sum_{j=0}^{i-1}a_{j}$。这些前缀和维护在一个长度 $n + 1$ 数组 <code>S</code> 里, 称为前缀和数组。</p>
+<h2 id="前缀和简介">前缀和简介</h2>
+<p>考虑以下问题：</p>
+<p>给定长度 <code>n</code> 的序列 <code>a</code>：<span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span>，给每个前缀求一次和，<span class="math inline">\(S_{0} = 0\)</span>, <span class="math inline">\(S_{i}=\sum_{j=0}^{i-1}a_{j}\)</span>。这些前缀和维护在一个长度 <span class="math inline">\(n + 1\)</span> 数组 <code>S</code> 里, 称为前缀和数组。</p>
 <p>有两类在数组 <code>a</code> 上的求和需求</p>
 <ul>
 <li>前缀和：求 <code>a[0..i]</code> 的和</li>
 <li>区间和：求区间 <code>a[L, R]</code> 的和</li>
 </ul>
-<p>对于前缀和，<code>S[i + 1]</code> 刚好就是答案，因为这就是前缀和的定义：$S_{i + 1}=\sum_{j=0}^{i}a_{j}$。</p>
-<p>对于区间和，解决此问题最直观的方法是枚举 <code>[L, R]</code> 上的所有元素求和：$sum(L, R) = \sum_{idx = L}^{R}nums[idx]$。</p>
+<p>对于前缀和，<code>S[i + 1]</code> 刚好就是答案，因为这就是前缀和的定义：<span class="math inline">\(S_{i + 1}=\sum_{j=0}^{i}a_{j}\)</span>。</p>
+<p>对于区间和，解决此问题最直观的方法是枚举 <code>[L, R]</code> 上的所有元素求和：<span class="math inline">\(sum(L, R) = \sum_{idx = L}^{R}nums[idx]\)</span>。</p>
 <p>这种方法虽然直观，但是不足是查询一次需要 <code>O(N)</code> 时间，并且每来一个新的查询，就要重新枚举元素求和。通过简单的画图推导可以得到答案为 <code>S[R + 1] - S[L]S[R+1]−S[L]</code></p>
 <p>如果查询次数很多，当新查询来时，此前的查询计算的中间结果很多是可以直接用的，新的查询不必重新枚举，例如 此前查询过 <code>sum(5, 10)</code>，现在来了新查询 <code>sum(4, 8)</code> 在计算新查询时，<code>5 ~ 8</code> 这一段在计算此前的查询 <code>sum(5, 10)</code> 的时候已经计算过了，新查询的计算过程可以写成 <code>nums[4] + sum(5, 8)</code>，而不用全部枚举。</p>
 <p>如果已经有了 前缀和数组，那么通过简单的画图推导可以知道，两个前缀和 <code>S[R+1]</code> 和 <code>S[L]</code> 的差刚好就是 <code>[L, R]</code> 上的区间和。已有前缀和数组之后，这一步操作就是 <code>O(1)</code> 的。</p>
 <p>现将前缀和数组预处理出来，然后在每次查询中直接通过前缀和数组来计算而不是通过原数组，这是一种缓存中间结果的思想，如果把这一思想执行彻底，可以将所有可能的问题 <code>sum(i, j)</code> 其中 <code>0 &lt;= i &lt;= j &lt;= n-1</code>，将计算它们所需的所有中间结果先算一次缓存下来。这里提到的是缓存所有所需的中间结果，而不是子问题的中间结果，因为计算 <code>sum(i, j)</code> 需要的中间结果是前 <code>i-1</code> 个数的和 <code>sum(0,i)</code> 和前 <code>j</code> 个数的和 <code>sum(0, j+1)</code>。最终 <code>sum(i, j) = sum(0, j+1) - sum(0, i)</code> 这对于所有的区间查询都是适用的。</p>
 <p>以上将中间结果缓存思路与动态规划中缓存子问题的解的思路是一致的。</p>
 <p>定义 <code>sums[k]</code> 为 <code>[0..k-1]</code> 的和，其中 <code>sums[0]</code> 表示数组中没有数字被选中，<code>sums[1]</code> 表示之选中第一个数 <code>nums[0]</code>。 预先计算 <code>0 ~ k (0 &lt;= k &lt;= n-1)</code> 的和，这一系列的和都是从 <code>0</code> 开始的，因此称为前缀和。公式如下：</p>
-<ol>
-<li><code>k = 0</code> : $sum(0,0)=0$</li>
-<li><code>1 &lt;= k &lt;= n-i</code> : $sum(0,k) = \sum_{i=0}^{k-1}nums[i]$</li>
+<ol type="1">
+<li><code>k = 0</code> : <span class="math inline">\(sum(0,0)=0\)</span></li>
+<li><code>1 &lt;= k &lt;= n-i</code> : <span class="math inline">\(sum(0,k) = \sum_{i=0}^{k-1}nums[i]\)</span></li>
 </ol>
 <p>此后的区间查询都可以利用公式 <code>sum(i, j) = sums(0, j + 1) - sum(0, i)</code></p>
 <p>在上一章中，我们把线性动态规划中几种主流问题及其对应的 dp 状态设计做了总结。其中最基础的一种是单串 <code>dp[i]</code>，并且只与子问题 <code>i - 1</code> 有关，即 <code>dp[i] = f(dp[i-1])</code>。前缀和就是这种情况，<code>sums[i]</code> 只与 <code>sums[i-1]</code> 有关。推导前缀和数组的过程是 <code>O(N)</code> 的，如果区间和的查询次数达到了 <code>O(N)</code> 那么计算区间和的时间复杂度是摊销 <code>O(1)</code> 的。</p>
 <p>以上就是前缀和的基础介绍了，其中比较关键的有两点</p>
-<ol>
+<ol type="1">
 <li>预处理前缀和的过程是最简单且最经典的单串动态规划问题。</li>
 <li>先将所有位置的前缀和预处理出来，然后再处理区间和的查询，这是一种先缓存中间结果再处理查询的思路，因为这些中间结果在查询时需要反复用到，缓存之后就不用反复计算了，因此花时间预处理这些信息是有效的。</li>
 </ol>
 <p>前缀和除了求区间和之外，还有一些其它的应用：</p>
-<ol>
-<li><p>在用 dp 的方式推 <code>sums[i]</code> 的时候，有时求完 <code>sums[i]</code> 需要查询以前算过的结果计算某种指标，需要用其它数据结构将前面的计算结果维护起来，例如哈希表等等，在求每个位置的前缀和的过程中，查询数据结构并更新答案，这是前缀和的一大类问题，变化比较多，力扣上这类题也有很多，在本章最后一节中汇总了一些题目，在下一节也选择了典型题目做讲解。</p>
-</li>
-<li><p>前缀和的逆运算是差分，对原序列求出其差分序列，然后在对得到的差分序列求其前缀和序列，可以得到原序列，这在处理一些区间修改的问题时很有用，参考后面小节的题目讲解。</p>
-</li>
-<li><p>前缀和还可以推广到二维上，并用于快速求矩形和，二维前缀和的计算过程是最经典的矩阵上的线性动态规划，参考后面一节的题目和讲解。</p>
-</li>
+<ol type="1">
+<li><p>在用 dp 的方式推 <code>sums[i]</code> 的时候，有时求完 <code>sums[i]</code> 需要查询以前算过的结果计算某种指标，需要用其它数据结构将前面的计算结果维护起来，例如哈希表等等，在求每个位置的前缀和的过程中，查询数据结构并更新答案，这是前缀和的一大类问题，变化比较多，力扣上这类题也有很多，在本章最后一节中汇总了一些题目，在下一节也选择了典型题目做讲解。</p></li>
+<li><p>前缀和的逆运算是差分，对原序列求出其差分序列，然后在对得到的差分序列求其前缀和序列，可以得到原序列，这在处理一些区间修改的问题时很有用，参考后面小节的题目讲解。</p></li>
+<li><p>前缀和还可以推广到二维上，并用于快速求矩形和，二维前缀和的计算过程是最经典的矩阵上的线性动态规划，参考后面一节的题目和讲解。</p></li>
 </ol>
-<h2 id="求区间和"><a href="#求区间和" class="headerlink" title="求区间和"></a>求区间和</h2><p>利用前缀和求区间和的思想，已经求前缀和的过程在上一节中已经重点介绍，这里主要回顾一下前缀和中的动态规划思想，如下：</p>
+<h2 id="求区间和">求区间和</h2>
+<p>利用前缀和求区间和的思想，已经求前缀和的过程在上一节中已经重点介绍，这里主要回顾一下前缀和中的动态规划思想，如下：</p>
 <ul>
 <li>状态定义：<code>sums[i] := [0..i-1]</code> 的和</li>
 <li>状态转移：<code>sums[i] = a[i - 1] + sums[i - 1]</code></li>
 <li>初始化：<code>sums[0] = 0</code></li>
 </ul>
 <p>这是最简单的单串线性动态规划，其思想在上一章重点介绍。求解该动态规划问题后得到数组 <code>sums</code> 。然后区间和问题就变成了两个前缀和的差的问题。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rangeRum</span><span class="params">(<span class="keyword">int</span> L, <span class="keyword">int</span> R)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sums[R + <span class="number">1</span>] - sums[L];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="求区间和相关练习题"><a href="#求区间和相关练习题" class="headerlink" title="求区间和相关练习题"></a>求区间和相关练习题</h3><ul>
-<li>实现前缀和问题<ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">rangeRum</span><span class="token punctuation">(</span><span class="token keyword">int</span> L<span class="token punctuation">,</span> <span class="token keyword">int</span> R<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> sums<span class="token punctuation">[</span>R <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> sums<span class="token punctuation">[</span>L<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="求区间和相关练习题">求区间和相关练习题</h3>
+<ul>
+<li>实现前缀和问题
+<ul>
 <li>区域和检索 - 数组不可变</li>
 <li>二维区域和检索 - 矩阵不可变</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="数据结构维护前缀和"><a href="#数据结构维护前缀和" class="headerlink" title="数据结构维护前缀和"></a>数据结构维护前缀和</h2><p>在上一节中提到，在用 <code>dp</code> 的方式推 <code>sums[i]</code> 的时候，有时求完 <code>sums[i]</code> 需要查询以前算过的结果计算某种指标，需要用其它数据结构将前面的计算结果维护起来，以便高效查询。以下几个问题就是以上思路的直接应用。</p>
+<h2 id="数据结构维护前缀和">数据结构维护前缀和</h2>
+<p>在上一节中提到，在用 <code>dp</code> 的方式推 <code>sums[i]</code> 的时候，有时求完 <code>sums[i]</code> 需要查询以前算过的结果计算某种指标，需要用其它数据结构将前面的计算结果维护起来，以便高效查询。以下几个问题就是以上思路的直接应用。</p>
 <p>将前缀和维护在数据结构中，以便于后续的 多次 查询，最常见的是维护在哈希表中。</p>
 <p>力扣上这种题目非常多，更多题目详见本章后续节。下面考虑几个经典问题：</p>
-<p>第一问：$a_{0}, a_{1}, …, a_{n-1}$ 上有没有一个区间，其和为 <code>target</code>。<br>计算前缀和数组 <code>sums[i]</code> 。当扫描到 i 时，$a_{0}, a_{1}, …, a_{i-1}$ 的前缀和都已经求过了，在计算的过程中将前缀和维护在数据结构中，以便于后续的多次查询，本题在之后要查询前缀和的值是否存在，因此维护在 <code>unordered_set</code> 里。</p>
+<p>第一问：<span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span> 上有没有一个区间，其和为 <code>target</code>。 计算前缀和数组 <code>sums[i]</code> 。当扫描到 i 时，<span class="math inline">\(a_{0}, a_{1}, ..., a_{i-1}\)</span> 的前缀和都已经求过了，在计算的过程中将前缀和维护在数据结构中，以便于后续的多次查询，本题在之后要查询前缀和的值是否存在，因此维护在 <code>unordered_set</code> 里。</p>
 <p>求完当前值 <code>a[i]</code> 对应的前缀和 <code>S[i+1]</code>, 在插入到 <code>unordered_set</code> 之前先问：<code>S[i+1] - target</code> 在 <code>unordered_set</code> 中是否出现：</p>
 <ul>
 <li>如果出现，说明存在以 i 结尾的某个区间，和为 <code>target</code>, 则找到答案。</li>
 <li>如果不出现，则没有以 i 结尾的区间，和为 <code>target</code>，继续枚举 <code>i + 1</code>。</li>
 </ul>
 <p>上面的问题还可以有变种：</p>
-<p>第二问：$a_{0}, a_{1}, …, a_{n-1}$ 上有多少个区间，其和为 <code>target</code>。</p>
+<p>第二问：<span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span> 上有多少个区间，其和为 <code>target</code>。</p>
 <p>按照第一问的思路，把 <code>unordered_set</code> 改成 <code>unordered_map</code> 就可以</p>
 <blockquote>
 <p>参考题目：560. 和为 K 的子数组</p>
 </blockquote>
-<p>第三问：$a_{0}, a_{1}, …, a_{n-1}$ 上有没有一个区间，其和大于或小于 <code>target</code>。</p>
+<p>第三问：<span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span> 上有没有一个区间，其和大于或小于 <code>target</code>。</p>
 <p>整体思路与第一问相同，但是维护前缀和的数据结构需要从哈希表变为线段树</p>
 <blockquote>
 <p>参考题目：327. 区间和的个数</p>
@@ -465,53 +378,59 @@
 <blockquote>
 <p>参考题目： 437. 路径总和 III</p>
 </blockquote>
-<h3 id="数据结构维护前缀和相关练习题"><a href="#数据结构维护前缀和相关练习题" class="headerlink" title="数据结构维护前缀和相关练习题"></a>数据结构维护前缀和相关练习题</h3><ul>
-<li>HashMap 维护 (1)，键是前缀和（状态）的值，值为第一次出现时的索引<ul>
+<h3 id="数据结构维护前缀和相关练习题">数据结构维护前缀和相关练习题</h3>
+<ul>
+<li>HashMap 维护 (1)，键是前缀和（状态）的值，值为第一次出现时的索引
+<ul>
 <li>和等于 k 的最长子数组长度</li>
 <li>连续数组</li>
 <li>每个元音包含偶数次的最长子字符串 —— 前缀状态为 a,e,i,o,u 的个数的奇偶</li>
-</ul>
-</li>
-<li>HashMap 维护 (2)，键是前缀和（前缀状态）的值，值为出现次数<ul>
+</ul></li>
+<li>HashMap 维护 (2)，键是前缀和（前缀状态）的值，值为出现次数
+<ul>
 <li>和为 K 的子数组</li>
 <li>统计优美子数组 —— 前缀状态为奇数的个数</li>
-</ul>
-</li>
-<li>HashMap 维护 (3)，键是前缀和模 K 的余数（可以理解为前缀状态，状态为前缀和模 K）<ul>
+</ul></li>
+<li>HashMap 维护 (3)，键是前缀和模 K 的余数（可以理解为前缀状态，状态为前缀和模 K）
+<ul>
 <li>连续的子数组和 —— 值为第一次出现时的索引</li>
 <li>和可被 K 整除的子数组 —— 值为出现次</li>
-</ul>
-</li>
-<li>前缀和（积）与后缀和（积）均需要<ul>
+</ul></li>
+<li>前缀和（积）与后缀和（积）均需要
+<ul>
 <li>除自身以外数组的乘积</li>
 <li>寻找数组的中心索引</li>
 <li>找两个和为目标值且不重叠的子数组 —— 前缀和后缀和分别推一次，推的时候保存信息（DP），枚举分割点</li>
-</ul>
-</li>
-<li>二维前缀和<ul>
+</ul></li>
+<li>二维前缀和
+<ul>
 <li>元素和为目标值的子矩阵数量</li>
 <li>矩阵区域和</li>
 <li>最大子矩阵 —— 思路类似一维的最大子数组和</li>
 <li>矩形区域不超过 K 的最大数值和 —— 在上一题基础上加了一个 K</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="运算推广"><a href="#运算推广" class="headerlink" title="运算推广"></a>运算推广</h2><p>前缀和求的是数组 a 的前缀 [0..i-1] 的和，也就是对这些元素做加法结果，实际上对前缀 [0..i-1]，我们还可以做很多其它运算得到相应结果。<br>如果利用前缀上的某种运算的结果，可以像前缀和一样快速得到区间 [L, R] 上同样运算的结果，那么前缀和就成功推广了。</p>
+<h2 id="运算推广">运算推广</h2>
+<p>前缀和求的是数组 a 的前缀 [0..i-1] 的和，也就是对这些元素做加法结果，实际上对前缀 [0..i-1]，我们还可以做很多其它运算得到相应结果。 如果利用前缀上的某种运算的结果，可以像前缀和一样快速得到区间 [L, R] 上同样运算的结果，那么前缀和就成功推广了。</p>
 <p>事实上这种运算是存在的，例如异或运算，对应每个前缀 [0..i-1] ，我们都可以求得一个异或值，称为前缀异或，而对于区间 [L, R]。我们可以用 [0..R] 的前缀异或减去 [0..L-1] 的前缀异或就可以得到区间上的异或值，这个逻辑与前缀和完全相同。这依赖于异或运算的性质。</p>
 <p>如果想将某种运算应用到前缀元素上，并且利用前缀的结果快速计算区间结果，需要该运算满足 区间减法：区间 A = [i, j]，区间 B = [i, k] 区间 C = [k+1, j]，那么有了大区间 A 上的结果 a 和其中一个小区间 B 上的结果 b, 要能够算出另一个小区间 C 上的结果 c 。</p>
 <p>例如：</p>
 <ul>
-<li>异或：$a = b \oplus c =&gt; c = b \oplus a$</li>
-<li>乘法或模下乘法：$a = b \times c =&gt; c = a / b$</li>
+<li>异或：<span class="math inline">\(a = b \oplus c =&gt; c = b \oplus a\)</span></li>
+<li>乘法或模下乘法：<span class="math inline">\(a = b \times c =&gt; c = a / b\)</span></li>
 </ul>
-<h3 id="运算推广相关练习题"><a href="#运算推广相关练习题" class="headerlink" title="运算推广相关练习题"></a>运算推广相关练习题</h3><ul>
-<li>前缀和<br>乘积最大子数组<br>乘积小于 K 的子数组<br>最后 K 个数的乘积 —— 若乘法的前缀积会溢出，可以用对数的前缀和防溢出，但是结果转回整数需要用四舍五入而不是下取整</li>
-<li>前缀异或<br>子数组异或查询<br>形成两个异或相等数组的三元组数目 —— 哈希表维护前缀异或结果，类似 「560. 和为 K 的子数组」</li>
+<h3 id="运算推广相关练习题">运算推广相关练习题</h3>
+<ul>
+<li>前缀和 乘积最大子数组 乘积小于 K 的子数组 最后 K 个数的乘积 —— 若乘法的前缀积会溢出，可以用对数的前缀和防溢出，但是结果转回整数需要用四舍五入而不是下取整</li>
+<li>前缀异或 子数组异或查询 形成两个异或相等数组的三元组数目 —— 哈希表维护前缀异或结果，类似 「560. 和为 K 的子数组」</li>
 </ul>
-<h2 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h2><p>前缀和序列 $S_{0}, S_{1}, …, S_{n}$ 的差分序列 $a_{0}, a_{1}, …, a_{n-1}$ 就等于原序列，其中 $a_{i} = S_{i+1} - S_{i}$ 原序列 $a_{0}, a_{1}, …, a_{n-1}$ 的差分序列为 $b_{0}, b_{1}, …, b_{n-1}$，其中 $b_{0} = a_{0} - 0$, $b_{i} = a_{i} - a_{i-1}$ 则对差分序列求前缀和序列，就得到原序列。</p>
+<h2 id="差分">差分</h2>
+<p>前缀和序列 <span class="math inline">\(S_{0}, S_{1}, ..., S_{n}\)</span> 的差分序列 <span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span> 就等于原序列，其中 <span class="math inline">\(a_{i} = S_{i+1} - S_{i}\)</span> 原序列 <span class="math inline">\(a_{0}, a_{1}, ..., a_{n-1}\)</span> 的差分序列为 <span class="math inline">\(b_{0}, b_{1}, ..., b_{n-1}\)</span>，其中 <span class="math inline">\(b_{0} = a_{0} - 0\)</span>, <span class="math inline">\(b_{i} = a_{i} - a_{i-1}\)</span> 则对差分序列求前缀和序列，就得到原序列。</p>
 <p>差分序列的好处是如果要对原序列的一个区间 <code>[l, r]</code> 上所有值加 <code>val</code>，原序列上要操作 <code>r-l+1</code> 次 <code>(a[l .. r] + val)</code>，在差分序列上只需要操作 <code>2</code> 次 <code>(b[l] + val, b[r+1] - val)</code>。如果这种区间操作需要很多次，最后的查询只有一次的话，就非常适合在差分序列上操作。</p>
-<h3 id="差分相关练习题"><a href="#差分相关练习题" class="headerlink" title="差分相关练习题"></a>差分相关练习题</h3><p>区间加法 —— 用差分维护区间加法模板</p>
-<h2 id="推荐阅读顺序"><a href="#推荐阅读顺序" class="headerlink" title="推荐阅读顺序"></a>推荐阅读顺序</h2><ol>
+<h3 id="差分相关练习题">差分相关练习题</h3>
+<p>区间加法 —— 用差分维护区间加法模板</p>
+<h2 id="推荐阅读顺序">推荐阅读顺序</h2>
+<ol type="1">
 <li><a href="/post/2020/aecf6ec6/" title="数据结构与算法 - 动态规划（简介）">数据结构与算法 - 动态规划（简介）</a></li>
 <li><a href="/post/2020/610682be/" title="数据结构与算法 - 动态规划（线性动态规划）">数据结构与算法 - 动态规划（线性动态规划）</a></li>
 <li><a href="/post/2020/9158b835/" title="数据结构与算法 - 动态规划（前缀和）">数据结构与算法 - 动态规划（前缀和）</a></li>
@@ -520,8 +439,7 @@
 <li><a href="/post/2020/2a7541d6/" title="数据结构与算法 - 动态规划（状态压缩）">数据结构与算法 - 动态规划（状态压缩）</a></li>
 <li><a href="/post/2020/8ed94cfd/" title="数据结构与算法 - 动态规划（计数问题）">数据结构与算法 - 动态规划（计数问题）</a></li>
 <li><a href="/post/2020/41da3a83/" title="数据结构与算法 - 矩阵快速幂">数据结构与算法 - 矩阵快速幂</a></li>
-<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a>
-</li>
+<li><a href="/post/2020/16341583/" title="数据结构与算法 - 动态规划（数位动态规划）">数据结构与算法 - 动态规划（数位动态规划）</a></li>
 </ol>
 
     </div>
@@ -529,31 +447,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\cb02a3b0\" rel="bookmark">数据结构与算法 - 动态规划（区间动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\16341583\" rel="bookmark">数据结构与算法 - 动态规划（数位动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\2a7541d6\" rel="bookmark">数据结构与算法 - 动态规划（状态压缩）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\610682be\" rel="bookmark">数据结构与算法 - 动态规划（线性动态规划）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\2cea0e37\" rel="bookmark">数据结构与算法 - 动态规划（背包问题）</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -596,42 +494,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -639,176 +509,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/9158b835/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/9158b835/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/9158b835/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

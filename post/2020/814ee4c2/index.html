@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="算术编码的原理算术编码是 1980 年代发展起来的一种熵编码方法。 基本原理是将被编码的数据序列表示成 0 和 1 之间的一个间隔 (也就是一个小数范围)，该间隔的位置与输入数据的概率分布有关。信息越长，编码表示的间隔就越小，因而表示这一间隔所需的二进制位数就越多 (由于间隔是用小数表示的)。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="算术编码的原理 算术编码是 1980 年代发展起来的一种熵编码方法。 基本原理是将被编码的数据序列表示成 0 和 1 之间的一个间隔 (也就是一个小数范围)，该间隔的位置与输入数据的概率分布有关。信息越长，编码表示的间隔就越小，因而表示这一间隔所需的二进制位数就越多 (由于间隔是用小数表示的)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据压缩技术 - 算术编码">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/814ee4c2/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="算术编码的原理算术编码是 1980 年代发展起来的一种熵编码方法。 基本原理是将被编码的数据序列表示成 0 和 1 之间的一个间隔 (也就是一个小数范围)，该间隔的位置与输入数据的概率分布有关。信息越长，编码表示的间隔就越小，因而表示这一间隔所需的二进制位数就越多 (由于间隔是用小数表示的)。">
+<meta property="og:description" content="算术编码的原理 算术编码是 1980 年代发展起来的一种熵编码方法。 基本原理是将被编码的数据序列表示成 0 和 1 之间的一个间隔 (也就是一个小数范围)，该间隔的位置与输入数据的概率分布有关。信息越长，编码表示的间隔就越小，因而表示这一间隔所需的二进制位数就越多 (由于间隔是用小数表示的)。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200827184355.jpg">
 <meta property="article:published_time" content="2020-08-26T07:05:54.000Z">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/814ee4c2/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据压缩技术 - 算术编码 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/814ee4c2/","path":"post/2020/814ee4c2/","title":"数据压缩技术 - 算术编码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据压缩技术 - 算术编码 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">算术编码的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">算术编码的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%A7%A3%E7%A0%81%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">算术解码的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">算术编码的分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E6%95%88%E7%8E%87"><span class="nav-number">5.</span> <span class="nav-text">算术编码的效率</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">算术编码的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">算术编码的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%A7%A3%E7%A0%81%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">算术解码的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">算术编码的分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%BC%96%E7%A0%81%E7%9A%84%E6%95%88%E7%8E%87"><span class="nav-number">5.</span> <span class="nav-text">算术编码的效率</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2020/814ee4c2/" class="post-meta-item leancloud_visitors" data-flag-title="数据压缩技术 - 算术编码" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/814ee4c2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/814ee4c2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -371,69 +279,74 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="算术编码的原理"><a href="#算术编码的原理" class="headerlink" title="算术编码的原理"></a>算术编码的原理</h2><p>算术编码是 1980 年代发展起来的一种熵编码方法。</p>
+        <h2 id="算术编码的原理">算术编码的原理</h2>
+<p>算术编码是 1980 年代发展起来的一种熵编码方法。</p>
 <p>基本原理是将被编码的数据序列表示成 0 和 1 之间的一个间隔 (也就是一个小数范围)，该间隔的位置与输入数据的概率分布有关。信息越长，编码表示的间隔就越小，因而表示这一间隔所需的二进制位数就越多 (由于间隔是用小数表示的)。</p>
-<a id="more"></a>
-<h2 id="算术编码的步骤"><a href="#算术编码的步骤" class="headerlink" title="算术编码的步骤"></a>算术编码的步骤</h2><p>算数编码是从整个符号序列出发，采用递推式连续编码的方法。解码时，根据该区间判断信源各个符号出现的顺序和类型。</p>
+<span id="more"></span>
+<h2 id="算术编码的步骤">算术编码的步骤</h2>
+<p>算数编码是从整个符号序列出发，采用递推式连续编码的方法。解码时，根据该区间判断信源各个符号出现的顺序和类型。</p>
 <p>下面以一个多符号的算术编码为例来分析算术编码的步骤：</p>
 <p>例: 对一个简单的信号源进行观察，得到的统计模型如下：</p>
 <ul>
-<li>60% 的机会出现符号 $a_{1}$</li>
-<li>20% 的机会出现符号 $a_{2}$</li>
-<li>10% 的机会出现符号 $a_{3}$</li>
-<li>10% 的机会出现符号 数据结束符 $a_{4}$ (出现这个符号的意思是该信号源’内部中止’，在进行数据压缩时这样的情况是很常见的。当第一次也是唯一的一次看到这个符号时，解码器就知道整个信号流都被解码完成了)。</li>
+<li>60% 的机会出现符号 <span class="math inline">\(a_{1}\)</span></li>
+<li>20% 的机会出现符号 <span class="math inline">\(a_{2}\)</span></li>
+<li>10% 的机会出现符号 <span class="math inline">\(a_{3}\)</span></li>
+<li>10% 的机会出现符号 数据结束符 <span class="math inline">\(a_{4}\)</span> (出现这个符号的意思是该信号源'内部中止'，在进行数据压缩时这样的情况是很常见的。当第一次也是唯一的一次看到这个符号时，解码器就知道整个信号流都被解码完成了)。</li>
 </ul>
 <p>解：</p>
-<ol>
+<ol type="1">
 <li>首先定义算法空间为 [0 1]。</li>
-<li><p>确定各个字符的区间分配，建立码点，码点要满足如下两条规则：</p>
+<li>确定各个字符的区间分配，建立码点，码点要满足如下两条规则：
 <ul>
-<li>每一个码点值是它前面所出现的概率之和；（第一个码点值是 0，因为它之前没有码字；第一个符号 $a_{1}$ 出现的概率为 0.6，故第二个码点值是 0.6，依次类推。）</li>
-<li><p>将每一个码点值作为右端点，每个子分过程中所得区间的宽度对应于该符号的概率。</p>
-<p>对于前面提出的 4 符号模型：</p>
-</li>
-<li>$a_{1}$ 对应的区间是 [0, 0.6)</li>
-<li>$a_{2}$ 对应的区间是 [0.6, 0.8)</li>
-<li>$a_{3}$ 对应的区间是 [0.8, 0.9)</li>
-<li>数据结束符 $a_{4}$ 对应的区间是 [0.9, 1)</li>
+<li>每一个码点值是它前面所出现的概率之和；（第一个码点值是 0，因为它之前没有码字；第一个符号 <span class="math inline">\(a_{1}\)</span> 出现的概率为 0.6，故第二个码点值是 0.6，依次类推。）</li>
+<li>将每一个码点值作为右端点，每个子分过程中所得区间的宽度对应于该符号的概率。</li>
 </ul>
-</li>
-<li><p>对输入的每个信源符号，重复如下步骤：</p>
+对于前面提出的 4 符号模型：
 <ul>
-<li>将第一个信源符号 $a_{1}$ 出现的概率空间 [0 0.6) 扩展为新的算法子空间，将当前区间分割为长度正比于信源集内各个符号概率的区间；</li>
-<li>接下来确定第二个符号是 $a_{3}$ 的子区间，即序列 $a_{1},a_{3}$ 的子区间：</li>
-</ul>
-</li>
+<li><span class="math inline">\(a_{1}\)</span> 对应的区间是 [0, 0.6)</li>
+<li><span class="math inline">\(a_{2}\)</span> 对应的区间是 [0.6, 0.8)</li>
+<li><span class="math inline">\(a_{3}\)</span> 对应的区间是 [0.8, 0.9)</li>
+<li>数据结束符 <span class="math inline">\(a_{4}\)</span> 对应的区间是 [0.9, 1)</li>
+</ul></li>
+<li>对输入的每个信源符号，重复如下步骤：
+<ul>
+<li>将第一个信源符号 <span class="math inline">\(a_{1}\)</span> 出现的概率空间 [0 0.6) 扩展为新的算法子空间，将当前区间分割为长度正比于信源集内各个符号概率的区间；</li>
+<li>接下来确定第二个符号是 <span class="math inline">\(a_{3}\)</span> 的子区间，即序列 <span class="math inline">\(a_{1},a_{3}\)</span> 的子区间：</li>
+</ul></li>
 </ol>
-<p>比如要编码序列 $a_{1},a_{3},a_{4}$：</p>
-<ol>
-<li>读入 $a_{1}$，结果区间为 [0, 0.6)</li>
-<li>读入 $a_{3}$，结果区间为 [0 + 0.6 <em> 0.8, 0 + 0.6 </em> 0.9) = [0.48, 0.54)</li>
-<li>读入 $a_{4}$，结果区间为 [0.48 + 0.06 <em> 0.9, 0.48 + 0.06 </em> 1) = [0.534, 0.54)</li>
+<p>比如要编码序列 <span class="math inline">\(a_{1},a_{3},a_{4}\)</span>：</p>
+<ol type="1">
+<li>读入 <span class="math inline">\(a_{1}\)</span>，结果区间为 [0, 0.6)</li>
+<li>读入 <span class="math inline">\(a_{3}\)</span>，结果区间为 [0 + 0.6 * 0.8, 0 + 0.6 * 0.9) = [0.48, 0.54)</li>
+<li>读入 <span class="math inline">\(a_{4}\)</span>，结果区间为 [0.48 + 0.06 * 0.9, 0.48 + 0.06 * 1) = [0.534, 0.54)</li>
 </ol>
 <p>当所有的符号都编码完毕，最终得到的结果区间即唯一的确定了已编码的符号序列。任何人使用该区间和使用的模型参数即可以解码重建得到该符号序列。</p>
 <p>实际上我们并不需要传输最后的结果区间 [0.534, 0.54)，实际上，我们只需要传输该区间中的一个小数（比如 0.535）即可。在实用中，只要传输足够的该小数足够的位数（不论几进制），以保证以这些位数开头的所有小数都位于结果区间就可以了。</p>
-<h2 id="算术解码的步骤"><a href="#算术解码的步骤" class="headerlink" title="算术解码的步骤"></a>算术解码的步骤</h2><p>例: 下面对使用前面提到的 4 符号模型进行编码的一段信息进行解码。编码的结果是 0.538（为了容易理解，这里使用十进制而不是二进制；我们也假设我们得到的结果的位数恰好够我们解码。下面会讨论这两个问题）。</p>
-<p>像编码器所作的那样我们从区间 [0,1) 开始，使用相同的模型，我们将它分成编码器所必需的四个子区间。分数 0.538 落在 $a_{1}$ 坐在的子区间 [0,0.6)；这向我们提示编码器所读的第一个符号必然是 $a_{1}$，这样我们就可以将它作为消息的第一个符号记下来。</p>
+<h2 id="算术解码的步骤">算术解码的步骤</h2>
+<p>例: 下面对使用前面提到的 4 符号模型进行编码的一段信息进行解码。编码的结果是 0.538（为了容易理解，这里使用十进制而不是二进制；我们也假设我们得到的结果的位数恰好够我们解码。下面会讨论这两个问题）。</p>
+<p>像编码器所作的那样我们从区间 [0,1) 开始，使用相同的模型，我们将它分成编码器所必需的四个子区间。分数 0.538 落在 <span class="math inline">\(a_{1}\)</span> 坐在的子区间 [0,0.6)；这向我们提示编码器所读的第一个符号必然是 <span class="math inline">\(a_{1}\)</span>，这样我们就可以将它作为消息的第一个符号记下来。</p>
 <p>然后我们将区间 [0,0.6) 分成子区间：</p>
 <ul>
-<li>$a_{1}$ 的区间是 [0, 0.36) — [0, 0.6) 的 60%</li>
-<li>$a_{2}$ 的区间是 [0.36, 0.48) — [0, 0.6) 的 20%</li>
-<li>$a_{3}$ 的区间是 [0.48, 0.54) — [0, 0.6) 的 10%</li>
-<li>数据结束符 $a_{4}$ 的区间是 [0.54, 0.6). — [0, 0.6) 的 10%</li>
+<li><span class="math inline">\(a_{1}\)</span> 的区间是 [0, 0.36) -- [0, 0.6) 的 60%</li>
+<li><span class="math inline">\(a_{2}\)</span> 的区间是 [0.36, 0.48) -- [0, 0.6) 的 20%</li>
+<li><span class="math inline">\(a_{3}\)</span> 的区间是 [0.48, 0.54) -- [0, 0.6) 的 10%</li>
+<li>数据结束符 <span class="math inline">\(a_{4}\)</span> 的区间是 [0.54, 0.6). -- [0, 0.6) 的 10%</li>
 </ul>
-<p>0.538 在 [0.48, 0.54) 区间；所以消息的第二个符号一定是 $a_{3}$。</p>
+<p>0.538 在 [0.48, 0.54) 区间；所以消息的第二个符号一定是 <span class="math inline">\(a_{3}\)</span>。</p>
 <p>我们再一次将当前区间划分成子区间：</p>
 <ul>
-<li>$a_{1}$ 的区间是 [0.48, 0.516)</li>
-<li>$a_{2}$ 的区间是 [0.516, 0.528)</li>
-<li>$a_{3}$ 的区间是 [0.528, 0.534)</li>
-<li>数据结束符 $a_{4}$ 的区间是 [0.534, 0.540)</li>
+<li><span class="math inline">\(a_{1}\)</span> 的区间是 [0.48, 0.516)</li>
+<li><span class="math inline">\(a_{2}\)</span> 的区间是 [0.516, 0.528)</li>
+<li><span class="math inline">\(a_{3}\)</span> 的区间是 [0.528, 0.534)</li>
+<li>数据结束符 <span class="math inline">\(a_{4}\)</span> 的区间是 [0.534, 0.540)</li>
 </ul>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200827184355.jpg" alt="算术编码的单位区间上的码点"></p>
-<p>0.538 落在符号数据结束符 $a_{4}$ 的区间；所以，这一定是下一个符号。由于它也是内部的结束符号，这也就意味着编码已经结束。（如果数据流没有内部结束，我们需要从其它的途径知道数据流在何处结束，否则我们将永远将解码进行下去，错误地将不属于实际编码生成的数据读进来。）</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200827184355.jpg" alt="算术编码的单位区间上的码点" /><figcaption aria-hidden="true">算术编码的单位区间上的码点</figcaption>
+</figure>
+<p>0.538 落在符号数据结束符 <span class="math inline">\(a_{4}\)</span> 的区间；所以，这一定是下一个符号。由于它也是内部的结束符号，这也就意味着编码已经结束。（如果数据流没有内部结束，我们需要从其它的途径知道数据流在何处结束，否则我们将永远将解码进行下去，错误地将不属于实际编码生成的数据读进来。）</p>
 <p>同样的消息能够使用同样短的分数来编码实现如 0.534、0.535、0.536、0.537 或者是 0.539，这表明使用十进制而不是二进制会带来效率的降低。这是正确的是因为三位十进制数据能够表达的信息内容大约是 9.966 位；我们也能够将同样的信息使用二进制分数表示为 0.10001010（等同于 0.5390625），它仅需 8 位。这稍稍大于信息内容本身或者消息的信息熵，大概是概率为 0.6% 的 7.361 位信息熵。（注意最后一个 0 必须在二进制分数中表示，否则消息将会变得不确定起来。）</p>
-<h2 id="算术编码的分析"><a href="#算术编码的分析" class="headerlink" title="算术编码的分析"></a>算术编码的分析</h2><p>算术编码是一种从整个符号系列出发，采用递推形式连续编码的方法。在算术编码中，字母表中的符号和码字间不再存在一一对应关系，一个算术码字要赋给整个信源符号序列（即不是一次编一个号），而码字本身确定 0 和 1 之间的一个实数区间。</p>
+<h2 id="算术编码的分析">算术编码的分析</h2>
+<p>算术编码是一种从整个符号系列出发，采用递推形式连续编码的方法。在算术编码中，字母表中的符号和码字间不再存在一一对应关系，一个算术码字要赋给整个信源符号序列（即不是一次编一个号），而码字本身确定 0 和 1 之间的一个实数区间。</p>
 <p>不论是否是二元信源，也不论数据的概率分布如何，其平均码长均能逼近信源的熵。</p>
 <p>算术编码和霍夫曼编码的区别就在于：在算术编码中，输入序列（即被赋给单个码字的符号块）的长度，是可变的，可以说，算术编码是将可变长码字赋给可变长符号块</p>
 <p>正是由于算术编码不需要为定长符号块分配整数长的码字，理论上能达到无损编码定理所规定的最低限。</p>
@@ -442,7 +355,8 @@
 <p>随着输入符号越来越多，子区间分割越来越精细，因此表示其左端点的数值的有效位数也越来越多。</p>
 <p>如果等整个符号序列输入完毕后再将最终得到的左端点输出，将遇到两个问题：第一，当符号序列很长时，将不能实时编解码；第二，有效位太长的数难以表示。</p>
 <p>为了解决这个问题，通常采用两个有限精度的移位寄存器存放码字的最新部分，随着序列中符号的不断输入，不断地将其中的高位移出到信道上，以实现实时编解码。</p>
-<h2 id="算术编码的效率"><a href="#算术编码的效率" class="headerlink" title="算术编码的效率"></a>算术编码的效率</h2><p>算术编码的最大优点之一在于它具有自适应性和高编码效率。</p>
+<h2 id="算术编码的效率">算术编码的效率</h2>
+<p>算术编码的最大优点之一在于它具有自适应性和高编码效率。</p>
 <p>算术编码的模式选择直接影响编码效率。其模式有固定模式和自适应模式两种：</p>
 <ul>
 <li>固定模式是基于概率分布模型进行编码。</li>
@@ -458,22 +372,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\28999b3b\" rel="bookmark">数据压缩技术 - Huffman 编码</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\b179cf14\" rel="bookmark">数据压缩技术 - 熵编码原理</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -516,42 +419,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -559,176 +434,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/814ee4c2/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/814ee4c2/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/814ee4c2/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

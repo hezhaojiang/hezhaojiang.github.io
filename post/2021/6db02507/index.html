@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="[转载] 深入讲解音视频编码原理，H264 码流详解——手写 H264 编码器_黎程雨的博客 - CSDN 博客 要彻底理解视频编码原理，看书都是虚的，需要实际动手，实现一个简单的视频编码器： 知识准备：基本图像处理知识，信号的时域和频域问题，熟练掌握傅立叶正反变换，一维、二维傅立叶变换，以及其变种，dct 变换，快速 dct 变换。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="[转载] 深入讲解音视频编码原理，H264 码流详解——手写 H264 编码器_黎程雨的博客 - CSDN 博客 要彻底理解视频编码原理，看书都是虚的，需要实际动手，实现一个简单的视频编码器： 知识准备：基本图像处理知识，信号的时域和频域问题，熟练掌握傅立叶正反变换，一维、二维傅立叶变换，以及其变种，dct 变换，快速 dct 变换。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频日记 - 手写 H264 编码器">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2021/6db02507/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="[转载] 深入讲解音视频编码原理，H264 码流详解——手写 H264 编码器_黎程雨的博客 - CSDN 博客 要彻底理解视频编码原理，看书都是虚的，需要实际动手，实现一个简单的视频编码器： 知识准备：基本图像处理知识，信号的时域和频域问题，熟练掌握傅立叶正反变换，一维、二维傅立叶变换，以及其变种，dct 变换，快速 dct 变换。">
+<meta property="og:description" content="[转载] 深入讲解音视频编码原理，H264 码流详解——手写 H264 编码器_黎程雨的博客 - CSDN 博客 要彻底理解视频编码原理，看书都是虚的，需要实际动手，实现一个简单的视频编码器： 知识准备：基本图像处理知识，信号的时域和频域问题，熟练掌握傅立叶正反变换，一维、二维傅立叶变换，以及其变种，dct 变换，快速 dct 变换。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-30T02:58:31.000Z">
-<meta property="article:modified_time" content="2021-01-30T13:00:23.709Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="H.264">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2021/6db02507/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>音视频日记 - 手写 H264 编码器 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2021/6db02507/","path":"post/2021/6db02507/","title":"音视频日记 - 手写 H264 编码器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>音视频日记 - 手写 H264 编码器 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0%E6%9C%89%E6%8D%9F%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B"><span class="nav-number">1.</span> <span class="nav-text">第一步：实现有损图像压缩和解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0%E5%AE%8F%E5%9D%97%E8%AF%AF%E5%B7%AE%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">2.1.2 第二步：实现宏块误差计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0%E8%BF%90%E5%8A%A8%E9%A2%84%E6%B5%8B%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">第三步：实现运动预测编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0-P-%E5%B8%A7%E7%BC%96%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">第四步：实现 P 帧编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0-P-%E5%B8%A7%E7%BC%96%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">第五步：实现 P 帧编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E5%AE%9E%E7%8E%B0-GOP-%E7%94%9F%E6%88%90"><span class="nav-number">5.</span> <span class="nav-text">第六步：实现 GOP 生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%9A%E5%AE%B9%E5%99%A8%E7%BB%84%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">第七步：容器组装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E6%94%B9%E8%BF%9B"><span class="nav-number">7.</span> <span class="nav-text">第八步：优化改进</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%AE%9E%E7%8E%B0%E6%9C%89%E6%8D%9F%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B"><span class="nav-number">1.</span> <span class="nav-text">第一步：实现有损图像压缩和解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E5%AE%9E%E7%8E%B0%E5%AE%8F%E5%9D%97%E8%AF%AF%E5%B7%AE%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">2.1.2 第二步：实现宏块误差计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E5%AE%9E%E7%8E%B0%E8%BF%90%E5%8A%A8%E9%A2%84%E6%B5%8B%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">第三步：实现运动预测编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E5%AE%9E%E7%8E%B0-p-%E5%B8%A7%E7%BC%96%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">第四步：实现 P 帧编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%AE%9E%E7%8E%B0-p-%E5%B8%A7%E7%BC%96%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">第五步：实现 P 帧编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%E5%AE%9E%E7%8E%B0-gop-%E7%94%9F%E6%88%90"><span class="nav-number">5.</span> <span class="nav-text">第六步：实现 GOP 生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%E5%AE%B9%E5%99%A8%E7%BB%84%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">第七步：容器组装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E6%AD%A5%E4%BC%98%E5%8C%96%E6%94%B9%E8%BF%9B"><span class="nav-number">7.</span> <span class="nav-text">第八步：优化改进</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -318,10 +247,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-01-30 10:58:31 / 修改时间：21:00:23" itemprop="dateCreated datePublished" datetime="2021-01-30T10:58:31+08:00">2021-01-30</time>
+      <time title="创建时间：2021-01-30 10:58:31" itemprop="dateCreated datePublished" datetime="2021-01-30T10:58:31+08:00">2021-01-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -332,27 +267,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/6db02507/" class="post-meta-item leancloud_visitors" data-flag-title="音视频日记 - 手写 H264 编码器" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/6db02507/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/6db02507/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -366,50 +280,86 @@
         <p>[转载] <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012165769/article/details/107700527">深入讲解音视频编码原理，H264 码流详解——手写 H264 编码器_黎程雨的博客 - CSDN 博客</a></p>
 <p>要彻底理解视频编码原理，看书都是虚的，需要实际动手，实现一个简单的视频编码器：</p>
 <p>知识准备：基本图像处理知识，信号的时域和频域问题，熟练掌握傅立叶正反变换，一维、二维傅立叶变换，以及其变种，<code>dct</code> 变换，快速 <code>dct</code> 变换。</p>
-<a id="more"></a>
-<h3 id="第一步：实现有损图像压缩和解压"><a href="#第一步：实现有损图像压缩和解压" class="headerlink" title="第一步：实现有损图像压缩和解压"></a>第一步：实现有损图像压缩和解压</h3><p>参考 <code>JPEG</code> 原理，将 <code>RGB-&gt;YUV</code>，然后将 <code>Y/U/V</code> 看成三张不同的图片，将其中一张图片分为 8x8 的 <code>block</code> 进行 <code>dct</code> 变换（可以直接进行二维 <code>dct</code> 变换，或者按一定顺序将 8x8 的二维数组整理成一个 64 字节的一维数组），还是得到一个 8x8 的整数频率数据。于是表示图像大轮廓的低频信号（人眼敏感的信号）集中在 8x8 的左上角；表示图像细节的高频信号集中在右下角。</p>
+<span id="more"></span>
+<h3 id="第一步实现有损图像压缩和解压">第一步：实现有损图像压缩和解压</h3>
+<p>参考 <code>JPEG</code> 原理，将 <code>RGB-&gt;YUV</code>，然后将 <code>Y/U/V</code> 看成三张不同的图片，将其中一张图片分为 8x8 的 <code>block</code> 进行 <code>dct</code> 变换（可以直接进行二维 <code>dct</code> 变换，或者按一定顺序将 8x8 的二维数组整理成一个 64 字节的一维数组），还是得到一个 8x8 的整数频率数据。于是表示图像大轮廓的低频信号（人眼敏感的信号）集中在 8x8 的左上角；表示图像细节的高频信号集中在右下角。</p>
 <p>接着将其量化，所谓量化，就是信号采样的步长，8x8 的整数频率数据块，每个数据都要除以对应位置的步长，左上角相对重要的低频信号步长是 1，也就是说 0-255，是多少就是多少。而右下角是不太重要的高频信号，比如步长取 10，那么这些位置的数据都要 / 10，实际解码的时候再将他们 × 10 恢复出来，这样经过编码的时候 / 10 和解码的时候 × 10，那么步长为 10 的信号 1, 13, 25, 37 就会变成规矩的：0, 10, 20, 30, 对小于步长 10 的部分我们直接丢弃了，因为高频不太重要。</p>
 <p>经过量化以后，8x8 的数据块左上角的数据由于步长小，都是比较离散的，而靠近右下角的高频数据，都比较统一，或者是一串 0，因此图像大量的细节被我们丢弃了，这时候，我们用无损压缩方式，比如 <code>lzma2</code> 算法（<code>jpeg</code> 是 <code>rle + huffman</code>）将这 64 个 <code>byte</code> 压缩起来，由于后面高频数据步长大，做了除法以后，这些值都比较小，而且比较靠近，甚至右下部分都是一串 0，十分便于压缩。</p>
 <p><code>JPEG</code> 图像有个问题就是低码率时 <code>block</code> 边界比较严重，现代图片压缩技术往往要配合一些 <code>de-block</code> 算法，比如最简单的就是边界部分几个像素点和周围插值模糊一下。</p>
 <blockquote>
 <p>做到这里我们实现了一个同 <code>jpeg</code> 类似的静态图片有损压缩算法。在视频里面用来保存 I 帧数据。</p>
 </blockquote>
-<h3 id="2-1-2-第二步：实现宏块误差计算"><a href="#2-1-2-第二步：实现宏块误差计算" class="headerlink" title="2.1.2 第二步：实现宏块误差计算"></a>2.1.2 第二步：实现宏块误差计算</h3><p>视频由连续的若干图像帧组成，分为 I 帧，P 帧，所谓 I 帧，就是不依赖就可以独立解码的视频图像帧，而 P 帧则需要依赖前面已解码的视频帧，配合一定数据才能生成出来。所以视频中 I 帧往往都比较大，而 P 帧比较小，如果播放器一开始收到了 P 帧那么是无法播放的，只有收到下一个 I 帧才能开始播放。I 帧多了视频就变大，I 帧少了，数据量是小了，但视频受到丢包或者数据错误的影响却又会更严重。</p>
+<h3 id="第二步实现宏块误差计算">2.1.2 第二步：实现宏块误差计算</h3>
+<p>视频由连续的若干图像帧组成，分为 I 帧，P 帧，所谓 I 帧，就是不依赖就可以独立解码的视频图像帧，而 P 帧则需要依赖前面已解码的视频帧，配合一定数据才能生成出来。所以视频中 I 帧往往都比较大，而 P 帧比较小，如果播放器一开始收到了 P 帧那么是无法播放的，只有收到下一个 I 帧才能开始播放。I 帧多了视频就变大，I 帧少了，数据量是小了，但视频受到丢包或者数据错误的影响却又会更严重。</p>
 <p>那么所谓运动预测编码，其实就是 P 帧的生成过程：继续将图片分成 16x16 的 <code>block</code>（为了简单只讨论 yuv 的 y 分量压缩）。I 帧内部单帧图片压缩我们采用了 8x8 的 <code>block</code>，而这里用 16x16 的 <code>block</code> 来提高帧间编码压缩率（当然也会有更多细节损失），我们用 <code>x</code>,<code>y</code> 表示像素点坐标，而 <code>s</code>,<code>t</code> 表示 <code>block</code> 坐标，那么坐标为（x,y）的像素点所属的 <code>block</code> 坐标为：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = x / <span class="number">16</span> = x &gt;&gt; <span class="number">4</span></span><br><span class="line">t = y / <span class="number">16</span> = y &gt;&gt; <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">s <span class="token operator">=</span> x <span class="token operator">/</span> <span class="token number">16</span> <span class="token operator">=</span> x <span class="token operator">>></span> <span class="token number">4</span>
+t <span class="token operator">=</span> y <span class="token operator">/</span> <span class="token number">16</span> <span class="token operator">=</span> y <span class="token operator">>></span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>接着要计算两个 <code>block</code> 的相似度，即矢量的距离，可以表示为一个 256 维矢量（16x16）像素点色彩距离的平方，我们先定义两个颜色的误差为：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PixelDiff(c1, c2) = (c1- c2) ^ 2</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">PixelDiff(c1, c2) &#x3D; (c1- c2) ^ 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>那么 256 个点的误差可以表示为所有对应点的像素误差和：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BlockDiff(b1, b2) = sum( PixelDiff(c1, c2) for c1 in b1 for c2 in b2)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">BlockDiff(b1, b2) &#x3D; sum( PixelDiff(c1, c2) for c1 in b1 for c2 in b2)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>代码化为：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">block_diff</span><span class="params">(<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> b1[<span class="number">16</span>][<span class="number">16</span>], <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> b2[<span class="number">16</span>][<span class="number">16</span>])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">16</span>; j++) &#123;</span><br><span class="line">              <span class="keyword">int</span> c1 = b1[i][j];</span><br><span class="line">              <span class="keyword">int</span> c2 = b2[i][j];</span><br><span class="line">              sum += (c1 - c2) * (c1 - c2);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">block_diff</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> b1<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span> b2<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+         <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              <span class="token keyword">int</span> c1 <span class="token operator">=</span> b1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+              <span class="token keyword">int</span> c2 <span class="token operator">=</span> b2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+              sum <span class="token operator">+=</span> <span class="token punctuation">(</span>c1 <span class="token operator">-</span> c2<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>c1 <span class="token operator">-</span> c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>有了这个 <code>block</code> 求差的函数，我们就可以针对特定 block，搜索另外若干个 <code>block</code> 中哪个和它最相似了（误差最小）。</p>
-<h4 id="第三步：实现运动预测编码"><a href="#第三步：实现运动预测编码" class="headerlink" title="第三步：实现运动预测编码"></a>第三步：实现运动预测编码</h4><p>根据上面的宏块比较函数，你已经可以知道两个 <code>block</code> 到底像不像了，越象的 <code>block</code>，<code>block_diff</code> 返回值越低。那么我们有两帧相邻的图片，P1，P2，假设 P1 已经完成编码了，现在要对 P2 进行 P 帧编码，其实就是轮询 P2 里面的每一个 <code>block</code>，为 P2 中每一个 <code>block</code> 找出上一帧中相似度最高的 <code>block</code> 坐标，并记录下来，具体伪代码可以表示为：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> block[<span class="number">16</span>][<span class="number">16</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">0</span>; t &lt;= maxt; t++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> s = <span class="number">0</span>; s &lt;= maxs; s++) &#123;</span><br><span class="line">         picture_get_block(P2, s * <span class="number">16</span>, t * <span class="number">16</span>, block); <span class="comment">// 取得图片 P2 的 block</span></span><br><span class="line">         <span class="keyword">int</span> x, y;</span><br><span class="line">         block_search_nearest(P1, &amp;x, &amp;y, block); <span class="comment">// 在 P1 中搜索最相似的 block</span></span><br><span class="line">         output(x, y);  <span class="comment">// 将 P1 中最相似的 block 的左上角像素坐标 (x, y) 输出</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第三步实现运动预测编码">第三步：实现运动预测编码</h4>
+<p>根据上面的宏块比较函数，你已经可以知道两个 <code>block</code> 到底像不像了，越象的 <code>block</code>，<code>block_diff</code> 返回值越低。那么我们有两帧相邻的图片，P1，P2，假设 P1 已经完成编码了，现在要对 P2 进行 P 帧编码，其实就是轮询 P2 里面的每一个 <code>block</code>，为 P2 中每一个 <code>block</code> 找出上一帧中相似度最高的 <code>block</code> 坐标，并记录下来，具体伪代码可以表示为：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> block<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> t <span class="token operator">&lt;=</span> maxt<span class="token punctuation">;</span> t<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> s <span class="token operator">&lt;=</span> maxs<span class="token punctuation">;</span> s<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+         <span class="token function">picture_get_block</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span> s <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">,</span> t <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">,</span> block<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 取得图片 P2 的 block</span>
+         <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+         <span class="token function">block_search_nearest</span><span class="token punctuation">(</span>P1<span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token operator">&amp;</span>y<span class="token punctuation">,</span> block<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在 P1 中搜索最相似的 block</span>
+         <span class="token function">output</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 将 P1 中最相似的 block 的左上角像素坐标 (x, y) 输出</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中在 P1 中搜索最相似 <code>block</code> 的 <code>block_search_nearest</code> 函数原理是比较简单的，我们可以暴力点用两个 <code>for</code> 循环轮询 P1 中每个像素点开始的 16x16 的 <code>block</code>（速度较慢），当然实际中不可能这么暴力搜索，而是围绕 P2 中该 <code>block</code> 对应坐标在 P1 中位置作为中心，慢慢四周扩散，搜索一定步长，并得到一个 ：按照一定顺序进行搜索，并且在一定范围内最相似的宏块坐标。</p>
 <blockquote>
 <p>于是 P2 进行运动预测编码的结果就是一大堆 <code>(x,y)</code> 的坐标，代表 P2 上每个 <code>block</code> 在上一帧 P1 里面最相似的 <code>block</code> 的位置。反过来说可能更容易理解，我们可以把第三步整个过程定义为：</p>
+</blockquote>
+<blockquote>
 <p>怎么用若干 P1 里不同起始位置的 <code>block</code> 拼凑出图片 P2 来，使得拼凑以后的结果和 P2 最像。</p>
 </blockquote>
-<h3 id="第四步：实现-P-帧编码"><a href="#第四步：实现-P-帧编码" class="headerlink" title="第四步：实现 P 帧编码"></a>第四步：实现 P 帧编码</h3><p>拼凑的结果就是一系列 <code>(x,y)</code> 的坐标数据，我们继续用 <code>lzma2</code> 将它们先压缩起来，按照 <code>vcd</code> 的分辨率</p>
+<h3 id="第四步实现-p-帧编码">第四步：实现 P 帧编码</h3>
+<p>拼凑的结果就是一系列 <code>(x,y)</code> 的坐标数据，我们继续用 <code>lzma2</code> 将它们先压缩起来，按照 <code>vcd</code> 的分辨率</p>
 <p><code>352 x 240</code>，我们横向需要 <code>352 / 16 = 22</code> 个 <code>block</code>，纵向需要 <code>240 / 16 = 15</code> 个 <code>block</code>，可以用 P1 中 <code>22 x 15 = 330</code></p>
-<p>个 <code>block</code> 的坐标信息生成一张和 P2 很类似的图片 P2’ ：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">0</span>; t &lt; <span class="number">15</span>; t++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> s = <span class="number">0</span>; s &lt; <span class="number">22</span>; s++, next++) &#123;</span><br><span class="line">         <span class="keyword">int</span> x = block_positions[next].x;   <span class="comment">// 取得对应 P1 上的 block 像素位置 x</span></span><br><span class="line">         <span class="keyword">int</span> y = block_positions[next].y;   <span class="comment">// 取得对应 P1 上的 block 像素位置 y</span></span><br><span class="line">         <span class="comment">// 将 P1 位置 (x,y) 开始的 16 x 16 的图块拷贝到 P2&#x27;的 (s * 16, t * 16) 处</span></span><br><span class="line">         CopyRect(P2<span class="number">&#x27;</span>, s * <span class="number">16</span>, t * <span class="number">16</span>, P1, x, y, <span class="number">16</span>, <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>个 <code>block</code> 的坐标信息生成一张和 P2 很类似的图片 P2' ：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> t <span class="token operator">&lt;</span> <span class="token number">15</span><span class="token punctuation">;</span> t<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> s <span class="token operator">&lt;</span> <span class="token number">22</span><span class="token punctuation">;</span> s<span class="token operator">++</span><span class="token punctuation">,</span> next<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+         <span class="token keyword">int</span> x <span class="token operator">=</span> block_positions<span class="token punctuation">[</span>next<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>   <span class="token comment">// 取得对应 P1 上的 block 像素位置 x</span>
+         <span class="token keyword">int</span> y <span class="token operator">=</span> block_positions<span class="token punctuation">[</span>next<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>   <span class="token comment">// 取得对应 P1 上的 block 像素位置 y</span>
+         <span class="token comment">// 将 P1 位置 (x,y) 开始的 16 x 16 的图块拷贝到 P2'的 (s * 16, t * 16) 处</span>
+         <span class="token function">CopyRect</span><span class="token punctuation">(</span>P2<span class="token number">'</span><span class="token punctuation">,</span> s <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">,</span> t <span class="token operator">*</span> <span class="token number">16</span><span class="token punctuation">,</span> P1<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>我们把用来生成 P2 的 P1 称为 P2 的参考帧，再把刚才那一堆 P1 内用来拼成 P2 的 block 坐标称为「运动矢量」，这是 P 帧里面最主要的数据内容。但是此时由 P1 和这些坐标数据拼凑出来的 P2，你会发现粗看和 P2 很象，但细看会发现有些支离破碎，并且边缘比较明显，怎么办呢？我们需要第四步。</p>
-<h3 id="第五步：实现-P-帧编码"><a href="#第五步：实现-P-帧编码" class="headerlink" title="第五步：实现 P 帧编码"></a>第五步：实现 P 帧编码</h3><p>有了刚才的运动预测矢量（一堆 <code>block</code> 的坐标），我们先用 P1 按照这些数据拼凑出一张类似 P2 的新图片叫做 P2’，然后同 P2 上每个像素做减法，得到一张保存 <code>differ</code> 的图片：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D2 = (P2 - P2<span class="number">&#x27;</span>) / <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p>误差图片 D2 上每一个点等于 P2 上对应位置的点的颜色减去 P2’上对应位置的点的颜色再除以 2，用 8 位表示差值，值是循环的，比如 - 2 就是 255，这里一般可以在结果上 + 0x80，即 128 代表 0，129 代表 2，127 代表 - 2。继续用一个 8 位的整数可以表示 [-254, 254] 之间的误差范围，步长精度是 2。</p>
-<p>按照第三步实现的逻辑，P2’其实已经很像 P2 了，只是有些误差，我们将这些误差保存成了图片 D2，所以图片 D2 中，信息量其实已经很小了，都是些细节修善，比起直接保存一张完整图片熵要低很多的。所以我们将 D2 用类似第一步提到的有损图片压缩方法进行编码，得到最终的 P 帧数据：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Encode(P2) = Lzma2(block_positions) + 有损图像编码（D2）</span><br></pre></td></tr></table></figure>
+<h3 id="第五步实现-p-帧编码">第五步：实现 P 帧编码</h3>
+<p>有了刚才的运动预测矢量（一堆 <code>block</code> 的坐标），我们先用 P1 按照这些数据拼凑出一张类似 P2 的新图片叫做 P2'，然后同 P2 上每个像素做减法，得到一张保存 <code>differ</code> 的图片：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">D2 <span class="token operator">=</span> <span class="token punctuation">(</span>P2 <span class="token operator">-</span> P2<span class="token number">'</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>误差图片 D2 上每一个点等于 P2 上对应位置的点的颜色减去 P2'上对应位置的点的颜色再除以 2，用 8 位表示差值，值是循环的，比如 - 2 就是 255，这里一般可以在结果上 + 0x80，即 128 代表 0，129 代表 2，127 代表 - 2。继续用一个 8 位的整数可以表示 [-254, 254] 之间的误差范围，步长精度是 2。</p>
+<p>按照第三步实现的逻辑，P2'其实已经很像 P2 了，只是有些误差，我们将这些误差保存成了图片 D2，所以图片 D2 中，信息量其实已经很小了，都是些细节修善，比起直接保存一张完整图片熵要低很多的。所以我们将 D2 用类似第一步提到的有损图片压缩方法进行编码，得到最终的 P 帧数据：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Encode(P2) &#x3D; Lzma2(block_positions) + 有损图像编码（D2）<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>具体在操作的时候，D2 的图像块可以用 16x16 进行有损编码，因为前面的运动预测数据是按 16x16 的宏块搜索的，而不用象 I 帧那样精确的用 8x8 表示，同时保存误差图时，量化的精度可以更粗一些用不着象 I 帧那么精确，可以理解成用质量更低的 <code>JPEG</code> 编码，按照 16x16 的块进行编码，加上误差图 D2 本来信息量就不高，这样的保存方式能够节省不少空间。</p>
 <p>​</p>
-<h3 id="第六步：实现-GOP-生成"><a href="#第六步：实现-GOP-生成" class="headerlink" title="第六步：实现 GOP 生成"></a>第六步：实现 GOP 生成</h3><p>通过前面的代码，我们实现了 I 帧编码和 P 帧编码，P 帧是参考 P1 对 P2 进行编码，而所谓 B 帧，就是参考 P1 和 P3 对 P2 进行编码，当然间隔不一定是 1，比如可以是参考 P1 和 P5 对 P2 进行编码，前提条件是 P5 可以依赖 P1 及以前的数据进行解码。</p>
+<h3 id="第六步实现-gop-生成">第六步：实现 GOP 生成</h3>
+<p>通过前面的代码，我们实现了 I 帧编码和 P 帧编码，P 帧是参考 P1 对 P2 进行编码，而所谓 B 帧，就是参考 P1 和 P3 对 P2 进行编码，当然间隔不一定是 1，比如可以是参考 P1 和 P5 对 P2 进行编码，前提条件是 P5 可以依赖 P1 及以前的数据进行解码。</p>
 <p>不过对于一个完整的简版视频编码器，I 帧和 P 帧编码已经够了，市面上任然有很多面向低延迟的商用编码器是直接干掉 B 帧的，因为做实时传输时收到 B 帧没法播放，之后再往后好几帧收到下一个 I 或者 P 帧时，先前收到的 B 帧才能被解码出来，造成不少的延迟。</p>
 <p>而所谓的 <code>GOP</code> (<code>Group of picture</code>) 就是由一系列类似 I, P, B, B, P, B, B, P, B, B P 组成的一个可以完整被解码出来的图像组，而所谓视频文件，就是一个接一个的 <code>GOP</code>，每个 <code>GOP</code> 由一个 I 帧开头，然后接下来一组连续的 P 或者 B 构成，播放时只有完整收到下一个 <code>GOP</code> 的 I 帧才能开始播放。</p>
-<p>最后是关于参考帧选择，前面提到的 P2 生成过程是参考了 P1，假设一个 <code>GOP</code> 中十张图片，是 I1, P1, P2, P3, P4, … P9 保存的，如果 P1 参考 I1，P2 参考 P1, P3 参考 P2 …. P9 参考 P8 这样每一个 P 帧都是参考上一帧进行编码的话，误差容易越来越大，因为 P1 已经引入一定误差了，P2 在 P1 的基础上误差更大，到了 P9 的话，图片质量可能已经没法看了。</p>
+<p>最后是关于参考帧选择，前面提到的 P2 生成过程是参考了 P1，假设一个 <code>GOP</code> 中十张图片，是 I1, P1, P2, P3, P4, ... P9 保存的，如果 P1 参考 I1，P2 参考 P1, P3 参考 P2 .... P9 参考 P8 这样每一个 P 帧都是参考上一帧进行编码的话，误差容易越来越大，因为 P1 已经引入一定误差了，P2 在 P1 的基础上误差更大，到了 P9 的话，图片质量可能已经没法看了。</p>
 <p>因此正确的参考帧选择往往不需要这样死板，比如可以 P1-P9 全部参考 I1 来生成，或者，P1-P4 参考 I1 来生成，而 P5-P9 则参考 P5 来生成，这样步子小点，误差也不算太离谱。</p>
-<h3 id="第七步：容器组装"><a href="#第七步：容器组装" class="headerlink" title="第七步：容器组装"></a>第七步：容器组装</h3><p>我们生成了一组组编码过的 <code>GOP</code> 了，这时候需要一定的文件格式将他们恰当的保存下来，记录视频信息，比如分辨率，帧率，时间索引等，就是一个类似 <code>MP4</code>（<code>h.264</code> 的容器）文件的东西。至此一个简单的小型编码器我们已经完成了，可以用 <code>SDL</code> / <code>DirectX</code> / <code>OpenGL</code> 配合实现一个播放器，愉快的将自己编码器编码的视频播放出来。</p>
-<h3 id="第八步：优化改进"><a href="#第八步：优化改进" class="headerlink" title="第八步：优化改进"></a>第八步：优化改进</h3><p>这时候你已经大概学习并掌握了视频编码的基础原理了，接下来大量的优化改进的坑等着你去填呢。优化有两大方向，编码效率优化和编码性能优化：前者追求同质量（同信噪比）下更低的码率，后者追求同样质量和码率的情况下，更快的编码速度。</p>
+<h3 id="第七步容器组装">第七步：容器组装</h3>
+<p>我们生成了一组组编码过的 <code>GOP</code> 了，这时候需要一定的文件格式将他们恰当的保存下来，记录视频信息，比如分辨率，帧率，时间索引等，就是一个类似 <code>MP4</code>（<code>h.264</code> 的容器）文件的东西。至此一个简单的小型编码器我们已经完成了，可以用 <code>SDL</code> / <code>DirectX</code> / <code>OpenGL</code> 配合实现一个播放器，愉快的将自己编码器编码的视频播放出来。</p>
+<h3 id="第八步优化改进">第八步：优化改进</h3>
+<p>这时候你已经大概学习并掌握了视频编码的基础原理了，接下来大量的优化改进的坑等着你去填呢。优化有两大方向，编码效率优化和编码性能优化：前者追求同质量（同信噪比）下更低的码率，后者追求同样质量和码率的情况下，更快的编码速度。</p>
 <p>有这个基础后接下来可以回过头去看 <code>JPEG</code> 标准，<code>MPEG1-2</code> 标准，并阅读相关实现代码，你会发现简单很多了，接着肯 <code>H.264</code> 代码，不用全部看可以针对性的了解以下 <code>H.264</code> 的 I 帧编码和各种搜索预测方法，有 <code>H.264</code> 的底子，你了解 <code>HEVC</code> 和 <code>vpx</code> 就比较容易了。</p>
 <p>参考这些编码器一些有意思的实现来改进自己的编码器，试验性质，可以侧重原理，各种优化技巧了解下即可，本来就是 <code>hack</code> 性质的。</p>
 <blockquote>
@@ -421,31 +371,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\4f888bde\" rel="bookmark">编解码技术：H264 - CAVLC</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\3552c034\" rel="bookmark">编解码技术：H264 - Level</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f2a4ae37\" rel="bookmark">编解码技术：H264 - NAL Unit</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\49096de1\" rel="bookmark">编解码技术：H264 - PPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\5224fbf9\" rel="bookmark">编解码技术：H264 - Profile</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -488,42 +418,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -531,132 +433,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2021/6db02507/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/6db02507/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2021/6db02507/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

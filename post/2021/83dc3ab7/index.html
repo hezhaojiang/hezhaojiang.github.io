@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,16 +16,14 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="本文主要记录 x264 中的 x264_mc_init 函数，该函数主要对 x264_mc_functions_t 结构体中的函数指针进行赋值， 完成了像素内插、拷贝、求平均的等运动补偿相关函数的初始化。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本文主要记录 x264 中的 x264_mc_init 函数，该函数主要对 x264_mc_functions_t 结构体中的函数指针进行赋值， 完成了像素内插、拷贝、求平均的等运动补偿相关函数的初始化。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 x264 - 运动补偿">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2021/83dc3ab7/index.html">
@@ -32,7 +32,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210123210246.png">
 <meta property="article:published_time" content="2021-01-22T06:52:43.000Z">
-<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="x264">
 <meta name="twitter:card" content="summary">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2021/83dc3ab7/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 x264 - 运动补偿 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2021/83dc3ab7/","path":"post/2021/83dc3ab7/","title":"源码阅读 x264 - 运动补偿"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 x264 - 运动补偿 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E5%83%8F%E7%B4%A0%E5%86%85%E6%8F%92%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">半像素内插函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%9A%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">获取亚像素数据</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E5%83%8F%E7%B4%A0%E5%86%85%E6%8F%92%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">半像素内插函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%9A%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">获取亚像素数据</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -328,7 +257,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2021/83dc3ab7/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 运动补偿" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/83dc3ab7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/83dc3ab7/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -372,17 +280,143 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>本文主要记录 <code>x264</code> 中的 <code>x264_mc_init</code> 函数，该函数主要对 <code>x264_mc_functions_t</code> 结构体中的函数指针进行赋值， 完成了像素内插、拷贝、求平均的等运动补偿相关函数的初始化。</p>
-<a id="more"></a>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_mc_init</span><span class="params">(<span class="keyword">uint32_t</span> cpu, <span class="keyword">x264_mc_functions_t</span> *pf, <span class="keyword">int</span> cpu_independent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf-&gt;mc_luma   = mc_luma;</span><br><span class="line">    pf-&gt;get_ref   = get_ref;</span><br><span class="line"></span><br><span class="line">    pf-&gt;mc_chroma = mc_chroma;</span><br><span class="line"></span><br><span class="line">    pf-&gt;avg[PIXEL_16x16]= pixel_avg_16x16;</span><br><span class="line">    pf-&gt;avg[PIXEL_16x8] = pixel_avg_16x8;</span><br><span class="line">    pf-&gt;avg[PIXEL_8x16] = pixel_avg_8x16;</span><br><span class="line">    pf-&gt;avg[PIXEL_8x8]  = pixel_avg_8x8;</span><br><span class="line">    pf-&gt;avg[PIXEL_8x4]  = pixel_avg_8x4;</span><br><span class="line">    pf-&gt;avg[PIXEL_4x16] = pixel_avg_4x16;</span><br><span class="line">    pf-&gt;avg[PIXEL_4x8]  = pixel_avg_4x8;</span><br><span class="line">    pf-&gt;avg[PIXEL_4x4]  = pixel_avg_4x4;</span><br><span class="line">    pf-&gt;avg[PIXEL_4x2]  = pixel_avg_4x2;</span><br><span class="line">    pf-&gt;avg[PIXEL_2x8]  = pixel_avg_2x8;</span><br><span class="line">    pf-&gt;avg[PIXEL_2x4]  = pixel_avg_2x4;</span><br><span class="line">    pf-&gt;avg[PIXEL_2x2]  = pixel_avg_2x2;</span><br><span class="line"></span><br><span class="line">    pf-&gt;weight    = mc_weight_wtab;</span><br><span class="line">    pf-&gt;offsetadd = mc_weight_wtab;</span><br><span class="line">    pf-&gt;offsetsub = mc_weight_wtab;</span><br><span class="line">    pf-&gt;weight_cache = weight_cache;</span><br><span class="line"></span><br><span class="line">    pf-&gt;copy_16x16_unaligned = mc_copy_w16;</span><br><span class="line">    pf-&gt;copy[PIXEL_16x16] = mc_copy_w16;</span><br><span class="line">    pf-&gt;copy[PIXEL_8x8]   = mc_copy_w8;</span><br><span class="line">    pf-&gt;copy[PIXEL_4x4]   = mc_copy_w4;</span><br><span class="line"></span><br><span class="line">    pf-&gt;store_interleave_chroma       = store_interleave_chroma;</span><br><span class="line">    pf-&gt;load_deinterleave_chroma_fenc = load_deinterleave_chroma_fenc;</span><br><span class="line">    pf-&gt;load_deinterleave_chroma_fdec = load_deinterleave_chroma_fdec;</span><br><span class="line"></span><br><span class="line">    pf-&gt;plane_copy = x264_plane_copy_c;</span><br><span class="line">    pf-&gt;plane_copy_swap = x264_plane_copy_swap_c;</span><br><span class="line">    pf-&gt;plane_copy_interleave = x264_plane_copy_interleave_c;</span><br><span class="line"></span><br><span class="line">    pf-&gt;plane_copy_deinterleave = x264_plane_copy_deinterleave_c;</span><br><span class="line">    pf-&gt;plane_copy_deinterleave_yuyv = x264_plane_copy_deinterleave_c;</span><br><span class="line">    pf-&gt;plane_copy_deinterleave_rgb = plane_copy_deinterleave_rgb_c;</span><br><span class="line">    pf-&gt;plane_copy_deinterleave_v210 = plane_copy_deinterleave_v210_c;</span><br><span class="line"></span><br><span class="line">    pf-&gt;hpel_filter = hpel_filter;</span><br><span class="line"></span><br><span class="line">    pf-&gt;prefetch_fenc_400 = prefetch_fenc_null;</span><br><span class="line">    pf-&gt;prefetch_fenc_420 = prefetch_fenc_null;</span><br><span class="line">    pf-&gt;prefetch_fenc_422 = prefetch_fenc_null;</span><br><span class="line">    pf-&gt;prefetch_ref  = prefetch_ref_null;</span><br><span class="line">    pf-&gt;memcpy_aligned = <span class="built_in">memcpy</span>;</span><br><span class="line">    pf-&gt;memzero_aligned = memzero_aligned;</span><br><span class="line">    pf-&gt;frame_init_lowres_core = frame_init_lowres_core;</span><br><span class="line"></span><br><span class="line">    pf-&gt;integral_init4h = integral_init4h;</span><br><span class="line">    pf-&gt;integral_init8h = integral_init8h;</span><br><span class="line">    pf-&gt;integral_init4v = integral_init4v;</span><br><span class="line">    pf-&gt;integral_init8v = integral_init8v;</span><br><span class="line"></span><br><span class="line">    pf-&gt;mbtree_propagate_cost = mbtree_propagate_cost;</span><br><span class="line">    pf-&gt;mbtree_propagate_list = mbtree_propagate_list;</span><br><span class="line">    pf-&gt;mbtree_fix8_pack      = mbtree_fix8_pack;</span><br><span class="line">    pf-&gt;mbtree_fix8_unpack    = mbtree_fix8_unpack;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 此处省略台的汇编函数初始化代码 */</span></span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">x264_mc_init</span><span class="token punctuation">(</span><span class="token keyword">uint32_t</span> cpu<span class="token punctuation">,</span> x264_mc_functions_t <span class="token operator">*</span>pf<span class="token punctuation">,</span> <span class="token keyword">int</span> cpu_independent<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    pf<span class="token operator">-></span>mc_luma   <span class="token operator">=</span> mc_luma<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>get_ref   <span class="token operator">=</span> get_ref<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>mc_chroma <span class="token operator">=</span> mc_chroma<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_16x16<span class="token punctuation">]</span><span class="token operator">=</span> pixel_avg_16x16<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_16x8<span class="token punctuation">]</span> <span class="token operator">=</span> pixel_avg_16x8<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_8x16<span class="token punctuation">]</span> <span class="token operator">=</span> pixel_avg_8x16<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_8x8<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_8x8<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_8x4<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_8x4<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_4x16<span class="token punctuation">]</span> <span class="token operator">=</span> pixel_avg_4x16<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_4x8<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_4x8<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_4x4<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_4x4<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_4x2<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_4x2<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_2x8<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_2x8<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_2x4<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_2x4<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>avg<span class="token punctuation">[</span>PIXEL_2x2<span class="token punctuation">]</span>  <span class="token operator">=</span> pixel_avg_2x2<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>weight    <span class="token operator">=</span> mc_weight_wtab<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>offsetadd <span class="token operator">=</span> mc_weight_wtab<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>offsetsub <span class="token operator">=</span> mc_weight_wtab<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>weight_cache <span class="token operator">=</span> weight_cache<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>copy_16x16_unaligned <span class="token operator">=</span> mc_copy_w16<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>copy<span class="token punctuation">[</span>PIXEL_16x16<span class="token punctuation">]</span> <span class="token operator">=</span> mc_copy_w16<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>copy<span class="token punctuation">[</span>PIXEL_8x8<span class="token punctuation">]</span>   <span class="token operator">=</span> mc_copy_w8<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>copy<span class="token punctuation">[</span>PIXEL_4x4<span class="token punctuation">]</span>   <span class="token operator">=</span> mc_copy_w4<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>store_interleave_chroma       <span class="token operator">=</span> store_interleave_chroma<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>load_deinterleave_chroma_fenc <span class="token operator">=</span> load_deinterleave_chroma_fenc<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>load_deinterleave_chroma_fdec <span class="token operator">=</span> load_deinterleave_chroma_fdec<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>plane_copy <span class="token operator">=</span> x264_plane_copy_c<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>plane_copy_swap <span class="token operator">=</span> x264_plane_copy_swap_c<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>plane_copy_interleave <span class="token operator">=</span> x264_plane_copy_interleave_c<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>plane_copy_deinterleave <span class="token operator">=</span> x264_plane_copy_deinterleave_c<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>plane_copy_deinterleave_yuyv <span class="token operator">=</span> x264_plane_copy_deinterleave_c<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>plane_copy_deinterleave_rgb <span class="token operator">=</span> plane_copy_deinterleave_rgb_c<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>plane_copy_deinterleave_v210 <span class="token operator">=</span> plane_copy_deinterleave_v210_c<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>hpel_filter <span class="token operator">=</span> hpel_filter<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>prefetch_fenc_400 <span class="token operator">=</span> prefetch_fenc_null<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>prefetch_fenc_420 <span class="token operator">=</span> prefetch_fenc_null<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>prefetch_fenc_422 <span class="token operator">=</span> prefetch_fenc_null<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>prefetch_ref  <span class="token operator">=</span> prefetch_ref_null<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>memcpy_aligned <span class="token operator">=</span> memcpy<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>memzero_aligned <span class="token operator">=</span> memzero_aligned<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>frame_init_lowres_core <span class="token operator">=</span> frame_init_lowres_core<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>integral_init4h <span class="token operator">=</span> integral_init4h<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>integral_init8h <span class="token operator">=</span> integral_init8h<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>integral_init4v <span class="token operator">=</span> integral_init4v<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>integral_init8v <span class="token operator">=</span> integral_init8v<span class="token punctuation">;</span>
+
+    pf<span class="token operator">-></span>mbtree_propagate_cost <span class="token operator">=</span> mbtree_propagate_cost<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>mbtree_propagate_list <span class="token operator">=</span> mbtree_propagate_list<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>mbtree_fix8_pack      <span class="token operator">=</span> mbtree_fix8_pack<span class="token punctuation">;</span>
+    pf<span class="token operator">-></span>mbtree_fix8_unpack    <span class="token operator">=</span> mbtree_fix8_unpack<span class="token punctuation">;</span>
+
+    <span class="token comment">/* 此处省略台的汇编函数初始化代码 */</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>由于运动估计和运动补偿在 <code>x264</code> 中属于相对复杂的环节，其中许多函数的作用很难三言两语表述出来，因此只分析两个相对重要的例子：</p>
-<ol>
+<ol type="1">
 <li>半像素内插函数 <code>hpel_filter()</code></li>
 <li>获取亚像素数据的函数 <code>get_ref()</code></li>
 </ol>
-<h2 id="半像素内插函数"><a href="#半像素内插函数" class="headerlink" title="半像素内插函数"></a>半像素内插函数</h2><p><code>hpel_filter()</code> 用于进行半像素插值，函数定义如下所示：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 半像素插值公式</span></span><br><span class="line"><span class="comment">// b = (E - 5F + 20G + 20H - 5I + J) / 32</span></span><br><span class="line"><span class="comment">// d 取 1，水平滤波器</span></span><br><span class="line"><span class="comment">// d 取 stride，垂直滤波器（这里没有除以 32）</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TAPFILTER(pix, d) ((pix)[x-2*d] + (pix)[x+3*d] - 5*((pix)[x-d] + (pix)[x+2*d]) + 20*((pix)[x] + (pix)[x+d]))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// x &gt; 0 return 0;</span></span><br><span class="line"><span class="comment">// 0 &lt;= x &lt;= 255 return x;</span></span><br><span class="line"><span class="comment">// x &gt; 255 return 255;</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> ALWAYS_INLINE pixel <span class="title">x264_clip_pixel</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((x &amp; ~PIXEL_MAX) ? (-x)&gt;&gt;<span class="number">31</span> &amp; PIXEL_MAX : x );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 半像素插值</span></span><br><span class="line"><span class="comment"> * dsth : 水平滤波得到的半像素点 (aa,bb,b,s,gg,hh)</span></span><br><span class="line"><span class="comment"> * dstv : 垂直滤波的到的半像素点 (cc,dd,h,m,ee,ff)</span></span><br><span class="line"><span class="comment"> * dstc : &quot;水平 + 垂直&quot; 滤波得到的位于 4 个像素中间的半像素点（j）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hpel_filter</span><span class="params">( pixel *dsth, pixel *dstv, pixel *dstc, pixel *src,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">intptr_t</span> stride, <span class="keyword">int</span> <span class="built_in">width</span>, <span class="keyword">int</span> <span class="built_in">height</span>, <span class="keyword">int16_t</span> *buf )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> pad = (BIT_DEPTH&gt; <span class="number">9</span>) ? (<span class="number">-10</span> * PIXEL_MAX) : <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 几种半像素点之间的位置关系</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * X : 像素点</span></span><br><span class="line"><span class="comment">     * H : 水平滤波半像素点</span></span><br><span class="line"><span class="comment">     * V : 垂直滤波半像素点</span></span><br><span class="line"><span class="comment">     * C : 中间位置半像素点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * X   H   X       X       X</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * V   C</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * X       X       X       X</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * X       X       X       X</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// 一行一行处理</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; <span class="built_in">height</span>; y++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">-2</span>; x &lt; <span class="built_in">width</span> + <span class="number">3</span>; x++) &#123;</span><br><span class="line">            <span class="keyword">int</span> v = TAPFILTER(src,stride);</span><br><span class="line">            dstv[x] = x264_clip_pixel( (v + <span class="number">16</span>) &gt;&gt; <span class="number">5</span> );</span><br><span class="line">            <span class="comment">/* transform v for storage in a 16-bit integer */</span></span><br><span class="line">            buf[x+<span class="number">2</span>] = v + pad;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="built_in">width</span>; x++)</span><br><span class="line">            dstc[x] = x264_clip_pixel( (TAPFILTER(buf+<span class="number">2</span>,<span class="number">1</span>) - <span class="number">32</span>*pad + <span class="number">512</span>) &gt;&gt; <span class="number">10</span> );</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="built_in">width</span>; x++)</span><br><span class="line">            dsth[x] = x264_clip_pixel( (TAPFILTER(src,<span class="number">1</span>) + <span class="number">16</span>) &gt;&gt; <span class="number">5</span> );</span><br><span class="line">        dsth += stride;</span><br><span class="line">        dstv += stride;</span><br><span class="line">        dstc += stride;</span><br><span class="line">        src  += stride;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="半像素内插函数">半像素内插函数</h2>
+<p><code>hpel_filter()</code> 用于进行半像素插值，函数定义如下所示：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 半像素插值公式</span>
+<span class="token comment">// b = (E - 5F + 20G + 20H - 5I + J) / 32</span>
+<span class="token comment">// d 取 1，水平滤波器</span>
+<span class="token comment">// d 取 stride，垂直滤波器（这里没有除以 32）</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> TAPFILTER(pix, d) ((pix)[x-2*d] + (pix)[x+3*d] - 5*((pix)[x-d] + (pix)[x+2*d]) + 20*((pix)[x] + (pix)[x+d]))</span>
+
+<span class="token comment">// x > 0 return 0;</span>
+<span class="token comment">// 0 &lt;= x &lt;= 255 return x;</span>
+<span class="token comment">// x > 255 return 255;</span>
+<span class="token keyword">static</span> ALWAYS_INLINE pixel <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">&amp;</span> <span class="token operator">~</span>PIXEL_MAX<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token operator">>></span><span class="token number">31</span> <span class="token operator">&amp;</span> PIXEL_MAX <span class="token operator">:</span> x <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/*
+ * 半像素插值
+ * dsth : 水平滤波得到的半像素点 (aa,bb,b,s,gg,hh)
+ * dstv : 垂直滤波的到的半像素点 (cc,dd,h,m,ee,ff)
+ * dstc : "水平 + 垂直" 滤波得到的位于 4 个像素中间的半像素点（j）
+ */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">hpel_filter</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>dsth<span class="token punctuation">,</span> pixel <span class="token operator">*</span>dstv<span class="token punctuation">,</span> pixel <span class="token operator">*</span>dstc<span class="token punctuation">,</span> pixel <span class="token operator">*</span>src<span class="token punctuation">,</span>
+                         intptr_t stride<span class="token punctuation">,</span> <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span> <span class="token keyword">int16_t</span> <span class="token operator">*</span>buf <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> pad <span class="token operator">=</span> <span class="token punctuation">(</span>BIT_DEPTH<span class="token operator">></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">10</span> <span class="token operator">*</span> PIXEL_MAX<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">/*
+     * 几种半像素点之间的位置关系
+     *
+     * X : 像素点
+     * H : 水平滤波半像素点
+     * V : 垂直滤波半像素点
+     * C : 中间位置半像素点
+     *
+     * X   H   X       X       X
+     *
+     * V   C
+     *
+     * X       X       X       X
+     *
+     *
+     *
+     * X       X       X       X
+     *
+     */</span>
+    <span class="token comment">// 一行一行处理</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> height<span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> width <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> <span class="token function">TAPFILTER</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span>stride<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            dstv<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span> <span class="token punctuation">(</span>v <span class="token operator">+</span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">/* transform v for storage in a 16-bit integer */</span>
+            buf<span class="token punctuation">[</span>x<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> v <span class="token operator">+</span> pad<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> width<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span>
+            dstc<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token function">TAPFILTER</span><span class="token punctuation">(</span>buf<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">32</span><span class="token operator">*</span>pad <span class="token operator">+</span> <span class="token number">512</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">10</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> width<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span>
+            dsth<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token function">TAPFILTER</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dsth <span class="token operator">+=</span> stride<span class="token punctuation">;</span>
+        dstv <span class="token operator">+=</span> stride<span class="token punctuation">;</span>
+        dstc <span class="token operator">+=</span> stride<span class="token punctuation">;</span>
+        src  <span class="token operator">+=</span> stride<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>半像素插值示意图如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210123210246.png" alt="半像素插值示意图"></p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210123210246.png" alt="半像素插值示意图" /><figcaption aria-hidden="true">半像素插值示意图</figcaption>
+</figure>
 <p>半像素点的计算关系如下：</p>
 <ul>
 <li>m : 由 B、D、H、N、S、U 计算</li>
@@ -390,39 +424,90 @@
 <li>s : 由 K、L、M、N、P、Q 计算</li>
 <li>j : 由 cc、dd、h、m、ee、ff 计算。需要注意 j 点的运算量比较大，因为 cc、dd、ee、ff 都需要通过半像素内插方法进行计算。</li>
 </ul>
-<h2 id="获取亚像素数据"><a href="#获取亚像素数据" class="headerlink" title="获取亚像素数据"></a>获取亚像素数据</h2><p><code>get_ref()</code> 函数用于获取亚像素数据</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">uint8_t</span> x264_hpel_ref0[<span class="number">16</span>] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">uint8_t</span> x264_hpel_ref1[<span class="number">16</span>] = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取运动矢量中亚像素的部分的数据</span></span><br><span class="line"><span class="comment">// 可以是半像素数据或者 1/4 像素数据</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> pixel *<span class="title">get_ref</span><span class="params">( pixel *dst,   <span class="keyword">intptr_t</span> *i_dst_stride,</span></span></span><br><span class="line"><span class="function"><span class="params">                       pixel *src[<span class="number">4</span>], <span class="keyword">intptr_t</span> i_src_stride,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">int</span> mvx, <span class="keyword">int</span> mvy,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">int</span> i_width, <span class="keyword">int</span> i_height, <span class="keyword">const</span> <span class="keyword">x264_weight_t</span> *weight )</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * qpel_idx 为 hpel_ref0[]，hpel_ref1[] 的索引值</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 运动矢量 (mvy,mvx) 位置和 qpel_idx 对应关系如下</span></span><br><span class="line"><span class="comment">     *  0pixel |   0p   | 1/4p   | 1/2p   | 3/4p   | 1pixel |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *      0p | 0&lt;&lt;2+0 | 0&lt;&lt;2+1 | 0&lt;&lt;2+2 | 0&lt;&lt;2+3 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    1/4p | 1&lt;&lt;2+0 | 1&lt;&lt;2+1 | 1&lt;&lt;2+2 | 1&lt;&lt;2+3 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    1/2p | 2&lt;&lt;2+0 | 2&lt;&lt;2+1 | 2&lt;&lt;2+2 | 2&lt;&lt;2+3 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    3/4p | 3&lt;&lt;2+0 | 3&lt;&lt;2+1 | 3&lt;&lt;2+2 | 3&lt;&lt;2+3 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *  1pixel |</span></span><br><span class="line"><span class="comment">     * --------+</span></span><br><span class="line"><span class="comment">     * 计算出来后</span></span><br><span class="line"><span class="comment">     *  0pixel |   0p   | 1/4p   | 1/2p   | 3/4p   | 1pixel |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *      0p |      0 |      1 |      2 |      3 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    1/4p |      4 |      5 |      6 |      7 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    1/2p |      8 |      9 |     10 |     11 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *    3/4p |     12 |     13 |     14 |     15 |        |</span></span><br><span class="line"><span class="comment">     * --------+--------+--------+--------+--------+--------+</span></span><br><span class="line"><span class="comment">     *  1pixel |</span></span><br><span class="line"><span class="comment">     * --------+</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span> qpel_idx = ((mvy&amp;<span class="number">3</span>)&lt;&lt;<span class="number">2</span>) + (mvx&amp;<span class="number">3</span>);</span><br><span class="line">    <span class="comment">// offset 是匹配块相对当前宏块的整数偏移量</span></span><br><span class="line">    <span class="keyword">int</span> offset = (mvy&gt;&gt;<span class="number">2</span>)*i_src_stride + (mvx&gt;&gt;<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// src[4] 中有 4 个分量，分别代表：整像素点 Full，水平半像素点 H，垂直半像素点 V，对角线半像素点 C 的取值</span></span><br><span class="line">    <span class="comment">// 几种半像素点的值已经提前计算出来，而 1/4 像素点的值则是临时计算</span></span><br><span class="line">    <span class="comment">// 注意上述几种半像素点是按照 &quot;分量&quot; 的方式存储的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// src1[] 为选择后的半像素数据</span></span><br><span class="line">    <span class="comment">// 选择了 Full,H,V,C 几种 &quot;分量&quot; 中的 1 种</span></span><br><span class="line">    pixel *src1 = src[x264_hpel_ref0[qpel_idx]] + offset + ((mvy&amp;<span class="number">3</span>) == <span class="number">3</span>) * i_src_stride;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// qpel_idx &amp; 5，5 是 0101， 代表 qpel_idx 最后 1 位（对应 x 分量）为 1 或者倒数第 3 位为 1（对应 y 分量）</span></span><br><span class="line">    <span class="comment">// 即 x 或者 y 中有 1/4 或者 3/4 像素点（此时需要 1/4 像素内插）</span></span><br><span class="line">    <span class="comment">// 只有需要 1/4 内插的点才会 qpel_idx &amp; 5!=0。这时候需要通过线性内插获得 1/4 像素点的值</span></span><br><span class="line">    <span class="keyword">if</span> (qpel_idx &amp; <span class="number">5</span>) <span class="comment">/* qpel interpolation needed */</span> &#123;</span><br><span class="line">        <span class="comment">// src2[] 为用于内插的数据另一组数据</span></span><br><span class="line">        pixel *src2 = src[x264_hpel_ref1[qpel_idx]] + offset + ((mvx&amp;<span class="number">3</span>) == <span class="number">3</span>);</span><br><span class="line">        <span class="comment">// 进行 1/4 像素线性内插</span></span><br><span class="line">        pixel_avg( dst, *i_dst_stride, src1, i_src_stride,</span><br><span class="line">                   src2, i_src_stride, i_width, i_height );</span><br><span class="line">        <span class="keyword">if</span> (weight-&gt;weightfn )</span><br><span class="line">            mc_weight(dst, *i_dst_stride, dst, *i_dst_stride, weight, i_width, i_height);</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (weight-&gt;weightfn ) &#123;</span><br><span class="line">        mc_weight(dst, *i_dst_stride, src1, i_src_stride, weight, i_width, i_height);</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        *i_dst_stride = i_src_stride; <span class="comment">// 只需要半像素滤波</span></span><br><span class="line">        <span class="keyword">return</span> src1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取亚像素数据">获取亚像素数据</h2>
+<p><code>get_ref()</code> 函数用于获取亚像素数据</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">uint8_t</span> x264_hpel_ref0<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">uint8_t</span> x264_hpel_ref1<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取运动矢量中亚像素的部分的数据</span>
+<span class="token comment">// 可以是半像素数据或者 1/4 像素数据</span>
+<span class="token keyword">static</span> pixel <span class="token operator">*</span><span class="token function">get_ref</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>dst<span class="token punctuation">,</span>   intptr_t <span class="token operator">*</span>i_dst_stride<span class="token punctuation">,</span>
+                       pixel <span class="token operator">*</span>src<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> intptr_t i_src_stride<span class="token punctuation">,</span>
+                       <span class="token keyword">int</span> mvx<span class="token punctuation">,</span> <span class="token keyword">int</span> mvy<span class="token punctuation">,</span>
+                       <span class="token keyword">int</span> i_width<span class="token punctuation">,</span> <span class="token keyword">int</span> i_height<span class="token punctuation">,</span> <span class="token keyword">const</span> x264_weight_t <span class="token operator">*</span>weight <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/*
+     * qpel_idx 为 hpel_ref0[]，hpel_ref1[] 的索引值
+     *
+     * 运动矢量 (mvy,mvx) 位置和 qpel_idx 对应关系如下
+     *  0pixel |   0p   | 1/4p   | 1/2p   | 3/4p   | 1pixel |
+     * --------+--------+--------+--------+--------+--------+
+     *      0p | 0&lt;&lt;2+0 | 0&lt;&lt;2+1 | 0&lt;&lt;2+2 | 0&lt;&lt;2+3 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    1/4p | 1&lt;&lt;2+0 | 1&lt;&lt;2+1 | 1&lt;&lt;2+2 | 1&lt;&lt;2+3 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    1/2p | 2&lt;&lt;2+0 | 2&lt;&lt;2+1 | 2&lt;&lt;2+2 | 2&lt;&lt;2+3 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    3/4p | 3&lt;&lt;2+0 | 3&lt;&lt;2+1 | 3&lt;&lt;2+2 | 3&lt;&lt;2+3 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *  1pixel |
+     * --------+
+     * 计算出来后
+     *  0pixel |   0p   | 1/4p   | 1/2p   | 3/4p   | 1pixel |
+     * --------+--------+--------+--------+--------+--------+
+     *      0p |      0 |      1 |      2 |      3 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    1/4p |      4 |      5 |      6 |      7 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    1/2p |      8 |      9 |     10 |     11 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *    3/4p |     12 |     13 |     14 |     15 |        |
+     * --------+--------+--------+--------+--------+--------+
+     *  1pixel |
+     * --------+
+     */</span>
+    <span class="token keyword">int</span> qpel_idx <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>mvy<span class="token operator">&amp;</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>mvx<span class="token operator">&amp;</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// offset 是匹配块相对当前宏块的整数偏移量</span>
+    <span class="token keyword">int</span> offset <span class="token operator">=</span> <span class="token punctuation">(</span>mvy<span class="token operator">>></span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">*</span>i_src_stride <span class="token operator">+</span> <span class="token punctuation">(</span>mvx<span class="token operator">>></span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// src[4] 中有 4 个分量，分别代表：整像素点 Full，水平半像素点 H，垂直半像素点 V，对角线半像素点 C 的取值</span>
+    <span class="token comment">// 几种半像素点的值已经提前计算出来，而 1/4 像素点的值则是临时计算</span>
+    <span class="token comment">// 注意上述几种半像素点是按照 "分量" 的方式存储的</span>
+
+    <span class="token comment">// src1[] 为选择后的半像素数据</span>
+    <span class="token comment">// 选择了 Full,H,V,C 几种 "分量" 中的 1 种</span>
+    pixel <span class="token operator">*</span>src1 <span class="token operator">=</span> src<span class="token punctuation">[</span>x264_hpel_ref0<span class="token punctuation">[</span>qpel_idx<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> offset <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>mvy<span class="token operator">&amp;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">*</span> i_src_stride<span class="token punctuation">;</span>
+
+    <span class="token comment">// qpel_idx &amp; 5，5 是 0101， 代表 qpel_idx 最后 1 位（对应 x 分量）为 1 或者倒数第 3 位为 1（对应 y 分量）</span>
+    <span class="token comment">// 即 x 或者 y 中有 1/4 或者 3/4 像素点（此时需要 1/4 像素内插）</span>
+    <span class="token comment">// 只有需要 1/4 内插的点才会 qpel_idx &amp; 5!=0。这时候需要通过线性内插获得 1/4 像素点的值</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>qpel_idx <span class="token operator">&amp;</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">/* qpel interpolation needed */</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// src2[] 为用于内插的数据另一组数据</span>
+        pixel <span class="token operator">*</span>src2 <span class="token operator">=</span> src<span class="token punctuation">[</span>x264_hpel_ref1<span class="token punctuation">[</span>qpel_idx<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> offset <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>mvx<span class="token operator">&amp;</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 进行 1/4 像素线性内插</span>
+        <span class="token function">pixel_avg</span><span class="token punctuation">(</span> dst<span class="token punctuation">,</span> <span class="token operator">*</span>i_dst_stride<span class="token punctuation">,</span> src1<span class="token punctuation">,</span> i_src_stride<span class="token punctuation">,</span>
+                   src2<span class="token punctuation">,</span> i_src_stride<span class="token punctuation">,</span> i_width<span class="token punctuation">,</span> i_height <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>weight<span class="token operator">-></span>weightfn <span class="token punctuation">)</span>
+            <span class="token function">mc_weight</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token operator">*</span>i_dst_stride<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> <span class="token operator">*</span>i_dst_stride<span class="token punctuation">,</span> weight<span class="token punctuation">,</span> i_width<span class="token punctuation">,</span> i_height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> dst<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>weight<span class="token operator">-></span>weightfn <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mc_weight</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token operator">*</span>i_dst_stride<span class="token punctuation">,</span> src1<span class="token punctuation">,</span> i_src_stride<span class="token punctuation">,</span> weight<span class="token punctuation">,</span> i_width<span class="token punctuation">,</span> i_height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> dst<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token operator">*</span>i_dst_stride <span class="token operator">=</span> i_src_stride<span class="token punctuation">;</span> <span class="token comment">// 只需要半像素滤波</span>
+        <span class="token keyword">return</span> src1<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
     </div>
 
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\2633a00a\" rel="bookmark">源码阅读 x264 - SPS & PPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\ae3a0f38\" rel="bookmark">源码阅读 x264 - 代价计算</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\3bc2314a\" rel="bookmark">源码阅读 x264 - 命令行工具</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\10604d20\" rel="bookmark">源码阅读 x264 - 去块效应滤波</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\b66cfff2\" rel="bookmark">源码阅读 x264 - 帧内预测</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -465,42 +550,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -508,132 +565,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2021/83dc3ab7/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/83dc3ab7/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2021/83dc3ab7/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

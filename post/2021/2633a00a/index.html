@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="x264 中参数集初始化主要包括如下两个函数：  x264_sps_init()：根据输入参数生成 H.264 码流的 SPS 信息。 x264_pps_init()：根据输入参数生成 H.264 码流的 PPS 信息。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="x264 中参数集初始化主要包括如下两个函数：  x264_sps_init()：根据输入参数生成 H.264 码流的 SPS 信息。 x264_pps_init()：根据输入参数生成 H.264 码流的 PPS 信息。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 x264 - SPS &amp; PPS">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2021/2633a00a/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="x264 中参数集初始化主要包括如下两个函数：  x264_sps_init()：根据输入参数生成 H.264 码流的 SPS 信息。 x264_pps_init()：根据输入参数生成 H.264 码流的 PPS 信息。">
+<meta property="og:description" content="x264 中参数集初始化主要包括如下两个函数：  x264_sps_init()：根据输入参数生成 H.264 码流的 SPS 信息。 x264_pps_init()：根据输入参数生成 H.264 码流的 PPS 信息。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-28T07:34:00.000Z">
-<meta property="article:modified_time" content="2021-01-30T13:00:23.702Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="x264">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2021/2633a00a/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 x264 - SPS & PPS | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2021/2633a00a/","path":"post/2021/2633a00a/","title":"源码阅读 x264 - SPS & PPS"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 x264 - SPS & PPS | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-sps-init"><span class="nav-number">1.</span> <span class="nav-text">x264_sps_init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264-pps-init"><span class="nav-number">2.</span> <span class="nav-text">x264_pps_init</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_sps_init"><span class="nav-number">1.</span> <span class="nav-text">x264_sps_init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264_pps_init"><span class="nav-number">2.</span> <span class="nav-text">x264_pps_init</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 21:00:23" itemprop="dateModified" datetime="2021-01-30T21:00:23+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,27 +267,6 @@
         </span>
     </span>
 
-  
-    <span id="/post/2021/2633a00a/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - SPS & PPS" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/2633a00a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/2633a00a/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
   
 </div>
 
@@ -374,44 +282,225 @@
 <li><code>x264_sps_init()</code>：根据输入参数生成 <code>H.264</code> 码流的 <code>SPS</code> 信息。</li>
 <li><code>x264_pps_init()</code>：根据输入参数生成 <code>H.264</code> 码流的 <code>PPS</code> 信息。</li>
 </ul>
-<a id="more"></a>
-<h3 id="x264-sps-init"><a href="#x264-sps-init" class="headerlink" title="x264_sps_init"></a>x264_sps_init</h3><p><code>x264_sps_init()</code> 会根据 <code>x264_param_t</code> 结构体中的参数来设置 <code>x264_sps_t</code> 结构体中的参数。</p>
+<span id="more"></span>
+<h3 id="x264_sps_init">x264_sps_init</h3>
+<p><code>x264_sps_init()</code> 会根据 <code>x264_param_t</code> 结构体中的参数来设置 <code>x264_sps_t</code> 结构体中的参数。</p>
 <p>具体代码及注释如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                            初始化 SPS</span></span><br><span class="line"><span class="comment">* @param[out]       sps             x264_sps_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        i_id            i_id</span></span><br><span class="line"><span class="comment">* @param[in]        param           x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                           x264_t 结构体指针</span></span><br><span class="line"><span class="comment">                                    # not nullptr   执行成功</span></span><br><span class="line"><span class="comment">*                                   # nullptr       执行失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_sps_init</span><span class="params">(<span class="keyword">x264_sps_t</span> *sps, <span class="keyword">int</span> i_id, <span class="keyword">x264_param_t</span> *param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> csp = param-&gt;i_csp &amp; X264_CSP_MASK;</span><br><span class="line"></span><br><span class="line">    sps-&gt;i_id = i_id;</span><br><span class="line">    <span class="comment">/* 以宏块为单位的图像宽度 */</span></span><br><span class="line">    sps-&gt;i_mb_width = (param-&gt;i_width + <span class="number">15</span> ) / <span class="number">16</span>;</span><br><span class="line">    <span class="comment">/* 以宏块为单位的图像高度 */</span></span><br><span class="line">    sps-&gt;i_mb_height= (param-&gt;i_height + <span class="number">15</span> ) / <span class="number">16</span>;</span><br><span class="line">    <span class="comment">/* 所有图像均使用帧编码 */</span></span><br><span class="line">    sps-&gt;b_frame_mbs_only = !(param-&gt;b_interlaced || param-&gt;b_fake_interlaced);</span><br><span class="line">    <span class="keyword">if</span>(!sps-&gt;b_frame_mbs_only )</span><br><span class="line">        <span class="comment">/* 场编码时 以宏块为单位的图像高度为偶数 */</span></span><br><span class="line">        sps-&gt;i_mb_height = (sps-&gt;i_mb_height + <span class="number">1</span> ) &amp; ~<span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* 色度采样结构 yuv444 yuv422 yuv420 yuv400 */</span></span><br><span class="line">    sps-&gt;i_chroma_format_idc = csp &gt;= X264_CSP_I444 ? CHROMA_444 :</span><br><span class="line">                               csp &gt;= X264_CSP_I422 ? CHROMA_422 :</span><br><span class="line">                               csp &gt;= X264_CSP_I420 ? CHROMA_420 : CHROMA_400;</span><br><span class="line"></span><br><span class="line">    sps-&gt;b_qpprime_y_zero_transform_bypass = param-&gt;rc.i_rc_method == X264_RC_CQP &amp;&amp; param-&gt;rc.i_qp_constant == <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 根据其他质量参数 设置 profile */</span></span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;b_qpprime_y_zero_transform_bypass || sps-&gt;i_chroma_format_idc == CHROMA_444 )</span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_HIGH444_PREDICTIVE;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(sps-&gt;i_chroma_format_idc == CHROMA_422 )</span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_HIGH422;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(BIT_DEPTH&gt; <span class="number">8</span> )</span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_HIGH10;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(param-&gt;analyse.b_transform_8x8 || param-&gt;i_cqm_preset != X264_CQM_FLAT || sps-&gt;i_chroma_format_idc == CHROMA_400 )</span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_HIGH;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(param-&gt;b_cabac || param-&gt;i_bframe &gt; <span class="number">0</span> || param-&gt;b_interlaced || param-&gt;b_fake_interlaced || param-&gt;analyse.i_weighted_pred &gt; <span class="number">0</span> )</span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_MAIN;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        sps-&gt;i_profile_idc  = PROFILE_BASELINE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* constraint_set0 表示编码视频序列遵守 Baseline profile 的所有约束 */</span></span><br><span class="line">    sps-&gt;b_constraint_set0  = sps-&gt;i_profile_idc == PROFILE_BASELINE;</span><br><span class="line">    <span class="comment">/* constraint_set1 表示编码视频序列遵守 Main profile 的所有约束 */</span></span><br><span class="line">    <span class="comment">/* x264 不支持 baseline 中存在，却不存在 main 中的约束，包括 arbitrary_slice_order 和 slice_groups */</span></span><br><span class="line">    sps-&gt;b_constraint_set1  = sps-&gt;i_profile_idc &lt;= PROFILE_MAIN;</span><br><span class="line">    <span class="comment">/* Never set constraint_set2, it is not necessary and not used in real world. */</span></span><br><span class="line">    sps-&gt;b_constraint_set2  = <span class="number">0</span>;</span><br><span class="line">    sps-&gt;b_constraint_set3  = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    sps-&gt;i_level_idc = param-&gt;i_level_idc;</span><br><span class="line">    <span class="keyword">if</span>(param-&gt;i_level_idc == <span class="number">9</span> &amp;&amp; ( sps-&gt;i_profile_idc == PROFILE_BASELINE || sps-&gt;i_profile_idc == PROFILE_MAIN ) )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* 在一些高级 profile 情况下，level_idc 值为 9 代表等级为 1b */</span></span><br><span class="line">        <span class="comment">/* 在 Baseline or Main profile，level_idc 值为 11 且 constraint_set3 值为 1 代表等级为 1b，（level_idc 值为 11 且 constraint_set3 值为 0 代表等级为 1.1）*/</span></span><br><span class="line">        sps-&gt;b_constraint_set3 = <span class="number">1</span>;</span><br><span class="line">        sps-&gt;i_level_idc      = <span class="number">11</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* Intra profiles */</span></span><br><span class="line">    <span class="keyword">if</span>(param-&gt;i_keyint_max == <span class="number">1</span> &amp;&amp; sps-&gt;i_profile_idc &gt;= PROFILE_HIGH )</span><br><span class="line">        sps-&gt;b_constraint_set3 = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.i_num_reorder_frames = param-&gt;i_bframe_pyramid ? <span class="number">2</span> : param-&gt;i_bframe ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* extra slot with pyramid so that we don&#x27;t have to override the</span></span><br><span class="line"><span class="comment">     * order of forgetting old pictures */</span></span><br><span class="line">    sps-&gt;vui.i_max_dec_frame_buffering =</span><br><span class="line">    sps-&gt;i_num_ref_frames = X264_MIN(X264_REF_MAX, X264_MAX4(param-&gt;i_frame_reference, <span class="number">1</span> + sps-&gt;vui.i_num_reorder_frames,</span><br><span class="line">                            param-&gt;i_bframe_pyramid ? <span class="number">4</span> : <span class="number">1</span>, param-&gt;i_dpb_size));</span><br><span class="line">    sps-&gt;i_num_ref_frames -= param-&gt;i_bframe_pyramid == X264_B_PYRAMID_STRICT;</span><br><span class="line">    <span class="keyword">if</span>(param-&gt;i_keyint_max == <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        sps-&gt;i_num_ref_frames = <span class="number">0</span>;</span><br><span class="line">        sps-&gt;vui.i_max_dec_frame_buffering = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* number of refs + current frame */</span></span><br><span class="line">    <span class="keyword">int</span> max_frame_num = sps-&gt;vui.i_max_dec_frame_buffering * (!!param-&gt;i_bframe_pyramid+<span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* Intra refresh cannot write a recovery time greater than max frame num-1 */</span></span><br><span class="line">    <span class="keyword">if</span>(param-&gt;b_intra_refresh )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> time_to_recovery = X264_MIN(sps-&gt;i_mb_width - <span class="number">1</span>, param-&gt;i_keyint_max ) + param-&gt;i_bframe - <span class="number">1</span>;</span><br><span class="line">        max_frame_num = X264_MAX(max_frame_num, time_to_recovery+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sps-&gt;i_log2_max_frame_num = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">while</span>((<span class="number">1</span> &lt;&lt; sps-&gt;i_log2_max_frame_num) &lt;= max_frame_num )</span><br><span class="line">        sps-&gt;i_log2_max_frame_num++;</span><br><span class="line"></span><br><span class="line">    sps-&gt;i_poc_type = param-&gt;i_bframe || param-&gt;b_interlaced || param-&gt;i_avcintra_class ? <span class="number">0</span> : <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;i_poc_type == <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> max_delta_poc = (param-&gt;i_bframe + <span class="number">2</span>) * (!!param-&gt;i_bframe_pyramid + <span class="number">1</span>) * <span class="number">2</span>;</span><br><span class="line">        sps-&gt;i_log2_max_poc_lsb = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">while</span>((<span class="number">1</span> &lt;&lt; sps-&gt;i_log2_max_poc_lsb) &lt;= max_delta_poc * <span class="number">2</span> )</span><br><span class="line">            sps-&gt;i_log2_max_poc_lsb++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 默认带有 VUI 信息 */</span></span><br><span class="line">    sps-&gt;b_vui = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    sps-&gt;b_gaps_in_frame_num_value_allowed = <span class="number">0</span>;</span><br><span class="line">    sps-&gt;b_mb_adaptive_frame_field = param-&gt;b_interlaced;</span><br><span class="line">    sps-&gt;b_direct8x8_inference = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    x264_sps_init_reconfigurable(sps, param);</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.b_overscan_info_present = param-&gt;vui.i_overscan &gt; <span class="number">0</span> &amp;&amp; param-&gt;vui.i_overscan &lt;= <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.b_overscan_info_present )</span><br><span class="line">        sps-&gt;vui.b_overscan_info = (param-&gt;vui.i_overscan == <span class="number">2</span> ? <span class="number">1</span> : <span class="number">0</span> );</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.b_signal_type_present = <span class="number">0</span>;</span><br><span class="line">    sps-&gt;vui.i_vidformat = (param-&gt;vui.i_vidformat &gt;= <span class="number">0</span> &amp;&amp; param-&gt;vui.i_vidformat &lt;= <span class="number">5</span> ? param-&gt;vui.i_vidformat : <span class="number">5</span> );</span><br><span class="line">    sps-&gt;vui.b_fullrange = (param-&gt;vui.b_fullrange &gt;= <span class="number">0</span> &amp;&amp; param-&gt;vui.b_fullrange &lt;= <span class="number">1</span> ? param-&gt;vui.b_fullrange :</span><br><span class="line">                           (csp&gt;= X264_CSP_BGR ? <span class="number">1</span> : <span class="number">0</span> ) );</span><br><span class="line">    sps-&gt;vui.b_color_description_present = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.i_colorprim = (param-&gt;vui.i_colorprim &gt;= <span class="number">0</span> &amp;&amp; param-&gt;vui.i_colorprim &lt;= <span class="number">12</span> ? param-&gt;vui.i_colorprim : <span class="number">2</span> );</span><br><span class="line">    sps-&gt;vui.i_transfer  = (param-&gt;vui.i_transfer  &gt;= <span class="number">0</span> &amp;&amp; param-&gt;vui.i_transfer  &lt;= <span class="number">18</span> ? param-&gt;vui.i_transfer  : <span class="number">2</span> );</span><br><span class="line">    sps-&gt;vui.i_colmatrix = (param-&gt;vui.i_colmatrix &gt;= <span class="number">0</span> &amp;&amp; param-&gt;vui.i_colmatrix &lt;= <span class="number">14</span> ? param-&gt;vui.i_colmatrix :</span><br><span class="line">                           (csp&gt;= X264_CSP_BGR ? <span class="number">0</span> : <span class="number">2</span> ) );</span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.i_colorprim != <span class="number">2</span> || sps-&gt;vui.i_transfer != <span class="number">2</span> || sps-&gt;vui.i_colmatrix != <span class="number">2</span> )</span><br><span class="line">        sps-&gt;vui.b_color_description_present = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.i_vidformat != <span class="number">5</span> || sps-&gt;vui.b_fullrange || sps-&gt;vui.b_color_description_present )</span><br><span class="line">        sps-&gt;vui.b_signal_type_present = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* <span class="doctag">FIXME:</span> not sufficient for interlaced video */</span></span><br><span class="line">    sps-&gt;vui.b_chroma_loc_info_present = param-&gt;vui.i_chroma_loc &gt; <span class="number">0</span> &amp;&amp; param-&gt;vui.i_chroma_loc &lt;= <span class="number">5</span> &amp;&amp;</span><br><span class="line">                                         sps-&gt;i_chroma_format_idc == CHROMA_420;</span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.b_chroma_loc_info_present )</span><br><span class="line">    &#123;</span><br><span class="line">        sps-&gt;vui.i_chroma_loc_top = param-&gt;vui.i_chroma_loc;</span><br><span class="line">        sps-&gt;vui.i_chroma_loc_bottom = param-&gt;vui.i_chroma_loc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.b_timing_info_present = param-&gt;i_timebase_num &gt; <span class="number">0</span> &amp;&amp; param-&gt;i_timebase_den &gt; <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.b_timing_info_present )</span><br><span class="line">    &#123;</span><br><span class="line">        sps-&gt;vui.i_num_units_in_tick = param-&gt;i_timebase_num;</span><br><span class="line">        sps-&gt;vui.i_time_scale = param-&gt;i_timebase_den * <span class="number">2</span>;</span><br><span class="line">        sps-&gt;vui.b_fixed_frame_rate = !param-&gt;b_vfr_input;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.b_vcl_hrd_parameters_present = <span class="number">0</span>; <span class="comment">// we don&#x27;t support VCL HRD</span></span><br><span class="line">    sps-&gt;vui.b_nal_hrd_parameters_present = !!param-&gt;i_nal_hrd;</span><br><span class="line">    sps-&gt;vui.b_pic_struct_present = param-&gt;b_pic_struct;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// <span class="doctag">NOTE:</span> HRD related parts of the SPS are initialised in x264_ratecontrol_init_reconfigurable</span></span><br><span class="line"></span><br><span class="line">    sps-&gt;vui.b_bitstream_restriction = !(sps-&gt;b_constraint_set3 &amp;&amp; sps-&gt;i_profile_idc &gt;= PROFILE_HIGH);</span><br><span class="line">    <span class="keyword">if</span>(sps-&gt;vui.b_bitstream_restriction )</span><br><span class="line">    &#123;</span><br><span class="line">        sps-&gt;vui.b_motion_vectors_over_pic_boundaries = <span class="number">1</span>;</span><br><span class="line">        sps-&gt;vui.i_max_bytes_per_pic_denom = <span class="number">0</span>;</span><br><span class="line">        sps-&gt;vui.i_max_bits_per_mb_denom = <span class="number">0</span>;</span><br><span class="line">        sps-&gt;vui.i_log2_max_mv_length_horizontal =</span><br><span class="line">        sps-&gt;vui.i_log2_max_mv_length_vertical = (<span class="keyword">int</span>)log2f( X264_MAX( <span class="number">1</span>, param-&gt;analyse.i_mv_range*<span class="number">4</span><span class="number">-1</span> ) ) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sps-&gt;b_avcintra = !!param-&gt;i_avcintra_class;</span><br><span class="line">    sps-&gt;i_cqm_preset = param-&gt;i_cqm_preset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="x264-pps-init"><a href="#x264-pps-init" class="headerlink" title="x264_pps_init"></a>x264_pps_init</h3><p><code>x264_pps_init()</code> 会根据 <code>x264_param_t</code> 结构体和 <code>x264_sps_t</code> 结构体对 <code>x264_pps_t</code> 进行设置。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                            初始化 SPS
+* @param[out]       sps             x264_sps_t 结构体指针
+* @param[in]        i_id            i_id
+* @param[in]        param           x264_param_t 结构体指针
+* @return                           x264_t 结构体指针
+                                    # not nullptr   执行成功
+*                                   # nullptr       执行失败
+*/</span>
+<span class="token keyword">void</span> <span class="token function">x264_sps_init</span><span class="token punctuation">(</span>x264_sps_t <span class="token operator">*</span>sps<span class="token punctuation">,</span> <span class="token keyword">int</span> i_id<span class="token punctuation">,</span> x264_param_t <span class="token operator">*</span>param<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> csp <span class="token operator">=</span> param<span class="token operator">-></span>i_csp <span class="token operator">&amp;</span> X264_CSP_MASK<span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>i_id <span class="token operator">=</span> i_id<span class="token punctuation">;</span>
+    <span class="token comment">/* 以宏块为单位的图像宽度 */</span>
+    sps<span class="token operator">-></span>i_mb_width <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>i_width <span class="token operator">+</span> <span class="token number">15</span> <span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">16</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 以宏块为单位的图像高度 */</span>
+    sps<span class="token operator">-></span>i_mb_height<span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>i_height <span class="token operator">+</span> <span class="token number">15</span> <span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">16</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 所有图像均使用帧编码 */</span>
+    sps<span class="token operator">-></span>b_frame_mbs_only <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>param<span class="token operator">-></span>b_interlaced <span class="token operator">||</span> param<span class="token operator">-></span>b_fake_interlaced<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>sps<span class="token operator">-></span>b_frame_mbs_only <span class="token punctuation">)</span>
+        <span class="token comment">/* 场编码时 以宏块为单位的图像高度为偶数 */</span>
+        sps<span class="token operator">-></span>i_mb_height <span class="token operator">=</span> <span class="token punctuation">(</span>sps<span class="token operator">-></span>i_mb_height <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 色度采样结构 yuv444 yuv422 yuv420 yuv400 */</span>
+    sps<span class="token operator">-></span>i_chroma_format_idc <span class="token operator">=</span> csp <span class="token operator">>=</span> X264_CSP_I444 <span class="token operator">?</span> CHROMA_444 <span class="token operator">:</span>
+                               csp <span class="token operator">>=</span> X264_CSP_I422 <span class="token operator">?</span> CHROMA_422 <span class="token operator">:</span>
+                               csp <span class="token operator">>=</span> X264_CSP_I420 <span class="token operator">?</span> CHROMA_420 <span class="token operator">:</span> CHROMA_400<span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>b_qpprime_y_zero_transform_bypass <span class="token operator">=</span> param<span class="token operator">-></span>rc<span class="token punctuation">.</span>i_rc_method <span class="token operator">==</span> X264_RC_CQP <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>rc<span class="token punctuation">.</span>i_qp_constant <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* 根据其他质量参数 设置 profile */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>b_qpprime_y_zero_transform_bypass <span class="token operator">||</span> sps<span class="token operator">-></span>i_chroma_format_idc <span class="token operator">==</span> CHROMA_444 <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_HIGH444_PREDICTIVE<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>i_chroma_format_idc <span class="token operator">==</span> CHROMA_422 <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_HIGH422<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>BIT_DEPTH<span class="token operator">></span> <span class="token number">8</span> <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_HIGH10<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>b_transform_8x8 <span class="token operator">||</span> param<span class="token operator">-></span>i_cqm_preset <span class="token operator">!=</span> X264_CQM_FLAT <span class="token operator">||</span> sps<span class="token operator">-></span>i_chroma_format_idc <span class="token operator">==</span> CHROMA_400 <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_HIGH<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>b_cabac <span class="token operator">||</span> param<span class="token operator">-></span>i_bframe <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">||</span> param<span class="token operator">-></span>b_interlaced <span class="token operator">||</span> param<span class="token operator">-></span>b_fake_interlaced <span class="token operator">||</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>i_weighted_pred <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_MAIN<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        sps<span class="token operator">-></span>i_profile_idc  <span class="token operator">=</span> PROFILE_BASELINE<span class="token punctuation">;</span>
+
+    <span class="token comment">/* constraint_set0 表示编码视频序列遵守 Baseline profile 的所有约束 */</span>
+    sps<span class="token operator">-></span>b_constraint_set0  <span class="token operator">=</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">==</span> PROFILE_BASELINE<span class="token punctuation">;</span>
+    <span class="token comment">/* constraint_set1 表示编码视频序列遵守 Main profile 的所有约束 */</span>
+    <span class="token comment">/* x264 不支持 baseline 中存在，却不存在 main 中的约束，包括 arbitrary_slice_order 和 slice_groups */</span>
+    sps<span class="token operator">-></span>b_constraint_set1  <span class="token operator">=</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">&lt;=</span> PROFILE_MAIN<span class="token punctuation">;</span>
+    <span class="token comment">/* Never set constraint_set2, it is not necessary and not used in real world. */</span>
+    sps<span class="token operator">-></span>b_constraint_set2  <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>b_constraint_set3  <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>i_level_idc <span class="token operator">=</span> param<span class="token operator">-></span>i_level_idc<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>i_level_idc <span class="token operator">==</span> <span class="token number">9</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">==</span> PROFILE_BASELINE <span class="token operator">||</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">==</span> PROFILE_MAIN <span class="token punctuation">)</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* 在一些高级 profile 情况下，level_idc 值为 9 代表等级为 1b */</span>
+        <span class="token comment">/* 在 Baseline or Main profile，level_idc 值为 11 且 constraint_set3 值为 1 代表等级为 1b，（level_idc 值为 11 且 constraint_set3 值为 0 代表等级为 1.1）*/</span>
+        sps<span class="token operator">-></span>b_constraint_set3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>i_level_idc      <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">/* Intra profiles */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>i_keyint_max <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">>=</span> PROFILE_HIGH <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>b_constraint_set3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_num_reorder_frames <span class="token operator">=</span> param<span class="token operator">-></span>i_bframe_pyramid <span class="token operator">?</span> <span class="token number">2</span> <span class="token operator">:</span> param<span class="token operator">-></span>i_bframe <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">/* extra slot with pyramid so that we don't have to override the
+     * order of forgetting old pictures */</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_max_dec_frame_buffering <span class="token operator">=</span>
+    sps<span class="token operator">-></span>i_num_ref_frames <span class="token operator">=</span> <span class="token function">X264_MIN</span><span class="token punctuation">(</span>X264_REF_MAX<span class="token punctuation">,</span> <span class="token function">X264_MAX4</span><span class="token punctuation">(</span>param<span class="token operator">-></span>i_frame_reference<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token operator">+</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_num_reorder_frames<span class="token punctuation">,</span>
+                            param<span class="token operator">-></span>i_bframe_pyramid <span class="token operator">?</span> <span class="token number">4</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> param<span class="token operator">-></span>i_dpb_size<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>i_num_ref_frames <span class="token operator">-=</span> param<span class="token operator">-></span>i_bframe_pyramid <span class="token operator">==</span> X264_B_PYRAMID_STRICT<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>i_keyint_max <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        sps<span class="token operator">-></span>i_num_ref_frames <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_max_dec_frame_buffering <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/* number of refs + current frame */</span>
+    <span class="token keyword">int</span> max_frame_num <span class="token operator">=</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_max_dec_frame_buffering <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span>param<span class="token operator">-></span>i_bframe_pyramid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token comment">/* Intra refresh cannot write a recovery time greater than max frame num-1 */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>param<span class="token operator">-></span>b_intra_refresh <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> time_to_recovery <span class="token operator">=</span> <span class="token function">X264_MIN</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>i_mb_width <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> param<span class="token operator">-></span>i_keyint_max <span class="token punctuation">)</span> <span class="token operator">+</span> param<span class="token operator">-></span>i_bframe <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        max_frame_num <span class="token operator">=</span> <span class="token function">X264_MAX</span><span class="token punctuation">(</span>max_frame_num<span class="token punctuation">,</span> time_to_recovery<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    sps<span class="token operator">-></span>i_log2_max_frame_num <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> sps<span class="token operator">-></span>i_log2_max_frame_num<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> max_frame_num <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>i_log2_max_frame_num<span class="token operator">++</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>i_poc_type <span class="token operator">=</span> param<span class="token operator">-></span>i_bframe <span class="token operator">||</span> param<span class="token operator">-></span>b_interlaced <span class="token operator">||</span> param<span class="token operator">-></span>i_avcintra_class <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>i_poc_type <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> max_delta_poc <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>i_bframe <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span>param<span class="token operator">-></span>i_bframe_pyramid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>i_log2_max_poc_lsb <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> sps<span class="token operator">-></span>i_log2_max_poc_lsb<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> max_delta_poc <span class="token operator">*</span> <span class="token number">2</span> <span class="token punctuation">)</span>
+            sps<span class="token operator">-></span>i_log2_max_poc_lsb<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/* 默认带有 VUI 信息 */</span>
+    sps<span class="token operator">-></span>b_vui <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>b_gaps_in_frame_num_value_allowed <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>b_mb_adaptive_frame_field <span class="token operator">=</span> param<span class="token operator">-></span>b_interlaced<span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>b_direct8x8_inference <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token function">x264_sps_init_reconfigurable</span><span class="token punctuation">(</span>sps<span class="token punctuation">,</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_overscan_info_present <span class="token operator">=</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_overscan <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_overscan <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_overscan_info_present <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_overscan_info <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_overscan <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_signal_type_present <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_vidformat <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_vidformat <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_vidformat <span class="token operator">&lt;=</span> <span class="token number">5</span> <span class="token operator">?</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_vidformat <span class="token operator">:</span> <span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fullrange <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fullrange <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fullrange <span class="token operator">&lt;=</span> <span class="token number">1</span> <span class="token operator">?</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fullrange <span class="token operator">:</span>
+                           <span class="token punctuation">(</span>csp<span class="token operator">>=</span> X264_CSP_BGR <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_color_description_present <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colorprim <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colorprim <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colorprim <span class="token operator">&lt;=</span> <span class="token number">12</span> <span class="token operator">?</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colorprim <span class="token operator">:</span> <span class="token number">2</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_transfer  <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_transfer  <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_transfer  <span class="token operator">&lt;=</span> <span class="token number">18</span> <span class="token operator">?</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_transfer  <span class="token operator">:</span> <span class="token number">2</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colmatrix <span class="token operator">=</span> <span class="token punctuation">(</span>param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colmatrix <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colmatrix <span class="token operator">&lt;=</span> <span class="token number">14</span> <span class="token operator">?</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colmatrix <span class="token operator">:</span>
+                           <span class="token punctuation">(</span>csp<span class="token operator">>=</span> X264_CSP_BGR <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token number">2</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colorprim <span class="token operator">!=</span> <span class="token number">2</span> <span class="token operator">||</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_transfer <span class="token operator">!=</span> <span class="token number">2</span> <span class="token operator">||</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_colmatrix <span class="token operator">!=</span> <span class="token number">2</span> <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_color_description_present <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_vidformat <span class="token operator">!=</span> <span class="token number">5</span> <span class="token operator">||</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fullrange <span class="token operator">||</span> sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_color_description_present <span class="token punctuation">)</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_signal_type_present <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* FIXME: not sufficient for interlaced video */</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_chroma_loc_info_present <span class="token operator">=</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc <span class="token operator">&lt;=</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span>
+                                         sps<span class="token operator">-></span>i_chroma_format_idc <span class="token operator">==</span> CHROMA_420<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_chroma_loc_info_present <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc_top <span class="token operator">=</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc<span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc_bottom <span class="token operator">=</span> param<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_chroma_loc<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_timing_info_present <span class="token operator">=</span> param<span class="token operator">-></span>i_timebase_num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>i_timebase_den <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_timing_info_present <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_num_units_in_tick <span class="token operator">=</span> param<span class="token operator">-></span>i_timebase_num<span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_time_scale <span class="token operator">=</span> param<span class="token operator">-></span>i_timebase_den <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_fixed_frame_rate <span class="token operator">=</span> <span class="token operator">!</span>param<span class="token operator">-></span>b_vfr_input<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_vcl_hrd_parameters_present <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// we don't support VCL HRD</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_nal_hrd_parameters_present <span class="token operator">=</span> <span class="token operator">!</span><span class="token operator">!</span>param<span class="token operator">-></span>i_nal_hrd<span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_pic_struct_present <span class="token operator">=</span> param<span class="token operator">-></span>b_pic_struct<span class="token punctuation">;</span>
+
+    <span class="token comment">// NOTE: HRD related parts of the SPS are initialised in x264_ratecontrol_init_reconfigurable</span>
+
+    sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_bitstream_restriction <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>b_constraint_set3 <span class="token operator">&amp;&amp;</span> sps<span class="token operator">-></span>i_profile_idc <span class="token operator">>=</span> PROFILE_HIGH<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_bitstream_restriction <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>b_motion_vectors_over_pic_boundaries <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_max_bytes_per_pic_denom <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_max_bits_per_mb_denom <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_log2_max_mv_length_horizontal <span class="token operator">=</span>
+        sps<span class="token operator">-></span>vui<span class="token punctuation">.</span>i_log2_max_mv_length_vertical <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">log2f</span><span class="token punctuation">(</span> <span class="token function">X264_MAX</span><span class="token punctuation">(</span> <span class="token number">1</span><span class="token punctuation">,</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>i_mv_range<span class="token operator">*</span><span class="token number">4</span><span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    sps<span class="token operator">-></span>b_avcintra <span class="token operator">=</span> <span class="token operator">!</span><span class="token operator">!</span>param<span class="token operator">-></span>i_avcintra_class<span class="token punctuation">;</span>
+    sps<span class="token operator">-></span>i_cqm_preset <span class="token operator">=</span> param<span class="token operator">-></span>i_cqm_preset<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="x264_pps_init">x264_pps_init</h3>
+<p><code>x264_pps_init()</code> 会根据 <code>x264_param_t</code> 结构体和 <code>x264_sps_t</code> 结构体对 <code>x264_pps_t</code> 进行设置。</p>
 <p>具体代码及注释如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @brief                            初始化 SPS</span></span><br><span class="line"><span class="comment">* @param[out]       sps             x264_sps_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        i_id            i_id</span></span><br><span class="line"><span class="comment">* @param[in]        param           x264_param_t 结构体指针</span></span><br><span class="line"><span class="comment">* @param[in]        param           x264_sps_t 结构体指针</span></span><br><span class="line"><span class="comment">* @return                           x264_t 结构体指针</span></span><br><span class="line"><span class="comment">                                    # not nullptr   执行成功</span></span><br><span class="line"><span class="comment">*                                   # nullptr       执行失败</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_pps_init</span><span class="params">(<span class="keyword">x264_pps_t</span> *pps, <span class="keyword">int</span> i_id, <span class="keyword">x264_param_t</span> *param, <span class="keyword">x264_sps_t</span> *sps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pps-&gt;i_id = i_id;</span><br><span class="line">    pps-&gt;i_sps_id = sps-&gt;i_id;</span><br><span class="line">    pps-&gt;b_cabac = param-&gt;b_cabac;</span><br><span class="line"></span><br><span class="line">    pps-&gt;b_pic_order = !param-&gt;i_avcintra_class &amp;&amp; param-&gt;b_interlaced;</span><br><span class="line">    pps-&gt;i_num_slice_groups = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    pps-&gt;i_num_ref_idx_l0_default_active = param-&gt;i_frame_reference;</span><br><span class="line">    pps-&gt;i_num_ref_idx_l1_default_active = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    pps-&gt;b_weighted_pred = param-&gt;analyse.i_weighted_pred &gt; <span class="number">0</span>;</span><br><span class="line">    pps-&gt;b_weighted_bipred = param-&gt;analyse.b_weighted_bipred ? <span class="number">2</span> : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    pps-&gt;i_pic_init_qp = param-&gt;rc.i_rc_method == X264_RC_ABR || param-&gt;b_stitchable ? <span class="number">26</span> + QP_BD_OFFSET : SPEC_QP(param-&gt;rc.i_qp_constant );</span><br><span class="line">    pps-&gt;i_pic_init_qs = <span class="number">26</span> + QP_BD_OFFSET;</span><br><span class="line"></span><br><span class="line">    pps-&gt;i_chroma_qp_index_offset = param-&gt;analyse.i_chroma_qp_offset;</span><br><span class="line">    pps-&gt;b_deblocking_filter_control = <span class="number">1</span>;</span><br><span class="line">    pps-&gt;b_constrained_intra_pred = param-&gt;b_constrained_intra;</span><br><span class="line">    pps-&gt;b_redundant_pic_cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    pps-&gt;b_transform_8x8_mode = param-&gt;analyse.b_transform_8x8 ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+* @brief                            初始化 SPS
+* @param[out]       sps             x264_sps_t 结构体指针
+* @param[in]        i_id            i_id
+* @param[in]        param           x264_param_t 结构体指针
+* @param[in]        param           x264_sps_t 结构体指针
+* @return                           x264_t 结构体指针
+                                    # not nullptr   执行成功
+*                                   # nullptr       执行失败
+*/</span>
+<span class="token keyword">void</span> <span class="token function">x264_pps_init</span><span class="token punctuation">(</span>x264_pps_t <span class="token operator">*</span>pps<span class="token punctuation">,</span> <span class="token keyword">int</span> i_id<span class="token punctuation">,</span> x264_param_t <span class="token operator">*</span>param<span class="token punctuation">,</span> x264_sps_t <span class="token operator">*</span>sps<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    pps<span class="token operator">-></span>i_id <span class="token operator">=</span> i_id<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>i_sps_id <span class="token operator">=</span> sps<span class="token operator">-></span>i_id<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>b_cabac <span class="token operator">=</span> param<span class="token operator">-></span>b_cabac<span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>b_pic_order <span class="token operator">=</span> <span class="token operator">!</span>param<span class="token operator">-></span>i_avcintra_class <span class="token operator">&amp;&amp;</span> param<span class="token operator">-></span>b_interlaced<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>i_num_slice_groups <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>i_num_ref_idx_l0_default_active <span class="token operator">=</span> param<span class="token operator">-></span>i_frame_reference<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>i_num_ref_idx_l1_default_active <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>b_weighted_pred <span class="token operator">=</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>i_weighted_pred <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>b_weighted_bipred <span class="token operator">=</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>b_weighted_bipred <span class="token operator">?</span> <span class="token number">2</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>i_pic_init_qp <span class="token operator">=</span> param<span class="token operator">-></span>rc<span class="token punctuation">.</span>i_rc_method <span class="token operator">==</span> X264_RC_ABR <span class="token operator">||</span> param<span class="token operator">-></span>b_stitchable <span class="token operator">?</span> <span class="token number">26</span> <span class="token operator">+</span> QP_BD_OFFSET <span class="token operator">:</span> <span class="token function">SPEC_QP</span><span class="token punctuation">(</span>param<span class="token operator">-></span>rc<span class="token punctuation">.</span>i_qp_constant <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>i_pic_init_qs <span class="token operator">=</span> <span class="token number">26</span> <span class="token operator">+</span> QP_BD_OFFSET<span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>i_chroma_qp_index_offset <span class="token operator">=</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>i_chroma_qp_offset<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>b_deblocking_filter_control <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>b_constrained_intra_pred <span class="token operator">=</span> param<span class="token operator">-></span>b_constrained_intra<span class="token punctuation">;</span>
+    pps<span class="token operator">-></span>b_redundant_pic_cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    pps<span class="token operator">-></span>b_transform_8x8_mode <span class="token operator">=</span> param<span class="token operator">-></span>analyse<span class="token punctuation">.</span>b_transform_8x8 <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
     </div>
 
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\ae3a0f38\" rel="bookmark">源码阅读 x264 - 代价计算</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\3bc2314a\" rel="bookmark">源码阅读 x264 - 命令行工具</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\10604d20\" rel="bookmark">源码阅读 x264 - 去块效应滤波</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\b66cfff2\" rel="bookmark">源码阅读 x264 - 帧内预测</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\f0753f9a\" rel="bookmark">源码阅读 x264 - 离散余弦变换</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -454,42 +543,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -497,132 +558,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2021/2633a00a/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/2633a00a/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2021/2633a00a/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

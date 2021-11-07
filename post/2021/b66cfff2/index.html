@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,16 +16,14 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="本文分析 x264 库中的帧内预测的 C 语言函数。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本文分析 x264 库中的帧内预测的 C 语言函数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 x264 - 帧内预测">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2021/b66cfff2/index.html">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004528.png">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004541.png">
 <meta property="article:published_time" content="2021-01-19T06:06:39.000Z">
-<meta property="article:modified_time" content="2021-02-04T16:46:01.923Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="x264">
 <meta name="twitter:card" content="summary">
@@ -54,59 +54,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2021/b66cfff2/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 x264 - 帧内预测 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2021/b66cfff2/","path":"post/2021/b66cfff2/","title":"源码阅读 x264 - 帧内预测"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 x264 - 帧内预测 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -117,7 +77,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -144,36 +104,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -184,8 +120,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -194,7 +129,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -210,7 +145,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -228,14 +163,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#16x16-%E9%A2%84%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">16x16 预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-16x16-Vertical"><span class="nav-number">1.1.</span> <span class="nav-text">Intra_16x16_Vertical</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-16x16-Horicontal"><span class="nav-number">1.2.</span> <span class="nav-text">Intra_16x16_Horicontal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-16x16-DC"><span class="nav-number">1.3.</span> <span class="nav-text">Intra_16x16_DC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-16x16-Plane"><span class="nav-number">1.4.</span> <span class="nav-text">Intra_16x16_Plane</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4x4-%E9%A2%84%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">4x4 预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Vertical"><span class="nav-number">2.1.</span> <span class="nav-text">Intra_4x4_Vertical</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Horizontal"><span class="nav-number">2.2.</span> <span class="nav-text">Intra_4x4_Horizontal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-DC"><span class="nav-number">2.3.</span> <span class="nav-text">Intra_4x4_DC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Diagonal-Down-Left"><span class="nav-number">2.4.</span> <span class="nav-text">Intra_4x4_Diagonal_Down_Left</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Diagonal-Down-Right"><span class="nav-number">2.5.</span> <span class="nav-text">Intra_4x4_Diagonal_Down_Right</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Vertical-Right"><span class="nav-number">2.6.</span> <span class="nav-text">Intra_4x4_Vertical_Right</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Horizontal-Down"><span class="nav-number">2.7.</span> <span class="nav-text">Intra_4x4_Horizontal_Down</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Vertical-Left"><span class="nav-number">2.8.</span> <span class="nav-text">Intra_4x4_Vertical_Left</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intra-4x4-Horizontal-Up"><span class="nav-number">2.9.</span> <span class="nav-text">Intra_4x4_Horizontal_Up</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8x8-%E9%A2%84%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">8x8 预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#x16-%E9%A2%84%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">16x16 预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_16x16_vertical"><span class="nav-number">1.1.</span> <span class="nav-text">Intra_16x16_Vertical</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_16x16_horicontal"><span class="nav-number">1.2.</span> <span class="nav-text">Intra_16x16_Horicontal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_16x16_dc"><span class="nav-number">1.3.</span> <span class="nav-text">Intra_16x16_DC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_16x16_plane"><span class="nav-number">1.4.</span> <span class="nav-text">Intra_16x16_Plane</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x4-%E9%A2%84%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">4x4 预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_vertical"><span class="nav-number">2.1.</span> <span class="nav-text">Intra_4x4_Vertical</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_horizontal"><span class="nav-number">2.2.</span> <span class="nav-text">Intra_4x4_Horizontal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_dc"><span class="nav-number">2.3.</span> <span class="nav-text">Intra_4x4_DC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_diagonal_down_left"><span class="nav-number">2.4.</span> <span class="nav-text">Intra_4x4_Diagonal_Down_Left</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_diagonal_down_right"><span class="nav-number">2.5.</span> <span class="nav-text">Intra_4x4_Diagonal_Down_Right</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_vertical_right"><span class="nav-number">2.6.</span> <span class="nav-text">Intra_4x4_Vertical_Right</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_horizontal_down"><span class="nav-number">2.7.</span> <span class="nav-text">Intra_4x4_Horizontal_Down</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_vertical_left"><span class="nav-number">2.8.</span> <span class="nav-text">Intra_4x4_Vertical_Left</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intra_4x4_horizontal_up"><span class="nav-number">2.9.</span> <span class="nav-text">Intra_4x4_Horizontal_Up</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x8-%E9%A2%84%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">8x8 预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -244,21 +180,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -268,14 +201,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -284,7 +215,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -297,9 +228,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -340,7 +269,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-05 00:46:01" itemprop="dateModified" datetime="2021-02-05T00:46:01+08:00">2021-02-05</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -353,27 +282,6 @@
     </span>
 
   
-    <span id="/post/2021/b66cfff2/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 x264 - 帧内预测" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/b66cfff2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/b66cfff2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -384,12 +292,18 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>本文分析 <code>x264</code> 库中的帧内预测的 <code>C</code> 语言函数。</p>
-<a id="more"></a>
-<h2 id="16x16-预测"><a href="#16x16-预测" class="headerlink" title="16x16 预测"></a>16x16 预测</h2><p><code>x264</code> 代码通过 <code>x264_predict_16x16_init()</code> 函数初始化 <code>Intra16x16</code> 帧内预测汇编函数，初始化的预测模式如下：</p>
-<div class="table-container">
+<span id="more"></span>
+<h2 id="x16-预测">16x16 预测</h2>
+<p><code>x264</code> 代码通过 <code>x264_predict_16x16_init()</code> 函数初始化 <code>Intra16x16</code> 帧内预测汇编函数，初始化的预测模式如下：</p>
 <table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><code>intra16x16Predmode</code></th>
 <th><code>Name of Intra16x16PredMode</code></th>
 <th><code>Note</code></th>
@@ -397,25 +311,25 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>0</code></td>
 <td><code>Intra_16x16_Vertical</code></td>
 <td>由上边像素推出相应像素值</td>
 <td><code>x264_predict_16x16_v_c</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>1</code></td>
 <td><code>Intra_16x16_Horicontal</code></td>
 <td>由左边像素推出相应像素值</td>
 <td><code>x264_predict_16x16_h_c</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>2</code></td>
 <td><code>Intra_16x16_DC</code></td>
 <td>由上边和左边像素平均值推出相应像素值</td>
 <td><code>x264_predict_16x16_dc_c</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>3</code></td>
 <td><code>Intra_16x16_Plane</code></td>
 <td>利用线性 plan 函数及左、上像素推出相应像素值，适用于亮度变化平缓区域</td>
@@ -423,169 +337,521 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="Intra-16x16-Vertical"><a href="#Intra-16x16-Vertical" class="headerlink" title="Intra_16x16_Vertical"></a>Intra_16x16_Vertical</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121220616.png" alt="Intra_16x16_Vertical"></p>
+<h3 id="intra_16x16_vertical">Intra_16x16_Vertical</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121220616.png" alt="Intra_16x16_Vertical" /><figcaption aria-hidden="true">Intra_16x16_Vertical</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Vertical</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* common/predict.c */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_16x16_v_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// pixel4 实际上是 uint32_t（占用 32bit），存储 4 个像素的值（每个像素占用 8bit）</span></span><br><span class="line">    pixel4 v0 = MPIXEL_X4(&amp;src[ <span class="number">0</span> - FDEC_STRIDE]);</span><br><span class="line">    pixel4 v1 = MPIXEL_X4(&amp;src[ <span class="number">4</span> - FDEC_STRIDE]);</span><br><span class="line">    pixel4 v2 = MPIXEL_X4(&amp;src[ <span class="number">8</span> - FDEC_STRIDE]);</span><br><span class="line">    pixel4 v3 = MPIXEL_X4(&amp;src[<span class="number">12</span> - FDEC_STRIDE]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Vertical 预测方式</span></span><br><span class="line"><span class="comment">     *   |X1 X2 X3 X4</span></span><br><span class="line"><span class="comment">     * --+-----------</span></span><br><span class="line"><span class="comment">     *   |X1 X2 X3 X4</span></span><br><span class="line"><span class="comment">     *   |X1 X2 X3 X4</span></span><br><span class="line"><span class="comment">     *   |X1 X2 X3 X4</span></span><br><span class="line"><span class="comment">     *   |X1 X2 X3 X4</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * uint32_t v0 = ((x264_union32_t*)(&amp;src[ 0-FDEC_STRIDE]))-&gt;i;</span></span><br><span class="line"><span class="comment">     * uint32_t v1 = ((x264_union32_t*)(&amp;src[ 4-FDEC_STRIDE]))-&gt;i;</span></span><br><span class="line"><span class="comment">     * uint32_t v2 = ((x264_union32_t*)(&amp;src[ 8-FDEC_STRIDE]))-&gt;i;</span></span><br><span class="line"><span class="comment">     * uint32_t v3 = ((x264_union32_t*)(&amp;src[12-FDEC_STRIDE]))-&gt;i;</span></span><br><span class="line"><span class="comment">     * x264_union32_t 的定义如下：</span></span><br><span class="line"><span class="comment">     * typedef union &#123;uint64_t i; uint32_t d[2]; uint16_t w[4]; uint8_t b[8]; &#125; MAY_ALIAS x264_union64_t;</span></span><br><span class="line"><span class="comment">     * 即将一行 16 字节数据分成 4 次，每次取出 4 个像素（一共 16 个像素），分别赋值给 v0，v1，v2，v3</span></span><br><span class="line"><span class="comment">     * 取出的值源自于 16x16 块上面的一行像素</span></span><br><span class="line"><span class="comment">     *    0|          4          8          12         16</span></span><br><span class="line"><span class="comment">     *    ||    v0    |    v1    |    v2    |    v3    |</span></span><br><span class="line"><span class="comment">     * ---++==========+==========+==========+==========+</span></span><br><span class="line"><span class="comment">     *    ||</span></span><br><span class="line"><span class="comment">     *    ||</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">        MPIXEL_X4(src +  <span class="number">0</span>) = v0;</span><br><span class="line">        MPIXEL_X4(src +  <span class="number">4</span>) = v1;</span><br><span class="line">        MPIXEL_X4(src +  <span class="number">8</span>) = v2;</span><br><span class="line">        MPIXEL_X4(src + <span class="number">12</span>) = v3;</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(src +  0))-&gt;i = v0;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(src +  4))-&gt;i = v1;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(src +  8))-&gt;i = v2;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(src + 12))-&gt;i = v3;</span></span><br><span class="line"><span class="comment">     * 即分成 4 次，每次赋值 4 个像素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">        src += FDEC_STRIDE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-16x16-Horicontal"><a href="#Intra-16x16-Horicontal" class="headerlink" title="Intra_16x16_Horicontal"></a>Intra_16x16_Horicontal</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121220849.png" alt="Intra_16x16_Horicontal"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/* common/predict.c */</span>
+<span class="token keyword">void</span> <span class="token function">x264_predict_16x16_v_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// pixel4 实际上是 uint32_t（占用 32bit），存储 4 个像素的值（每个像素占用 8bit）</span>
+    pixel4 v0 <span class="token operator">=</span> <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>src<span class="token punctuation">[</span> <span class="token number">0</span> <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pixel4 v1 <span class="token operator">=</span> <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>src<span class="token punctuation">[</span> <span class="token number">4</span> <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pixel4 v2 <span class="token operator">=</span> <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>src<span class="token punctuation">[</span> <span class="token number">8</span> <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pixel4 v3 <span class="token operator">=</span> <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>src<span class="token punctuation">[</span><span class="token number">12</span> <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/*
+     * Vertical 预测方式
+     *   |X1 X2 X3 X4
+     * --+-----------
+     *   |X1 X2 X3 X4
+     *   |X1 X2 X3 X4
+     *   |X1 X2 X3 X4
+     *   |X1 X2 X3 X4
+     *
+     * 展开宏定义如下：
+     * uint32_t v0 = ((x264_union32_t*)(&amp;src[ 0-FDEC_STRIDE]))->i;
+     * uint32_t v1 = ((x264_union32_t*)(&amp;src[ 4-FDEC_STRIDE]))->i;
+     * uint32_t v2 = ((x264_union32_t*)(&amp;src[ 8-FDEC_STRIDE]))->i;
+     * uint32_t v3 = ((x264_union32_t*)(&amp;src[12-FDEC_STRIDE]))->i;
+     * x264_union32_t 的定义如下：
+     * typedef union &#123;uint64_t i; uint32_t d[2]; uint16_t w[4]; uint8_t b[8]; &#125; MAY_ALIAS x264_union64_t;
+     * 即将一行 16 字节数据分成 4 次，每次取出 4 个像素（一共 16 个像素），分别赋值给 v0，v1，v2，v3
+     * 取出的值源自于 16x16 块上面的一行像素
+     *    0|          4          8          12         16
+     *    ||    v0    |    v1    |    v2    |    v3    |
+     * ---++==========+==========+==========+==========+
+     *    ||
+     *    ||
+     */</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span>src <span class="token operator">+</span>  <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> v0<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span>src <span class="token operator">+</span>  <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">=</span> v1<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span>src <span class="token operator">+</span>  <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">=</span> v2<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span>src <span class="token operator">+</span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">=</span> v3<span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * ((x264_union32_t*)(src +  0))->i = v0;
+     * ((x264_union32_t*)(src +  4))->i = v1;
+     * ((x264_union32_t*)(src +  8))->i = v2;
+     * ((x264_union32_t*)(src + 12))->i = v3;
+     * 即分成 4 次，每次赋值 4 个像素
+     */</span>
+        src <span class="token operator">+=</span> FDEC_STRIDE<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_16x16_horicontal">Intra_16x16_Horicontal</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121220849.png" alt="Intra_16x16_Horicontal" /><figcaption aria-hidden="true">Intra_16x16_Horicontal</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_16x16_Horicontal</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PIXEL_SPLAT_X4(x) ((x)*0x01010101U)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_16x16_h_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ ) &#123;</span><br><span class="line">        <span class="keyword">const</span> pixel4 v = PIXEL_SPLAT_X4( src[<span class="number">-1</span>] );</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">0</span> ) = v;</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">4</span> ) = v;</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">8</span> ) = v;</span><br><span class="line">        MPIXEL_X4( src+<span class="number">12</span> ) = v;</span><br><span class="line">        <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">         * uint32_t v = src[-1] * 0x01010101U;</span></span><br><span class="line"><span class="comment">         * ((x264_union32_t*)(src +  0))-&gt;i = v;</span></span><br><span class="line"><span class="comment">         * ((x264_union32_t*)(src +  4))-&gt;i = v;</span></span><br><span class="line"><span class="comment">         * ((x264_union32_t*)(src +  8))-&gt;i = v;</span></span><br><span class="line"><span class="comment">         * ((x264_union32_t*)(src + 12))-&gt;i = v;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        src += FDEC_STRIDE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-16x16-DC"><a href="#Intra-16x16-DC" class="headerlink" title="Intra_16x16_DC"></a>Intra_16x16_DC</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121222206.jpg" alt="Intra_16x16_DC"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> PIXEL_SPLAT_X4(x) ((x)*0x01010101U)</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_16x16_h_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> pixel4 v <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> src<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span> src<span class="token operator">+</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span> src<span class="token operator">+</span> <span class="token number">4</span> <span class="token punctuation">)</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span> src<span class="token operator">+</span> <span class="token number">8</span> <span class="token punctuation">)</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token function">MPIXEL_X4</span><span class="token punctuation">(</span> src<span class="token operator">+</span><span class="token number">12</span> <span class="token punctuation">)</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token comment">/* 展开宏定义如下：
+         * uint32_t v = src[-1] * 0x01010101U;
+         * ((x264_union32_t*)(src +  0))->i = v;
+         * ((x264_union32_t*)(src +  4))->i = v;
+         * ((x264_union32_t*)(src +  8))->i = v;
+         * ((x264_union32_t*)(src + 12))->i = v;
+         */</span>
+        src <span class="token operator">+=</span> FDEC_STRIDE<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_16x16_dc">Intra_16x16_DC</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121222206.jpg" alt="Intra_16x16_DC" /><figcaption aria-hidden="true">Intra_16x16_DC</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_16x16_DC</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_16x16_DC(v)\</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ )\</span><br><span class="line">    &#123;\</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">0</span> ) = v;\</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">4</span> ) = v;\</span><br><span class="line">        MPIXEL_X4( src+ <span class="number">8</span> ) = v;\</span><br><span class="line">        MPIXEL_X4( src+<span class="number">12</span> ) = v;\</span><br><span class="line">        src += FDEC_STRIDE;\</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_16x16_dc_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dc = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ ) &#123;</span><br><span class="line">        dc += src[<span class="number">-1</span> + i * FDEC_STRIDE];</span><br><span class="line">        dc += src[i - FDEC_STRIDE];</span><br><span class="line">    &#125;</span><br><span class="line">    pixel4 dcsplat = PIXEL_SPLAT_X4( ( dc + <span class="number">16</span> ) &gt;&gt; <span class="number">5</span> );</span><br><span class="line">    PREDICT_16x16_DC( dcsplat );</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * uint32_t dcsplat = ((dc + 16) &gt;&gt; 5) * 0x01010101U;</span></span><br><span class="line"><span class="comment">     * for ( int i = 0; i &lt; 16; i++ ) &#123;</span></span><br><span class="line"><span class="comment">     *     ((x264_union32_t*)(src +  0))-&gt;i = v;</span></span><br><span class="line"><span class="comment">     *     ((x264_union32_t*)(src +  4))-&gt;i = v;</span></span><br><span class="line"><span class="comment">     *     ((x264_union32_t*)(src +  8))-&gt;i = v;</span></span><br><span class="line"><span class="comment">     *     ((x264_union32_t*)(src + 12))-&gt;i = v;</span></span><br><span class="line"><span class="comment">     *     src += FDEC_STRIDE;</span></span><br><span class="line"><span class="comment">     * &#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-16x16-Plane"><a href="#Intra-16x16-Plane" class="headerlink" title="Intra_16x16_Plane"></a>Intra_16x16_Plane</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121222712.png" alt="Intra_16x16_Plane"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_16x16_DC(v)\
+    for( int i = 0; i &lt; 16; i++ )\
+    &#123;\
+        MPIXEL_X4( src+ 0 ) = v;\
+        MPIXEL_X4( src+ 4 ) = v;\
+        MPIXEL_X4( src+ 8 ) = v;\
+        MPIXEL_X4( src+12 ) = v;\
+        src += FDEC_STRIDE;\
+    &#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_16x16_dc_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> dc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        dc <span class="token operator">+=</span> src<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">+</span> i <span class="token operator">*</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        dc <span class="token operator">+=</span> src<span class="token punctuation">[</span>i <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    pixel4 dcsplat <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> <span class="token punctuation">(</span> dc <span class="token operator">+</span> <span class="token number">16</span> <span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PREDICT_16x16_DC</span><span class="token punctuation">(</span> dcsplat <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * uint32_t dcsplat = ((dc + 16) >> 5) * 0x01010101U;
+     * for ( int i = 0; i &lt; 16; i++ ) &#123;
+     *     ((x264_union32_t*)(src +  0))->i = v;
+     *     ((x264_union32_t*)(src +  4))->i = v;
+     *     ((x264_union32_t*)(src +  8))->i = v;
+     *     ((x264_union32_t*)(src + 12))->i = v;
+     *     src += FDEC_STRIDE;
+     * &#125;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_16x16_plane">Intra_16x16_Plane</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121222712.png" alt="Intra_16x16_Plane" /><figcaption aria-hidden="true">Intra_16x16_Plane</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_16x16_Plane</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PIXEL_MAX 255</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> ALWAYS_INLINE pixel <span class="title">x264_clip_pixel</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((x &amp; ~PIXEL_MAX) ? (-x)&gt;&gt;<span class="number">31</span> &amp; PIXEL_MAX : x );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_16x16_p_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> H = <span class="number">0</span>, V = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* calculate H and V */</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">7</span>; i++) &#123;</span><br><span class="line">        H += (i + <span class="number">1</span>) * ( src[ <span class="number">8</span> + i - FDEC_STRIDE ] - src[<span class="number">6</span> - i - FDEC_STRIDE] );</span><br><span class="line">        V += (i + <span class="number">1</span>) * ( src[<span class="number">-1</span> + (<span class="number">8</span>+i) * FDEC_STRIDE] - src[<span class="number">-1</span> + (<span class="number">6</span>-i) * FDEC_STRIDE] );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">16</span> * (src[<span class="number">-1</span> + <span class="number">15</span>*FDEC_STRIDE] + src[<span class="number">15</span> - FDEC_STRIDE] );</span><br><span class="line">    <span class="keyword">int</span> b = (<span class="number">5</span> * H + <span class="number">32</span>) &gt;&gt; <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">int</span> c = (<span class="number">5</span> * V + <span class="number">32</span>) &gt;&gt; <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i00 = a - b * <span class="number">7</span> - c * <span class="number">7</span> + <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt; <span class="number">16</span>; y++) &#123;</span><br><span class="line">        <span class="keyword">int</span> pix = i00;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="number">16</span>; x++) &#123;</span><br><span class="line">            src[x] = x264_clip_pixel( pix &gt;&gt; <span class="number">5</span> );</span><br><span class="line">            pix += b;</span><br><span class="line">        &#125;</span><br><span class="line">        src += FDEC_STRIDE;</span><br><span class="line">        i00 += c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="4x4-预测"><a href="#4x4-预测" class="headerlink" title="4x4 预测"></a>4x4 预测</h2><p><code>x264</code> 中对 <code>4x4</code> 的预测模式如下：</p>
-<div class="table-container">
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> PIXEL_MAX 255</span>
+<span class="token keyword">static</span> ALWAYS_INLINE pixel <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">&amp;</span> <span class="token operator">~</span>PIXEL_MAX<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token operator">>></span><span class="token number">31</span> <span class="token operator">&amp;</span> PIXEL_MAX <span class="token operator">:</span> x <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_16x16_p_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> H <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> V <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* calculate H and V */</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        H <span class="token operator">+=</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span> src<span class="token punctuation">[</span> <span class="token number">8</span> <span class="token operator">+</span> i <span class="token operator">-</span> FDEC_STRIDE <span class="token punctuation">]</span> <span class="token operator">-</span> src<span class="token punctuation">[</span><span class="token number">6</span> <span class="token operator">-</span> i <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        V <span class="token operator">+=</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span> src<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">8</span><span class="token operator">+</span>i<span class="token punctuation">)</span> <span class="token operator">*</span> FDEC_STRIDE<span class="token punctuation">]</span> <span class="token operator">-</span> src<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">6</span><span class="token operator">-</span>i<span class="token punctuation">)</span> <span class="token operator">*</span> FDEC_STRIDE<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">16</span> <span class="token operator">*</span> <span class="token punctuation">(</span>src<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token number">15</span><span class="token operator">*</span>FDEC_STRIDE<span class="token punctuation">]</span> <span class="token operator">+</span> src<span class="token punctuation">[</span><span class="token number">15</span> <span class="token operator">-</span> FDEC_STRIDE<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> H <span class="token operator">+</span> <span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">5</span> <span class="token operator">*</span> V <span class="token operator">+</span> <span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> i00 <span class="token operator">=</span> a <span class="token operator">-</span> b <span class="token operator">*</span> <span class="token number">7</span> <span class="token operator">-</span> c <span class="token operator">*</span> <span class="token number">7</span> <span class="token operator">+</span> <span class="token number">16</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> pix <span class="token operator">=</span> i00<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> <span class="token number">16</span><span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            src<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">x264_clip_pixel</span><span class="token punctuation">(</span> pix <span class="token operator">>></span> <span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            pix <span class="token operator">+=</span> b<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        src <span class="token operator">+=</span> FDEC_STRIDE<span class="token punctuation">;</span>
+        i00 <span class="token operator">+=</span> c<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="x4-预测">4x4 预测</h2>
+<p><code>x264</code> 中对 <code>4x4</code> 的预测模式如下：</p>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><code>Intra4x4PredMode[luma4x4BlkIdx]</code></th>
 <th><code>Name of Intra4x4PredMode[luma4x4BlkIdx]</code></th>
 <th><code>x264 Function</code></th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>0</code></td>
 <td><code>Intra_4x4_Vertical</code></td>
 <td><code>x264_predict_4x4_v_c()</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>1</code></td>
 <td><code>Intra_4x4_Horizontal</code></td>
 <td><code>x264_predict_4x4_h_c()</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>2</code></td>
 <td><code>Intra_4x4_DC</code></td>
 <td><code>x264_predict_4x4_dc_c()</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>3</code></td>
 <td><code>Intra_4x4_Diagonal_Down_Left</code></td>
 <td><code>predict_4x4_ddl_c()</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>4</code></td>
 <td><code>Intra_4x4_Diagonal_Down_Right</code></td>
 <td><code>predict_4x4_ddr_c()</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>5</code></td>
 <td><code>Intra_4x4_Vertical_Right</code></td>
 <td><code>predict_4x4_vr_c()</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>6</code></td>
 <td><code>Intra_4x4_Horizontal_Down</code></td>
 <td><code>predict_4x4_hd_c()</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>7</code></td>
 <td><code>Intra_4x4_Vertical_Left</code></td>
 <td><code>predict_4x4_vl_c()</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>8</code></td>
 <td><code>Intra_4x4_Horizontal_Up</code></td>
 <td><code>predict_4x4_hu_c()</code></td>
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="Intra-4x4-Vertical"><a href="#Intra-4x4-Vertical" class="headerlink" title="Intra_4x4_Vertical"></a>Intra_4x4_Vertical</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210120234537.png" alt="Intra_4x4_Vertical"></p>
+<h3 id="intra_4x4_vertical">Intra_4x4_Vertical</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210120234537.png" alt="Intra_4x4_Vertical" /><figcaption aria-hidden="true">Intra_4x4_Vertical</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Vertical</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SRC(x,y) src[(x)+(y)*FDEC_STRIDE]</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SRC_X4(x,y) MPIXEL_X4( &amp;SRC(x,y) )</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_4x4_DC(v)\</span></span><br><span class="line">    SRC_X4(<span class="number">0</span>,<span class="number">0</span>) = SRC_X4(<span class="number">0</span>,<span class="number">1</span>) = SRC_X4(<span class="number">0</span>,<span class="number">2</span>) = SRC_X4(<span class="number">0</span>,<span class="number">3</span>) = v;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_4x4_v_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    PREDICT_4x4_DC(SRC_X4(<span class="number">0</span>,<span class="number">-1</span>));</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+0*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+1*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+2*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+3*FDEC_STRIDE])-&gt;i = ((x264_union32_t*)(&amp;src[0+(-1)*FDEC_STRIDE])-&gt;i;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Horizontal"><a href="#Intra-4x4-Horizontal" class="headerlink" title="Intra_4x4_Horizontal"></a>Intra_4x4_Horizontal</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210120235209.png" alt="Intra_4x4_Horizontal"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> SRC(x,y) src[(x)+(y)*FDEC_STRIDE]</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SRC_X4(x,y) MPIXEL_X4( &amp;SRC(x,y) )</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_4x4_DC(v)\
+    SRC_X4(0,0) = SRC_X4(0,1) = SRC_X4(0,2) = SRC_X4(0,3) = v;</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_4x4_v_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">PREDICT_4x4_DC</span><span class="token punctuation">(</span><span class="token function">SRC_X4</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * ((x264_union32_t*)(&amp;src[0+0*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[0+1*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[0+2*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[0+3*FDEC_STRIDE])->i = ((x264_union32_t*)(&amp;src[0+(-1)*FDEC_STRIDE])->i;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_horizontal">Intra_4x4_Horizontal</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210120235209.png" alt="Intra_4x4_Horizontal" /><figcaption aria-hidden="true">Intra_4x4_Horizontal</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Horizontal</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> M32(src) (((x264_union32_t*)(src))-&gt;i)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MPIXEL_X4(src) M32(src)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SRC(x,y) src[(x)+(y)*FDEC_STRIDE]</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SRC_X4(x,y) MPIXEL_X4( &amp;SRC(x,y) )</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PIXEL_SPLAT_X4(x) ((x)*0x01010101U)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_4x4_h_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    SRC_X4(<span class="number">0</span>,<span class="number">0</span>) = PIXEL_SPLAT_X4( SRC(<span class="number">-1</span>,<span class="number">0</span>) );</span><br><span class="line">    SRC_X4(<span class="number">0</span>,<span class="number">1</span>) = PIXEL_SPLAT_X4( SRC(<span class="number">-1</span>,<span class="number">1</span>) );</span><br><span class="line">    SRC_X4(<span class="number">0</span>,<span class="number">2</span>) = PIXEL_SPLAT_X4( SRC(<span class="number">-1</span>,<span class="number">2</span>) );</span><br><span class="line">    SRC_X4(<span class="number">0</span>,<span class="number">3</span>) = PIXEL_SPLAT_X4( SRC(<span class="number">-1</span>,<span class="number">3</span>) );</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+0*FDEC_STRIDE])-&gt;i = src[-1+0*FDEC_STRIDE]*0x01010101U;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+1*FDEC_STRIDE])-&gt;i = src[-1+1*FDEC_STRIDE]*0x01010101U;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+2*FDEC_STRIDE])-&gt;i = src[-1+2*FDEC_STRIDE]*0x01010101U;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[0+3*FDEC_STRIDE])-&gt;i = src[-1+3*FDEC_STRIDE]*0x01010101U;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-DC"><a href="#Intra-4x4-DC" class="headerlink" title="Intra_4x4_DC"></a>Intra_4x4_DC</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121000124.png" alt="Intra_4x4_DC"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> M32(src) (((x264_union32_t*)(src))->i)</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> MPIXEL_X4(src) M32(src)</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> SRC(x,y) src[(x)+(y)*FDEC_STRIDE]</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SRC_X4(x,y) MPIXEL_X4( &amp;SRC(x,y) )</span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> PIXEL_SPLAT_X4(x) ((x)*0x01010101U)</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_4x4_h_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">SRC_X4</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC_X4</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC_X4</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC_X4</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * ((x264_union32_t*)(&amp;src[0+0*FDEC_STRIDE])->i = src[-1+0*FDEC_STRIDE]*0x01010101U;
+     * ((x264_union32_t*)(&amp;src[0+1*FDEC_STRIDE])->i = src[-1+1*FDEC_STRIDE]*0x01010101U;
+     * ((x264_union32_t*)(&amp;src[0+2*FDEC_STRIDE])->i = src[-1+2*FDEC_STRIDE]*0x01010101U;
+     * ((x264_union32_t*)(&amp;src[0+3*FDEC_STRIDE])->i = src[-1+3*FDEC_STRIDE]*0x01010101U;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_dc">Intra_4x4_DC</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121000124.png" alt="Intra_4x4_DC" /><figcaption aria-hidden="true">Intra_4x4_DC</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_DC</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">uint32_t</span> pixel4;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_4x4_DC(v) SRC_X4(0,0) = SRC_X4(0,1) = SRC_X4(0,2) = SRC_X4(0,3) = v;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">x264_predict_4x4_dc_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    pixel4 dc = PIXEL_SPLAT_X4((SRC(<span class="number">-1</span>,<span class="number">0</span>) + SRC(<span class="number">-1</span>,<span class="number">1</span>) + SRC(<span class="number">-1</span>,<span class="number">2</span>) + SRC(<span class="number">-1</span>,<span class="number">3</span>) +</span><br><span class="line">                                 SRC(<span class="number">0</span>,<span class="number">-1</span>) + SRC(<span class="number">1</span>,<span class="number">-1</span>) + SRC(<span class="number">2</span>,<span class="number">-1</span>) + SRC(<span class="number">3</span>,<span class="number">-1</span>) + <span class="number">4</span>) &gt;&gt; <span class="number">3</span> );</span><br><span class="line">    PREDICT_4x4_DC(dc);</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * uint32_t dc = (( src[-1+0*FDEC_STRIDE] + src[-1+1*FDEC_STRIDE] +</span></span><br><span class="line"><span class="comment">                        src[-1+2*FDEC_STRIDE] + src[-1+3*FDEC_STRIDE] +</span></span><br><span class="line"><span class="comment">                        src[0+(-1)*FDEC_STRIDE] + src[1+(-1)*FDEC_STRIDE] +</span></span><br><span class="line"><span class="comment">                        src[2+(-1)*FDEC_STRIDE] + src[3+(-1)*FDEC_STRIDE] ) &gt;&gt; 3 ) * 0x01010101U;</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[(0)+(0)*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[(0)+(1)*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[(0)+(2)*FDEC_STRIDE])-&gt;i = \</span></span><br><span class="line"><span class="comment">     * ((x264_union32_t*)(&amp;src[(0)+(3)*FDEC_STRIDE])-&gt;i = dc;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Diagonal-Down-Left"><a href="#Intra-4x4-Diagonal-Down-Left" class="headerlink" title="Intra_4x4_Diagonal_Down_Left"></a>Intra_4x4_Diagonal_Down_Left</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121001324.png" alt="Intra_4x4_Diagonal_Down_Left"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">uint32_t</span> pixel4<span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_4x4_DC(v) SRC_X4(0,0) = SRC_X4(0,1) = SRC_X4(0,2) = SRC_X4(0,3) = v;</span>
+
+<span class="token keyword">void</span> <span class="token function">x264_predict_4x4_dc_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pixel4 dc <span class="token operator">=</span> <span class="token function">PIXEL_SPLAT_X4</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                                 <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">3</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PREDICT_4x4_DC</span><span class="token punctuation">(</span>dc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * uint32_t dc = (( src[-1+0*FDEC_STRIDE] + src[-1+1*FDEC_STRIDE] +
+                        src[-1+2*FDEC_STRIDE] + src[-1+3*FDEC_STRIDE] +
+                        src[0+(-1)*FDEC_STRIDE] + src[1+(-1)*FDEC_STRIDE] +
+                        src[2+(-1)*FDEC_STRIDE] + src[3+(-1)*FDEC_STRIDE] ) >> 3 ) * 0x01010101U;
+     * ((x264_union32_t*)(&amp;src[(0)+(0)*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[(0)+(1)*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[(0)+(2)*FDEC_STRIDE])->i = \
+     * ((x264_union32_t*)(&amp;src[(0)+(3)*FDEC_STRIDE])->i = dc;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_diagonal_down_left">Intra_4x4_Diagonal_Down_Left</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121001324.png" alt="Intra_4x4_Diagonal_Down_Left" /><figcaption aria-hidden="true">Intra_4x4_Diagonal_Down_Left</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Diagonal_Down_Left</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_4x4_LOAD_TOP\</span></span><br><span class="line">    <span class="keyword">int</span> t0 = SRC(<span class="number">0</span>,<span class="number">-1</span>);\</span><br><span class="line">    <span class="keyword">int</span> t1 = SRC(<span class="number">1</span>,<span class="number">-1</span>);\</span><br><span class="line">    <span class="keyword">int</span> t2 = SRC(<span class="number">2</span>,<span class="number">-1</span>);\</span><br><span class="line">    UNUSED <span class="keyword">int</span> t3 = SRC(<span class="number">3</span>,<span class="number">-1</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_4x4_LOAD_TOP_RIGHT\</span></span><br><span class="line">    <span class="keyword">int</span> t4 = SRC(<span class="number">4</span>,<span class="number">-1</span>);\</span><br><span class="line">    <span class="keyword">int</span> t5 = SRC(<span class="number">5</span>,<span class="number">-1</span>);\</span><br><span class="line">    <span class="keyword">int</span> t6 = SRC(<span class="number">6</span>,<span class="number">-1</span>);\</span><br><span class="line">    UNUSED <span class="keyword">int</span> t7 = SRC(<span class="number">7</span>,<span class="number">-1</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> F2(a,b,c) (((a)+2*(b)+(c)+2)&gt;&gt;2)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_ddl_c</span><span class="params">(pixel *src)</span> </span>&#123;</span><br><span class="line">    PREDICT_4x4_LOAD_TOP</span><br><span class="line">    PREDICT_4x4_LOAD_TOP_RIGHT</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)= F2(t0,t1,t2);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)=SRC(<span class="number">0</span>,<span class="number">1</span>)= F2(t1,t2,t3);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)=SRC(<span class="number">1</span>,<span class="number">1</span>)=SRC(<span class="number">0</span>,<span class="number">2</span>)= F2(t2,t3,t4);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)=SRC(<span class="number">2</span>,<span class="number">1</span>)=SRC(<span class="number">1</span>,<span class="number">2</span>)=SRC(<span class="number">0</span>,<span class="number">3</span>)= F2(t3,t4,t5);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">1</span>)=SRC(<span class="number">2</span>,<span class="number">2</span>)=SRC(<span class="number">1</span>,<span class="number">3</span>)= F2(t4,t5,t6);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">2</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)= F2(t5,t6,t7);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">3</span>)= F2(t6,t7,t7);</span><br><span class="line">    <span class="comment">/* 展开宏定义如下：</span></span><br><span class="line"><span class="comment">     * int t0 = src[0+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t1 = src[1+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t2 = src[2+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t3 = src[3+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t4 = src[4+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t5 = src[5+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t6 = src[6+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t7 = src[7+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * src[0+0*FDEC_STRIDE] = (t0+2*t1+t2+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[1+0*FDEC_STRIDE] = src[0+1*FDEC_STRIDE] = (t1+2*t2+t3+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[2+0*FDEC_STRIDE] = src[1+1*FDEC_STRIDE] = src[0+2*FDEC_STRIDE] = (t2+2*t3+t4+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[3+0*FDEC_STRIDE] = src[2+1*FDEC_STRIDE] = src[1+2*FDEC_STRIDE] = src[0+3*FDEC_STRIDE] = (t3+2*t4+t5+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[3+1*FDEC_STRIDE] = src[2+2*FDEC_STRIDE] = src[1+3*FDEC_STRIDE] = (t4+2*t5+t6+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[3+2*FDEC_STRIDE] = src[2+3*FDEC_STRIDE] = (t5+2*t6+t7+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[3+3*FDEC_STRIDE] = (t6+2*t7+t7+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Diagonal-Down-Right"><a href="#Intra-4x4-Diagonal-Down-Right" class="headerlink" title="Intra_4x4_Diagonal_Down_Right"></a>Intra_4x4_Diagonal_Down_Right</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121003328.png" alt="Intra_4x4_Diagonal_Down_Right"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_4x4_LOAD_TOP\
+    int t0 = SRC(0,-1);\
+    int t1 = SRC(1,-1);\
+    int t2 = SRC(2,-1);\
+    UNUSED int t3 = SRC(3,-1);</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_4x4_LOAD_TOP_RIGHT\
+    int t4 = SRC(4,-1);\
+    int t5 = SRC(5,-1);\
+    int t6 = SRC(6,-1);\
+    UNUSED int t7 = SRC(7,-1);</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> F2(a,b,c) (((a)+2*(b)+(c)+2)>>2)</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_ddl_c</span><span class="token punctuation">(</span>pixel <span class="token operator">*</span>src<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    PREDICT_4x4_LOAD_TOP
+    PREDICT_4x4_LOAD_TOP_RIGHT
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">,</span>t4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t3<span class="token punctuation">,</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">,</span>t6<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t5<span class="token punctuation">,</span>t6<span class="token punctuation">,</span>t7<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t6<span class="token punctuation">,</span>t7<span class="token punctuation">,</span>t7<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下：
+     * int t0 = src[0+(-1)*FDEC_STRIDE];
+     * int t1 = src[1+(-1)*FDEC_STRIDE];
+     * int t2 = src[2+(-1)*FDEC_STRIDE];
+     * int t3 = src[3+(-1)*FDEC_STRIDE];
+     * int t4 = src[4+(-1)*FDEC_STRIDE];
+     * int t5 = src[5+(-1)*FDEC_STRIDE];
+     * int t6 = src[6+(-1)*FDEC_STRIDE];
+     * int t7 = src[7+(-1)*FDEC_STRIDE];
+     * src[0+0*FDEC_STRIDE] = (t0+2*t1+t2+2) >> 2;
+     * src[1+0*FDEC_STRIDE] = src[0+1*FDEC_STRIDE] = (t1+2*t2+t3+2) >> 2;
+     * src[2+0*FDEC_STRIDE] = src[1+1*FDEC_STRIDE] = src[0+2*FDEC_STRIDE] = (t2+2*t3+t4+2) >> 2;
+     * src[3+0*FDEC_STRIDE] = src[2+1*FDEC_STRIDE] = src[1+2*FDEC_STRIDE] = src[0+3*FDEC_STRIDE] = (t3+2*t4+t5+2) >> 2;
+     * src[3+1*FDEC_STRIDE] = src[2+2*FDEC_STRIDE] = src[1+3*FDEC_STRIDE] = (t4+2*t5+t6+2) >> 2;
+     * src[3+2*FDEC_STRIDE] = src[2+3*FDEC_STRIDE] = (t5+2*t6+t7+2) >> 2;
+     * src[3+3*FDEC_STRIDE] = (t6+2*t7+t7+2) >> 2;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_diagonal_down_right">Intra_4x4_Diagonal_Down_Right</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121003328.png" alt="Intra_4x4_Diagonal_Down_Right" /><figcaption aria-hidden="true">Intra_4x4_Diagonal_Down_Right</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Diagonal_Down_Right</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PREDICT_4x4_LOAD_LEFT\</span></span><br><span class="line">    <span class="keyword">int</span> l0 = SRC(<span class="number">-1</span>,<span class="number">0</span>);\</span><br><span class="line">    <span class="keyword">int</span> l1 = SRC(<span class="number">-1</span>,<span class="number">1</span>);\</span><br><span class="line">    <span class="keyword">int</span> l2 = SRC(<span class="number">-1</span>,<span class="number">2</span>);\</span><br><span class="line">    UNUSED <span class="keyword">int</span> l3 = SRC(<span class="number">-1</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_ddr_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lt = SRC(<span class="number">-1</span>,<span class="number">-1</span>);</span><br><span class="line">    PREDICT_4x4_LOAD_LEFT</span><br><span class="line">    PREDICT_4x4_LOAD_TOP</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)= F2(t3,t2,t1);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)=SRC(<span class="number">3</span>,<span class="number">1</span>)= F2(t2,t1,t0);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)=SRC(<span class="number">2</span>,<span class="number">1</span>)=SRC(<span class="number">3</span>,<span class="number">2</span>)= F2(t1,t0,lt);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)=SRC(<span class="number">1</span>,<span class="number">1</span>)=SRC(<span class="number">2</span>,<span class="number">2</span>)=SRC(<span class="number">3</span>,<span class="number">3</span>)= F2(t0,lt,l0);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">1</span>)=SRC(<span class="number">1</span>,<span class="number">2</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)= F2(lt,l0,l1);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">2</span>)=SRC(<span class="number">1</span>,<span class="number">3</span>)= F2(l0,l1,l2);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">3</span>)= F2(l1,l2,l3);</span><br><span class="line">    <span class="comment">/* 展开宏定义如下，后续类似代码不再进行宏定义展开：</span></span><br><span class="line"><span class="comment">     * int lt = src[-1+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int l0 = src[-1+0*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int l1 = src[-1+1*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int l2 = src[-1+2*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t0 = src[0+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t1 = src[1+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t2 = src[2+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * int t3 = src[3+(-1)*FDEC_STRIDE];</span></span><br><span class="line"><span class="comment">     * src[3+0*FDEC_STRIDE] = (t3+2*t2+t1+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[2+0*FDEC_STRIDE] = src[3+1*FDEC_STRIDE] = (t2+2*t1+t0+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[1+0*FDEC_STRIDE] = src[2+1*FDEC_STRIDE] = src[3+2*FDEC_STRIDE] = (t1+2*t0+lt+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[0+0*FDEC_STRIDE] = src[1+1*FDEC_STRIDE] = src[2+2*FDEC_STRIDE] = src[3+3*FDEC_STRIDE] = (t0+2*lt+l0+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[0+1*FDEC_STRIDE] = src[1+2*FDEC_STRIDE] = src[2+3*FDEC_STRIDE] = (lt+2*l0+l1+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[0+2*FDEC_STRIDE] = src[1+3*FDEC_STRIDE] = (l0+2*l1+l2+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     * src[0+3*FDEC_STRIDE] = (l1+2*l2+l3+2) &gt;&gt; 2;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Vertical-Right"><a href="#Intra-4x4-Vertical-Right" class="headerlink" title="Intra_4x4_Vertical_Right"></a>Intra_4x4_Vertical_Right</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004449.png" alt="Intra_4x4_Vertical_Right"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> PREDICT_4x4_LOAD_LEFT\
+    int l0 = SRC(-1,0);\
+    int l1 = SRC(-1,1);\
+    int l2 = SRC(-1,2);\
+    UNUSED int l3 = SRC(-1,3);</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_ddr_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> lt <span class="token operator">=</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    PREDICT_4x4_LOAD_LEFT
+    PREDICT_4x4_LOAD_TOP
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t3<span class="token punctuation">,</span>t2<span class="token punctuation">,</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t1<span class="token punctuation">,</span>t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t0<span class="token punctuation">,</span>lt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>lt<span class="token punctuation">,</span>l0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>lt<span class="token punctuation">,</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">/* 展开宏定义如下，后续类似代码不再进行宏定义展开：
+     * int lt = src[-1+(-1)*FDEC_STRIDE];
+     * int l0 = src[-1+0*FDEC_STRIDE];
+     * int l1 = src[-1+1*FDEC_STRIDE];
+     * int l2 = src[-1+2*FDEC_STRIDE];
+     * int t0 = src[0+(-1)*FDEC_STRIDE];
+     * int t1 = src[1+(-1)*FDEC_STRIDE];
+     * int t2 = src[2+(-1)*FDEC_STRIDE];
+     * int t3 = src[3+(-1)*FDEC_STRIDE];
+     * src[3+0*FDEC_STRIDE] = (t3+2*t2+t1+2) >> 2;
+     * src[2+0*FDEC_STRIDE] = src[3+1*FDEC_STRIDE] = (t2+2*t1+t0+2) >> 2;
+     * src[1+0*FDEC_STRIDE] = src[2+1*FDEC_STRIDE] = src[3+2*FDEC_STRIDE] = (t1+2*t0+lt+2) >> 2;
+     * src[0+0*FDEC_STRIDE] = src[1+1*FDEC_STRIDE] = src[2+2*FDEC_STRIDE] = src[3+3*FDEC_STRIDE] = (t0+2*lt+l0+2) >> 2;
+     * src[0+1*FDEC_STRIDE] = src[1+2*FDEC_STRIDE] = src[2+3*FDEC_STRIDE] = (lt+2*l0+l1+2) >> 2;
+     * src[0+2*FDEC_STRIDE] = src[1+3*FDEC_STRIDE] = (l0+2*l1+l2+2) >> 2;
+     * src[0+3*FDEC_STRIDE] = (l1+2*l2+l3+2) >> 2;
+     */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_vertical_right">Intra_4x4_Vertical_Right</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004449.png" alt="Intra_4x4_Vertical_Right" /><figcaption aria-hidden="true">Intra_4x4_Vertical_Right</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Vertical_Right</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_vr_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lt = SRC(<span class="number">-1</span>,<span class="number">-1</span>);</span><br><span class="line">    PREDICT_4x4_LOAD_LEFT</span><br><span class="line">    PREDICT_4x4_LOAD_TOP</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">3</span>)= F2(l2,l1,l0);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">2</span>)= F2(l1,l0,lt);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">1</span>)=SRC(<span class="number">1</span>,<span class="number">3</span>)= F2(l0,lt,t0);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)=SRC(<span class="number">1</span>,<span class="number">2</span>)= F1(lt,t0);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">1</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)= F2(lt,t0,t1);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)=SRC(<span class="number">2</span>,<span class="number">2</span>)= F1(t0,t1);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">1</span>)=SRC(<span class="number">3</span>,<span class="number">3</span>)= F2(t0,t1,t2);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)=SRC(<span class="number">3</span>,<span class="number">2</span>)= F1(t1,t2);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">1</span>)= F2(t1,t2,t3);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)= F1(t2,t3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Horizontal-Down"><a href="#Intra-4x4-Horizontal-Down" class="headerlink" title="Intra_4x4_Horizontal_Down"></a>Intra_4x4_Horizontal_Down</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004515.png" alt="Intra_4x4_Horizontal_Down"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_vr_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> lt <span class="token operator">=</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    PREDICT_4x4_LOAD_LEFT
+    PREDICT_4x4_LOAD_TOP
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l2<span class="token punctuation">,</span>l1<span class="token punctuation">,</span>l0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l0<span class="token punctuation">,</span>lt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>lt<span class="token punctuation">,</span>t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>lt<span class="token punctuation">,</span>t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>lt<span class="token punctuation">,</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_horizontal_down">Intra_4x4_Horizontal_Down</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004515.png" alt="Intra_4x4_Horizontal_Down" /><figcaption aria-hidden="true">Intra_4x4_Horizontal_Down</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Horizontal_Down</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_hd_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lt= SRC(<span class="number">-1</span>,<span class="number">-1</span>);</span><br><span class="line">    PREDICT_4x4_LOAD_LEFT</span><br><span class="line">    PREDICT_4x4_LOAD_TOP</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">3</span>)= F1(l2,l3);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">3</span>)= F2(l1,l2,l3);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">2</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)= F1(l1,l2);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">2</span>)=SRC(<span class="number">3</span>,<span class="number">3</span>)= F2(l0,l1,l2);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">1</span>)=SRC(<span class="number">2</span>,<span class="number">2</span>)= F1(l0,l1);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">1</span>)=SRC(<span class="number">3</span>,<span class="number">2</span>)= F2(lt,l0,l1);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)=SRC(<span class="number">2</span>,<span class="number">1</span>)= F1(lt,l0);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)=SRC(<span class="number">3</span>,<span class="number">1</span>)= F2(t0,lt,l0);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)= F2(t1,t0,lt);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)= F2(t2,t1,t0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Vertical-Left"><a href="#Intra-4x4-Vertical-Left" class="headerlink" title="Intra_4x4_Vertical_Left"></a>Intra_4x4_Vertical_Left</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004528.png" alt="Intra_4x4_Vertical_Left"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_hd_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> lt<span class="token operator">=</span> <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    PREDICT_4x4_LOAD_LEFT
+    PREDICT_4x4_LOAD_TOP
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>lt<span class="token punctuation">,</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>lt<span class="token punctuation">,</span>l0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>lt<span class="token punctuation">,</span>l0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t0<span class="token punctuation">,</span>lt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t1<span class="token punctuation">,</span>t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_vertical_left">Intra_4x4_Vertical_Left</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004528.png" alt="Intra_4x4_Vertical_Left" /><figcaption aria-hidden="true">Intra_4x4_Vertical_Left</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Vertical_Left</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_vl_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    PREDICT_4x4_LOAD_TOP</span><br><span class="line">    PREDICT_4x4_LOAD_TOP_RIGHT</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)= F1(t0,t1);</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">1</span>)= F2(t0,t1,t2);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)=SRC(<span class="number">0</span>,<span class="number">2</span>)= F1(t1,t2);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">1</span>)=SRC(<span class="number">0</span>,<span class="number">3</span>)= F2(t1,t2,t3);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)=SRC(<span class="number">1</span>,<span class="number">2</span>)= F1(t2,t3);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">1</span>)=SRC(<span class="number">1</span>,<span class="number">3</span>)= F2(t2,t3,t4);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)=SRC(<span class="number">2</span>,<span class="number">2</span>)= F1(t3,t4);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">1</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)= F2(t3,t4,t5);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">2</span>)= F1(t4,t5);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">3</span>)= F2(t4,t5,t6);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Intra-4x4-Horizontal-Up"><a href="#Intra-4x4-Horizontal-Up" class="headerlink" title="Intra_4x4_Horizontal_Up"></a>Intra_4x4_Horizontal_Up</h3><p>在 SPEC 中，关于该预测模式的定义如下：</p>
-<p><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004541.png" alt="Intra_4x4_Horizontal_Up"></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_vl_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    PREDICT_4x4_LOAD_TOP
+    PREDICT_4x4_LOAD_TOP_RIGHT
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t0<span class="token punctuation">,</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t1<span class="token punctuation">,</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t2<span class="token punctuation">,</span>t3<span class="token punctuation">,</span>t4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t3<span class="token punctuation">,</span>t4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t3<span class="token punctuation">,</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>t4<span class="token punctuation">,</span>t5<span class="token punctuation">,</span>t6<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="intra_4x4_horizontal_up">Intra_4x4_Horizontal_Up</h3>
+<p>在 SPEC 中，关于该预测模式的定义如下：</p>
+<figure>
+<img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20210121004541.png" alt="Intra_4x4_Horizontal_Up" /><figcaption aria-hidden="true">Intra_4x4_Horizontal_Up</figcaption>
+</figure>
 <p><code>x264</code> 中关于模式 <code>Intra_4x4_Horizontal_Up</code> 的代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">predict_4x4_hu_c</span><span class="params">( pixel *src )</span> </span>&#123;</span><br><span class="line">    PREDICT_4x4_LOAD_LEFT</span><br><span class="line">    SRC(<span class="number">0</span>,<span class="number">0</span>)= F1(l0,l1);</span><br><span class="line">    SRC(<span class="number">1</span>,<span class="number">0</span>)= F2(l0,l1,l2);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">0</span>)=SRC(<span class="number">0</span>,<span class="number">1</span>)= F1(l1,l2);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">0</span>)=SRC(<span class="number">1</span>,<span class="number">1</span>)= F2(l1,l2,l3);</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">1</span>)=SRC(<span class="number">0</span>,<span class="number">2</span>)= F1(l2,l3);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">1</span>)=SRC(<span class="number">1</span>,<span class="number">2</span>)= F2(l2,l3,l3);</span><br><span class="line">    SRC(<span class="number">3</span>,<span class="number">2</span>)=SRC(<span class="number">1</span>,<span class="number">3</span>)=SRC(<span class="number">0</span>,<span class="number">3</span>)=</span><br><span class="line">    SRC(<span class="number">2</span>,<span class="number">2</span>)=SRC(<span class="number">2</span>,<span class="number">3</span>)=SRC(<span class="number">3</span>,<span class="number">3</span>)= l3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="8x8-预测"><a href="#8x8-预测" class="headerlink" title="8x8 预测"></a>8x8 预测</h2><p>x264 中对 8x8 的预测模式如下：</p>
-<div class="table-container">
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">predict_4x4_hu_c</span><span class="token punctuation">(</span> pixel <span class="token operator">*</span>src <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    PREDICT_4x4_LOAD_LEFT
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F1</span><span class="token punctuation">(</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span> <span class="token function">F2</span><span class="token punctuation">(</span>l2<span class="token punctuation">,</span>l3<span class="token punctuation">,</span>l3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span>
+    <span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">SRC</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span> l3<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="x8-预测">8x8 预测</h2>
+<p>x264 中对 8x8 的预测模式如下：</p>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><code>intra8x8Predmodei[luma8x8BlkIdx]</code></th>
 <th><code>Name of Intra8x8PredMode[luma8x8BlkIdx]</code></th>
 <th>Function</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>0</td>
 <td><code>Intra_8x8_Vertical</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>1</td>
 <td><code>Intra_8x8_Horizontal</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>2</td>
 <td><code>Intra_8x8_DC</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>3</td>
 <td><code>Intra_8x8_Diagonal_Down_Left</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>4</td>
 <td><code>Intra_8x8_Diagonal_Down_Right</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>5</td>
 <td><code>Intra_8x8_Vertical_Right</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>6</td>
 <td><code>Intra_8x8_Horizontal_Down</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>7</td>
 <td><code>Intra_8x8_Vertical_Left</code></td>
+<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>8</td>
 <td><code>Intra_8x8_Horizontal_Up</code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020/article/details/45644367">x264 源代码简单分析：编码器主干部分 - 1 雷霄骅的专栏 - CSDN 博客</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="http://lazybing.github.io/blog/2017/06/30/x264-intra-prediction/#intra4x4vertical-">X264 源码解析之帧内预测 - 懒人李冰</a></li>
 </ul>
@@ -595,31 +861,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\2633a00a\" rel="bookmark">源码阅读 x264 - SPS & PPS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\ae3a0f38\" rel="bookmark">源码阅读 x264 - 代价计算</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\3bc2314a\" rel="bookmark">源码阅读 x264 - 命令行工具</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\10604d20\" rel="bookmark">源码阅读 x264 - 去块效应滤波</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2021\f0753f9a\" rel="bookmark">源码阅读 x264 - 离散余弦变换</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -662,42 +908,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -705,132 +923,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2021/b66cfff2/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/b66cfff2/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2021/b66cfff2/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="对于加减乘运算都会满足： 　　(a + b) \bmod p &#x3D; a \bmod p + b \bmod p 　　(a - b) \bmod p &#x3D; a \bmod p - b \bmod p 　　(a \times b) \bmod p &#x3D; a \bmod p \times (b \bmod p) 但是对于除法而言 $ (a&#x2F;b) \bmod p \neq (a \bmod p) &#x2F; (b \b">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="对于加减乘运算都会满足： 　　\[ (a + b) \bmod p &#x3D; a \bmod p + b \bmod p \] 　　\[ (a - b) \bmod p &#x3D; a \bmod p - b \bmod p \] 　　\[ (a \times b) \bmod p &#x3D; a \bmod p \times (b \bmod p) \] 但是对于除法而言 $ (a&#x2F;b) p (a p) &#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法 - 逆元">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2021/47588647/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="对于加减乘运算都会满足： 　　(a + b) \bmod p &#x3D; a \bmod p + b \bmod p 　　(a - b) \bmod p &#x3D; a \bmod p - b \bmod p 　　(a \times b) \bmod p &#x3D; a \bmod p \times (b \bmod p) 但是对于除法而言 $ (a&#x2F;b) \bmod p \neq (a \bmod p) &#x2F; (b \b">
+<meta property="og:description" content="对于加减乘运算都会满足： 　　\[ (a + b) \bmod p &#x3D; a \bmod p + b \bmod p \] 　　\[ (a - b) \bmod p &#x3D; a \bmod p - b \bmod p \] 　　\[ (a \times b) \bmod p &#x3D; a \bmod p \times (b \bmod p) \] 但是对于除法而言 $ (a&#x2F;b) p (a p) &#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-24T01:33:58.000Z">
-<meta property="article:modified_time" content="2021-02-09T11:38:38.052Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.399Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="数论">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2021/47588647/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>数据结构与算法 - 逆元 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2021/47588647/","path":"post/2021/47588647/","title":"数据结构与算法 - 逆元"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构与算法 - 逆元 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%85%83%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">逆元的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%85%83%E7%9A%84%E6%B1%82%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">逆元的求解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97"><span class="nav-number">2.1.</span> <span class="nav-text">拓展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.1.</span> <span class="nav-text">欧几里得算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">拓展欧几里得算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B"><span class="nav-number">2.1.3.</span> <span class="nav-text">线性同余方程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">快速幂算法</span></a></li></ol></li></ol></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%85%83%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">逆元的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%85%83%E7%9A%84%E6%B1%82%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">逆元的求解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97"><span class="nav-number">2.1.</span> <span class="nav-text">拓展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.1.</span> <span class="nav-text">欧几里得算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">拓展欧几里得算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B"><span class="nav-number">2.1.3.</span> <span class="nav-text">线性同余方程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">快速幂算法</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-02-09 19:38:38" itemprop="dateModified" datetime="2021-02-09T19:38:38+08:00">2021-02-09</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2021/47588647/" class="post-meta-item leancloud_visitors" data-flag-title="数据结构与算法 - 逆元" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2021/47588647/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2021/47588647/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -370,63 +278,107 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>对于加减乘运算都会满足：</p>
-<p>　　<script type="math/tex">(a + b) \bmod p = a \bmod p + b \bmod p</script></p>
-<p>　　<script type="math/tex">(a - b) \bmod p = a \bmod p - b \bmod p</script></p>
-<p>　　<script type="math/tex">(a \times b) \bmod p = a \bmod p \times (b \bmod p)</script></p>
-<p>但是对于除法而言 $ (a/b) \bmod p \neq (a \bmod p) / (b \bmod p) $</p>
-<p>这个可以通过举例验证一下或者可以通过 $b \bmod p$ 可以为 0 但是分母不能为 0 得到对于除法而言不满足这个运算的结论。</p>
-<p>但是如果非要求 $(a/b) \bmod p$ 要怎么办呢？</p>
-<a id="more"></a>
-<h2 id="逆元的定义"><a href="#逆元的定义" class="headerlink" title="逆元的定义"></a>逆元的定义</h2><p>为了解决模意义下的除法问题，我们引入了逆元 $\text{inv}(a)$。 $\text{inv}(a)$ 其实可以看做模 $p$ 意义下的 $\displaystyle\frac{1}{a}$ ，那么在模 $p$ 意义下， $\displaystyle\frac{a}{b}$ 就可以变形为 $a\cdot \text{inv}(b))$</p>
-<p>定义：如果一个线性同余方程 $ax \equiv 1 \pmod b$ ，则 $x$ 称为 $a \bmod b$ 的逆元，记作 $\text{inv}(a)$ 。</p>
-<h2 id="逆元的求解"><a href="#逆元的求解" class="headerlink" title="逆元的求解"></a>逆元的求解</h2><p>这里介绍三种计算逆元的方法：拓展欧几里得，费马小定理，线性递推。</p>
-<h3 id="拓展欧几里得"><a href="#拓展欧几里得" class="headerlink" title="拓展欧几里得"></a>拓展欧几里得</h3><h4 id="欧几里得算法"><a href="#欧几里得算法" class="headerlink" title="欧几里得算法"></a>欧几里得算法</h4><p>如果我们已知两个数 $a$ 和 $b$ ，如何求出二者的最大公约数呢？</p>
-<p>不妨设 $a &gt; b$</p>
-<p>我们发现如果 $b$ 是 $a$ 的约数，那么 $b$ 就是二者的最大公约数。<br>下面讨论不能整除的情况，即 $a = b \times q + r$ ，其中 $r &lt; b$ 。</p>
-<p>我们通过证明可以得到 $\gcd(a,b)=\gcd(b,a \bmod b)$ ，过程如下：</p>
-<hr>
-<p>设 $a=bk+c$ ，显然有 $c=a \bmod b$ 。设 $d|a\ \ \ d|b$ ，则 $c=a-bk$  $\frac{c}{d}=\frac{a}{d}-\frac{b}{d}k$ 由右边的式子可知 $\frac{c}{d}$ 为整数，即 $d|c$ 所以对于 $a,b$ 的公约数，它也会是 $a \bmod b$ 的公约数。</p>
+<p>　　<span class="math display">\[ (a + b) \bmod p = a \bmod p + b \bmod p \]</span></p>
+<p>　　<span class="math display">\[ (a - b) \bmod p = a \bmod p - b \bmod p \]</span></p>
+<p>　　<span class="math display">\[ (a \times b) \bmod p = a \bmod p \times (b \bmod p) \]</span></p>
+<p>但是对于除法而言 $ (a/b) p (a p) / (b p) $</p>
+<p>这个可以通过举例验证一下或者可以通过 <span class="math inline">\(b \bmod p\)</span> 可以为 0 但是分母不能为 0 得到对于除法而言不满足这个运算的结论。</p>
+<p>但是如果非要求 <span class="math inline">\((a/b) \bmod p\)</span> 要怎么办呢？</p>
+<span id="more"></span>
+<h2 id="逆元的定义">逆元的定义</h2>
+<p>为了解决模意义下的除法问题，我们引入了逆元 <span class="math inline">\(\text{inv}(a)\)</span>。 <span class="math inline">\(\text{inv}(a)\)</span> 其实可以看做模 <span class="math inline">\(p\)</span> 意义下的 <span class="math inline">\(\displaystyle\frac{1}{a}\)</span> ，那么在模 <span class="math inline">\(p\)</span> 意义下， <span class="math inline">\(\displaystyle\frac{a}{b}\)</span> 就可以变形为 <span class="math inline">\(a\cdot \text{inv}(b))\)</span></p>
+<p>定义：如果一个线性同余方程 <span class="math inline">\(ax \equiv 1 \pmod b\)</span> ，则 <span class="math inline">\(x\)</span> 称为 <span class="math inline">\(a \bmod b\)</span> 的逆元，记作 <span class="math inline">\(\text{inv}(a)\)</span> 。</p>
+<h2 id="逆元的求解">逆元的求解</h2>
+<p>这里介绍三种计算逆元的方法：拓展欧几里得，费马小定理，线性递推。</p>
+<h3 id="拓展欧几里得">拓展欧几里得</h3>
+<h4 id="欧几里得算法">欧几里得算法</h4>
+<p>如果我们已知两个数 <span class="math inline">\(a\)</span> 和 <span class="math inline">\(b\)</span> ，如何求出二者的最大公约数呢？</p>
+<p>不妨设 <span class="math inline">\(a &gt; b\)</span></p>
+<p>我们发现如果 <span class="math inline">\(b\)</span> 是 <span class="math inline">\(a\)</span> 的约数，那么 <span class="math inline">\(b\)</span> 就是二者的最大公约数。 下面讨论不能整除的情况，即 <span class="math inline">\(a = b \times q + r\)</span> ，其中 <span class="math inline">\(r &lt; b\)</span> 。</p>
+<p>我们通过证明可以得到 <span class="math inline">\(\gcd(a,b)=\gcd(b,a \bmod b)\)</span> ，过程如下：</p>
+<hr />
+<p>设 <span class="math inline">\(a=bk+c\)</span> ，显然有 <span class="math inline">\(c=a \bmod b\)</span> 。设 <span class="math inline">\(d|a\ \ \ d|b\)</span> ，则 <span class="math inline">\(c=a-bk\)</span> <span class="math inline">\(\frac{c}{d}=\frac{a}{d}-\frac{b}{d}k\)</span> 由右边的式子可知 <span class="math inline">\(\frac{c}{d}\)</span> 为整数，即 <span class="math inline">\(d|c\)</span> 所以对于 <span class="math inline">\(a,b\)</span> 的公约数，它也会是 <span class="math inline">\(a \bmod b\)</span> 的公约数。</p>
 <p>反过来也需要证明</p>
-<p>设 $d|b\ \ \ d|(a \bmod b)$ ，我们还是可以像之前一样得到以下式子 $\frac{a\bmod b}{d}=\frac{a}{d}-\frac{b}{d}k$  $\frac{a\bmod b}{d}+\frac{b}{d}k=\frac{a}{d}$ 因为左边式子显然为整数，所以 $\frac{a}{d}$ 也为整数，即 $d|a$ ，所以 $b,a\bmod b$ 的公约数也是 $a,b$ 的公约数。</p>
+<p>设 <span class="math inline">\(d|b\ \ \ d|(a \bmod b)\)</span> ，我们还是可以像之前一样得到以下式子 <span class="math inline">\(\frac{a\bmod b}{d}=\frac{a}{d}-\frac{b}{d}k\)</span> <span class="math inline">\(\frac{a\bmod b}{d}+\frac{b}{d}k=\frac{a}{d}\)</span> 因为左边式子显然为整数，所以 <span class="math inline">\(\frac{a}{d}\)</span> 也为整数，即 <span class="math inline">\(d|a\)</span> ，所以 <span class="math inline">\(b,a\bmod b\)</span> 的公约数也是 <span class="math inline">\(a,b\)</span> 的公约数。</p>
 <p>既然两式公约数都是相同的，那么最大公约数也会相同。</p>
-<p>所以得到式子 $\gcd(a,b)=\gcd(b,a\bmod b)$</p>
-<p>既然得到了 $\gcd(a, b) = \gcd(b, r)$ ，这里两个数的大小是不会增大的，那么我们也就得到了关于两个数的最大公约数的一个递归求法。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (b == <span class="number">0</span>) <span class="keyword">return</span> a;</span><br><span class="line">  <span class="keyword">return</span> gcd(b, a % b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以得到式子 <span class="math inline">\(\gcd(a,b)=\gcd(b,a\bmod b)\)</span></p>
+<p>既然得到了 <span class="math inline">\(\gcd(a, b) = \gcd(b, r)\)</span> ，这里两个数的大小是不会增大的，那么我们也就得到了关于两个数的最大公约数的一个递归求法。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">gcd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> a<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">gcd</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> a <span class="token operator">%</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>递归至 <code>b==0</code> （即上一步的 <code>a%b==0</code> ) 的情况再返回值即可。</p>
-<hr>
-<h4 id="拓展欧几里得算法"><a href="#拓展欧几里得算法" class="headerlink" title="拓展欧几里得算法"></a>拓展欧几里得算法</h4><p>扩展欧几里德定理（Extended Euclidean algorithm, EXGCD），常用于求 $ax+by=\gcd(a,b)$ 的一组可行解。</p>
+<hr />
+<h4 id="拓展欧几里得算法">拓展欧几里得算法</h4>
+<p>扩展欧几里德定理（Extended Euclidean algorithm, EXGCD），常用于求 <span class="math inline">\(ax+by=\gcd(a,b)\)</span> 的一组可行解。</p>
 <p>证明：</p>
 <p>设</p>
-<p>$ax_1+by_1=\gcd(a,b)$</p>
-<p>$bx_2+(a\bmod b)y_2=\gcd(b,a\bmod b)$</p>
-<p>由欧几里得定理可知： $\gcd(a,b)=\gcd(b,a\bmod b)$</p>
-<p>所以 $ax_1+by_1=bx_2+(a\bmod b)y_2$</p>
-<p>又因为 $a\bmod b=a-(\lfloor\frac{a}{b}\rfloor\times b)$</p>
-<p>所以 $ax_1+by_1=bx_2+(a-(\lfloor\frac{a}{b}\rfloor\times b))y_2$</p>
-<p> $ax_1+by_1=ay_2+bx_2-\lfloor\frac{a}{b}\rfloor\times by_2=ay_2+b(x_2-\lfloor\frac{a}{b}\rfloor y_2)$</p>
-<p>因为 $a=a,b=b$ ，所以可令 $x_1=y_2,y_1=x_2-\lfloor\frac{a}{b}\rfloor y_2$</p>
-<p>将 $x_2,y_2$ 不断代入递归求解直至 GCD（最大公约数，下同）为 <code>0</code> 递归 <code>x=1,y=0</code> 回去求解。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Exgcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> &amp;x, <span class="keyword">int</span> &amp;y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!b) &#123;</span><br><span class="line">        x = <span class="number">1</span>;</span><br><span class="line">        y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d = Exgcd(b, a % b, x, y);</span><br><span class="line">    <span class="keyword">int</span> t = x;</span><br><span class="line">    x = y;</span><br><span class="line">    y = t - (a / b) * y;</span><br><span class="line">    <span class="keyword">return</span> d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>函数返回的值为 GCD，在这个过程中计算 $x,y$ 即可。</p>
-<h4 id="线性同余方程"><a href="#线性同余方程" class="headerlink" title="线性同余方程"></a>线性同余方程</h4><p>形如 $ax \equiv c \pmod b$ 的方程被称为 线性同余方程 (Congruence Equation)。</p>
-<p>根据以下两个定理，我们可以求出同余方程 $ax \equiv c \pmod b$ 的解。</p>
-<p>定理 1 ：方程 $ax+by=c$ 与方程 $ax \equiv c \pmod b$ 是等价的，有整数解的充要条件为 $\gcd(a,b) \mid c$</p>
-<p>根据定理 1，方程 $ax+by=c$，我们可以先用扩展欧几里得算法求出一组 $x_0,y_0$ ，也就是 $ax_0+by_0=\gcd(a,b)$，然后两边同时除以 $\gcd(a,b)$，再乘 $c$。然后就得到了方程 $a\dfrac{c}{\gcd(a,b)}x_0+b\dfrac{c}{\gcd(a,b)}y_0=c$，然后我们就找到了方程的一个解。</p>
-<p>定理 2 ：若 $\gcd(a,b)=1$，且 $x_0$、$y_0$ 为方程 $ax+by=c$ 的一组解，则该方程的任意解可表示为：$x=x_0+bt$，$y=y_0-at$ , 且对任意整数 $t$ 都成立。</p>
-<p>根据定理 2，可以求出方程的所有解。但在实际问题中，我们往往被要求求出一个最小整数解，也就是一个特解 $x=(x \bmod t+t) \bmod t$，其中 $t=\dfrac{b}{\gcd(a,b)}$。</p>
+<p><span class="math inline">\(ax_1+by_1=\gcd(a,b)\)</span></p>
+<p><span class="math inline">\(bx_2+(a\bmod b)y_2=\gcd(b,a\bmod b)\)</span></p>
+<p>由欧几里得定理可知： <span class="math inline">\(\gcd(a,b)=\gcd(b,a\bmod b)\)</span></p>
+<p>所以 <span class="math inline">\(ax_1+by_1=bx_2+(a\bmod b)y_2\)</span></p>
+<p>又因为 <span class="math inline">\(a\bmod b=a-(\lfloor\frac{a}{b}\rfloor\times b)\)</span></p>
+<p>所以 <span class="math inline">\(ax_1+by_1=bx_2+(a-(\lfloor\frac{a}{b}\rfloor\times b))y_2\)</span></p>
+<p><span class="math inline">\(ax_1+by_1=ay_2+bx_2-\lfloor\frac{a}{b}\rfloor\times by_2=ay_2+b(x_2-\lfloor\frac{a}{b}\rfloor y_2)\)</span></p>
+<p>因为 <span class="math inline">\(a=a,b=b\)</span> ，所以可令 <span class="math inline">\(x_1=y_2,y_1=x_2-\lfloor\frac{a}{b}\rfloor y_2\)</span></p>
+<p>将 <span class="math inline">\(x_2,y_2\)</span> 不断代入递归求解直至 GCD（最大公约数，下同）为 <code>0</code> 递归 <code>x=1,y=0</code> 回去求解。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">Exgcd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token function">Exgcd</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> a <span class="token operator">%</span> b<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> t <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    x <span class="token operator">=</span> y<span class="token punctuation">;</span>
+    y <span class="token operator">=</span> t <span class="token operator">-</span> <span class="token punctuation">(</span>a <span class="token operator">/</span> b<span class="token punctuation">)</span> <span class="token operator">*</span> y<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>函数返回的值为 GCD，在这个过程中计算 <span class="math inline">\(x,y\)</span> 即可。</p>
+<h4 id="线性同余方程">线性同余方程</h4>
+<p>形如 <span class="math inline">\(ax \equiv c \pmod b\)</span> 的方程被称为 线性同余方程 (Congruence Equation)。</p>
+<p>根据以下两个定理，我们可以求出同余方程 <span class="math inline">\(ax \equiv c \pmod b\)</span> 的解。</p>
+<p>定理 1 ：方程 <span class="math inline">\(ax+by=c\)</span> 与方程 <span class="math inline">\(ax \equiv c \pmod b\)</span> 是等价的，有整数解的充要条件为 <span class="math inline">\(\gcd(a,b) \mid c\)</span></p>
+<p>根据定理 1，方程 <span class="math inline">\(ax+by=c\)</span>，我们可以先用扩展欧几里得算法求出一组 <span class="math inline">\(x_0,y_0\)</span> ，也就是 <span class="math inline">\(ax_0+by_0=\gcd(a,b)\)</span>，然后两边同时除以 <span class="math inline">\(\gcd(a,b)\)</span>，再乘 <span class="math inline">\(c\)</span>。然后就得到了方程 <span class="math inline">\(a\dfrac{c}{\gcd(a,b)}x_0+b\dfrac{c}{\gcd(a,b)}y_0=c\)</span>，然后我们就找到了方程的一个解。</p>
+<p>定理 2 ：若 <span class="math inline">\(\gcd(a,b)=1\)</span>，且 <span class="math inline">\(x_0\)</span>、<span class="math inline">\(y_0\)</span> 为方程 <span class="math inline">\(ax+by=c\)</span> 的一组解，则该方程的任意解可表示为：<span class="math inline">\(x=x_0+bt\)</span>，<span class="math inline">\(y=y_0-at\)</span> , 且对任意整数 <span class="math inline">\(t\)</span> 都成立。</p>
+<p>根据定理 2，可以求出方程的所有解。但在实际问题中，我们往往被要求求出一个最小整数解，也就是一个特解 <span class="math inline">\(x=(x \bmod t+t) \bmod t\)</span>，其中 <span class="math inline">\(t=\dfrac{b}{\gcd(a,b)}\)</span>。</p>
 <p>代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exgcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span>&amp; x, <span class="keyword">int</span>&amp; y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        x = <span class="number">1</span>, y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    exgcd(b, a % b, y, x);</span><br><span class="line">    y -= a / b * x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">exgcd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exgcd</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> a <span class="token operator">%</span> b<span class="token punctuation">,</span> y<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    y <span class="token operator">-=</span> a <span class="token operator">/</span> b <span class="token operator">*</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>扩展欧几里得法和求解 线性同余方程 是一个原理，在这里不展开解释。</p>
-<h3 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h3><p>费马小定理是数论里的重要定理，叙述如下：</p>
+<h3 id="费马小定理">费马小定理</h3>
+<p>费马小定理是数论里的重要定理，叙述如下：</p>
 <blockquote>
-<p>若 $p$ 是质数，且 $\gcd(a,p)=1$ ，则有 $a^{p-1}\equiv1\pmod{p}$</p>
+<p>若 <span class="math inline">\(p\)</span> 是质数，且 <span class="math inline">\(\gcd(a,p)=1\)</span> ，则有 <span class="math inline">\(a^{p-1}\equiv1\pmod{p}\)</span></p>
 </blockquote>
 <p>从逆元的定义推导，可得：</p>
-<script type="math/tex; mode=display">a\cdot\text{inv}(a)\equiv1\equiv a^{p-1}\pmod{p}</script><p>于是有：</p>
-<script type="math/tex; mode=display">\text{inv}(a)\equiv a^{p-2}\pmod{p}</script><p>于是对 $a^{p-2}$ 算一下快速幂就好了。注意这个方法只对 $p$ 是质数的情形有效。</p>
+<p><span class="math display">\[ a\cdot\text{inv}(a)\equiv1\equiv a^{p-1}\pmod{p} \]</span></p>
+<p>于是有：</p>
+<p><span class="math display">\[\text{inv}(a)\equiv a^{p-2}\pmod{p}\]</span></p>
+<p>于是对 <span class="math inline">\(a^{p-2}\)</span> 算一下快速幂就好了。注意这个方法只对 <span class="math inline">\(p\)</span> 是质数的情形有效。</p>
 <p>代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速幂算法 (a ^ n) mod p</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">qpow</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a, <span class="keyword">long</span> <span class="keyword">long</span> n, <span class="keyword">long</span> <span class="keyword">long</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">1</span>;</span><br><span class="line">    a = (a % p + p) % p;</span><br><span class="line">    <span class="keyword">for</span> (; n; n&gt;&gt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n &amp; <span class="number">1</span>) ans = (a * ans) % p;</span><br><span class="line">        a = (a * a) % p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a mod b</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">inv</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a, <span class="keyword">long</span> <span class="keyword">long</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> qpow(a, p - <span class="number">2</span>, p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="快速幂算法"><a href="#快速幂算法" class="headerlink" title="快速幂算法"></a>快速幂算法</h4><pre><code>快速幂算法解读（以 3^10 为例）：
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 快速幂算法 (a ^ n) mod p</span>
+<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">qpow</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span> a<span class="token punctuation">,</span> <span class="token keyword">long</span> <span class="token keyword">long</span> n<span class="token punctuation">,</span> <span class="token keyword">long</span> <span class="token keyword">long</span> p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> <span class="token keyword">long</span> ans <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    a <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">%</span> p <span class="token operator">+</span> p<span class="token punctuation">)</span> <span class="token operator">%</span> p<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> n<span class="token punctuation">;</span> n<span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> ans <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">*</span> ans<span class="token punctuation">)</span> <span class="token operator">%</span> p<span class="token punctuation">;</span>
+        a <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">*</span> a<span class="token punctuation">)</span> <span class="token operator">%</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// a mod b</span>
+<span class="token keyword">inline</span> <span class="token keyword">long</span> <span class="token keyword">long</span> <span class="token function">inv</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span> a<span class="token punctuation">,</span> <span class="token keyword">long</span> <span class="token keyword">long</span> p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">qpow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> p <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="快速幂算法">快速幂算法</h4>
+<pre><code>快速幂算法解读（以 3^10 为例）：
 
 3^10 = (3*3*3*3*3*3*3*3*3*3)
 
@@ -470,20 +422,18 @@
 而 9 是怎么产生的？是不是当指数为奇数 5 时，此时底数为 9
 那 6561 又是怎么产生的呢？是不是当指数为奇数 1 时，此时的底数为 6561
 
-所以我们能发现一个规律：最后求出的幂结果实际上就是在变化过程中所有当指数为奇数时底数的乘积
-</code></pre>
+所以我们能发现一个规律：最后求出的幂结果实际上就是在变化过程中所有当指数为奇数时底数的乘积</code></pre>
+
     </div>
 
     
     
     
-      
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -526,42 +476,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -569,176 +491,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2021/47588647/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
-    script.defer = true;
-    document.head.appendChild(script);
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2021/47588647/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2021/47588647/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

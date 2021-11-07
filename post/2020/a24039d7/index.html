@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,24 +16,22 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="在之前的文章中提到过：libevent 中的哈希表只会用于 Windows 系统，像遵循 POSIX 标准的 OS 是不会用到哈希表的。那么在遵循 POSIX 标准的 OS 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中： 1#define event_io_map event_signal_map 从该宏定义中可以看出，此时 event_io_map 被定义为了 event">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在之前的文章中提到过：libevent 中的哈希表只会用于 Windows 系统，像遵循 POSIX 标准的 OS 是不会用到哈希表的。那么在遵循 POSIX 标准的 OS 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中： #define event_io_map event_signal_map 从该宏定义中可以看出，此时 event_io_map 被定义为了 even">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码阅读 libevent - 结构体：event_signal_map">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/a24039d7/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="在之前的文章中提到过：libevent 中的哈希表只会用于 Windows 系统，像遵循 POSIX 标准的 OS 是不会用到哈希表的。那么在遵循 POSIX 标准的 OS 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中： 1#define event_io_map event_signal_map 从该宏定义中可以看出，此时 event_io_map 被定义为了 event">
+<meta property="og:description" content="在之前的文章中提到过：libevent 中的哈希表只会用于 Windows 系统，像遵循 POSIX 标准的 OS 是不会用到哈希表的。那么在遵循 POSIX 标准的 OS 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中： #define event_io_map event_signal_map 从该宏定义中可以看出，此时 event_io_map 被定义为了 even">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-30T22:03:13.000Z">
-<meta property="article:modified_time" content="2021-01-30T12:55:55.530Z">
+<meta property="article:modified_time" content="2021-11-07T11:28:11.400Z">
 <meta property="article:author" content="何照江">
 <meta property="article:tag" content="libevent">
 <meta name="twitter:card" content="summary">
@@ -40,59 +40,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/a24039d7/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>源码阅读 libevent - 结构体：event_signal_map | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/a24039d7/","path":"post/2020/a24039d7/","title":"源码阅读 libevent - 结构体：event_signal_map"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>源码阅读 libevent - 结构体：event_signal_map | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -103,7 +63,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -130,36 +90,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,8 +106,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -180,7 +115,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -196,7 +131,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -214,14 +149,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#event-signal-map-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">event_signal_map 的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#evmap-signal"><span class="nav-number">1.1.</span> <span class="nav-text">evmap_signal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-signal-map-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">event_signal_map 的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0"><span class="nav-number">4.</span> <span class="nav-text">添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#evmap-make-space"><span class="nav-number">4.1.</span> <span class="nav-text">evmap_make_space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-SIGNAL-SLOT-AND-CTOR"><span class="nav-number">4.2.</span> <span class="nav-text">GET_SIGNAL_SLOT_AND_CTOR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-SIGNAL-SLOT"><span class="nav-number">5.1.</span> <span class="nav-text">GET_SIGNAL_SLOT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#event_signal_map-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">event_signal_map 的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#evmap_signal"><span class="nav-number">1.1.</span> <span class="nav-text">evmap_signal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event_signal_map-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">event_signal_map 的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0"><span class="nav-number">4.</span> <span class="nav-text">添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#evmap_make_space"><span class="nav-number">4.1.</span> <span class="nav-text">evmap_make_space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get_signal_slot_and_ctor"><span class="nav-number">4.2.</span> <span class="nav-text">GET_SIGNAL_SLOT_AND_CTOR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get_signal_slot"><span class="nav-number">5.1.</span> <span class="nav-text">GET_SIGNAL_SLOT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -230,21 +166,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -254,14 +187,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -270,7 +201,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -283,9 +214,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -326,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-30 20:55:55" itemprop="dateModified" datetime="2021-01-30T20:55:55+08:00">2021-01-30</time>
+        <time title="修改时间：2021-11-07 19:28:11" itemprop="dateModified" datetime="2021-11-07T19:28:11+08:00">2021-11-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,27 +268,6 @@
     </span>
 
   
-    <span id="/post/2020/a24039d7/" class="post-meta-item leancloud_visitors" data-flag-title="源码阅读 libevent - 结构体：event_signal_map" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/a24039d7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/a24039d7/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -370,48 +278,130 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>在之前的文章中提到过：<code>libevent</code> 中的哈希表只会用于 <code>Windows</code> 系统，像遵循 <code>POSIX</code> 标准的 <code>OS</code> 是不会用到哈希表的。那么在遵循 <code>POSIX</code> 标准的 <code>OS</code> 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> event_io_map event_signal_map</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> event_io_map event_signal_map</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>从该宏定义中可以看出，此时 <code>event_io_map</code> 被定义为了 <code>event_signal_map</code> 结构体。本文就分析一下 <code>event_signal_map</code> 结构体。</p>
-<a id="more"></a>
-<h2 id="event-signal-map-的定义"><a href="#event-signal-map-的定义" class="headerlink" title="event_signal_map 的定义"></a>event_signal_map 的定义</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">event_signal_map</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> **entries; <span class="comment">/* evmap_io * 或 evmap_signal * 型数组 */</span></span><br><span class="line">    <span class="keyword">int</span> nentries; <span class="comment">/* 数组有效长度 */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="event_signal_map-的定义">event_signal_map 的定义</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>entries<span class="token punctuation">;</span> <span class="token comment">/* evmap_io * 或 evmap_signal * 型数组 */</span>
+    <span class="token keyword">int</span> nentries<span class="token punctuation">;</span> <span class="token comment">/* 数组有效长度 */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>event_signal_map</code> 结构体中仅有两个元素，其意义如下：</p>
-<ol>
+<ol type="1">
 <li><code>entries</code>：一个二级指针，其实是一个数组，数组中元素为指针类型（<code>evmap_io*</code> 型或 <code>evmap_signal*</code> 型）</li>
 <li><code>nentries</code>：表明 <code>entries</code> 数组的有效长度，以防止访问溢出。</li>
 </ol>
 <p>在 <a href="#">Post not found: 源码阅读 libevent - event_io_map</a> 文章中已经分析过 <code>evmap_io</code> 结构体，本文侧重分析 <code>evmap_signal</code> 结构体。</p>
-<h3 id="evmap-signal"><a href="#evmap-signal" class="headerlink" title="evmap_signal"></a>evmap_signal</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">evmap_signal</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_dlist</span> <span class="title">events</span>;</span> <span class="comment">/* LIST_HEAD (event_dlist, event); */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="evmap_signal">evmap_signal</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_dlist</span> events<span class="token punctuation">;</span> <span class="token comment">/* LIST_HEAD (event_dlist, event); */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p><code>evmap_signal</code> 结构体也极其简单，其中仅有一个元素，是一个双向链表的表头。</p>
-<h2 id="event-signal-map-的结构"><a href="#event-signal-map-的结构" class="headerlink" title="event_signal_map 的结构"></a>event_signal_map 的结构</h2><p>从上述定义分析就可看出 <code>event_signal_map</code> 的结构较为简单：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">event_signal_map        Array of struct evmap_signal*       struct event             struct event</span><br><span class="line">+--------------+        +----------------------------+      +-------------+          +-------------+</span><br><span class="line">|   entries    |-------&gt;| event_dlist (DList Header) |-----&gt;|   DList A   |-- ... --&gt;|   DList N   |-----&gt; NULL</span><br><span class="line">+--------------+        +----------------------------+      +-------------+          +-------------+</span><br><span class="line">|   nentries   |        | event_dlist (DList Header) |-----&gt; NULL</span><br><span class="line">+--------------+        +----------------------------+</span><br><span class="line">                        | event_dlist (DList Header) |-----&gt; NULL</span><br><span class="line">                        +----------------------------+</span><br><span class="line">                                    ......</span><br><span class="line">                        +----------------------------+      +-------------+</span><br><span class="line">                        | event_dlist (DList Header) |-----&gt;|   DList X   |-----&gt; NULL</span><br><span class="line">                        +----------------------------+      +-------------+</span><br></pre></td></tr></table></figure>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">evmap_signal_initmap_</span><span class="params">(struct event_signal_map *ctx)</span> </span>&#123;</span><br><span class="line">    ctx-&gt;nentries = <span class="number">0</span>;</span><br><span class="line">    ctx-&gt;entries = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Emmm… 不知道该说点什么…</p>
-<h2 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">evmap_signal_add_</span><span class="params">(struct event_base *base, <span class="keyword">int</span> sig, struct event *ev)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">eventop</span> *<span class="title">evsel</span> = <span class="title">base</span>-&gt;<span class="title">evsigsel</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_signal_map</span> *<span class="title">map</span> = &amp;<span class="title">base</span>-&gt;<span class="title">sigmap</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evmap_signal</span> *<span class="title">ctx</span> = <span class="title">NULL</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sig &lt; <span class="number">0</span> || sig&gt;= NSIG) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span> (sig&gt;= <span class="built_in">map</span>-&gt;nentries)</span><br><span class="line">        <span class="keyword">if</span> (evmap_make_space(<span class="built_in">map</span>, sig, <span class="keyword">sizeof</span>(struct evmap_signal *)) == <span class="number">-1</span>) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">    GET_SIGNAL_SLOT_AND_CTOR(ctx, <span class="built_in">map</span>, sig, evmap_signal, evmap_signal_init, base-&gt;evsigsel-&gt;fdinfo_len);</span><br><span class="line">    <span class="keyword">if</span> (LIST_EMPTY(&amp;ctx-&gt;events))</span><br><span class="line">        <span class="keyword">if</span> (evsel-&gt;add(base, ev-&gt;ev_fd, <span class="number">0</span>, EV_SIGNAL, <span class="literal">NULL</span>) == <span class="number">-1</span>) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">    LIST_INSERT_HEAD(&amp;ctx-&gt;events, ev, ev_signal_next);</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="event_signal_map-的结构">event_signal_map 的结构</h2>
+<p>从上述定义分析就可看出 <code>event_signal_map</code> 的结构较为简单：</p>
+<pre class="line-numbers language-node" data-language="node"><code class="language-node">event_signal_map        Array of struct evmap_signal*       struct event             struct event
++--------------+        +----------------------------+      +-------------+          +-------------+
+|   entries    |-------&gt;| event_dlist (DList Header) |-----&gt;|   DList A   |-- ... --&gt;|   DList N   |-----&gt; NULL
++--------------+        +----------------------------+      +-------------+          +-------------+
+|   nentries   |        | event_dlist (DList Header) |-----&gt; NULL
++--------------+        +----------------------------+
+                        | event_dlist (DList Header) |-----&gt; NULL
+                        +----------------------------+
+                                    ......
+                        +----------------------------+      +-------------+
+                        | event_dlist (DList Header) |-----&gt;|   DList X   |-----&gt; NULL
+                        +----------------------------+      +-------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="初始化">初始化</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">evmap_signal_initmap_</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> <span class="token operator">*</span>ctx<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ctx<span class="token operator">-></span>nentries <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    ctx<span class="token operator">-></span>entries <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Emmm… 不知道该说点什么...</p>
+<h2 id="添加">添加</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">evmap_signal_add_</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> <span class="token keyword">int</span> sig<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">eventop</span> <span class="token operator">*</span>evsel <span class="token operator">=</span> base<span class="token operator">-></span>evsigsel<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> <span class="token operator">*</span>map <span class="token operator">=</span> <span class="token operator">&amp;</span>base<span class="token operator">-></span>sigmap<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span>ctx <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sig <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> sig<span class="token operator">>=</span> NSIG<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sig<span class="token operator">>=</span> map<span class="token operator">-></span>nentries<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">evmap_make_space</span><span class="token punctuation">(</span>map<span class="token punctuation">,</span> sig<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">GET_SIGNAL_SLOT_AND_CTOR</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> map<span class="token punctuation">,</span> sig<span class="token punctuation">,</span> evmap_signal<span class="token punctuation">,</span> evmap_signal_init<span class="token punctuation">,</span> base<span class="token operator">-></span>evsigsel<span class="token operator">-></span>fdinfo_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LIST_EMPTY</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ctx<span class="token operator">-></span>events<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>evsel<span class="token operator">-></span><span class="token function">add</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> EV_SIGNAL<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">LIST_INSERT_HEAD</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ctx<span class="token operator">-></span>events<span class="token punctuation">,</span> ev<span class="token punctuation">,</span> ev_signal_next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>以上代码可分为 4 个步骤：</p>
-<ol>
+<ol type="1">
 <li>evmap_make_space</li>
 <li>GET_SIGNAL_SLOT_AND_CTOR</li>
 <li>event_base.evsel-&gt;add</li>
 <li>LIST_INSERT_HEAD</li>
 </ol>
 <p>其中步骤 3 和步骤 4 在 <a href="#">Post not found: 源码阅读 libevent - event_io_map</a> 文章中已讲解过，下面分析前两个步骤：</p>
-<h3 id="evmap-make-space"><a href="#evmap-make-space" class="headerlink" title="evmap_make_space"></a>evmap_make_space</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evmap_make_space</span><span class="params">(struct event_signal_map *<span class="built_in">map</span>, <span class="keyword">int</span> slot, <span class="keyword">int</span> msize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">map</span>-&gt;nentries &lt;= slot) &#123;</span><br><span class="line">        <span class="keyword">int</span> nentries = <span class="built_in">map</span>-&gt;nentries ? <span class="built_in">map</span>-&gt;nentries : <span class="number">32</span>;</span><br><span class="line">        <span class="keyword">void</span> **tmp;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (slot&gt; INT_MAX / <span class="number">2</span>) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">while</span> (nentries &lt;= slot) nentries &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (nentries&gt; INT_MAX / msize) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">        tmp = (<span class="keyword">void</span> **)mm_realloc(<span class="built_in">map</span>-&gt;entries, nentries * msize);</span><br><span class="line">        <span class="keyword">if</span> (tmp == <span class="literal">NULL</span>) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        <span class="built_in">memset</span>(&amp;tmp[<span class="built_in">map</span>-&gt;nentries], <span class="number">0</span>, (nentries - <span class="built_in">map</span>-&gt;nentries) * msize);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">map</span>-&gt;nentries = nentries;</span><br><span class="line">        <span class="built_in">map</span>-&gt;entries = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="evmap_make_space">evmap_make_space</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">evmap_make_space</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> <span class="token operator">*</span>map<span class="token punctuation">,</span> <span class="token keyword">int</span> slot<span class="token punctuation">,</span> <span class="token keyword">int</span> msize<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token operator">-></span>nentries <span class="token operator">&lt;=</span> slot<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> nentries <span class="token operator">=</span> map<span class="token operator">-></span>nentries <span class="token operator">?</span> map<span class="token operator">-></span>nentries <span class="token operator">:</span> <span class="token number">32</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>tmp<span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>slot<span class="token operator">></span> INT_MAX <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>nentries <span class="token operator">&lt;=</span> slot<span class="token punctuation">)</span> nentries <span class="token operator">&lt;&lt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nentries<span class="token operator">></span> INT_MAX <span class="token operator">/</span> msize<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        tmp <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">mm_realloc</span><span class="token punctuation">(</span>map<span class="token operator">-></span>entries<span class="token punctuation">,</span> nentries <span class="token operator">*</span> msize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>tmp <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tmp<span class="token punctuation">[</span>map<span class="token operator">-></span>nentries<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>nentries <span class="token operator">-</span> map<span class="token operator">-></span>nentries<span class="token punctuation">)</span> <span class="token operator">*</span> msize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        map<span class="token operator">-></span>nentries <span class="token operator">=</span> nentries<span class="token punctuation">;</span>
+        map<span class="token operator">-></span>entries <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>evmap_make_space</code> 函数会在数组长度不足时对数组进行拓展：</p>
-<ol>
+<ol type="1">
 <li>如果数组没有初始化，则初始化数组长度为 <code>32</code></li>
 <li>如果数组长度不足，则将数组长度乘 <code>2</code>，直至满足要求</li>
 <li><code>realloc</code> 数组空间，并将新开辟出来的空间清 <code>0</code></li>
 <li>保存新数组的地址信息和长度信息</li>
 </ol>
-<h3 id="GET-SIGNAL-SLOT-AND-CTOR"><a href="#GET-SIGNAL-SLOT-AND-CTOR" class="headerlink" title="GET_SIGNAL_SLOT_AND_CTOR"></a>GET_SIGNAL_SLOT_AND_CTOR</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET_SIGNAL_SLOT_AND_CTOR(ctx, <span class="built_in">map</span>, sig, evmap_signal, evmap_signal_init, base-&gt;evsigsel-&gt;fdinfo_len);</span><br><span class="line"><span class="comment">/* 以上宏定义展开后结果为如下所示 */</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((<span class="built_in">map</span>)-&gt;entries[sig] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        (<span class="built_in">map</span>)-&gt;entries[sig] = mm_calloc(<span class="number">1</span>,<span class="keyword">sizeof</span>(struct evmap_signal)+base-&gt;evsigsel-&gt;fdinfo_len);</span><br><span class="line">        <span class="keyword">if</span> (EVUTIL_UNLIKELY((<span class="built_in">map</span>)-&gt;entries[sig] == <span class="literal">NULL</span>)) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">        (evmap_signal_init)((struct evmap_signal *)(<span class="built_in">map</span>)-&gt;entries[sig]);</span><br><span class="line">    &#125;</span><br><span class="line">    (ctx) = (struct evmap_signal *)((<span class="built_in">map</span>)-&gt;entries[sig]);</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="get_signal_slot_and_ctor">GET_SIGNAL_SLOT_AND_CTOR</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">GET_SIGNAL_SLOT_AND_CTOR</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> map<span class="token punctuation">,</span> sig<span class="token punctuation">,</span> evmap_signal<span class="token punctuation">,</span> evmap_signal_init<span class="token punctuation">,</span> base<span class="token operator">-></span>evsigsel<span class="token operator">-></span>fdinfo_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* 以上宏定义展开后结果为如下所示 */</span>
+<span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mm_calloc</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span><span class="token punctuation">)</span><span class="token operator">+</span>base<span class="token operator">-></span>evsigsel<span class="token operator">-></span>fdinfo_len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">EVUTIL_UNLIKELY</span><span class="token punctuation">(</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">(</span>evmap_signal_init<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">(</span>ctx<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>GET_SIGNAL_SLOT_AND_CTOR</code> 宏找到当前 <code>sig</code> 对应的数组元素：</p>
 <ul>
 <li>如果该元素为空，则新建一个双向链表的表头，存入链表，并将该表头地址赋值给 ctx 变量</li>
 <li>如果该元素非空，则其指向的是一个双向链表的表头，将该元素赋值给 ctx 变量</li>
 </ul>
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">evmap_signal_del_</span><span class="params">(struct event_base *base, <span class="keyword">int</span> sig, struct event *ev)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">eventop</span> *<span class="title">evsel</span> = <span class="title">base</span>-&gt;<span class="title">evsigsel</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">event_signal_map</span> *<span class="title">map</span> = &amp;<span class="title">base</span>-&gt;<span class="title">sigmap</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">evmap_signal</span> *<span class="title">ctx</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sig &lt; <span class="number">0</span> || sig&gt;= <span class="built_in">map</span>-&gt;nentries) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">    GET_SIGNAL_SLOT(ctx, <span class="built_in">map</span>, sig, evmap_signal);</span><br><span class="line">    LIST_REMOVE(ev, ev_signal_next);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (LIST_FIRST(&amp;ctx-&gt;events) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">if</span> (evsel-&gt;del(base, ev-&gt;ev_fd, <span class="number">0</span>, EV_SIGNAL, <span class="literal">NULL</span>) == <span class="number">-1</span>) <span class="keyword">return</span> (<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="GET-SIGNAL-SLOT"><a href="#GET-SIGNAL-SLOT" class="headerlink" title="GET_SIGNAL_SLOT"></a>GET_SIGNAL_SLOT</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET_SIGNAL_SLOT(ctx, <span class="built_in">map</span>, sig, evmap_signal);</span><br><span class="line"><span class="comment">/* 以上宏定义展开后结果为如下所示 */</span></span><br><span class="line">(ctx) = (struct evmap_signal *)((<span class="built_in">map</span>)-&gt;entries[sig])</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<h2 id="删除">删除</h2>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">evmap_signal_del_</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">event_base</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> <span class="token keyword">int</span> sig<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">event</span> <span class="token operator">*</span>ev<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">eventop</span> <span class="token operator">*</span>evsel <span class="token operator">=</span> base<span class="token operator">-></span>evsigsel<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">event_signal_map</span> <span class="token operator">*</span>map <span class="token operator">=</span> <span class="token operator">&amp;</span>base<span class="token operator">-></span>sigmap<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span>ctx<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sig <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> sig<span class="token operator">>=</span> map<span class="token operator">-></span>nentries<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">GET_SIGNAL_SLOT</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> map<span class="token punctuation">,</span> sig<span class="token punctuation">,</span> evmap_signal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">LIST_REMOVE</span><span class="token punctuation">(</span>ev<span class="token punctuation">,</span> ev_signal_next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">LIST_FIRST</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ctx<span class="token operator">-></span>events<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>evsel<span class="token operator">-></span><span class="token function">del</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> ev<span class="token operator">-></span>ev_fd<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> EV_SIGNAL<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="get_signal_slot">GET_SIGNAL_SLOT</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">GET_SIGNAL_SLOT</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> map<span class="token punctuation">,</span> sig<span class="token punctuation">,</span> evmap_signal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* 以上宏定义展开后结果为如下所示 */</span>
+<span class="token punctuation">(</span>ctx<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">evmap_signal</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token operator">-></span>entries<span class="token punctuation">[</span>sig<span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="参考资料">参考资料</h2>
+<ul>
 <li>[1] <a target="_blank" rel="noopener" href="https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz">libevent-2.1.11-stable.tar.gz (Released 2019-08-01)</a></li>
 <li>[2] <a target="_blank" rel="noopener" href="https://github.com/KelvinYin/libevent-src-analysis/blob/master/libevent%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md">libevent-src-analysis/libevent 源码分析. md at master · KelvinYin/libevent-src-analysis</a></li>
 </ul>
@@ -421,31 +411,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\f65e9050\" rel="bookmark">源码阅读 libevent - 事件主循环</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\27de5435\" rel="bookmark">源码阅读 libevent - 优先级管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\89de67d\" rel="bookmark">源码阅读 libevent - 信号事件处理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\58deb66e\" rel="bookmark">源码阅读 libevent - 内存管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\1a2a4fe3\" rel="bookmark">源码阅读 libevent - 创建 event_base</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -488,42 +458,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -531,132 +473,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/a24039d7/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/a24039d7/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/a24039d7/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>

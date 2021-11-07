@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232605.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201006232538.png">
@@ -14,21 +16,19 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Bree+Serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.hezhaojiang.io","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-
-  <meta name="description" content="看前必读： 本博客基于 hexo v5.2.0 和 NexT v8.0.1 搭建，本文的美化过程也是基于以上版本，不保证其他版本中的效果。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.hezhaojiang.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"buttons","active":true,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="看前必读： 本博客基于 hexo v5.2.0 和 NexT v8.0.1 搭建，本文的美化过程也是基于以上版本，不保证其他版本中的效果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="博客搭建 - NexT 主题美化">
 <meta property="og:url" content="http://github.hezhaojiang.io/post/2020/97e2582/index.html">
 <meta property="og:site_name" content="何照江的博客">
-<meta property="og:description" content="看前必读： 本博客基于 hexo v5.2.0 和 NexT v8.0.1 搭建，本文的美化过程也是基于以上版本，不保证其他版本中的效果。">
+<meta property="og:description" content="看前必读： 本博客基于 hexo v5.2.0 和 NexT v8.0.1 搭建，本文的美化过程也是基于以上版本，不保证其他版本中的效果。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201011225105.png">
 <meta property="article:published_time" content="2020-10-11T06:23:25.000Z">
@@ -42,59 +42,19 @@
 <link rel="canonical" href="http://github.hezhaojiang.io/post/2020/97e2582/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>博客搭建 - NexT 主题美化 | 何照江的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://github.hezhaojiang.io/post/2020/97e2582/","path":"post/2020/97e2582/","title":"博客搭建 - NexT 主题美化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>博客搭建 - NexT 主题美化 | 何照江的博客</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 <link rel="alternate" href="/atom.xml" title="何照江的博客" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
@@ -105,7 +65,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -132,36 +92,12 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-links">
-
-    <a href="/links" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -172,8 +108,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -182,7 +117,7 @@
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -198,7 +133,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -216,14 +151,15 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="nav-number">1.</span> <span class="nav-text">增加背景图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E7%BE%8E%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">页面元素美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90"><span class="nav-number">3.</span> <span class="nav-text">增加网易云音乐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E7%82%B9%E5%87%BB%E7%89%B9%E6%95%88"><span class="nav-number">4.</span> <span class="nav-text">增加点击特效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%8F%8B%E9%93%BE%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">增加友链链接</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="nav-number">1.</span> <span class="nav-text">增加背景图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E7%BE%8E%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">页面元素美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90"><span class="nav-number">3.</span> <span class="nav-text">增加网易云音乐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E7%82%B9%E5%87%BB%E7%89%B9%E6%95%88"><span class="nav-number">4.</span> <span class="nav-text">增加点击特效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%8F%8B%E9%93%BE%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">增加友链链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="何照江"
       src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20200801192913.jpg">
   <p class="site-author-name" itemprop="name">何照江</p>
@@ -232,21 +168,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -256,14 +189,12 @@
       <span class="links-of-author-item">
         <a href="https://github.com/hezhaojiang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hezhaojiang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
-      <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
-      </span>
   </div>
 
 
 
-      </section>
+        </div>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -272,7 +203,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -285,9 +216,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -341,27 +270,6 @@
     </span>
 
   
-    <span id="/post/2020/97e2582/" class="post-meta-item leancloud_visitors" data-flag-title="博客搭建 - NexT 主题美化" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/post/2020/97e2582/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/post/2020/97e2582/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 </div>
 
         </div>
@@ -374,57 +282,340 @@
         <div class="note danger no-icon"><p>看前必读：</p>
 <p>本博客基于 <code>hexo v5.2.0</code> 和 <code>NexT v8.0.1</code> 搭建，本文的美化过程也是基于以上版本，不保证其他版本中的效果。</p>
 </div>
-<a id="more"></a>
-<h2 id="增加背景图片"><a href="#增加背景图片" class="headerlink" title="增加背景图片"></a>增加背景图片</h2><ol>
+<span id="more"></span>
+<h2 id="增加背景图片">增加背景图片</h2>
+<ol type="1">
 <li><p>修改主题配置文件（如 <code>_config.next.yml</code>）</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 找到以下内容</span><br><span class="line">  # style: source&#x2F;_data&#x2F;styles.styl</span><br><span class="line"># 放开注释</span><br><span class="line">  style: source&#x2F;_data&#x2F;styles.styl</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux"># 找到以下内容
+  # style: source&#x2F;_data&#x2F;styles.styl
+# 放开注释
+  style: source&#x2F;_data&#x2F;styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>在 <code>source</code> 目录下 创建文件夹 <code>_data</code>，并在 <code>_data</code> 文件夹中创建名为 <code>styles.styl</code> 的新文件，并填入以下内容：</p>
- <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 增加背景图片</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>:<span class="built_in">url</span>(http://www.dmoe.cc/random.php);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>: fixed;</span><br><span class="line">    <span class="attribute">background-position</span>: center;</span><br><span class="line">    //background-position:50% 50%;</span><br><span class="line">    <span class="selector-tag">opacity</span>: 0<span class="selector-class">.95</span>;</span><br><span class="line">    +<span class="selector-tag">mobile</span>()&#123;</span><br><span class="line">        <span class="attribute">background-image</span>: <span class="built_in">url</span>(https://acg.yanwz.cn/api.php);</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">10%</span> <span class="number">20%</span>;</span><br><span class="line">        <span class="attribute">background-size</span>: cover;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 其中 <code>url</code> 可以使用网络图片地址，也可以使用本地图片，其他参数也可以根据 <code>css</code> 语法结合想要的效果自行修改。</p>
-</li>
+<p><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">// 增加背景图片
+body</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">background-image</span><span class="token punctuation">:</span><span class="token url"><span class="token function">url</span><span class="token punctuation">(</span>http://www.dmoe.cc/random.php<span class="token punctuation">)</span></span><span class="token punctuation">;</span>
+    <span class="token property">background-repeat</span><span class="token punctuation">:</span> no-repeat<span class="token punctuation">;</span>
+    <span class="token property">background-attachment</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+    <span class="token property">background-position</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+    //<span class="token property">background-position</span><span class="token punctuation">:</span>50% 50%<span class="token punctuation">;</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> 0.95<span class="token selector">;
+    +mobile()</span><span class="token punctuation">&#123;</span>
+        <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span>https://acg.yanwz.cn/api.php<span class="token punctuation">)</span></span><span class="token punctuation">;</span>
+        <span class="token property">background-position</span><span class="token punctuation">:</span> 10% 20%<span class="token punctuation">;</span>
+        <span class="token property">background-size</span><span class="token punctuation">:</span> cover<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>其中 <code>url</code> 可以使用网络图片地址，也可以使用本地图片，其他参数也可以根据 <code>css</code> 语法结合想要的效果自行修改。</p></li>
 </ol>
-<h2 id="页面元素美化"><a href="#页面元素美化" class="headerlink" title="页面元素美化"></a>页面元素美化</h2><p>接增加背景图片，可通过在 <code>source/_data/styles.styl</code> 增加内容对页面元素进行美化</p>
+<h2 id="页面元素美化">页面元素美化</h2>
+<p>接增加背景图片，可通过在 <code>source/_data/styles.styl</code> 增加内容对页面元素进行美化</p>
 <p>如增加元素阴影效果、修改元素圆角效果、优化文字间距等</p>
 <p>具体修改如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">// 调整组件位置</span><br><span class="line"><span class="selector-class">.posts-expand</span> <span class="selector-class">.post-header</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">1.125em</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.post-button</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post-block</span>&#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 组件边框椭圆化</span><br><span class="line"><span class="selector-class">.main-inner</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">10px</span> <span class="number">10px</span> <span class="number">10px</span>;</span><br><span class="line">    .sub-menu,</span><br><span class="line">    <span class="selector-class">.post-block</span>,</span><br><span class="line">    <span class="selector-class">.tabs-comment</span>,</span><br><span class="line">    <span class="selector-class">.comments</span>,</span><br><span class="line">    <span class="selector-class">.pagination</span>,</span><br><span class="line">    <span class="selector-class">.sub-menu</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span><span class="selector-pseudo">:not(.sub-menu)</span>,</span><br><span class="line">    <span class="selector-class">.post-block</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span><span class="selector-pseudo">:not(.sub-menu)</span>,</span><br><span class="line">    <span class="selector-class">.tabs-comment</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span><span class="selector-pseudo">:not(.sub-menu)</span>,</span><br><span class="line">    <span class="selector-class">.comments</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span><span class="selector-pseudo">:not(.sub-menu)</span>,</span><br><span class="line">    <span class="selector-class">.pagination</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span><span class="selector-pseudo">:not(.sub-menu)</span> &#123;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">box-shadow</span>: <span class="number">8px</span> <span class="number">7px</span> <span class="number">2px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>), <span class="number">7px</span> <span class="number">4px</span> <span class="number">1px</span> -<span class="number">2px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.06</span>), <span class="number">0</span> <span class="number">1px</span> <span class="number">5px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">8px</span> <span class="number">7px</span> <span class="number">2px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>), <span class="number">7px</span> <span class="number">4px</span> <span class="number">1px</span> -<span class="number">2px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.06</span>), <span class="number">0</span> <span class="number">1px</span> <span class="number">5px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.sidebar-inner</span>&#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">8px</span> <span class="number">7px</span> <span class="number">2px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>), <span class="number">7px</span> <span class="number">4px</span> <span class="number">1px</span> -<span class="number">2px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.06</span>), <span class="number">0</span> <span class="number">1px</span> <span class="number">5px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.12</span>);    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 修改标题字体行距</span><br><span class="line"><span class="selector-tag">h1</span>,</span><br><span class="line"><span class="selector-tag">h2</span>,</span><br><span class="line"><span class="selector-tag">h3</span>,</span><br><span class="line"><span class="selector-tag">h4</span>,</span><br><span class="line"><span class="selector-tag">h5</span>,</span><br><span class="line"><span class="selector-tag">h6</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: Bree+Serif, <span class="string">&quot;PingFang SC&quot;</span>, <span class="string">&quot;Microsoft YaHei&quot;</span>, sans-serif;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0px</span> <span class="number">0</span> <span class="number">15px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 缩小打赏行距</span><br><span class="line"><span class="selector-class">.reward-container</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line">// 缩小相关文章行距</span><br><span class="line"><span class="selector-class">.popular-posts-header</span> &#123;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">1.125em</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line">// 缩小文章底部标签行距</span><br><span class="line"><span class="selector-class">.post-tags</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="增加网易云音乐"><a href="#增加网易云音乐" class="headerlink" title="增加网易云音乐"></a>增加网易云音乐</h2><ol>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">// 调整组件位置
+.posts-expand .post-header</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 1.125em<span class="token punctuation">;</span>
+  <span class="token property">margin-bottom</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.post-button</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">margin-top</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.post-block</span><span class="token punctuation">&#123;</span>
+    <span class="token property">margin-top</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+    <span class="token property">margin-bottom</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">// 组件边框椭圆化
+.main-inner</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span>255<span class="token punctuation">,</span> 255<span class="token punctuation">,</span> 255<span class="token punctuation">,</span> 0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> 0px 10px 10px 10px<span class="token selector">;
+    .sub-menu,
+    .post-block,
+    .tabs-comment,
+    .comments,
+    .pagination,
+    .sub-menu:not(:first-child):not(.sub-menu),
+    .post-block:not(:first-child):not(.sub-menu),
+    .tabs-comment:not(:first-child):not(.sub-menu),
+    .comments:not(:first-child):not(.sub-menu),
+    .pagination:not(:first-child):not(.sub-menu)</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">border-radius</span><span class="token punctuation">:</span> 30px 30px 30px 30px<span class="token punctuation">;</span>
+        <span class="token property">box-shadow</span><span class="token punctuation">:</span> 8px 7px 2px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">,</span> 7px 4px 1px -2px <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.06<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 1px 5px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.header-inner</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">border-radius</span><span class="token punctuation">:</span> 30px 30px 30px 30px<span class="token punctuation">;</span>
+    <span class="token property">box-shadow</span><span class="token punctuation">:</span> 8px 7px 2px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">,</span> 7px 4px 1px -2px <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.06<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 1px 5px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.sidebar-inner</span><span class="token punctuation">&#123;</span>
+    <span class="token property">border-radius</span><span class="token punctuation">:</span> 30px 30px 30px 30px<span class="token punctuation">;</span>
+    <span class="token property">box-shadow</span><span class="token punctuation">:</span> 8px 7px 2px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">,</span> 7px 4px 1px -2px <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.06<span class="token punctuation">)</span><span class="token punctuation">,</span> 0 1px 5px 0 <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.12<span class="token punctuation">)</span><span class="token punctuation">;</span>    
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">// 修改标题字体行距
+h1,
+h2,
+h3,
+h4,
+h5,
+h6</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> Bree+Serif<span class="token punctuation">,</span> <span class="token string">"PingFang SC"</span><span class="token punctuation">,</span> <span class="token string">"Microsoft YaHei"</span><span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+  <span class="token property">font-weight</span><span class="token punctuation">:</span> bold<span class="token punctuation">;</span>
+  <span class="token property">line-height</span><span class="token punctuation">:</span> 1.5<span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> 0px 0 15px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">// 缩小打赏行距
+.reward-container</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> 5px<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 5px<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">// 缩小相关文章行距
+.popular-posts-header</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">border-bottom</span><span class="token punctuation">:</span> 1px solid #eee<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 1.125em<span class="token punctuation">;</span>
+  <span class="token property">margin-bottom</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+  <span class="token property">margin-top</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">// 缩小文章底部标签行距
+.post-tags</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">margin-top</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="增加网易云音乐">增加网易云音乐</h2>
+<ol type="1">
 <li><p>修改 <code>layout/_partials/header/menu.njk</code> 文件，加入以下代码（也可以在自行在其他位置添加）：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;%- <span class="keyword">if</span> theme.background_music %&#125;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;iframe seamless frameborder=<span class="string">&quot;no&quot;</span> border=<span class="string">&quot;0&quot;</span> marginwidth=<span class="string">&quot;0&quot;</span> marginheight=<span class="string">&quot;0&quot;</span> width=<span class="number">288</span> height=<span class="number">52</span> src=<span class="string">&quot;//music.163.com/outchain/player?type=2&amp;id=&#123;&#123; theme.background_music &#125;&#125;&amp;auto=1&amp;height=32&quot;</span>&gt;&lt;/iframe&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-<p> 我添加的位置示例：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;%- <span class="keyword">if</span> theme.algolia_search.enable or theme.local_search.enable %&#125;</span><br><span class="line">    &lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;menu-item menu-item-search&quot;</span>&gt;</span><br><span class="line">        &lt;a role=<span class="string">&quot;button&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;popup-trigger&quot;</span>&gt;</span><br><span class="line">        &#123;%- <span class="keyword">if</span> theme.menu_settings.icons %&#125;&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;fa fa-search fa-fw&quot;</span>&gt;&lt;/i&gt;&#123;%- endif %&#125;&#123;&#123; __(<span class="string">&#x27;menu.search&#x27;</span>) &#125;&#125;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;%- <span class="keyword">if</span> theme.background_music %&#125;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;iframe seamless frameborder=<span class="string">&quot;no&quot;</span> border=<span class="string">&quot;0&quot;</span> marginwidth=<span class="string">&quot;0&quot;</span> marginheight=<span class="string">&quot;0&quot;</span> width=<span class="number">288</span> height=<span class="number">52</span> src=<span class="string">&quot;//music.163.com/outchain/player?type=2&amp;id=&#123;&#123; theme.background_music &#125;&#125;&amp;auto=1&amp;height=32&quot;</span>&gt;&lt;/iframe&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> <span class="token keyword">if</span> theme<span class="token punctuation">.</span>background_music <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span>iframe seamless frameborder<span class="token operator">=</span><span class="token string">"no"</span> border<span class="token operator">=</span><span class="token string">"0"</span> marginwidth<span class="token operator">=</span><span class="token string">"0"</span> marginheight<span class="token operator">=</span><span class="token string">"0"</span> width<span class="token operator">=</span><span class="token number">288</span> height<span class="token operator">=</span><span class="token number">52</span> src<span class="token operator">=</span><span class="token string">"//music.163.com/outchain/player?type=2&amp;id=&#123;&#123; theme.background_music &#125;&#125;&amp;auto=1&amp;height=32"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> endif <span class="token operator">%</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>我添加的位置示例：</p>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> <span class="token keyword">if</span> theme<span class="token punctuation">.</span>algolia_search<span class="token punctuation">.</span>enable or theme<span class="token punctuation">.</span>local_search<span class="token punctuation">.</span>enable <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>li <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"menu-item menu-item-search"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>a role<span class="token operator">=</span><span class="token string">"button"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"popup-trigger"</span><span class="token operator">></span>
+        <span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> <span class="token keyword">if</span> theme<span class="token punctuation">.</span>menu_settings<span class="token punctuation">.</span>icons <span class="token operator">%</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span>i <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"fa fa-search fa-fw"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> endif <span class="token operator">%</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token function">__</span><span class="token punctuation">(</span><span class="token string">'menu.search'</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> endif <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> <span class="token keyword">if</span> theme<span class="token punctuation">.</span>background_music <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span>iframe seamless frameborder<span class="token operator">=</span><span class="token string">"no"</span> border<span class="token operator">=</span><span class="token string">"0"</span> marginwidth<span class="token operator">=</span><span class="token string">"0"</span> marginheight<span class="token operator">=</span><span class="token string">"0"</span> width<span class="token operator">=</span><span class="token number">288</span> height<span class="token operator">=</span><span class="token number">52</span> src<span class="token operator">=</span><span class="token string">"//music.163.com/outchain/player?type=2&amp;id=&#123;&#123; theme.background_music &#125;&#125;&amp;auto=1&amp;height=32"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> endif <span class="token operator">%</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改主题配置文件（如 <code>_config.next.yml</code>），添加如下内容：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background_music: 569214252</span><br></pre></td></tr></table></figure>
+<p><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">background_music: 569214252<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
 <blockquote>
-<p><code>background_music</code> 字段后的音乐 <code>id</code> 可用下图方式获取：<br><img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201011225105.png" alt="网易云音乐 id 获取方式"></p>
-</blockquote>
-</li>
+<p><code>background_music</code> 字段后的音乐 <code>id</code> 可用下图方式获取： <img data-src="https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201011225105.png" alt="网易云音乐 id 获取方式" /></p>
+</blockquote></li>
 </ol>
-<h2 id="增加点击特效"><a href="#增加点击特效" class="headerlink" title="增加点击特效"></a>增加点击特效</h2><ol>
+<h2 id="增加点击特效">增加点击特效</h2>
+<ol type="1">
 <li><p>创建 <code>source/js/click_magic.js</code> 文件，填入以下内容：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 鼠标特效 */</span></span><br><span class="line"><span class="keyword">var</span> a_idx = <span class="number">0</span>;</span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>) </span>&#123;</span><br><span class="line">$(<span class="string">&quot;body&quot;</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">&quot;Python&quot;</span>, <span class="string">&quot;Java&quot;</span>, <span class="string">&quot;Go&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;C++&quot;</span>, <span class="string">&quot;C#&quot;</span>, <span class="string">&quot;JavaScript&quot;</span> ,</span><br><span class="line">    <span class="string">&quot;Php&quot;</span>, <span class="string">&quot;Sql&quot;</span>, <span class="string">&quot;R&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> $i = $(<span class="string">&quot;&lt;span/&gt;&quot;</span>).text(a[a_idx]);</span><br><span class="line">    a_idx = (a_idx + <span class="number">1</span>) % a.length;</span><br><span class="line">    <span class="keyword">var</span> x = e.pageX,</span><br><span class="line">    y = e.pageY;</span><br><span class="line">    $i.css(&#123;</span><br><span class="line">        <span class="string">&quot;z-index&quot;</span>: <span class="number">9999</span>,</span><br><span class="line">        <span class="string">&quot;top&quot;</span>: y - <span class="number">20</span>,</span><br><span class="line">        <span class="string">&quot;left&quot;</span>: x,</span><br><span class="line">        <span class="string">&quot;position&quot;</span>: <span class="string">&quot;absolute&quot;</span>,</span><br><span class="line">        <span class="string">&quot;font-weight&quot;</span>: <span class="string">&quot;bold&quot;</span>,</span><br><span class="line">        <span class="string">&quot;color&quot;</span>: <span class="string">&quot;#ff6651&quot;</span></span><br><span class="line">    &#125;);</span><br><span class="line">    $(<span class="string">&quot;body&quot;</span>).append($i);</span><br><span class="line">    $i.animate(&#123;</span><br><span class="line">        <span class="string">&quot;top&quot;</span>: y - <span class="number">180</span>,</span><br><span class="line">        <span class="string">&quot;opacity&quot;</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="number">1500</span>,</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $i.remove();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/* 鼠标特效 */</span>
+<span class="token keyword">var</span> a_idx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">jQuery</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ready</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"body"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">click</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token string">"Python"</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">,</span> <span class="token string">"Go"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">,</span> <span class="token string">"C++"</span><span class="token punctuation">,</span> <span class="token string">"C#"</span><span class="token punctuation">,</span> <span class="token string">"JavaScript"</span> <span class="token punctuation">,</span>
+    <span class="token string">"Php"</span><span class="token punctuation">,</span> <span class="token string">"Sql"</span><span class="token punctuation">,</span> <span class="token string">"R"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> $i <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"&lt;span/>"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>a_idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    a_idx <span class="token operator">=</span> <span class="token punctuation">(</span>a_idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> a<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> x <span class="token operator">=</span> e<span class="token punctuation">.</span>pageX<span class="token punctuation">,</span>
+    y <span class="token operator">=</span> e<span class="token punctuation">.</span>pageY<span class="token punctuation">;</span>
+    $i<span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token string">"z-index"</span><span class="token operator">:</span> <span class="token number">9999</span><span class="token punctuation">,</span>
+        <span class="token string">"top"</span><span class="token operator">:</span> y <span class="token operator">-</span> <span class="token number">20</span><span class="token punctuation">,</span>
+        <span class="token string">"left"</span><span class="token operator">:</span> x<span class="token punctuation">,</span>
+        <span class="token string">"position"</span><span class="token operator">:</span> <span class="token string">"absolute"</span><span class="token punctuation">,</span>
+        <span class="token string">"font-weight"</span><span class="token operator">:</span> <span class="token string">"bold"</span><span class="token punctuation">,</span>
+        <span class="token string">"color"</span><span class="token operator">:</span> <span class="token string">"#ff6651"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"body"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>$i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    $i<span class="token punctuation">.</span><span class="token function">animate</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token string">"top"</span><span class="token operator">:</span> y <span class="token operator">-</span> <span class="token number">180</span><span class="token punctuation">,</span>
+        <span class="token string">"opacity"</span><span class="token operator">:</span> <span class="token number">0</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token number">1500</span><span class="token punctuation">,</span>
+    <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        $i<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改 <code>layout/_layout.njk</code>，在该文件最末尾增加如下代码：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;/js/click_magic.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">&lt;</span>script type<span class="token operator">=</span><span class="token string">"text/javascript"</span> src<span class="token operator">=</span><span class="token string">"/js/click_magic.js"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p></li>
 </ol>
-<h2 id="增加友链链接"><a href="#增加友链链接" class="headerlink" title="增加友链链接"></a>增加友链链接</h2><ol>
+<h2 id="增加友链链接">增加友链链接</h2>
+<ol type="1">
 <li><p>创建 <code>layout/_partials/page/links.njk</code> 文件，填入以下内容：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block content %&#125;</span><br><span class="line">&#123;######################&#125;</span><br><span class="line">&#123;### LINKS BLOCK ###&#125;</span><br><span class="line">&#123;######################&#125;</span><br><span class="line"></span><br><span class="line">    &lt;div id=<span class="string">&quot;links&quot;</span>&gt;</span><br><span class="line">        &lt;style&gt;</span><br><span class="line">            #links&#123;</span><br><span class="line">            margin-top: <span class="number">5</span>rem;</span><br><span class="line">            &#125;</span><br><span class="line">            .links-content&#123;</span><br><span class="line">                margin-top:<span class="number">1</span>rem;</span><br><span class="line">            &#125;</span><br><span class="line">            .link-navigation::after &#123;</span><br><span class="line">                content: <span class="string">&quot; &quot;</span>;</span><br><span class="line">                display: block;</span><br><span class="line">                clear: both;</span><br><span class="line">            &#125;</span><br><span class="line">            .card &#123;</span><br><span class="line">                width: <span class="number">300</span>px;</span><br><span class="line">                font-size: <span class="number">1</span>rem;</span><br><span class="line">                padding: <span class="number">10</span>px <span class="number">20</span>px;</span><br><span class="line">                border-radius: <span class="number">4</span>px;</span><br><span class="line">                transition-duration: <span class="number">0.15</span>s;</span><br><span class="line">                margin-bottom: <span class="number">1</span>rem;</span><br><span class="line">                display:flex;</span><br><span class="line">            &#125;</span><br><span class="line">            .card:nth-child(odd) &#123;</span><br><span class="line">                float: left;</span><br><span class="line">            &#125;</span><br><span class="line">            .card:nth-child(even) &#123;</span><br><span class="line">                float: right;</span><br><span class="line">            &#125;</span><br><span class="line">            .card:hover &#123;</span><br><span class="line">                transform: scale(<span class="number">1.1</span>);</span><br><span class="line">                box-shadow: <span class="number">0</span> <span class="number">2</span>px <span class="number">6</span>px <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.12</span>), <span class="number">0</span> <span class="number">0</span> <span class="number">6</span>px <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.04</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            .card a &#123;</span><br><span class="line">                border:none;</span><br><span class="line">            &#125;</span><br><span class="line">            .card .ava &#123;</span><br><span class="line">                width: <span class="number">3</span>rem!important;</span><br><span class="line">                height: <span class="number">3</span>rem!important;</span><br><span class="line">                margin:<span class="number">0</span>!important;</span><br><span class="line">                margin-right: <span class="number">1</span>em!important;</span><br><span class="line">                border-radius:<span class="number">4</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">            .card .card-header &#123;</span><br><span class="line">                font-style: italic;</span><br><span class="line">                overflow: hidden;</span><br><span class="line">                width: <span class="number">236</span>px;</span><br><span class="line">            &#125;</span><br><span class="line">            .card .card-header a &#123;</span><br><span class="line">                font-style: normal;</span><br><span class="line">                color: #2bbc8a;</span><br><span class="line">                font-weight: bold;</span><br><span class="line">                text-decoration: none;</span><br><span class="line">            &#125;</span><br><span class="line">            .card .card-header a:hover &#123;</span><br><span class="line">                color: #d480aa;</span><br><span class="line">                text-decoration: none;</span><br><span class="line">            &#125;</span><br><span class="line">            .card .card-header .info &#123;</span><br><span class="line">                font-style:normal;</span><br><span class="line">                color:#a3a3a3;</span><br><span class="line">                font-size:<span class="number">14</span>px;</span><br><span class="line">                min-width: <span class="number">0</span>;</span><br><span class="line">                text-overflow: ellipsis;</span><br><span class="line">                overflow: hidden;</span><br><span class="line">                white-space: nowrap;</span><br><span class="line">            &#125;</span><br><span class="line">            span.focus-links &#123;</span><br><span class="line">                font-style: normal;</span><br><span class="line">                margin-left: <span class="number">10</span>px;</span><br><span class="line">                position: unset;</span><br><span class="line">                left: <span class="number">0</span>;</span><br><span class="line">                padding: <span class="number">0</span> <span class="number">7</span>px <span class="number">0</span> <span class="number">5</span>px;</span><br><span class="line">                font-size: <span class="number">11</span>px;</span><br><span class="line">                border-color: #42c02e;</span><br><span class="line">                border-radius: <span class="number">40</span>px;</span><br><span class="line">                line-height: <span class="number">24</span>px;</span><br><span class="line">                height: <span class="number">22</span>px;</span><br><span class="line">                color: #fff !important;</span><br><span class="line">                background-color: #42c02e;</span><br><span class="line">                display: inline-block;</span><br><span class="line">            &#125;</span><br><span class="line">            span.focus-links:hover&#123;</span><br><span class="line">                background-color: #318024;</span><br><span class="line">            &#125;</span><br><span class="line">        &lt;/style&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;links-content&quot;</span>&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;no-icon note warning&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;link-info&quot;</span>&gt;</span>👨‍🎓 跟着大佬走，成为小大佬<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;/div&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;link-navigation&quot;</span>&gt;</span><br><span class="line">                &#123;% <span class="keyword">for</span> link <span class="keyword">in</span> theme.defaultlinks %&#125;</span><br><span class="line">                    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;card&quot;</span>&gt;</span><br><span class="line">                        &lt;img <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;ava nofancybox&quot;</span> src=<span class="string">&quot;&#123;&#123; link.avatar &#125;&#125;&quot;</span>/&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;card-header&quot;</span>&gt;</span><br><span class="line">                        &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; link.site &#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span> &#123;&#123; link.nickname &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span> <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; link.site &#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;focus-links&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;fa fa-plus&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="symbol">&amp;nbsp;</span>关注<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/div&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;info&quot;</span>&gt;&#123;&#123; link.info &#125;&#125;&lt;/div&gt;</span><br><span class="line">                        &lt;/div&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &#123;% endfor %&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;no-icon note primary&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;link-info&quot;</span>&gt;</span>🍭 五湖四海的朋友们<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;/div&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;link-navigation&quot;</span>&gt;</span><br><span class="line">                &#123;% <span class="keyword">for</span> link <span class="keyword">in</span> theme.friendslinks %&#125;</span><br><span class="line">                    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;card&quot;</span>&gt;</span><br><span class="line">                        &lt;img <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;ava nofancybox&quot;</span> src=<span class="string">&quot;&#123;&#123; link.avatar &#125;&#125;&quot;</span>/&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;card-header&quot;</span>&gt;</span><br><span class="line">                        &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; link.site &#125;&#125;&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span> &#123;&#123; link.nickname &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span> <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; link.site &#125;&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;focus-links&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;fa fa-plus&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="symbol">&amp;nbsp;</span>关注<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/div&gt;</span><br><span class="line">                        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;info&quot;</span>&gt;&#123;&#123; link.info &#125;&#125;&lt;/div&gt;</span><br><span class="line">                        &lt;/div&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &#123;% endfor %&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &#123;&#123; page.content &#125;&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&#123;##########################&#125;</span><br><span class="line">&#123;### END LINKS BLOCK ###&#125;</span><br><span class="line">&#123;##########################&#125;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span><span class="token operator">%</span> block content <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span>######################<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span>### <span class="token constant">LINKS</span> <span class="token constant">BLOCK</span> ###<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span>######################<span class="token punctuation">&#125;</span>
+
+    <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"links"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>style<span class="token operator">></span>
+            #links<span class="token punctuation">&#123;</span>
+            margin<span class="token operator">-</span>top<span class="token operator">:</span> <span class="token number">5</span>rem<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>links<span class="token operator">-</span>content<span class="token punctuation">&#123;</span>
+                margin<span class="token operator">-</span>top<span class="token operator">:</span><span class="token number">1</span>rem<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>link<span class="token operator">-</span>navigation<span class="token operator">:</span><span class="token operator">:</span>after <span class="token punctuation">&#123;</span>
+                content<span class="token operator">:</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+                display<span class="token operator">:</span> block<span class="token punctuation">;</span>
+                clear<span class="token operator">:</span> both<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">&#123;</span>
+                width<span class="token operator">:</span> <span class="token number">300</span>px<span class="token punctuation">;</span>
+                font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">1</span>rem<span class="token punctuation">;</span>
+                padding<span class="token operator">:</span> <span class="token number">10</span>px <span class="token number">20</span>px<span class="token punctuation">;</span>
+                border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">4</span>px<span class="token punctuation">;</span>
+                transition<span class="token operator">-</span>duration<span class="token operator">:</span> <span class="token number">0.15</span>s<span class="token punctuation">;</span>
+                margin<span class="token operator">-</span>bottom<span class="token operator">:</span> <span class="token number">1</span>rem<span class="token punctuation">;</span>
+                display<span class="token operator">:</span>flex<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card<span class="token operator">:</span>nth<span class="token operator">-</span><span class="token function">child</span><span class="token punctuation">(</span><span class="token parameter">odd</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                float<span class="token operator">:</span> left<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card<span class="token operator">:</span>nth<span class="token operator">-</span><span class="token function">child</span><span class="token punctuation">(</span><span class="token parameter">even</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                float<span class="token operator">:</span> right<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card<span class="token operator">:</span>hover <span class="token punctuation">&#123;</span>
+                transform<span class="token operator">:</span> <span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                box<span class="token operator">-</span>shadow<span class="token operator">:</span> <span class="token number">0</span> <span class="token number">2</span>px <span class="token number">6</span>px <span class="token number">0</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.12</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">6</span>px <span class="token number">0</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.04</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card a <span class="token punctuation">&#123;</span>
+                border<span class="token operator">:</span>none<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">.</span>ava <span class="token punctuation">&#123;</span>
+                width<span class="token operator">:</span> <span class="token number">3</span>rem<span class="token operator">!</span>important<span class="token punctuation">;</span>
+                height<span class="token operator">:</span> <span class="token number">3</span>rem<span class="token operator">!</span>important<span class="token punctuation">;</span>
+                margin<span class="token operator">:</span><span class="token number">0</span><span class="token operator">!</span>important<span class="token punctuation">;</span>
+                margin<span class="token operator">-</span>right<span class="token operator">:</span> <span class="token number">1</span>em<span class="token operator">!</span>important<span class="token punctuation">;</span>
+                border<span class="token operator">-</span>radius<span class="token operator">:</span><span class="token number">4</span>px<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">.</span>card<span class="token operator">-</span>header <span class="token punctuation">&#123;</span>
+                font<span class="token operator">-</span>style<span class="token operator">:</span> italic<span class="token punctuation">;</span>
+                overflow<span class="token operator">:</span> hidden<span class="token punctuation">;</span>
+                width<span class="token operator">:</span> <span class="token number">236</span>px<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">.</span>card<span class="token operator">-</span>header a <span class="token punctuation">&#123;</span>
+                font<span class="token operator">-</span>style<span class="token operator">:</span> normal<span class="token punctuation">;</span>
+                color<span class="token operator">:</span> #<span class="token number">2</span>bbc8a<span class="token punctuation">;</span>
+                font<span class="token operator">-</span>weight<span class="token operator">:</span> bold<span class="token punctuation">;</span>
+                text<span class="token operator">-</span>decoration<span class="token operator">:</span> none<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">.</span>card<span class="token operator">-</span>header a<span class="token operator">:</span>hover <span class="token punctuation">&#123;</span>
+                color<span class="token operator">:</span> #d480aa<span class="token punctuation">;</span>
+                text<span class="token operator">-</span>decoration<span class="token operator">:</span> none<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">.</span>card <span class="token punctuation">.</span>card<span class="token operator">-</span>header <span class="token punctuation">.</span>info <span class="token punctuation">&#123;</span>
+                font<span class="token operator">-</span>style<span class="token operator">:</span>normal<span class="token punctuation">;</span>
+                color<span class="token operator">:</span>#a3a3a3<span class="token punctuation">;</span>
+                font<span class="token operator">-</span>size<span class="token operator">:</span><span class="token number">14</span>px<span class="token punctuation">;</span>
+                min<span class="token operator">-</span>width<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                text<span class="token operator">-</span>overflow<span class="token operator">:</span> ellipsis<span class="token punctuation">;</span>
+                overflow<span class="token operator">:</span> hidden<span class="token punctuation">;</span>
+                white<span class="token operator">-</span>space<span class="token operator">:</span> nowrap<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            span<span class="token punctuation">.</span>focus<span class="token operator">-</span>links <span class="token punctuation">&#123;</span>
+                font<span class="token operator">-</span>style<span class="token operator">:</span> normal<span class="token punctuation">;</span>
+                margin<span class="token operator">-</span>left<span class="token operator">:</span> <span class="token number">10</span>px<span class="token punctuation">;</span>
+                position<span class="token operator">:</span> unset<span class="token punctuation">;</span>
+                left<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                padding<span class="token operator">:</span> <span class="token number">0</span> <span class="token number">7</span>px <span class="token number">0</span> <span class="token number">5</span>px<span class="token punctuation">;</span>
+                font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">11</span>px<span class="token punctuation">;</span>
+                border<span class="token operator">-</span>color<span class="token operator">:</span> #<span class="token number">42</span>c02e<span class="token punctuation">;</span>
+                border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">40</span>px<span class="token punctuation">;</span>
+                line<span class="token operator">-</span>height<span class="token operator">:</span> <span class="token number">24</span>px<span class="token punctuation">;</span>
+                height<span class="token operator">:</span> <span class="token number">22</span>px<span class="token punctuation">;</span>
+                color<span class="token operator">:</span> #fff <span class="token operator">!</span>important<span class="token punctuation">;</span>
+                background<span class="token operator">-</span>color<span class="token operator">:</span> #<span class="token number">42</span>c02e<span class="token punctuation">;</span>
+                display<span class="token operator">:</span> inline<span class="token operator">-</span>block<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            span<span class="token punctuation">.</span>focus<span class="token operator">-</span>links<span class="token operator">:</span>hover<span class="token punctuation">&#123;</span>
+                background<span class="token operator">-</span>color<span class="token operator">:</span> #<span class="token number">318024</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span>
+        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"links-content"</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"no-icon note warning"</span><span class="token operator">></span><span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link-info"</span><span class="token operator">></span>👨‍🎓 跟着大佬走，成为小大佬<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link-navigation"</span><span class="token operator">></span>
+                <span class="token punctuation">&#123;</span><span class="token operator">%</span> <span class="token keyword">for</span> link <span class="token keyword">in</span> theme<span class="token punctuation">.</span>defaultlinks <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+                    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"card"</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>img <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"ava nofancybox"</span> src<span class="token operator">=</span><span class="token string">"&#123;&#123; link.avatar &#125;&#125;"</span><span class="token operator">/</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"card-header"</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div<span class="token operator">></span><span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"&#123;&#123; link.site &#125;&#125;"</span> target<span class="token operator">=</span><span class="token string">"_blank"</span><span class="token operator">></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> link<span class="token punctuation">.</span>nickname <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span> <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"&#123;&#123; link.site &#125;&#125;"</span><span class="token operator">></span><span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"focus-links"</span><span class="token operator">></span><span class="token operator">&lt;</span>i <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"fa fa-plus"</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">"true"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>关注<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"info"</span><span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> link<span class="token punctuation">.</span>info <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                <span class="token punctuation">&#123;</span><span class="token operator">%</span> endfor <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"no-icon note primary"</span><span class="token operator">></span><span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link-info"</span><span class="token operator">></span>🍭 五湖四海的朋友们<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"link-navigation"</span><span class="token operator">></span>
+                <span class="token punctuation">&#123;</span><span class="token operator">%</span> <span class="token keyword">for</span> link <span class="token keyword">in</span> theme<span class="token punctuation">.</span>friendslinks <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+                    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"card"</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>img <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"ava nofancybox"</span> src<span class="token operator">=</span><span class="token string">"&#123;&#123; link.avatar &#125;&#125;"</span><span class="token operator">/</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"card-header"</span><span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div<span class="token operator">></span><span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"&#123;&#123; link.site &#125;&#125;"</span> target<span class="token operator">=</span><span class="token string">"_blank"</span><span class="token operator">></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> link<span class="token punctuation">.</span>nickname <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span> <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"&#123;&#123; link.site &#125;&#125;"</span><span class="token operator">></span><span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"focus-links"</span><span class="token operator">></span><span class="token operator">&lt;</span>i <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"fa fa-plus"</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">"true"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>关注<span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"info"</span><span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> link<span class="token punctuation">.</span>info <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+                <span class="token punctuation">&#123;</span><span class="token operator">%</span> endfor <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+            <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> page<span class="token punctuation">.</span>content <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+
+<span class="token punctuation">&#123;</span>##########################<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span>### <span class="token constant">END</span> <span class="token constant">LINKS</span> <span class="token constant">BLOCK</span> ###<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span>##########################<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span> endblock <span class="token operator">%</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改 <code>layout/page.njk</code>：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 找到如下两行代码 */</span></span><br><span class="line">&#123;%- elif page.type === <span class="string">&#x27;schedule&#x27;</span> and not page.title %&#125;</span><br><span class="line">    &#123;&#123;- __(<span class="string">&#x27;title.schedule&#x27;</span>) + page_title_suffix &#125;&#125;</span><br><span class="line"><span class="comment">/* 在上述代码后添加如下内容 */</span></span><br><span class="line">&#123;%- elif page.type === <span class="string">&#x27;links&#x27;</span> and not page.title %&#125;</span><br><span class="line">    &#123;&#123;- __(<span class="string">&#x27;title.links&#x27;</span>) + page_title_suffix &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 找到如下两行代码 */</span></span><br><span class="line">&#123;% elif page.type === <span class="string">&#x27;schedule&#x27;</span> %&#125;</span><br><span class="line">    &#123;% include <span class="string">&#x27;_partials/page/schedule.njk&#x27;</span> %&#125;</span><br><span class="line"><span class="comment">/* 在上述代码后添加如下内容 */</span></span><br><span class="line">&#123;% elif page.type === <span class="string">&#x27;links&#x27;</span> %&#125;</span><br><span class="line">    &#123;% include <span class="string">&#x27;_partials/page/links.njk&#x27;</span> %&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/* 找到如下两行代码 */</span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> elif page<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'schedule'</span> and not page<span class="token punctuation">.</span>title <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token operator">-</span> <span class="token function">__</span><span class="token punctuation">(</span><span class="token string">'title.schedule'</span><span class="token punctuation">)</span> <span class="token operator">+</span> page_title_suffix <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token comment">/* 在上述代码后添加如下内容 */</span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span><span class="token operator">-</span> elif page<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'links'</span> and not page<span class="token punctuation">.</span>title <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token operator">-</span> <span class="token function">__</span><span class="token punctuation">(</span><span class="token string">'title.links'</span><span class="token punctuation">)</span> <span class="token operator">+</span> page_title_suffix <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* 找到如下两行代码 */</span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span> elif page<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'schedule'</span> <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token operator">%</span> include <span class="token string">'_partials/page/schedule.njk'</span> <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+<span class="token comment">/* 在上述代码后添加如下内容 */</span>
+<span class="token punctuation">&#123;</span><span class="token operator">%</span> elif page<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'links'</span> <span class="token operator">%</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token operator">%</span> include <span class="token string">'_partials/page/links.njk'</span> <span class="token operator">%</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改主题配置文件（如 <code>_config.next.yml</code>）：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 找到如下代码</span><br><span class="line">archives: &#x2F;archives&#x2F; || fa fa-archive</span><br><span class="line"># 在上述代码后添加如下内容</span><br><span class="line">links: &#x2F;links || fa fa-link</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux"># 找到如下代码
+archives: &#x2F;archives&#x2F; || fa fa-archive
+# 在上述代码后添加如下内容
+links: &#x2F;links || fa fa-link<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改语言文件 <code>languages/zh-CN.yml</code>:</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 在合适位置添加以下内容</span><br><span class="line">links: 友链</span><br><span class="line"># 比如</span><br><span class="line">about: 关于</span><br><span class="line">links: 友链</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux"># 在合适位置添加以下内容
+links: 友链
+# 比如
+about: 关于
+links: 友链<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 <li><p>修改主题配置文件（如 <code>_config.next.yml</code>），添加如下内容：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># defaultlinks 会显示在 跟着大佬走，成为小大佬 标签中</span><br><span class="line">defaultlinks:</span><br><span class="line">  - nickname: 雷霄骅</span><br><span class="line">    site: https:&#x2F;&#x2F;me.csdn.net&#x2F;leixiaohua1020</span><br><span class="line">    avatar: https:&#x2F;&#x2F;gitee.com&#x2F;hezhaojiang&#x2F;MyPics&#x2F;raw&#x2F;master&#x2F;img&#x2F;20201008135337.png</span><br><span class="line">    info: 中国传媒大学一个搞广播电视相关的视音频技术的学生</span><br><span class="line"></span><br><span class="line"># friendslinks 会显示在 五湖四海的朋友们 标签中</span><br><span class="line">friendslinks:</span><br><span class="line">  - nickname: 何照江</span><br><span class="line">    site: https:&#x2F;&#x2F;xiaoqingdu.gitee.io&#x2F;</span><br><span class="line">    avatar: https:&#x2F;&#x2F;xiaoqingdu.gitee.io&#x2F;images&#x2F;head.jpeg</span><br><span class="line">    info: 无</span><br></pre></td></tr></table></figure>
-</li>
+<p><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux"># defaultlinks 会显示在 跟着大佬走，成为小大佬 标签中
+defaultlinks:
+  - nickname: 雷霄骅
+    site: https:&#x2F;&#x2F;me.csdn.net&#x2F;leixiaohua1020
+    avatar: https:&#x2F;&#x2F;gitee.com&#x2F;hezhaojiang&#x2F;MyPics&#x2F;raw&#x2F;master&#x2F;img&#x2F;20201008135337.png
+    info: 中国传媒大学一个搞广播电视相关的视音频技术的学生
+
+# friendslinks 会显示在 五湖四海的朋友们 标签中
+friendslinks:
+  - nickname: 何照江
+    site: https:&#x2F;&#x2F;xiaoqingdu.gitee.io&#x2F;
+    avatar: https:&#x2F;&#x2F;xiaoqingdu.gitee.io&#x2F;images&#x2F;head.jpeg
+    info: 无<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p></li>
 </ol>
 
     </div>
@@ -432,22 +623,11 @@
     
     
     
-      
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\c73e32c0\" rel="bookmark">博客搭建 - NexT Snippets</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\post\2020\6a28acc4\" rel="bookmark">博客搭建 - Hexo 换机指导</a></div>
-    </li>
-  </ul>
-
 
     <footer class="post-footer">
           <div class="reward-container">
   <div></div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <button>
     赞赏
   </button>
   <div class="post-reward">
@@ -490,42 +670,14 @@
 
 
 
-      
-    <div class="comments" id="valine-comments"></div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -533,132 +685,52 @@
   </span>
   <span class="author" itemprop="copyrightHolder">何照江</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script size="900" alpha="0.6" zIndex="-2" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
 
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"dark","js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.13.3/dist/mermaid.min.js","integrity":"sha256-blHXaX2RMvNwEOnrYOl/6/RKqNi97Ig3o6Ae3bhXPvM="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-<script data-pjax>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'dark',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
-
-
-
-
-
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"http://github.hezhaojiang.io/post/2020/97e2582/"}</script>
+  <script src="/js/third-party/quicklink.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-
-
-
-
-    <div class="pjax">
-  
-
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://github.hezhaojiang.io/post/2020/97e2582/',]
-      });
-      });
-  </script>
-
-<script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el: '#valine-comments',
-      path: "/post/2020/97e2582/",
-      serverURLs: "https://ovsz3ptu.api.lncldglobal.com"
-    },{"enable":true,"appId":"oVsz3ptudld7784mEB48TVJ5-gzGzoHsz","appKey":"j2c9RsmaYmRXLhRBTXLS4NVE","serverURLs":null,"placeholder":"写下你的评论吧...","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":["nick"]}));
-  }, window.Valine);
-});
-</script>
-
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 <script type="text/javascript" src="/js/click_magic.js"></script>
