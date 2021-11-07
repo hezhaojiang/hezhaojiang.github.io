@@ -9,7 +9,7 @@ date: 2020-11-06 05:08:22
 ---
 `libevent` 允许创建一个超时 `event`，使用 `evtimer_new` 宏。
 
-``` c++
+``` cpp
 #define evtimer_new(b, cb, arg)     event_new((b), -1, 0, (cb), (arg))
 ```
 
@@ -29,7 +29,7 @@ date: 2020-11-06 05:08:22
 
 首先调用 event_add 时要设置一个超时值，这样才能成为一个超时 event。
 
-``` c++
+``` cpp
 int event_add(struct event *ev, const struct timeval *tv) {
     ......
     res = event_add_nolock_(ev, tv, 0);
@@ -87,7 +87,7 @@ int event_add_nolock_(struct event *ev, const struct timeval *tv, int tv_is_abso
 
 现在来看一下 `event_base_loop` 函数，看其是怎么处理超时 `event` 的。
 
-``` c++
+``` cpp
 /* 非超时相关代码没有展示 */
 int event_base_loop(struct event_base *base, int flags) {
     const struct eventop *evsel = base->evsel;
@@ -119,7 +119,7 @@ done:
 1. 设置 `dispatch` 回调的第二个参数 `tv`，这个参数如果为 `0`, 则无论是否有事件发生，都会立即返回。
     1. 如果设置了 `EVLOOP_NONBLOCK` 标志位，则会调用 `evutil_timerclear()` 将 `tv` 设置为 `0`
 
-        ``` c++
+        ``` cpp
         /* 不会阻塞，它仅仅是查看是否已经有 event ready. 有则运行其 callback. 然后退出 */
         #define EVLOOP_NONBLOCK 0x02
 
@@ -135,7 +135,7 @@ done:
 
 `timeout_next()` 用来计算出本次调用多路 `IO` 复用函数的等待时间：
 
-``` c++
+``` cpp
 static int timeout_next(struct event_base *base, struct timeval **tv_p) {
     /* Caller must hold th_base_lock */
     struct timeval now;
@@ -162,7 +162,7 @@ out:
 
 `timeout_process()` 函数将超时了的 `event` 加入激活队列：
 
-``` c++
+``` cpp
 static void timeout_process(struct event_base *base) {
     struct timeval now;
     struct event *ev;

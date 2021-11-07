@@ -17,7 +17,7 @@ date: 2020-10-19 15:29:10
 
 假设我们执行的命令为：`rtmpdump -r rtmp://62.234.111.13:1935/mylive/1 -o Hello.flv`，该条命令涉及到的函数流程均进行保留，其他流程分支请参考源代码。
 
-``` c++
+``` cpp
 int main(int argc, char **argv) {
     if (!InitSockets()) {
         RTMP_Log(RTMP_LOGERROR,
@@ -209,7 +209,7 @@ clean:
 
 其中 `InitSockets` 函数和 `CleanupSockets` 较为简单，在 `Windows` 平台下仅仅做了 `socket` 的初始化和反初始化工作，在 `Linux` 平台下甚至什么都没有做就 `return` 了：
 
-``` c++
+``` cpp
 int InitSockets() {
 #ifdef WIN32
     WORD version;

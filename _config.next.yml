@@ -91,7 +91,7 @@ creative_commons:
 
 background_music:
   enable: false
-  id: 569214252
+  id: 22707008
 
 # ---------------------------------------------------------------
 # Menu Settings
@@ -386,7 +386,7 @@ codeblock:
     light: vs
     dark: vs2015
   prism:
-    light: prism
+    light: prism-hopscotch
     dark: prism-tomorrow
   # Add copy button on codeblock
   copy_button:
@@ -537,7 +537,7 @@ math:
   mathjax:
     enable: true
     # Available values: none | ams | all
-    tags: none
+    tags: all
 
   katex:
     enable: false
@@ -871,7 +871,7 @@ motion:
 # Progress bar in the top during page loading.
 # For more information: https://github.com/CodeByZach/pace
 pace:
-  enable: false
+  enable: true
   # All available colors:
   # black | blue | green | orange | pink | purple | red | silver | white | yellow
   color: blue
@@ -883,7 +883,7 @@ pace:
 # Canvas ribbon
 # For more information: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: false
+  enable: true
   size: 300 # The width of the ribbon
   alpha: 0.6 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon

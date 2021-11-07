@@ -22,7 +22,7 @@ date: 2020-11-02 14:00:47
 
 而完全二叉树由于其特性，通常由数组来实现：
 
-``` c++
+``` cpp
 /* 已知一个节点所在数组下标，获取其左子节点、右子节点、父节点的数组下标 */
 #define GetLeftChild(index)     ((index) * 2 + 1)
 #define GetRightChild(index)    ((index) * 2 + 2)
@@ -35,7 +35,7 @@ date: 2020-11-02 14:00:47
 
 ## min_heap 的定义
 
-``` c++
+``` cpp
 typedef struct min_heap
 {
     struct event** p;
@@ -55,14 +55,14 @@ typedef struct min_heap
 
 `min_heap_elem_greater` 函数传入两个 `event` 参数，用来判断第一个参数 `event` 的超时结构体是否大于第二参数的超时结构体，如果大于则返回 `1`，否则返回 `0`。比较两个超时结构体先比较秒数，再比较微妙数，函数中调用了宏函数，如下所示：
 
-``` c++
+``` cpp
 #define evutil_timercmp(tvp, uvp, cmp)                  \
     (((tvp)->tv_sec == (uvp)->tv_sec) ? ((tvp)->tv_usec cmp (uvp)->tv_usec) : ((tvp)->tv_sec cmp (uvp)->tv_sec))
 
 #define min_heap_elem_greater(a, b) (evutil_timercmp(&(a)->ev_timeout, &(b)->ev_timeout, >))
 ```
 
-``` c++
+``` cpp
 struct event {
     ......
     union {
@@ -75,14 +75,14 @@ struct event {
 
 虽然说 `C` 语言中没有构造函数和析构函数，但是 `min_heap` 也将这种思想进行了体现在了 `min_heap_ctor` 函数和 `min_heap_dtor` 函数上，从函数名上看就是 `constructor` 和 `destructor` 的简写，各自定义如下：
 
-``` c++
+``` cpp
 void min_heap_ctor_(min_heap_t* s) { s->p = 0; s->n = 0; s->a = 0; }
 void min_heap_dtor_(min_heap_t* s) { if (s->p) mm_free(s->p); }
 ```
 
 `min_heap_elem_init` 函数用来初始化小根堆中的 `event`，将 `event` 的堆索引初始化为 `-1`。其定义如下：
 
-``` c++
+``` cpp
 void min_heap_elem_init_(struct event* e) { e->ev_timeout_pos.min_heap_idx = -1; }
 ```
 
@@ -106,7 +106,7 @@ void min_heap_elem_init_(struct event* e) { e->ev_timeout_pos.min_heap_idx = -1;
 
 接下来我们再分析下 `libevent` 向堆中插入一个新节点的过程，其由 `min_heap_push_` 函数实现，其定义如下：
 
-``` c++
+``` cpp
 int min_heap_push_(min_heap_t* s, struct event* e) {
     if (s->n == UINT32_MAX || min_heap_reserve_(s, s->n + 1)) return -1;
     min_heap_shift_up_(s, s->n++, e);
@@ -125,7 +125,7 @@ int min_heap_push_(min_heap_t* s, struct event* e) {
 
 `min_heap` 是在插入新的 `event` 时，如果空间不足是可以自动扩容的，该函数需要传入 `n` 表明需要让堆装下 `n` 个元素。由函数 `min_heap_reserve_` 实现如下：
 
-``` c++
+``` cpp
 int min_heap_reserve_(min_heap_t* s, unsigned n) {
     if (s->a < n) {
         struct event** p;
@@ -154,7 +154,7 @@ int min_heap_reserve_(min_heap_t* s, unsigned n) {
 
 `min_heap` 的堆元素上浮是通过 `min_heap_shift_up_` 函数实现的，该函数定义如下：
 
-``` c++
+``` cpp
 void min_heap_shift_up_(min_heap_t* s, unsigned hole_index, struct event* e) {
     unsigned parent = (hole_index - 1) / 2;
     while (hole_index && min_heap_elem_greater(s->p[parent], e)) {
@@ -178,7 +178,7 @@ void min_heap_shift_up_(min_heap_t* s, unsigned hole_index, struct event* e) {
 
 接下来我们再分析下 `libevent` 向堆中弹出一个新节点的过程，，其由 `min_heap_pop_` 函数实现，其定义如下：
 
-``` c++
+``` cpp
 struct event* min_heap_pop_(min_heap_t* s) {
     if (s->n) {
         struct event* e = *s->p;
@@ -194,7 +194,7 @@ struct event* min_heap_pop_(min_heap_t* s) {
 
 与堆元素的上浮相似，由 `min_heap_shift_down_` 函数实现，其定义如下：
 
-``` c++
+``` cpp
 void min_heap_shift_down_(min_heap_t* s, unsigned hole_index, struct event* e) {
     unsigned min_child = 2 * (hole_index + 1);
     while (min_child <= s->n) {
@@ -212,7 +212,7 @@ void min_heap_shift_down_(min_heap_t* s, unsigned hole_index, struct event* e) {
 
 根据堆的特性，`peek` 操作只需要返回非空数组的首个元素即可：
 
-``` c++
+``` cpp
 struct event* min_heap_top(min_heap_t* s) { return s->n ? *s->p : 0; }
 ```
 
@@ -220,7 +220,7 @@ struct event* min_heap_top(min_heap_t* s) { return s->n ? *s->p : 0; }
 
 `min_heap_elt_is_top` 函数用于判断 `event` 是否在堆顶。显然，如果 `event` 的堆索引为 `0`，那么这个 `event` 就在堆顶了。其定义如下：
 
-``` c++
+``` cpp
 int min_heap_elt_is_top_(const struct event *e) {
     return e->ev_timeout_pos.min_heap_idx == 0;
 }
@@ -230,7 +230,7 @@ int min_heap_elt_is_top_(const struct event *e) {
 
 前面说了 `min_heap` 中的成员变量 `n` 描述堆中实际存在的元素数目，因此直接判断 `n` 是否为 `0` 即可：
 
-``` c++
+``` cpp
 int min_heap_empty(min_heap_t* s) { return 0u == s->n; }   // 堆是否为空
 unsigned min_heap_size(min_heap_t* s) { return s->n; }   // 堆大小
 ```
@@ -239,7 +239,7 @@ unsigned min_heap_size(min_heap_t* s) { return s->n; }   // 堆大小
 
 需要注意的一点是，由于堆末尾的元素对于整个堆来说，删除它对于堆是没有任何影响的，因此，如果要对堆中的任意一个元素进行删除，就可以将需要删除的元素先和堆尾元素互换，然后不考虑需要删除的元素，对互换后的堆进行调整，最终得到的堆就是删除了该元素的堆了。由 `min_heap_erase_` 实现，由于其定义如下：
 
-``` c++
+``` cpp
 int min_heap_erase_(min_heap_t* s, struct event* e) {
     if (-1 != e->ev_timeout_pos.min_heap_idx) {
         struct event *last = s->p[--s->n];

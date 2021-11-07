@@ -31,7 +31,7 @@ date: 2020-12-30 16:24:28
 
 通过 `Cmake` 判断系统环境，来确定获取 `monotonic` 时间的函数。
 
-``` c++
+``` cpp
 // CMakeLists.txt:
 CHECK_FUNCTION_EXISTS_EX(clock_gettime EVENT__HAVE_CLOCK_GETTIME)
 CHECK_FUNCTION_EXISTS_EX(mach_absolute_time EVENT__HAVE_MACH_ABSOLUTE_TIME)
@@ -54,7 +54,7 @@ CHECK_FUNCTION_EXISTS_EX(mach_absolute_time EVENT__HAVE_MACH_ABSOLUTE_TIME)
 
 `libevent` 会在 `event_base` 创建时对 `monotonic` 时间的支持进行判断，判断方式为：调用不同平台下的 `monotonic` 时间获取函数，如果能正确返回，则代表该平台支持 `monotonic` 时间，`libevent` 后续使用 `gettime` 获取时间均会使用 `monotonic` 时间。
 
-``` c++
+``` cpp
 /* The POSIX clock_gettime() interface provides a few ways to get at a monotonic clock.
    CLOCK_MONOTONIC is most widely supported.
    Linux also provides a CLOCK_MONOTONIC_COARSE with accuracy of about 1-4 msec.
@@ -82,7 +82,7 @@ int evutil_configure_monotonic_time_(struct evutil_monotonic_timer *base, int fl
 
 从上述分析中可以看到，在平台不支持 `base->monotonic_clock` 会被 `libevent` 置为 `-1`，此时调用 `gettime` 就会调用 `evutil_gettimeofday` 来获取系统时间，并通过 `adjust_monotonic_time` 将获取到的系统时间调整为一个单调递增的时间。
 
-``` c++
+``` cpp
 int evutil_gettime_monotonic_(struct evutil_monotonic_timer *base, struct timeval *tp) {
     struct timespec ts;
     if (base->monotonic_clock < 0) {
@@ -112,7 +112,7 @@ static int gettime(struct event_base *base, struct timeval *tp) {
 
 `libevent` 获取到系统时间后，会调用 `adjust_monotonic_time` 生成 `fake monotonic` 时间。
 
-``` c++
+``` cpp
 /* This function assumes it's called repeatedly with a not-actually-so-monotonic time source whose outputs
    are in 'tv'. It implements a trivial ratcheting mechanism so that the values never go backwards. */
 static void adjust_monotonic_time(struct evutil_monotonic_timer *base, struct timeval *tv) {

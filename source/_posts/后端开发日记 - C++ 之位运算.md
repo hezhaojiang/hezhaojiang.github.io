@@ -18,7 +18,7 @@ date: 2020-11-05 16:32:28
 
 该函数是判断 `n` 的二进制中 `1` 的个数的奇偶性
 
-``` c++
+``` cpp
 int n = 15;                         // 二进制为 1111
 int m = 7;                          // 二进制为 111
 cout<<__builtin_parity(n)<<endl;    // 偶数个 1，输出 0
@@ -29,7 +29,7 @@ cout<<__builtin_parity(m)<<endl;    // 奇数个 1，输出 1
 
 该函数时判断 `n` 的二进制中有多少个 `1`
 
-``` c++
+``` cpp
 int n = 15;                         // 二进制为 1111
 cout<<__builtin_popcount(n)<<endl;  // 输出结果为 4
 ```
@@ -38,7 +38,7 @@ cout<<__builtin_popcount(n)<<endl;  // 输出结果为 4
 
 该函数判断 `n` 的二进制末尾后面 `0` 的个数，`n = 0` 时结果未定义
 
-``` c++
+``` cpp
 int n = 1;                      // 二进制为 1
 int m = 8;                      // 二进制为 1000
 cout<<__builtin_ctzll(n)<<endl; // 输出 0
@@ -49,7 +49,7 @@ cout<<__builtin_ctz(m)<<endl;   // 输出 3
 
 `n` 前导 `0` 的个数, `n = 0` 时结果未定义
 
-``` c++
+``` cpp
 long long n = 1;                // 二进制为 000....001 64 位整数
 int m = 8;                      // 二进制为 000...1000 32 位整数
 cout<<__builtin_clzll(n)<<endl; // 输出 63
@@ -60,7 +60,7 @@ cout<<__builtin_clz(m)<<endl;   // 输出 28
 
 该函数判断 `n` 的二进制末尾最后一个 `1` 的位置，从 `1` 开始
 
-``` c++
+``` cpp
 int n = 1;                      // 二进制为 1
 int m = 8;                      // 二进制为 1000
 cout<<__builtin_ffs(n)<<endl;   // 输出 1

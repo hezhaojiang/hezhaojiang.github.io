@@ -17,7 +17,7 @@ date: 2020-10-25 04:53:10
 
 > `evthread_enable_lock_debuging` 函数为 `evthread_enable_lock_debugging` 函数的拼写错误版本。因兼容性原因进行保留。
 
-``` c++
+``` cpp
 GLOBAL int evthread_lock_debugging_enabled_ = 0;
 
 void evthread_enable_lock_debuging(void) {
@@ -58,7 +58,7 @@ void evthread_enable_lock_debugging(void) {
 
 ## 调试锁结构
 
-``` c++
+``` cpp
 struct debug_lock {
     unsigned signature;
     unsigned locktype;
@@ -81,7 +81,7 @@ struct debug_lock {
 
 ### debug_lock_alloc
 
-``` c++
+``` cpp
 static void * debug_lock_alloc(unsigned locktype) {
     struct debug_lock *result = mm_malloc(sizeof(struct debug_lock));
     if (!result) return NULL;
@@ -107,7 +107,7 @@ static void * debug_lock_alloc(unsigned locktype) {
 
 ### debug_lock_free
 
-``` c++
+``` cpp
 static void debug_lock_free(void *lock_, unsigned locktype) {
     struct debug_lock *lock = lock_;
     EVUTIL_ASSERT(lock->count == 0);
@@ -132,7 +132,7 @@ static void debug_lock_free(void *lock_, unsigned locktype) {
 
 ### debug_lock_lock
 
-``` c++
+``` cpp
 static int debug_lock_lock(unsigned mode, void *lock_) {
     struct debug_lock *lock = lock_;
     int res = 0;
@@ -154,7 +154,7 @@ static int debug_lock_lock(unsigned mode, void *lock_) {
 
 #### evthread_debug_lock_mark_locked
 
-``` c++
+``` cpp
 static void evthread_debug_lock_mark_locked(unsigned mode, struct debug_lock *lock) {
     EVUTIL_ASSERT(DEBUG_LOCK_SIG == lock->signature);
     ++lock->count;
@@ -183,7 +183,7 @@ static void evthread_debug_lock_mark_locked(unsigned mode, struct debug_lock *lo
 
 ### debug_lock_unlock
 
-``` c++
+``` cpp
 static int debug_lock_unlock(unsigned mode, void *lock_) {
     struct debug_lock *lock = lock_;
     int res = 0;
@@ -197,7 +197,7 @@ static int debug_lock_unlock(unsigned mode, void *lock_) {
 
 #### evthread_debug_lock_mark_unlocked
 
-``` c++
+``` cpp
 static void evthread_debug_lock_mark_unlocked(unsigned mode, struct debug_lock *lock) {
     EVUTIL_ASSERT(DEBUG_LOCK_SIG == lock->signature);
     if (lock->locktype & EVTHREAD_LOCKTYPE_READWRITE) EVUTIL_ASSERT(mode & (EVTHREAD_READ|EVTHREAD_WRITE));
@@ -229,7 +229,7 @@ static void evthread_debug_lock_mark_unlocked(unsigned mode, struct debug_lock *
 
 ### debug_cond_wait
 
-``` c++
+``` cpp
 static int debug_cond_wait(void *cond_, void *lock_, const struct timeval *tv) {
     int r;
     struct debug_lock *lock = lock_;

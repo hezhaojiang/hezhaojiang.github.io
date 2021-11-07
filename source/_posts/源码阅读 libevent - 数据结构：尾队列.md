@@ -19,7 +19,7 @@ date: 2020-10-25 13:36:35
 
 ### 尾队列的定义宏
 
-``` c++
+``` cpp
 #define TAILQ_HEAD(name, type)                      \
 struct name {                                       \
     struct type *tqh_first; /* first element */                         \
@@ -37,7 +37,7 @@ struct {                                            \
 
 同双向链表一样，我们通过代码来分析尾队列的节点结构：
 
-``` c++
+``` cpp
 #include<stdio.h>
 #include<stdlib.h>
 #include"queue.h"
@@ -94,7 +94,7 @@ int main(void) {
 
 ### 尾队列的访问宏
 
-``` c++
+``` cpp
 #define TAILQ_FIRST(head)           ((head)->tqh_first)
 #define TAILQ_END(head)             NULL
 #define TAILQ_NEXT(elm, field)      ((elm)->field.tqe_next)
@@ -133,7 +133,7 @@ int main(void) {
 
 尾队列的尾节点获取方式如下：
 
-``` c++
+``` cpp
 #define TAILQ_LAST(head, headname)  (*(((struct headname *)((head)->tqh_last))->tqh_last))
 ```
 
@@ -164,7 +164,7 @@ int main(void) {
 
 尾队列的前继节点获取方式如下：
 
-``` c++
+``` cpp
 #define TAILQ_PREV(elm, headname, field)    (*(((struct headname *)((elm)->field.tqe_prev))->tqh_last))
 ```
 
@@ -210,7 +210,7 @@ int main(void) {
 
 ### 初始化
 
-``` c++
+``` cpp
 #define TAILQ_INIT(head) do {                       \
     (head)->tqh_first = NULL;                       \
     (head)->tqh_last = &(head)->tqh_first;          \
@@ -219,7 +219,7 @@ int main(void) {
 
 ### 头插法
 
-``` c++
+``` cpp
 #define TAILQ_INSERT_HEAD(head, elm, field) do {    \
     if (((elm)->field.tqe_next = (head)->tqh_first) != NULL)    \
         (head)->tqh_first->field.tqe_prev = &(elm)->field.tqe_next;             \
@@ -231,7 +231,7 @@ int main(void) {
 
 ### 尾插法
 
-``` c++
+``` cpp
 #define TAILQ_INSERT_TAIL(head, elm, field) do {    \
     (elm)->field.tqe_next = NULL;                   \
     (elm)->field.tqe_prev = (head)->tqh_last;       \
@@ -242,7 +242,7 @@ int main(void) {
 
 ### 后插法
 
-``` c++
+``` cpp
 #define TAILQ_INSERT_AFTER(head, listelm, elm, field) do {                      \
     if (((elm)->field.tqe_next = (listelm)->field.tqe_next) != NULL)            \
         (elm)->field.tqe_next->field.tqe_prev = &(elm)->field.tqe_next;         \
@@ -254,7 +254,7 @@ int main(void) {
 
 ### 前插法
 
-``` c++
+``` cpp
 #define TAILQ_INSERT_BEFORE(listelm, elm, field) do {                           \
     (elm)->field.tqe_prev = (listelm)->field.tqe_prev;                          \
     (elm)->field.tqe_next = (listelm);              \
@@ -265,7 +265,7 @@ int main(void) {
 
 ### 删除节点
 
-``` c++
+``` cpp
 #define TAILQ_REMOVE(head, elm, field) do {         \
     if (((elm)->field.tqe_next) != NULL)            \
         (elm)->field.tqe_next->field.tqe_prev = (elm)->field.tqe_prev;          \
@@ -276,7 +276,7 @@ int main(void) {
 
 ### 替换节点
 
-``` c++
+``` cpp
 #define TAILQ_REPLACE(head, elm, elm2, field) do {                              \
     if (((elm2)->field.tqe_next = (elm)->field.tqe_next) != NULL)               \
         (elm2)->field.tqe_next->field.tqe_prev = &(elm2)->field.tqe_next;       \

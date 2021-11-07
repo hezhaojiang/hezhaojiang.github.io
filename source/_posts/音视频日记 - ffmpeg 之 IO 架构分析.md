@@ -24,7 +24,7 @@ tags:
 
 ## 函数调用关系
 
-``` c++
+``` cpp
 + avformat_open_input()
 +---+ init_input()                              /* 打开输入的视频数据并且探测视频的格式 */
     +---- av_probe_input_buffer2()
@@ -45,7 +45,7 @@ tags:
 
 ## init_input()
 
-``` C++
+``` cpp
 
 /* Open input file and probe the format if necessary. */
 static int init_input(AVFormatContext *s, const char *filename,
@@ -83,7 +83,7 @@ static int init_input(AVFormatContext *s, const char *filename,
 
 在函数的开头的 `score` 变量是一个判决 `AVInputFormat` 的分数的门限值，如果最后得到的 `AVInputFormat` 的分数低于该门限值，就认为没有找到合适的 `AVInputFormat`。`ffmpeg` 内部判断封装格式的原理实际上是对每种 `AVInputFormat` 给出一个分数，满分是 `100` 分，越有可能正确的 `AVInputFormat` 给出的分数就越高。最后选择分数最高的 `AVInputFormat` 作为推测结果。`score` 的值是一个宏定义 `AVPROBE_SCORE_RETRY`，我们可以看一下它的定义：
 
-``` C++
+``` cpp
 #define AVPROBE_SCORE_MAX       100 ///< maximum score
 #define AVPROBE_SCORE_RETRY (AVPROBE_SCORE_MAX/4)
 ```

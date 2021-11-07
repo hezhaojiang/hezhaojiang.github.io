@@ -9,7 +9,7 @@ date: 2020-11-01 13:54:26
 ---
 在 {% post_link "源码阅读 libevent - event_io_map" %} 和 {% post_link "源码阅读 libevent - event_signal_map" %} 中，无论是哈希表还是普通数组，都是将一个 fd 或者 sig 映射到了一个双向链表的表头上：
 
-``` c++
+``` cpp
 LIST_HEAD (event_dlist, event);
 /* 以上宏定义展开后结果为如下所示 */
 struct event_dlist {
@@ -23,7 +23,7 @@ struct event_dlist {
 
 ## struct event 的定义
 
-``` c++
+``` cpp
 struct event {
     struct event_callback ev_evcallback;
 
@@ -61,7 +61,7 @@ struct event {
 
 `ev_evcallback` 的定义为：`struct event_callback ev_evcallback;`，其中 `struct event_callback` 定义如下：
 
-``` c++
+``` cpp
 struct event_callback {
     TAILQ_ENTRY(event_callback) evcb_active_next;
     short evcb_flags;
@@ -82,7 +82,7 @@ struct event_callback {
 2. `evcb_flags`：反映 `event` 目前的状态，是处于超时队列、已添加队列、激活队列、信号队列等
     - 描述 `event` 的状态，由 `libevent` 内部设置。比如说 `event` 被初始化，那么 `flags` 就会设置为 `EVLIST_INIT`，有如下几种状态：
 
-    ``` c++
+    ``` cpp
     #define EVLIST_TIMEOUT      0x01    // event 在 time min_heap 中
     #define EVLIST_INSERTED     0x02    // event 在已注册事件链表中
     #define EVLIST_SIGNAL       0x04    // event 属于信号队列
@@ -99,7 +99,7 @@ struct event_callback {
 4. `evcb_closure`：描述 event 在激活时的处理方式。
     - 对于永久事件来说就需要重新添加到定时器中并调用回调函数，而对于一般的事件来说则是直接调用回调函数。`ev_closure` 可以设置为以下几种：
 
-    ``` c++
+    ``` cpp
     #define EV_CLOSURE_EVENT                0   // 常规事件，使用 evcb_callback 回调
     #define EV_CLOSURE_EVENT_SIGNAL         1   // 信号事件；使用 evcb_callback 回调
     #define EV_CLOSURE_EVENT_PERSIST        2   // 永久性非信号事件；使用 evcb_callback 回调
@@ -114,7 +114,7 @@ struct event_callback {
 
 ### ev_timeout_pos
 
-``` c++
+``` cpp
 union { /* for managing timeouts */
     TAILQ_ENTRY(event) ev_next_with_common_timeout;
     int min_heap_idx;
@@ -134,7 +134,7 @@ union { /* for managing timeouts */
 
 在 `libevent` 中，每一个 `event_base` 都定义了以下几种事件集合：已添加事件队列 `eventqueue`、已激活事件队列 `activequeues`、定时器 `min_heap`、公用超时事件队列 `common_timeout_queues`、`io` 事件集合以及 `signal` 事件集合，如下所示：
 
-``` c++
+``` cpp
 struct event_base {
     ......
     /** An array of nactivequeues queues for active events (ones that
@@ -168,7 +168,7 @@ struct event_base {
 
 ### ev_
 
-``` c++
+``` cpp
 union {
     struct { /* used for io events */
         LIST_ENTRY (event) ev_io_next;
@@ -198,7 +198,7 @@ union {
 
 `ev_events`：`event` 感兴趣的事件类型，可以定义为以下组合：
 
-``` c++
+``` cpp
 #define EV_TIMEOUT  0x01    // 超时事件
 /** Wait for a socket or FD to become readable */
 #define EV_READ     0x02    // 读事件
@@ -229,7 +229,7 @@ union {
 
 通过前面 `event` 的结构可以知道，`event` 结构体成员分为两类：一类是 `event` 本身的属性，另一类则是用于描述 `event` 在某些 `event` 集合中的位置。前者既然是属性，那么就应当在 `event` 创建时就制定好，而后者则应该是当 `event` 被添加到 `event_base` 之后才进行设置的。那么现在就来看看 `event` 的创建。
 
-``` c++
+``` cpp
 struct event *
 event_new(struct event_base *base, evutil_socket_t fd, short events, void (*cb)(evutil_socket_t, short, void *), void *arg)
 {
@@ -251,7 +251,7 @@ event_new(struct event_base *base, evutil_socket_t fd, short events, void (*cb)(
 
 分配内存后的 `event` 通过 `event_assign()` 根据参数对其各个字段初始化，`event_assign()` 定义如下：
 
-``` c++
+``` cpp
 int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, short events,
                  void (*callback)(evutil_socket_t, short, void *), void *arg) {
     if (!base) base = current_base;
@@ -297,7 +297,7 @@ int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, 
 
 如果是要创建超时事件，`fd` 和 `events` 的值分别设置为 `-1` 和 `0`，`libevent` 用一个宏来表示，超时事件的创建：
 
-``` c++
+``` cpp
 #define evtimer_new(b, cb, arg) event_new((b), -1, 0, (cb), (arg))
 ```
 
@@ -305,7 +305,7 @@ int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, 
 
 - `event_assign()` 中使用了宏来对 `event` 中的参数赋值，所以看起来像赋值了很多 `event` 中没有的成员，部分宏定义如下：
 
-    ``` c++
+    ``` cpp
     #define ev_ncalls       ev_.ev_signal.ev_ncalls
     #define ev_pncalls      ev_.ev_signal.ev_pncalls
     #define ev_pri          ev_evcallback.evcb_pri
@@ -321,7 +321,7 @@ int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, 
 
 `libevent` 向用户提供的添加接口是 `event_add()` 函数，实际上这个函数内部主要是调用 `event_add_nolock_()` 函数来完成 `event` 的添加：
 
-``` c++
+``` cpp
 int event_add(struct event *ev, const struct timeval *tv) {
     int res;
 
@@ -343,7 +343,7 @@ int event_add(struct event *ev, const struct timeval *tv) {
 
 `event_add_nolock_()` 干的活儿非常多，为了深入理解这里也不会一一展开，同样也需要留到后边剖析 (事件管理框架，超时时间管理)，这里仅仅摘出一条主线，省略其他干扰项：
 
-``` c++
+``` cpp
 int event_add_nolock_(struct event *ev, const struct timeval *tv, int tv_is_absolute) {
     ......
     if ((ev->ev_events & (EV_READ|EV_WRITE|EV_CLOSED|EV_SIGNAL)) &&
@@ -374,7 +374,7 @@ int event_add_nolock_(struct event *ev, const struct timeval *tv, int tv_is_abso
 
 `libevent` 同样提供了接口让我们取消监听 `event`，和 `event_add()` 类似，`event_del()` 也是讲任务交给 `event_del_nolock_()` 来完成。取消监听和监听是逆操作，这在代码里边也有体现, 同样地，只摘出了主线：
 
-``` c++
+``` cpp
 int event_del_nolock_(struct event *ev, int blocking) {
     ......
     if (ev->ev_flags & EVLIST_TIMEOUT) event_queue_remove_timeout(base, ev);
@@ -405,7 +405,7 @@ int event_del_nolock_(struct event *ev, int blocking) {
 
 和 `event_new()` 对应，`event_free()` 先取消监听 `event`，然后释放其内存：
 
-``` c++
+``` cpp
 void event_free(struct event *ev) {
     event_del(ev);
     mm_free(ev);

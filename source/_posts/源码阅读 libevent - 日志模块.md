@@ -21,7 +21,7 @@ date: 2020-10-20 14:01:09
 
 从 `log-internal.h` 文件中即可看到 `libevnet` 的日志相关函数声明如下：
 
-``` c++
+``` cpp
 #define EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))
 #define EV_NORETURN __attribute__((noreturn))
 #define EVENT2_EXPORT_SYMBOL __attribute__ ((visibility("default")))
@@ -42,7 +42,7 @@ EVENT2_EXPORT_SYMBOL void event_logv_(int severity, const char *errstr, const ch
 
 从上述源码中可以发现，所有的日志 API 均被一些宏定义所修饰，这些宏定义有：
 
-``` c++
+``` cpp
 #define EV_CHECK_FMT(a,b) __attribute__((format(printf, a, b)))
 #define EV_NORETURN __attribute__((noreturn))
 #define EVENT2_EXPORT_SYMBOL __attribute__ ((visibility("default")))
@@ -68,7 +68,7 @@ EVENT2_EXPORT_SYMBOL void event_logv_(int severity, const char *errstr, const ch
 
 `libevnet` 的日志 `API` 的函数定义较为简单，下面列出几个示例，其余函数定义可详见源码：
 
-``` c++
+``` cpp
 void event_err(int eval, const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
@@ -104,7 +104,7 @@ void event_debugx_(const char *fmt, ...) {
 
 #### event_logv_
 
-``` c++
+``` cpp
 static void event_log(int severity, const char *msg) {
     if (log_fn) log_fn(severity, msg);
     else {
@@ -146,7 +146,7 @@ void event_logv_(int severity, const char *errstr, const char *fmt, va_list ap) 
 
 从源代码中可以看出 `event_logv_` 的功能较为简单，其根本上是调用 `fprintf` 将错误日志打印到 `stderr`，并且也提供了函数指针 `log_fn` 以供用户自行替换打印日志函数，替换打印日志函数可调用 `event_set_log_callback` 函数实现，该函数的声明位于 `event.h`，实现位于 `log.c`，可以被用户调用：
 
-``` c++
+``` cpp
 static event_log_cb log_fn = NULL;
 typedef void (*event_log_cb)(int severity, const char *msg);
 void event_set_log_callback(event_log_cb cb) {
@@ -160,14 +160,14 @@ void event_set_log_callback(event_log_cb cb) {
 
 `evutil_socket_geterror` 函数实现在 `GNU` 编译环境下非常简单，仅仅是对 `errno` 和 `strerror(errno)` 的封装，定义该函数的目的是区分不同平台的不同编译环境，如果各位读者有兴趣可自行学习该函数在 `Window` 平台下的实现。
 
-``` c++
+``` cpp
 #define evutil_socket_geterror(sock) (errno)
 #define evutil_socket_error_to_string(errcode) (strerror(errcode))
 ```
 
 #### event_exit
 
-``` c++
+``` cpp
 static void event_exit(int errcode) {
     if (fatal_fn) {
         fatal_fn(errcode);
@@ -181,7 +181,7 @@ static void event_exit(int errcode) {
 
 `event_exit` 的功能也较为简单，其根本上是调用 `abort()` 或者 `exit()` 退出程序运行。 当然，`event_exit` 也和 `event_logv_` 一样，提供了函数指针 `fatal_fn` 以供用户自行替换退出程序的方式，替换退出程序函数可调用 `event_set_fatal_callback` 函数实现，该函数的声明位于 `event.h`，实现位于 `log.c`，可以被用户调用：
 
-``` c++
+``` cpp
 typedef void (*event_fatal_cb)(int err);
 static event_fatal_cb fatal_fn = NULL;
 void event_set_fatal_callback(event_fatal_cb cb) {

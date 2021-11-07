@@ -9,7 +9,7 @@ date: 2020-11-09 05:03:49
 ---
 在 `libevent` 中，事件主循环的作用就是执行一个循环，在循环中监听事件以及超时的事件并且将这些激活的事件进行处理。`libevent` 提供了对用户开放了两种执行事件主循环的函数：
 
-``` c++
+``` cpp
 int event_base_dispatch(struct event_base *);
 int event_base_loop(struct event_base *, int);
 ```
@@ -37,7 +37,7 @@ active 状态：事件已经发生，等待调用事件回调
 
 事件主循环函数 `event_base_dispatch()` 其实就是调用 `event_base_loop()`：
 
-``` c++
+``` cpp
 int event_base_dispatch(struct event_base *event_base) {
     return (event_base_loop(event_base, 0));
 }
@@ -45,7 +45,7 @@ int event_base_dispatch(struct event_base *event_base) {
 
 `event_base_loop()` 函数实现如下：
 
-``` c++
+``` cpp
 int event_base_loop(struct event_base *base, int flags) {
     const struct eventop *evsel = base->evsel;
     struct timeval tv;
@@ -135,7 +135,7 @@ done:
 
 libevent 提供了多种监听事件的方案，如单次监听、循环监听等，监听方案由 `event_base_loop()` 参数决定：
 
-``` c++
+``` cpp
     /* 阻塞, 直到一个 event 变成 active. 在 active 状态的 event 的 Callback 函数执行后，就退出。 */
     #define EVLOOP_ONCE 0x01
     /* 不会阻塞，它仅仅是查看是否已经有 event ready. 有则运行其 callback. 然后退出 */
@@ -160,7 +160,7 @@ libevent 提供了多种监听事件的方案，如单次监听、循环监听�
 
 #### select
 
-``` c++
+``` cpp
 static int select_dispatch(struct event_base *base, struct timeval *tv) {
     int res=0, i, j, nfds;
     struct selectop *selectop = base->evbase;
@@ -219,7 +219,7 @@ static int select_dispatch(struct event_base *base, struct timeval *tv) {
 
 从 `select_dispatch` 函数中可以看出，对于每一个事件发生的 `fd`，均会调用一次 `evmap_io_active_` 函数。
 
-``` c++
+``` cpp
 void evmap_io_active_(struct event_base *base, evutil_socket_t fd, short events) {
     struct event_io_map *io = &base->io;
     struct evmap_io *ctx;
@@ -242,7 +242,7 @@ void evmap_io_active_(struct event_base *base, evutil_socket_t fd, short events)
 
 `evmap_io_active_` 对 `dispatch` 的所有事件进行过滤后，对于所有已添加事件，就需要调用 `event_active_nolock_` 进行激活。
 
-``` c++
+``` cpp
 void event_active_nolock_(struct event *ev, int res, short ncalls) {
     struct event_base *base;
     base = ev->ev_base;
@@ -277,7 +277,7 @@ void event_active_nolock_(struct event *ev, int res, short ncalls) {
 
 ##### event_callback_activate_nolock_
 
-``` c++
+``` cpp
 int event_callback_activate_nolock_(struct event_base *base, struct event_callback *evcb) {
     int r = 1;
     if (evcb->evcb_flags & EVLIST_FINALIZING) return 0;
@@ -304,7 +304,7 @@ int event_callback_activate_nolock_(struct event_base *base, struct event_callba
 
 ##### event_queue_insert_active
 
-``` c++
+``` cpp
 static void
 event_queue_insert_active(struct event_base *base, struct event_callback *evcb)
 {
@@ -331,7 +331,7 @@ event_queue_insert_active(struct event_base *base, struct event_callback *evcb)
 
 `evmap_signal_active_` 代码如下，其最终也是调用了 `event_active_nolock_` 进行事件的激活。
 
-``` c++
+``` cpp
 void evmap_signal_active_(struct event_base *base, evutil_socket_t sig, int ncalls) {
     struct event_signal_map *map = &base->sigmap;
     struct evmap_signal *ctx;
@@ -351,7 +351,7 @@ void evmap_signal_active_(struct event_base *base, evutil_socket_t sig, int ncal
 
 遍历检查小根堆中每个事件是否超时，如果超时，则将其加入到激活队列中，激活事件调用的函数也为 `event_active_nolock_`。
 
-``` c++
+``` cpp
 static void timeout_process(struct event_base *base) {
     /* Caller must hold lock. */
     struct timeval now;
@@ -381,7 +381,7 @@ static void timeout_process(struct event_base *base) {
 
 #### event_process_active
 
-``` c++
+``` cpp
 static int event_process_active(struct event_base *base) {
     /* Caller must hold th_base_lock */
     struct evcallback_list *activeq = NULL;
@@ -419,7 +419,7 @@ done:
 
 #### event_process_active_single_queue
 
-``` c++
+``` cpp
 static int event_process_active_single_queue(struct event_base *base,
     struct evcallback_list *activeq, int max_to_process, const struct timeval *endtime) {
     struct event_callback *evcb;
@@ -510,7 +510,7 @@ static int event_process_active_single_queue(struct event_base *base,
 
 `libevent` 持久化事件是在调用事件的回调函数之前，调用 `event_add_nolock_` 重新将事件添加到事件列表中：
 
-``` c++
+``` cpp
 /* Closure function invoked when we're activating a persistent event. */
 static inline void event_persist_closure(struct event_base *base, struct event *ev) {
     void (*evcb_callback)(evutil_socket_t, short, void *);

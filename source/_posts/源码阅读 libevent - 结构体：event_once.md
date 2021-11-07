@@ -13,7 +13,7 @@ date: 2020-11-04 16:20:40
 
 ## struct event_once 的定义
 
-``` c++
+``` cpp
 struct event_once {
     LIST_ENTRY(event_once) next_once;
     struct event ev;
@@ -26,7 +26,7 @@ struct event_once {
 
 并没有 `event_once_new()` 之类的函数用于创建 `event_once`，要使用它要到一个新的函数 `event_base_once()`, 它将 `event_new()` 和 `event_add()` 两个步骤合成了一个：
 
-``` c++
+``` cpp
 
 /* Schedules an event once */
 int event_base_once(struct event_base *base, evutil_socket_t fd, short events,
@@ -72,7 +72,7 @@ int event_base_once(struct event_base *base, evutil_socket_t fd, short events,
 
 上文中说到，`event_once_cb()` 是一次性事件的真正回调函数，我们来看下该函数的实现：
 
-``` c++
+``` cpp
 static void event_once_cb(evutil_socket_t fd, short events, void *arg) {
     struct event_once *eonce = arg;
 
@@ -89,13 +89,13 @@ static void event_once_cb(evutil_socket_t fd, short events, void *arg) {
 
 要是这个事件不触发，那么他的回调函数就不会被释放，`event_once` 所占用的内存就得不到释放，我们无法获得它的指针对其 `free`。一次性事件链表就是为了解决这个问题的，他是 `event_base` 里的一个结构。
 
-``` c++
+``` cpp
 LIST_HEAD(once_event_list, event_once) once_events;
 ```
 
 所有的 `event_once` 在释放之前都会保留在这个链表里，除了 `event_once_cb()` 触发时会被移除，在 `event_base` 被释放时，也会将所有 `once_events` 里的 `event_once` 逐个释放。
 
-``` c++
+``` cpp
 static void event_base_free_(struct event_base *base, int run_finalizers) {
     ......
     while (LIST_FIRST(&base->once_events)) {

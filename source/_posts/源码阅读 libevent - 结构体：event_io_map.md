@@ -17,7 +17,7 @@ date: 2020-10-29 16:30:24
 
 `libevent` 中的哈希表只会用于 `Windows` 系统，像遵循 `POSIX` 标准的 `OS` 是不会用到哈希表的。从下面的定义可以看到这一点。
 
-``` c++
+``` cpp
 #ifdef _WIN32
 #define EVMAP_USE_HT
 #endif
@@ -45,7 +45,7 @@ struct event_signal_map {
 
 `event_io_map` 结构几个重要结构体如下：
 
-``` c++
+``` cpp
 LIST_HEAD (event_dlist, event);
 struct evmap_io {
     struct event_dlist events; /* LIST_HEAD (event_dlist, event); */
@@ -77,7 +77,7 @@ HT_HEAD(event_io_map, event_map_entry);
 
 `event_base_new_with_config` 函数中会调用 `evmap_io_initmap_` 函数对每个 `event_base` 中的 `event_io_map` 进行初始化：
 
-``` c++
+``` cpp
 /** file: event.c
 *** function: event_base_new_with_config */
 evmap_io_initmap_(&base->io);
@@ -89,7 +89,7 @@ void evmap_io_initmap_(struct event_io_map *ctx) {
 
 ## 添加
 
-``` c++
+``` cpp
 int evmap_io_add_(struct event_base *base, evutil_socket_t fd, struct event *ev) {
     const struct eventop *evsel = base->evsel;
     struct event_io_map *io = &base->io;
@@ -132,7 +132,7 @@ int evmap_io_add_(struct event_base *base, evutil_socket_t fd, struct event *ev)
 
 ### GET_IO_SLOT_AND_CTOR
 
-``` c++
+``` cpp
 GET_IO_SLOT_AND_CTOR(ctx, io, fd, evmap_io, evmap_io_init, evsel->fdinfo_len);
 /* 以上宏定义展开后结果为如下所示 */
 do {
@@ -160,7 +160,7 @@ while (0);
 
 双向链表的初始化函数如下：
 
-``` c++
+``` cpp
 static void evmap_io_init(struct evmap_io *entry) {
     LIST_INIT(&entry->events);
     entry->nread = 0;
@@ -173,7 +173,7 @@ static void evmap_io_init(struct evmap_io *entry) {
 
 `event_base.evsel->add` 其实是个函数指针（参见：{% post_link "源码阅读 libevent - 创建 event_base" %}），其根据 `event_base` 选择的不同后端来调用不同的函数来执行事件添加操作，以 `select` 后端为例：
 
-``` c++
+``` cpp
 static int select_add(struct event_base *base, int fd, short old, short events, void *p) {
     struct selectop *sop = base->evbase; /* event_base.evbase 是 init 返回的结构体指针 */
     EVUTIL_ASSERT((events & EV_SIGNAL) == 0);
@@ -204,7 +204,7 @@ static int select_add(struct event_base *base, int fd, short old, short events, 
 
 ## 删除
 
-``` c++
+``` cpp
 int evmap_io_del_(struct event_base *base, evutil_socket_t fd, struct event *ev) {
     const struct eventop *evsel = base->evsel;
     struct event_io_map *io = &base->io;
@@ -254,7 +254,7 @@ int evmap_io_del_(struct event_base *base, evutil_socket_t fd, struct event *ev)
 
 ### GET_IO_SLOT
 
-``` c++
+``` cpp
 GET_IO_SLOT(ctx, io, fd, evmap_io);
 /* 以上宏定义展开后结果为如下所示 */
 do {
@@ -269,7 +269,7 @@ do {
 
 ### event_base.evsel->del
 
-``` c++
+``` cpp
 static int select_del(struct event_base *base, int fd, short old, short events, void *p) {
     struct selectop *sop = base->evbase;
     EVUTIL_ASSERT((events & EV_SIGNAL) == 0);

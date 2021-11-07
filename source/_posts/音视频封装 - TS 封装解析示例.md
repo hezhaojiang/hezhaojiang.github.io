@@ -26,7 +26,7 @@ date: 2020-11-27 16:13:10
 
 对比该部分结构，可代码定义如下：
 
-``` c++
+``` cpp
 typedef struct TS_HEAD {
     unsigned sync_byte                    : 8;  // 同步字节，固定为 0x47
     unsigned transport_error_indicator    : 1;  // 传输错误指示符，0 表明在 TS 头的 adapt 域后没有无用字节
@@ -46,7 +46,7 @@ typedef struct TS_HEAD {
 
 对比该部分结构，代码定义分析如下：
 
-``` c++
+``` cpp
 typedef struct TS_ADAPT {
     unsigned char adaptation_field_length;  // 自适应域长度，后面的字节数，此包中为 7 字节
     unsigned char flag;                     // 0x50 表示包含 PCR，0x40 表示不包含 PCR
@@ -65,7 +65,7 @@ typedef struct TS_ADAPT {
 
 对比该部分结构，代码定义分析如下：
 
-``` c++
+``` cpp
 typedef struct TS_PAT {
     unsigned table_id                     : 8;  // 固定 0x00 ，标志是该表是 PAT
     unsigned section_syntax_indicator     : 1;  // 段语法标志位，固定为 1
@@ -121,7 +121,7 @@ typedef struct TS_PAT {
 
 对比该部分结构，代码定义分析如下：
 
-``` c++
+``` cpp
 typedef struct TS_PMT {
     unsigned table_id                     : 8;  // 取值随意，一般使用 0x02, 表示 PMT 表
     unsigned section_syntax_indicator     : 1;  // 段语法标志位，固定为 1
@@ -185,7 +185,7 @@ typedef struct TS_PMT {
 
 对比该部分结构，代码定义分析如下：
 
-``` c++
+``` cpp
 typedef struct TS_ADAPT {
     unsigned char adaptation_field_length;  // 自适应域长度，后面的字节数，此包中为 7 字节
     unsigned char flag;                     // 0x50 表示包含 PCR
@@ -202,7 +202,7 @@ typedef struct TS_ADAPT {
 
 对比该部分结构，代码定义分析如下：
 
-``` c++
+``` cpp
 typedef struct TS_ADAPT {
     unsigned start_code_prefix        : 24; // 包头起始码，固定为 0x000001
     unsigned stream_id;               : 8;  // PES 包中的负载流类型，一般视频为 0xe0，音频为 0xc0

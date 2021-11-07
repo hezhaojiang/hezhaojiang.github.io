@@ -99,7 +99,7 @@ date: 2020-11-27 14:47:00
 - `PAT` 的 payload 中传送特殊 `PID` 的列表，每个 `PID` 对应一个节目（对应一张 `PMT` 表）
 - `PAT` 表是 `TS` 流的基础，任何一个 `TS` 流解析寻找节目都是从 `PAT` 表开始查找
 
-``` c++
+``` cpp
 typedef struct TS_PAT_Program {
     unsigned program_number       :16;  // 节目号，为 0x0000 时表示这是 NIT，节目号为 0x0001 时, 表示这是 PMT
     unsigned reserved             :3    // 保留，固定为 111
@@ -133,7 +133,7 @@ typedef struct TS_PAT {
 
 如果 `TS` 流中包含多个节目，那么就会有多个 `PMT` 表。只要我们处理了 `PMT` 表，那么我们就可以获取该节目中所有的流信息，如当前节目包含多少个 Video、多少个 `Audio` 和其他数据及每种数据对用的流 `PID` 分别是多少。
 
-``` c++
+``` cpp
 typedef struct TS_PMT_Stream {
     unsigned stream_type              : 8;  // 指示本节目流的类型，H.264 编码对应 0x1b，AAC 编码对应 0x0f，MP3 编码对应 0x03
     unsigned reserved1                : 3;  // 保留位，固定为 111

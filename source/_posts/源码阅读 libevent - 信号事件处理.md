@@ -38,7 +38,7 @@ IO -- 监听到可读 --> F[用户处理函数]
 
 ## 关键结构体
 
-``` c++
+``` cpp
 /* file: event-internal.h */
 struct event_base {
     const struct eventop *evsigsel;
@@ -70,7 +70,7 @@ struct evsig_info {
 
 ## 初始化
 
-``` c++
+``` cpp
 int evsig_init_(struct event_base *base) {
     if (evutil_make_internal_pipe_(base->sig.ev_signal_pair) == -1) {
         event_sock_err(1, -1, "%s: socketpair", __func__);
@@ -102,7 +102,7 @@ int evsig_init_(struct event_base *base) {
 
 三种方式的实现均在以下代码中：
 
-``` c++
+``` cpp
 int evutil_make_internal_pipe_(evutil_socket_t fd[2]) {
 #if defined(EVENT__HAVE_PIPE2)
     if (pipe2(fd, O_NONBLOCK|O_CLOEXEC) == 0) return 0;
@@ -139,7 +139,7 @@ int evutil_make_internal_pipe_(evutil_socket_t fd[2]) {
 
 #### evutil_socketpair
 
-``` c++
+``` cpp
 int evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2]) {
     return evutil_ersatz_socketpair_(family, type, protocol, fd);
 }
@@ -239,7 +239,7 @@ deactivate listener
 
 #### 其他三个函数
 
-``` c++
+``` cpp
 static int evutil_fast_socket_nonblocking(evutil_socket_t fd) {
     if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1) {
         event_warn("fcntl(%d, F_SETFL)", fd);
@@ -279,7 +279,7 @@ int evutil_closesocket(evutil_socket_t sock) {
 
 创建一个 `io event` 的函数是 `event_new()`，如果要创建信号 `event`，一种方法是直接设置 `event_new()` 的参数为 `EV_SIGNAL`，不过这种方法对于用户来说是非常不友好的。为此，`libevent` 在 `event.h` 中进行了如下的宏定义：
 
-``` c++
+``` cpp
 #define evsignal_add(ev, tv)                event_add((ev), (tv))
 #define evsignal_assign(ev, b, x, cb, arg)  event_assign((ev), (b), (x), EV_SIGNAL|EV_PERSIST, cb, (arg))
 #define evsignal_new(b, x, cb, arg)         event_new((b), (x), EV_SIGNAL|EV_PERSIST, (cb), (arg))
@@ -299,7 +299,7 @@ int evutil_closesocket(evutil_socket_t sock) {
 
 ### evmap_signal_add
 
-``` c++
+``` cpp
 int evmap_signal_add_(struct event_base *base, int sig, struct event *ev) {
     const struct eventop *evsel = base->evsigsel;
     struct event_signal_map *map = &base->sigmap;
@@ -320,7 +320,7 @@ int evmap_signal_add_(struct event_base *base, int sig, struct event *ev) {
 
 ### evsig_add
 
-``` c++
+``` cpp
 static int evsig_add(struct event_base *base, evutil_socket_t evsignal, short old, short events, void *p) {
     struct evsig_info *sig = &base->sig;
     EVUTIL_ASSERT(evsignal>= 0 && evsignal < NSIG);
@@ -350,7 +350,7 @@ err:
 
 `evsig_add()` 函数还调用了 `_evsig_set_handler()` 函数完成设置 `libevent` 内部的信号捕抓函数。
 
-``` c++
+``` cpp
 int evsig_set_handler_(struct event_base *base, int evsignal, void (__cdecl *handler)(int)) {
     struct sigaction sa;
     struct evsig_info *sig = &base->sig;
@@ -393,7 +393,7 @@ int evsig_set_handler_(struct event_base *base, int evsignal, void (__cdecl *han
 
 `_evsig_set_handler()` 函数设置 `libevent` 内部的信号捕抓函数为 `evsig_handler()`
 
-``` c++
+``` cpp
 static void __cdecl evsig_handler(int sig) {
     int save_errno = errno;
     ev_uint8_t msg;
@@ -411,7 +411,7 @@ static void __cdecl evsig_handler(int sig) {
 
 ### 回调函数 evsig_cb
 
-``` c++
+``` cpp
 /* Callback for when the signal handler write a byte to our signaling socket */
 static void evsig_cb(evutil_socket_t fd, short what, void *arg) {
     static char signals[1024];
@@ -448,7 +448,7 @@ static void evsig_cb(evutil_socket_t fd, short what, void *arg) {
 
 `evmap_signal_active` 主要是找到 `event_signal_map` 中，监听信号值为 `sig` 的那一个 `evmap_signal`，在这个 `evmap_signal` 中，包含了所有监听信号值为 `sig` 的 `event` 组成的双向链表，然后直接遍历这个双向链表，把每个元素都按照 `EV_SIGNAL` 的激活方式调用 `event_active_nolock` 函数。
 
-``` c++
+``` cpp
 void evmap_signal_active_(struct event_base *base, evutil_socket_t sig, int ncalls) {
     struct event_signal_map *map = &base->sigmap;
     struct evmap_signal *ctx;
@@ -464,7 +464,7 @@ void evmap_signal_active_(struct event_base *base, evutil_socket_t sig, int ncal
 
 对于 `event_active_nolock` 函数来说，主要任务是调用 `event_callback_activate_nolock_` 把传入的 `event` 添加到激活队列中，如下所示：
 
-``` c++
+``` cpp
 void event_active_nolock_(struct event *ev, int res, short ncalls) {
     ......
     event_callback_activate_nolock_(base, event_to_event_callback(ev));
@@ -484,7 +484,7 @@ int event_callback_activate_nolock_(struct event_base *base, struct event_callba
 
 激活处理的过程就是 `event_base_loop()` --> `event_process_active()` --> `event_process_active_single_queue()`，在 `event_process_active_single_queue` 函数中，会判断激活处理事件的回调关闭方式 `ev_closure`，而对于信号 `event` 来说，在 `evsignal_new()` 时由于传入的参数为 `EV_SIGNAL|EV_PERSIST`，因此 `evsignal_new()` 内部调用的 `event_assign()` 会直接设置信号 `event` 的 `ev_closure` 为 `EV_CLOSURE_SIGNAL`，也就是说，处理激活的信号 `event` 最终是通过 `event_signal_closure()` 函数实现的，该函数定义如下：
 
-``` c++
+``` cpp
 /* "closure" function called when processing active signal events */
 static inline void event_signal_closure(struct event_base *base, struct event *ev) {
     short ncalls;

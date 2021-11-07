@@ -17,7 +17,7 @@ date: 2020-12-30 13:15:02
 
 可以通过 `event_base_priority_init` 函数设置 `event_base` 的优先级个数，该函数实现如下：
 
-``` c++
+``` cpp
 int event_base_priority_init(struct event_base *base, int npriorities) {
     int i, r = -1;
     EVBASE_ACQUIRE_LOCK(base, th_base_lock);
@@ -52,7 +52,7 @@ err:
 
 上面是设置 `event_base` 的优先级个数。现在来看一下怎么设置 `event` 的优先级。可以通过 `event_priority_set` 函数设置，该函数如下：
 
-``` c++
+``` cpp
 /* Set's the priority of an event - if an event is already scheduled changing the priority is going to fail. */
 int event_priority_set(struct event *ev, int pri) {
     event_debug_assert_is_setup_(ev);
@@ -69,7 +69,7 @@ int event_priority_set(struct event *ev, int pri) {
 
 现在看一下一个 `event` 是怎么插入到 `event_base` 的优先级数组中。
 
-``` c++
+``` cpp
 static void event_queue_insert_active(struct event_base *base, struct event_callback *evcb)
 {
     ... ...
@@ -82,7 +82,7 @@ static void event_queue_insert_active(struct event_base *base, struct event_call
 
 `event` 插入到 `event_base` 的优先级数组中后，会被按照优先级顺序被调用：
 
-``` c++
+``` cpp
 static int event_process_active(struct event_base *base) {
     ... ...
     /* 按优先级遍历激活队列中的事件 */
@@ -106,7 +106,7 @@ static int event_process_active(struct event_base *base) {
 
 默认优先级是在新建 `event` 结构体时设置的。不错，看下面的 `event_assign` 函数。
 
-``` c++
+``` cpp
 
 int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd,
                  short events, void (*callback)(evutil_socket_t, short, void *), void *arg) {

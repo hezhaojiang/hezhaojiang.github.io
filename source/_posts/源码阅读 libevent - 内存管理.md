@@ -21,7 +21,7 @@ date: 2020-10-21 13:37:19
 
 从 `mm-internal.h` 文件中可以得到内存管理模块函数的声明：
 
-``` c++
+``` cpp
 EVENT2_EXPORT_SYMBOL void *event_mm_malloc_(size_t sz);
 EVENT2_EXPORT_SYMBOL void *event_mm_calloc_(size_t count, size_t size);
 EVENT2_EXPORT_SYMBOL char *event_mm_strdup_(const char *str);
@@ -44,7 +44,7 @@ EVENT2_EXPORT_SYMBOL void event_mm_free_(void *p);
 
 则 `libevent` 的内存管理函数使用系统的内存管理函数，即：
 
-``` c++
+``` cpp
 #define mm_malloc(sz) malloc(sz)
 #define mm_calloc(n, sz) calloc((n), (sz))
 #define mm_strdup(s) strdup(s)
@@ -56,7 +56,7 @@ EVENT2_EXPORT_SYMBOL void event_mm_free_(void *p);
 
 #### mm_malloc & mm_free & mm_realloc
 
-``` c++
+``` cpp
 #define mm_malloc(sz) event_mm_malloc_(sz)
 #define mm_free(p) event_mm_free_(p)
 #define mm_realloc(p, sz) event_mm_realloc_((p), (sz))
@@ -83,7 +83,7 @@ void *event_mm_realloc_(void *ptr, size_t sz)
 
 ### mm_strdup
 
-``` c++
+``` cpp
 char *event_mm_strdup_(const char *str) {
     if (!str) {
         errno = EINVAL;
@@ -112,7 +112,7 @@ error:
 
 ### mm_calloc
 
-``` c++
+``` cpp
 void *event_mm_calloc_(size_t count, size_t size) {
     if (count == 0 || size == 0) return NULL;
 
@@ -143,7 +143,7 @@ error:
 
 `libevent` 库提供了修改 `mm_malloc` & `mm_free` & `mm_realloc` 内存管理方式的函数 `event_set_mem_functions`：
 
-``` c++
+``` cpp
 void event_set_mem_functions(void *(*malloc_fn)(size_t sz),
             void *(*realloc_fn)(void *ptr, size_t sz),
             void (*free_fn)(void *ptr)) {

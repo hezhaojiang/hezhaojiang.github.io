@@ -18,7 +18,7 @@ date: 2020-08-03 13:34:58
 
 ## x264_encoder_open
 
-``` c++
+``` cpp
 /**
 * @brief                            创建一个新的编码 handler
 * @param[in]        param           x264_param_t 结构体指针
@@ -72,7 +72,7 @@ X264_API x264_t *x264_encoder_open(x264_param_t *param);
 
 ## x264_encoder_headers
 
-``` c++
+``` cpp
 /* x264_encoder_headers:
  *      return the SPS and PPS that will be used for the whole stream.
  *      *pi_nal is the number of NAL units outputted in pp_nal.
@@ -84,7 +84,7 @@ X264_API int x264_encoder_headers(x264_t *param, x264_nal_t **pp_nal, int *pi_na
 
 ## x264_encoder_encode
 
-``` c++
+``` cpp
 /* x264_encoder_encode:
  *      encode one picture.
  *      *pi_nal is the number of NAL units outputted in pp_nal.
@@ -96,7 +96,7 @@ X264_API int x264_encoder_encode(x264_t *param, x264_nal_t **pp_nal, int *pi_nal
 
 ## x264_encoder_close
 
-``` c++
+``` cpp
 /* x264_encoder_close:
  *      close an encoder handler */
 X264_API void x264_encoder_close(x264_t *param);

@@ -25,7 +25,7 @@ date: 2020-11-29 15:39:12
 
 `Box Header` 的格式可用如下代码表示:
 
-``` c++
+``` cpp
 aligned(8) class Box (unsigned int(32) boxtype, optional unsigned int(8)[16] extended_type) {
     unsigned int(32) size;
     unsigned int(32) type = boxtype;
@@ -42,7 +42,7 @@ aligned(8) class Box (unsigned int(32) boxtype, optional unsigned int(8)[16] ext
 
 一些 `Box` 对象的 `Box Header` 可能会包含有版本号和标志域:
 
-``` c++
+``` cpp
 aligned(8) class FullBox(unsigned int(32) boxtype, unsigned int(8) v, bit(24) f) extends Box(boxtype) {
     unsigned int(8) version = v;
     bit(24) flags = f;
@@ -82,7 +82,7 @@ aligned(8) class FullBox(unsigned int(32) boxtype, unsigned int(8) v, bit(24) f)
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class FileTypeBox extends Box("ftyp") {
     unsigned int(32) major_brand;           // 不同厂商要实现这种规范都要向 ISO 注册的一个四字节的标识码
     unsigned int(32) minor_version;         // 商标版本号
@@ -118,7 +118,7 @@ aligned(8) class FileTypeBox extends Box("ftyp") {
 
 ![moov box](https://gitee.com/hezhaojiang/MyPics/raw/master/img/20201201000619.png)
 
-``` c++
+``` cpp
 aligned(8) class MovieBox extends Box("moov") { }
 ```
 
@@ -180,7 +180,7 @@ aligned(8) class MovieBox extends Box("moov") { }
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class MovieHeaderBox extends FullBox("mvhd", version, 0) {
     if (version==1) {
         unsigned int(64) creation_time;     // 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）
@@ -262,7 +262,7 @@ aligned(8) class MovieHeaderBox extends FullBox("mvhd", version, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class TrackHeaderBox extends FullBox(‘tkhd’, version, flags){
     if (version==1) {
         unsigned int(64) creation_time;     // 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）
@@ -324,7 +324,7 @@ aligned(8) class TrackHeaderBox extends FullBox(‘tkhd’, version, flags){
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class MediaBox extends Box("mdia") { }
 ```
 
@@ -350,7 +350,7 @@ aligned(8) class MediaBox extends Box("mdia") { }
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class MediaHeaderBox extends FullBox("mdhd", version, 0) {
     if (version==1) {
         unsigned int(64) creation_time;     // 当前 Track 创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）
@@ -401,7 +401,7 @@ aligned(8) class MediaHeaderBox extends FullBox("mdhd", version, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class HandlerBox extends FullBox("hdlr", version = 0, 0) {
     unsigned int(32) pre_defined = 0;
     unsigned int(32) handler_type;  // Handle 的类型: 视频: 'vide'，音频: 'soun'
@@ -441,7 +441,7 @@ aligned(8) class HandlerBox extends FullBox("hdlr", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class MediaInformationBox extends Box("minf") { }
 ```
 
@@ -468,7 +468,7 @@ aligned(8) class MediaInformationBox extends Box("minf") { }
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class VideoMediaHeaderBox extends FullBox("vmhd", version = 0, 1) {
     template unsigned int(16) graphicsmode = 0; // 视频合成模式，为 0 时拷贝原始图像，否则与 opcolor 进行合成
     template unsigned int(16)[3] opcolor = {0, 0, 0}; // 颜色值，RGB 颜色值，{R,G,B} 一般默认 0x00 00 00 00 00 00
@@ -485,7 +485,7 @@ aligned(8) class VideoMediaHeaderBox extends FullBox("vmhd", version = 0, 1) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class SoundMediaHeaderBox extends FullBox("smhd", version = 0, 0) {
     template int(16) balance = 0;   // 音频的均衡是用来控制计算机的两个扬声器的声音混合效果，一般是 0
     const unsigned int(16) reserved = 0;
@@ -508,7 +508,7 @@ aligned(8) class SoundMediaHeaderBox extends FullBox("smhd", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class DataInformationBox extends Box("dinf") { }
 ```
 
@@ -528,7 +528,7 @@ aligned(8) class DataInformationBox extends Box("dinf") { }
 
 stbl Box 同样是 Container Box，使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class SampleTableBox extends Box("stbl") { }
 ```
 
@@ -557,7 +557,7 @@ aligned(8) class SampleTableBox extends Box("stbl") { }
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class DataEntryUrlBox (bit(24) flags) extends FullBox("url", version = 0, flags) {
     string location;
 }
@@ -598,7 +598,7 @@ aligned(8) class DataReferenceBox extends FullBox("dref", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) abstract class SampleEntry (unsigned int(32) format) extends Box(format){
     const unsigned int(8)[6] reserved = 0;
     unsigned int(16) data_reference_index;
@@ -641,7 +641,7 @@ aligned(8) class SampleDescriptionBox (unsigned int(32) handler_type) extends Fu
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class TimeToSampleBox extends FullBox("stts", version = 0, 0) {
     unsigned int(32) entry_count;
     for (int i = 0; i < entry_count; i++) {
@@ -682,7 +682,7 @@ aligned(8) class TimeToSampleBox extends FullBox("stts", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class SyncSampleBox extends FullBox("stss", version = 0, 0) {
     unsigned int(32) entry_count;           // 关键帧的 sample 个数
     for (int i = 0; i < entry_count; i++) {
@@ -715,7 +715,7 @@ aligned(8) class SyncSampleBox extends FullBox("stss", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class SampleToChunkBox extends FullBox("stsc", version = 0, 0) {
     unsigned int(32) entry_count;
     for (int i = 1; i <= entry_count; i++) {
@@ -758,7 +758,7 @@ aligned(8) class SampleToChunkBox extends FullBox("stsc", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class SampleSizeBox extends FullBox("stsz", version = 0, 0) {
     unsigned int(32) sample_size;   // 指定默认的 Sample 大小，如果每个 Sample 大小不相等，则这个字段值为 0，每个 Sample 大小存在下表中
     unsigned int(32) sample_count;  // 该 Track 中所有 Sample 的数量
@@ -801,7 +801,7 @@ aligned(8) class SampleSizeBox extends FullBox("stsz", version = 0, 0) {
 
 使用代码描述其结构:
 
-``` c++
+``` cpp
 aligned(8) class ChunkOffsetBox extends FullBox("stco", version = 0, 0) {
     unsigned int(32) entry_count;
     for (int i = 1; i <= entry_count; i++) {

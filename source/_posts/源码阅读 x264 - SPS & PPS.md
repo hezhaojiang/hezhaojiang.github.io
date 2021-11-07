@@ -20,7 +20,7 @@ date: 2021-01-28 15:34:00
 
 具体代码及注释如下：
 
-``` c++
+``` cpp
 /**
 * @brief                            初始化 SPS
 * @param[out]       sps             x264_sps_t 结构体指针
@@ -195,7 +195,7 @@ void x264_sps_init(x264_sps_t *sps, int i_id, x264_param_t *param)
 
 具体代码及注释如下：
 
-``` c++
+``` cpp
 /**
 * @brief                            初始化 SPS
 * @param[out]       sps             x264_sps_t 结构体指针

@@ -58,7 +58,7 @@ SDP 的文本信息包括：
 
 ### SDP 举例
 
-```c++
+``` cpp
 //sdp 版本号，一直为 0,rfc4566 规定
 o=- 7017624586836067756 2 IN IP4 127.0.0.1
 // o=<username> <sess-id> <sess-version> <nettype> <addrtype> <unicast-address>

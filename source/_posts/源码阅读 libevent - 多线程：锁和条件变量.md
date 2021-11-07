@@ -29,7 +29,7 @@ date: 2020-10-21 14:53:56
 
 `libevent` 中锁和条件变量定制对应的全局变量如下：
 
-``` c++
+``` cpp
 struct evthread_lock_callbacks {
     int lock_api_version;
     unsigned supported_locktypes;
@@ -73,7 +73,7 @@ GLOBAL struct evthread_condition_callbacks evthread_cond_fns_ = {0, NULL, NULL, 
 
 在 `Linux 2.6` 以上版本中，已经对 `pthread` 线程有了完善的支持，以下我们就分析一下 `libevent` 提供的多线程函数 `evthread_use_pthreads()`
 
-``` c++
+``` cpp
 #define EVTHREAD_LOCK_API_VERSION 1
 #define EVTHREAD_LOCKTYPE_RECURSIVE 1
 #define EVTHREAD_CONDITION_API_VERSION 1
@@ -117,7 +117,7 @@ int evthread_use_pthreads(void) {
 
 #### evthread_posix_lock_alloc
 
-``` c++
+``` cpp
 static void *evthread_posix_lock_alloc(unsigned locktype) {
     pthread_mutexattr_t *attr = NULL;
     pthread_mutex_t *lock = mm_malloc(sizeof(pthread_mutex_t));
@@ -139,7 +139,7 @@ static void *evthread_posix_lock_alloc(unsigned locktype) {
 
 #### evthread_posix_lock_free
 
-``` c++
+``` cpp
 static void evthread_posix_lock_free(void *lock_, unsigned locktype) {
     pthread_mutex_t *lock = lock_;
     pthread_mutex_destroy(lock);
@@ -151,7 +151,7 @@ static void evthread_posix_lock_free(void *lock_, unsigned locktype) {
 
 #### evthread_posix_lock
 
-``` c++
+``` cpp
 static int evthread_posix_lock(unsigned mode, void *lock_) {
     pthread_mutex_t *lock = lock_;
     if (mode & EVTHREAD_TRY) return pthread_mutex_trylock(lock);
@@ -166,7 +166,7 @@ static int evthread_posix_lock(unsigned mode, void *lock_) {
 
 #### evthread_posix_unlock
 
-``` c++
+``` cpp
 static int evthread_posix_unlock(unsigned mode, void *lock_) {
     pthread_mutex_t *lock = lock_;
     return pthread_mutex_unlock(lock);
@@ -179,7 +179,7 @@ static int evthread_posix_unlock(unsigned mode, void *lock_) {
 
 #### evthread_posix_cond_alloc
 
-``` c++
+``` cpp
 static void * evthread_posix_cond_alloc(unsigned condflags) {
     pthread_cond_t *cond = mm_malloc(sizeof(pthread_cond_t));
     if (!cond) return NULL;
@@ -195,7 +195,7 @@ static void * evthread_posix_cond_alloc(unsigned condflags) {
 
 #### evthread_posix_cond_free
 
-``` c++
+``` cpp
 static void evthread_posix_cond_free(void *cond_) {
     pthread_cond_t *cond = cond_;
     pthread_cond_destroy(cond);
@@ -207,7 +207,7 @@ static void evthread_posix_cond_free(void *cond_) {
 
 #### evthread_posix_cond_signal
 
-``` c++
+``` cpp
 static int evthread_posix_cond_signal(void *cond_, int broadcast) {
     pthread_cond_t *cond = cond_;
     int r;
@@ -224,7 +224,7 @@ static int evthread_posix_cond_signal(void *cond_, int broadcast) {
 
 #### evthread_posix_cond_wait
 
-``` c++
+``` cpp
 static int evthread_posix_cond_wait(void *cond_, void *lock_, const struct timeval *tv) {
     int r;
     pthread_cond_t *cond = cond_;
@@ -260,7 +260,7 @@ static int evthread_posix_cond_wait(void *cond_, void *lock_, const struct timev
 
 `evthread_set_lock_callbacks` 和 `evthread_set_condition_callbacks` 函数实现极其相似，本文中给出 `evthread_set_lock_callbacks` 的实现代码：
 
-``` c++
+``` cpp
 int
 evthread_set_lock_callbacks(const struct evthread_lock_callbacks *cbs)
 {
@@ -320,7 +320,7 @@ evthread_set_lock_callbacks(const struct evthread_lock_callbacks *cbs)
 
 #### evthread_set_id_callback
 
-``` c++
+``` cpp
 void evthread_set_id_callback(unsigned long (*id_fn)(void)) {
     evthread_id_fn_ = id_fn;
 }
@@ -328,7 +328,7 @@ void evthread_set_id_callback(unsigned long (*id_fn)(void)) {
 
 `evthread_set_id_callback` 函数看上去非常简单，就是让 `_evthread_id_fn` 这个全局变量指向了传入的函数指针参数，在 `evthread_use_pthreads` 函数的实现中，传入参数为 `evthread_posix_get_id`：
 
-``` c++
+``` cpp
 static unsigned long evthread_posix_get_id(void) {
     union {
         pthread_t thr;

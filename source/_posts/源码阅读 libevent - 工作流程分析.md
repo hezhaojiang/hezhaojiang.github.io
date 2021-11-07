@@ -13,7 +13,7 @@ date: 2020-11-09 04:36:32
 
 ## libevent 工作流程分析
 
-``` c++
+``` cpp
 #include<stdio.h>
 #include<event.h>
 #include<thread.h>

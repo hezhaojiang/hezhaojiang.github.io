@@ -33,7 +33,7 @@ libevent 中，5 种数据结构的各类操作均通过宏定义实现，且所
 
 ### 双向链表的定义宏
 
-``` c++
+``` cpp
 #define LIST_HEAD(name, type)                       \
 struct name {                                       \
     struct type *lh_first;  /* first element */     \
@@ -58,7 +58,7 @@ struct {                                            \
 
 我们可以写一个测试程序来看看该双向链表的结构：
 
-``` c++
+``` cpp
 #include<stdio.h>
 #include<stdlib.h>
 #include"queue.h"
@@ -112,7 +112,7 @@ int main(void) {
 
 ### 双向链表的访问宏
 
-``` c++
+``` cpp
 #define LIST_FIRST(head)        ((head)->lh_first)
 #define LIST_END(head)          NULL
 #define LIST_EMPTY(head)        (LIST_FIRST(head) == LIST_END(head))
@@ -154,7 +154,7 @@ int main(void) {
 
 #### 初始化宏
 
-``` c++
+``` cpp
 #define LIST_INIT(head) do {                        \
     LIST_FIRST(head) = LIST_END(head);              \
 } while (0)
@@ -168,7 +168,7 @@ int main(void) {
 
 #### 头插法宏
 
-``` c++
+``` cpp
 #define LIST_INSERT_HEAD(head, elm, field) do {     \
     if (((elm)->field.le_next = (head)->lh_first) != NULL)              \
         (head)->lh_first->field.le_prev = &(elm)->field.le_next;        \
@@ -194,7 +194,7 @@ int main(void) {
 
 #### 前插法宏
 
-``` c++
+``` cpp
 #define LIST_INSERT_BEFORE(listelm, elm, field) do {                    \
     (elm)->field.le_prev = (listelm)->field.le_prev;                    \
     (elm)->field.le_next = (listelm);               \
@@ -220,7 +220,7 @@ int main(void) {
 
 #### 后插法宏
 
-``` c++
+``` cpp
 #define LIST_INSERT_AFTER(listelm, elm, field) do {                     \
     if (((elm)->field.le_next = (listelm)->field.le_next) != NULL)      \
         (listelm)->field.le_next->field.le_prev = &(elm)->field.le_next;\
@@ -246,7 +246,7 @@ int main(void) {
 
 #### 删除节点宏
 
-``` c++
+``` cpp
 #define LIST_REMOVE(elm, field) do {                \
     if ((elm)->field.le_next != NULL)               \
         (elm)->field.le_next->field.le_prev = (elm)->field.le_prev;     \
@@ -267,7 +267,7 @@ int main(void) {
 
 #### 替换节点宏
 
-``` c++
+``` cpp
 #define LIST_REPLACE(elm, elm2, field) do {         \
     if (((elm2)->field.le_next = (elm)->field.le_next) != NULL)         \
         (elm2)->field.le_next->field.le_prev = &(elm2)->field.le_next;  \

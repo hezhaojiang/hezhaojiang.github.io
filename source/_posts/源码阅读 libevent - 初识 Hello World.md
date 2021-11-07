@@ -40,7 +40,7 @@ date: 2020-05-19 15:22:36
 
 1、调用 `event_base_new` 获得 `event_base` 对象
 
-```c++
+``` cpp
 base = event_base_new();
 if (!base) {
     fprintf(stderr, "Could not initialize libevent!\n");
@@ -50,7 +50,7 @@ if (!base) {
 
 2、调用 `evconnlistener_new_bind`，返回一个 `struct evconnlistener` 对象指针
 
-```c++
+``` cpp
 listener = evconnlistener_new_bind(
     base,                                           // 所属的 event_base 对象
     listener_cb,                                    // 监听回调函数
@@ -69,7 +69,7 @@ if (!listener) {
 
 3、调用 `evsignal_new` 函数获取一个信号事件对象, 并将事件处理器添加到 `event_base` 的事件处理器注册队列中
 
-```c++
+``` cpp
 signal_event = evsignal_new(
     base,                       // 所属的 event_base 对象
     SIGINT,                     // 信号处理器处理的信号 这里处理的信号是 SIGINT
@@ -85,13 +85,13 @@ if (!signal_event || event_add(signal_event, NULL)<0) {     // 将事件处理�
 
 4、调用 `event_base_dispatch` 函数进入事件循环
 
-```c++
+``` cpp
 event_base_dispatch(base);          // 进入事件循环
 ```
 
 5、对象的释放
 
-```c++
+``` cpp
 evconnlistener_free(listener);
 event_free(signal_event);
 event_base_free(base);
@@ -99,7 +99,7 @@ event_base_free(base);
 
 6、在创建 `evconnlistener` 对象时传入了一个回调函数：`listener_cb`
 
-```c++
+``` cpp
 static void
 listener_cb(struct evconnlistener *listener, evutil_socket_t fd,
     struct sockaddr *sa, int socklen, void *user_data)
@@ -134,7 +134,7 @@ listener_cb(struct evconnlistener *listener, evutil_socket_t fd,
 
 7、 回调函数 `listener_cb` 又注册了写事件回调函数 `conn_writecb` 和 事件处理回调函数 `conn_eventcb`
 
-```c++
+``` cpp
 static void
 conn_writecb(struct bufferevent *bev, void *user_data)
 {
@@ -162,7 +162,7 @@ conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 
 8、 `evsignal_new` 函数注册了信号处理函数 `signal_cb`
 
-```c++
+``` cpp
 static void
 signal_cb(evutil_socket_t sig, short events, void *user_data)
 {

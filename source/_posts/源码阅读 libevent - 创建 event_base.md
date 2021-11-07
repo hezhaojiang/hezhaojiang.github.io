@@ -21,7 +21,7 @@ date: 2020-10-26 15:33:30
 
 `event_base_new` 函数的定义如下：
 
-``` c++
+``` cpp
 struct event_base * event_base_new(void) {
     struct event_base *base = NULL;
     struct event_config *cfg = event_config_new();
@@ -41,7 +41,7 @@ struct event_base * event_base_new(void) {
 
 `event_config` 结构体定义如下：
 
-``` c++
+``` cpp
 struct event_config {
     TAILQ_HEAD(event_configq, event_config_entry) entries;
     int n_cpus_hint;
@@ -65,7 +65,7 @@ struct event_config {
 
 第一个成员 `entries`，其结构是一个队列，队列元素的类型就是 `event_config_entry`，可以用来存储一个字符串指针。它对应的设置函数为 `event_config_avoid_method`。
 
-``` c++
+``` cpp
 struct event_config_entry {
     TAILQ_ENTRY(event_config_entry) next;
     const char *avoid_method;
@@ -87,7 +87,7 @@ int event_config_avoid_method(struct event_config *cfg, const char *method) {
 
 查看 `libevent` 源码包里的文件，可以发现有诸如 `epoll.c`、`select.c`、`poll.c`、`devpoll.c`、`kqueue.c` 这些文件。打开这些文件就可以发现在文件内容的前面都会定义一个 `struct eventop` 类型变量。该结构体的第一个成员必然是一个字符串。这个字符串就描述了对应的多路 `IO` 复用函数的名称。所以是可以通过名称来禁用某种多路 `IO` 复用函数的。
 
-``` c++
+``` cpp
 /* select.c */
 const struct eventop selectops = {
     "select",
@@ -112,7 +112,7 @@ const struct eventop selectops = {
 
 第六个成员变量 `require_features`。从其名称来看是要求的特征。不错，这个变量指定 多路 `IO` 复用函数应该满足哪些特征。所有的特征定义在一个枚举类型中。
 
-``` c++
+``` cpp
 enum event_method_feature {
     EV_FEATURE_ET = 0x01, /* 支持边沿触发 */
     EV_FEATURE_O1 = 0x02, /* 添加、删除、或者确定哪个事件激活这些动作的时间复杂度都为 O(1) */
@@ -123,7 +123,7 @@ enum event_method_feature {
 
 比如 epoll.c 中定义了 epoll 满足的特性：
 
-``` c++
+``` cpp
 const struct eventop epollops = {
     "epoll",
     epoll_init,
@@ -143,7 +143,7 @@ const struct eventop epollops = {
 
 可用的标志位可参见枚举类型 `event_base_config_flag`，该枚举类型定义如下：
 
-``` c++
+``` cpp
 enum event_base_config_flag {
     /** 不要为 event_base 分配锁。
     *** 设置这个选项可以为 event_base 节省一点加锁和解锁的时间，但是当多个线程访问 event_base 会变得不安全 */
@@ -177,7 +177,7 @@ enum event_base_config_flag {
 
 将以上我们定制好的 `event_config` 类型的参数 `cfg` 传入到 `event_base_new_with_config` 中，即可根据 `cfg` 中的配置来创建符合条件的 `event_base`，`event_base_new_with_config` 中部分关键代码如下：
 
-``` c++
+``` cpp
 struct event_base * event_base_new_with_config(const struct event_config *cfg) {
     int i;
     struct event_base *base;
@@ -252,7 +252,7 @@ struct event_base * event_base_new_with_config(const struct event_config *cfg) {
 
 `eventops` 数组和 `event_base.evsel` 都是一个结构体指针，结构体类型为 `struct eventop`：
 
-``` c++
+``` cpp
 struct eventop {
     const char *name;
     void *(*init)(struct event_base *);

@@ -17,7 +17,7 @@ date: 2020-10-27 15:49:03
 
 ### 哈希表定义宏
 
-``` c++
+``` cpp
 #define HT_HEAD(name, type)                         \
     struct name {                                   \
         struct type **hth_table; /* The hash table itself. */               \
@@ -38,7 +38,7 @@ date: 2020-10-27 15:49:03
 
 与双向链表一样，我们通过测试程序来看哈希表在内存中的结构：
 
-``` c++
+``` cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -134,7 +134,7 @@ int main(void) {
 
 ### 查找
 
-``` c++
+``` cpp
 static inline struct Node ** INT_MAP_HT_FIND_P_(struct INT_MAP *head, struct Node *elm) {
     struct Node **p;
     if (!head->hth_table) return NULL;
@@ -172,7 +172,7 @@ static inline struct Node * INT_MAP_HT_FIND(const struct INT_MAP *head, struct N
 
 ### 遍历
 
-``` c++
+``` cpp
 static inline struct Node ** INT_MAP_HT_START(struct INT_MAP *head) {
     unsigned b = 0;
     while (b < head->hth_table_length)
@@ -209,7 +209,7 @@ static inline struct Node ** INT_MAP_HT_NEXT(struct INT_MAP *head, struct Node *
 
 ### 哈希表的基础操作
 
-``` c++
+``` cpp
 /* 哈希表的判空 */
 #define HT_EMPTY(head) ((head)->hth_n_entries == 0)
 /* 哈希表的表数组大小 */
@@ -222,7 +222,7 @@ static inline struct Node ** INT_MAP_HT_NEXT(struct INT_MAP *head, struct Node *
 
 ### 初始化
 
-``` c++
+``` cpp
 static inline void INT_MAP_HT_INIT(struct INT_MAP *head) {
     head->hth_table_length = 0;
     head->hth_table = NULL;
@@ -236,7 +236,7 @@ static inline void INT_MAP_HT_INIT(struct INT_MAP *head) {
 
 ### 插入
 
-``` c++
+``` cpp
 static inline void INT_MAP_HT_INSERT(struct INT_MAP *head, struct Node *elm) {
     struct Node **p;
     if (!head->hth_table || head->hth_n_entries >= head->hth_load_limit)
@@ -262,7 +262,7 @@ static inline void INT_MAP_HT_INSERT(struct INT_MAP *head, struct Node *elm) {
 
 ### 修改 & 插入
 
-``` c++
+``` cpp
 static inline struct Node * INT_MAP_HT_REPLACE(struct INT_MAP *head, struct Node *elm) {
     struct Node **p, *r;
     if (!head->hth_table || head->hth_n_entries >= head->hth_load_limit)
@@ -291,7 +291,7 @@ static inline struct Node * INT_MAP_HT_REPLACE(struct INT_MAP *head, struct Node
 
 ### 删除
 
-``` c++
+``` cpp
 static inline struct Node * INT_MAP_HT_REMOVE(struct INT_MAP *head, struct Node *elm) {
     struct Node **p, *r;
     do {
@@ -334,7 +334,7 @@ static inline struct Node ** INT_MAP_HT_NEXT_RMV(struct INT_MAP *head, struct No
 
 ### 参数检查
 
-``` c++
+``` cpp
 static inline void INT_MAP_HT_FOREACH_FN(struct INT_MAP *head, int (*fn)(struct Node *, void *), void *data)
 {
     unsigned idx;
@@ -361,7 +361,7 @@ static inline void INT_MAP_HT_FOREACH_FN(struct INT_MAP *head, int (*fn)(struct 
 
 ### 销毁
 
-``` c++
+``` cpp
 void INT_MAP_HT_CLEAR(struct INT_MAP *head) {
     if (head->hth_table) free(head->hth_table);
     INT_MAP_HT_INIT(head);
@@ -370,7 +370,7 @@ void INT_MAP_HT_CLEAR(struct INT_MAP *head) {
 
 该函数需要在哈希表清空后使用，否则会丢失哈希表中元素信息，导致一些 `malloc` 的空间无法释放，例如：
 
-``` c++
+``` cpp
 /* 自定义函数，非 libenent 宏定义生成函数 */
 void INT_MAP_HT_CLEAR_ALL(struct INT_MAP * head) {
     struct Node **ent, **next, *this;
@@ -385,7 +385,7 @@ void INT_MAP_HT_CLEAR_ALL(struct INT_MAP * head) {
 
 ### 扩容
 
-``` c++
+``` cpp
 static unsigned INT_MAP_PRIMES[] = {
     53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593,
     49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469, 12582917, 25165843,

@@ -26,7 +26,7 @@ date: 2020-06-01 16:27:00
 
 首先通过 `man` 命令查看下 `select` 的函数声明：
 
-```c++
+``` cpp
 #include <sys/select.h>
 
 int select(int nfds, fd_set *restrict readfds,
@@ -68,7 +68,7 @@ void FD_ZERO(fd_set *fdset);
 
 ### Select 实现框架
 
-```c++
+``` cpp
 fd_set read_fd;
 struct timeval tv;
 int err;
@@ -114,7 +114,7 @@ while (1) {
 
 ### Epoll 函数集声明
 
-``` c++
+``` cpp
 #include <sys/epoll.h>
 
 int epoll_create(int size);
@@ -128,7 +128,7 @@ int epoll_wait(int epfd, struct epoll_event *events, int maxevents, int timeout)
 
 ### Epoll实现框架
 
-``` c++
+``` cpp
 #define MAX_EVENTS 10
 struct epoll_event ev, events[MAX_EVENTS];
 int listen_sock, conn_sock, nfds, epollfd;

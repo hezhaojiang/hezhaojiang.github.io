@@ -26,7 +26,7 @@ date: 2021-01-08 16:53:09
 
 #### AVIOContext 相关函数
 
-``` c++
+``` cpp
 /**
  * Allocate and initialize an AVIOContext for buffered I/O. It must be later freed with avio_context_free().
  *
@@ -75,7 +75,7 @@ AVIOContext *avio_alloc_context(
 
 #### URLContext & URLProtocol 定义
 
-``` c++
+``` cpp
 typedef struct URLContext {
     const AVClass *av_class;    /**<information for av_log(). Set by url_open(). */
     const struct URLProtocol *prot;
@@ -143,7 +143,7 @@ typedef struct URLProtocol {
 
 在 `URLProtocol` 结构体中，除了一些回调函数接口之外，有一个变量 `const char *name`，该变量存储了协议的名称。每一种输入协议都对应这样一个结构体对象。比如说，文件协议中代码如下：
 
-``` c++
+``` cpp
 // file.c
 const URLProtocol ff_file_protocol = {
     .name                = "file",
@@ -171,7 +171,7 @@ const URLProtocol ff_file_protocol = {
 
 #### AVFormatContext 相关函数
 
-``` c++
+``` cpp
 // 分配一个 AVFormatContext
 AVFormatContext *avformat_alloc_context(void);
 // 释放 AVFormatContext 及其所有 AVStream
@@ -204,7 +204,7 @@ int avformat_find_stream_info(AVFormatContext *ic, AVDictionary **options);
 
 #### AVStream 相关函数
 
-``` c++
+``` cpp
 /**
  * Add a new stream to a media file.
  * @param s media file handle
@@ -227,7 +227,7 @@ AVStream *avformat_new_stream(AVFormatContext *s, const AVCodec *c)
 - `AVPacket attached_pic;` : 附带的图片。比如说一些 MP3，AAC 音频文件附带的专辑封面
 - `AVCodecParameters *codecpar;` : 与此流相关的编解码器参数
 
-``` c++
+``` cpp
 // AVRational 可以用来表示无理数：
     typedef struct AVRational {
     int num; ///< Numerator 分子
@@ -243,7 +243,7 @@ AVStream *avformat_new_stream(AVFormatContext *s, const AVCodec *c)
 
 #### AVInputFormat 相关函数
 
-``` c++
+``` cpp
 /**
  * If f is NULL, returns the first registered input format,
  * if f is non-NULL, returns the next registered input format after f or NULL if f is the last one.
@@ -273,7 +273,7 @@ attribute_deprecated AVInputFormat  *av_iformat_next(const AVInputFormat  *f);
 
 ### AVCodecContext 相关函数
 
-``` c++
+``` cpp
 // 分配一个 AVCodecContext，并将其字段设置为默认值
 AVCodecContext *avcodec_alloc_context3(const AVCodec *codec);
 // 释放 AVCodecContext 及其相关内容，并向提供的指针写入 nullptr
@@ -315,7 +315,7 @@ AVCodec 是存储编解码器信息的结构体
 
 #### AVCodec 相关函数
 
-``` c++
+``` cpp
 // 如果 c 为空，返回第一个注册的编解码器
 // 如果 c 非空，返回 c 之后的下一个注册编解码器，如果 c 是最后一个编解码器，返回 nullptr
 attribute_deprecated AVCodec *av_codec_next(const AVCodec *c);
@@ -346,7 +346,7 @@ int avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **op
 
 每一个编解码器对应一个该结构体，查看一下 `ffmpeg` 的源代码，我们可以看一下 `H.264` 解码器的结构体如下所示：
 
-``` c++
+``` cpp
 // h264.c
 AVCodec ff_h264_decoder = {
     .name                  = "h264",
@@ -378,7 +378,7 @@ AVCodec ff_h264_decoder = {
 
 #### AVPacket 相关函数
 
-``` c++
+``` cpp
 // 返回流的下一帧
 int av_read_frame(AVFormatContext *s, AVPacket *pkt);
 // 向解码器提供原始数据包数据作为输入
@@ -387,7 +387,7 @@ int avcodec_send_packet(AVCodecContext *avctx, const AVPacket *avpkt);
 
 #### AVPacket 结构体定义
 
-``` c++
+``` cpp
 typedef struct AVPacket {
     AVBufferRef *buf;
     int64_t pts;    ///< 显示时间戳
@@ -416,7 +416,7 @@ typedef struct AVPacket {
 
 #### AVFrame 相关函数
 
-``` c++
+``` cpp
 // 分配 AVFrame 并将其字段设置为默认值
 AVFrame *av_frame_alloc(void);
 // 释放 AVFrame 和其中所有动态分配的成员
@@ -427,7 +427,7 @@ int avcodec_receive_frame(AVCodecContext *avctx, AVFrame *frame);
 
 #### AVPacket 成员变量
 
-``` c++
+``` cpp
 typedef struct AVFrame {
 #define AV_NUM_DATA_POINTERS 8
     uint8_t *data[AV_NUM_DATA_POINTERS];    // 解码后原始数据 对视频来说是 YUV，RGB，对音频来说是 PCM

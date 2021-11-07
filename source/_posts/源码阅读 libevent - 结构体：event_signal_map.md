@@ -9,7 +9,7 @@ date: 2020-10-31 06:03:13
 ---
 在之前的文章中提到过：`libevent` 中的哈希表只会用于 `Windows` 系统，像遵循 `POSIX` 标准的 `OS` 是不会用到哈希表的。那么在遵循 `POSIX` 标准的 `OS` 中 event_io_map 是怎么实现的呢？答案就在下面的宏定义中：
 
-``` c++
+``` cpp
 #define event_io_map event_signal_map
 ```
 
@@ -19,7 +19,7 @@ date: 2020-10-31 06:03:13
 
 ## event_signal_map 的定义
 
-``` c++
+``` cpp
 struct event_signal_map {
     void **entries; /* evmap_io * 或 evmap_signal * 型数组 */
     int nentries; /* 数组有效长度 */
@@ -35,7 +35,7 @@ struct event_signal_map {
 
 ### evmap_signal
 
-``` c++
+``` cpp
 struct evmap_signal {
     struct event_dlist events; /* LIST_HEAD (event_dlist, event); */
 };
@@ -64,7 +64,7 @@ event_signal_map        Array of struct evmap_signal*       struct event        
 
 ## 初始化
 
-``` c++
+``` cpp
 void evmap_signal_initmap_(struct event_signal_map *ctx) {
     ctx->nentries = 0;
     ctx->entries = NULL;
@@ -75,7 +75,7 @@ Emmm… 不知道该说点什么...
 
 ## 添加
 
-``` c++
+``` cpp
 int evmap_signal_add_(struct event_base *base, int sig, struct event *ev) {
     const struct eventop *evsel = base->evsigsel;
     struct event_signal_map *map = &base->sigmap;
@@ -103,7 +103,7 @@ int evmap_signal_add_(struct event_base *base, int sig, struct event *ev) {
 
 ### evmap_make_space
 
-``` c++
+``` cpp
 static int evmap_make_space(struct event_signal_map *map, int slot, int msize) {
     if (map->nentries <= slot) {
         int nentries = map->nentries ? map->nentries : 32;
@@ -133,7 +133,7 @@ static int evmap_make_space(struct event_signal_map *map, int slot, int msize) {
 
 ### GET_SIGNAL_SLOT_AND_CTOR
 
-``` c++
+``` cpp
 GET_SIGNAL_SLOT_AND_CTOR(ctx, map, sig, evmap_signal, evmap_signal_init, base->evsigsel->fdinfo_len);
 /* 以上宏定义展开后结果为如下所示 */
 do {
@@ -153,7 +153,7 @@ do {
 
 ## 删除
 
-``` c++
+``` cpp
 int evmap_signal_del_(struct event_base *base, int sig, struct event *ev) {
     const struct eventop *evsel = base->evsigsel;
     struct event_signal_map *map = &base->sigmap;
@@ -171,7 +171,7 @@ int evmap_signal_del_(struct event_base *base, int sig, struct event *ev) {
 
 ### GET_SIGNAL_SLOT
 
-``` c++
+``` cpp
 GET_SIGNAL_SLOT(ctx, map, sig, evmap_signal);
 /* 以上宏定义展开后结果为如下所示 */
 (ctx) = (struct evmap_signal *)((map)->entries[sig])
